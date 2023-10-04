@@ -1,0 +1,7 @@
+Package: isaac-sim-standalone
+Version: 2022.2.1-rc.14+2022.2.494.70497c06.tc.linux-x86_64.release
+Commit: 70497c064272778b550d785b89e618821248d0cf
+Time: Thu Mar 16 01:35:15 2023
+CI Build ID: 14259040
+Platform: linux-x86_64
+CI Build Number: 2022.2.1-rc.14+2022.2.494.70497c06.tc

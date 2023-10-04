@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: ros_environment
+Description: Description of ros_environment
+Version: 1.3.2
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: pcl_ros
+Description: Description of pcl_ros
+Version: 1.7.4
+Cflags: -I${prefix}/include -I/workspace/boost_1_68_0/_install/include -I/usr/local/include/eigen3 -I/usr/local/include/pcl-1.9 -I/usr/include
+Libs: -L${prefix}/lib -lpcl_ros_filter -lpcl_ros_tf /usr/local/lib/libpcl_common.so /usr/local/lib/libpcl_kdtree.so /usr/local/lib/libpcl_octree.so /usr/local/lib/libpcl_search.so /usr/local/lib/libpcl_features.so /usr/local/lib/libpcl_sample_consensus.so /usr/local/lib/libpcl_filters.so /usr/local/lib/libpcl_io.so /usr/local/lib/libpcl_ml.so /usr/local/lib/libpcl_segmentation.so /usr/local/lib/libpcl_surface.so /workspace/boost_1_68_0/_install/lib/libboost_system.so /workspace/boost_1_68_0/_install/lib/libboost_filesystem.so /workspace/boost_1_68_0/_install/lib/libboost_thread.so -lpthread /workspace/boost_1_68_0/_install/lib/libboost_date_time.so /workspace/boost_1_68_0/_install/lib/libboost_iostreams.so /workspace/boost_1_68_0/_install/lib/libboost_chrono.so /workspace/boost_1_68_0/_install/lib/libboost_atomic.so /workspace/boost_1_68_0/_install/lib/libboost_regex.so /usr/lib/x86_64-linux-gnu/libqhull.so /usr/lib/x86_64-linux-gnu/libflann_cpp.so
+Requires: dynamic_reconfigure geometry_msgs message_filters nodelet nodelet_topic_tools pcl_conversions pcl_msgs rosbag roscpp sensor_msgs std_msgs tf tf2 tf2_eigen tf2_ros

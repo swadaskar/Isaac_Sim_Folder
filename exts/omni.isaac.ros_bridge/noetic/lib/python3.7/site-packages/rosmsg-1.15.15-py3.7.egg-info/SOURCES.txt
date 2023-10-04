@@ -1,0 +1,9 @@
+setup.py
+scripts/rosmsg
+scripts/rosmsg-proto
+scripts/rossrv
+src/rosmsg/__init__.py
+test/test_rosmsg.py
+test/test_rosmsg_command_line.py
+test/test_rosmsgproto.py
+test/test_rosmsgproto_command_line.py

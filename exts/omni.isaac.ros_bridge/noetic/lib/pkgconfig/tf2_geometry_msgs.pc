@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: tf2_geometry_msgs
+Description: Description of tf2_geometry_msgs
+Version: 0.7.6
+Cflags: -I${prefix}/include -I/workspace/noetic_ws/install/include -I/usr/local/include/eigen3
+Libs: -L${prefix}/lib /workspace/noetic_ws/install/lib/liborocos-kdl.so /workspace/noetic_ws/install/lib/liborocos-kdl.so.1.5.1
+Requires: geometry_msgs tf2_ros tf2

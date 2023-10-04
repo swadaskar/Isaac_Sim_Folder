@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Occupancy Extension [omni.isaac.occupancy_map] &mdash; isaac_sim 2022.2.1-rc.14 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/omni-style.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/api-styles.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/mermaid-init.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+        <script src="https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js"></script>
+        <script>initMermaid();</script>
+        <script src="../../../../_static/version.js"></script>
+        <script src="../../../../_static/social-media.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Replicator Isaac Extension [omni.replicator.isaac]" href="../../omni.replicator.isaac/docs/index.html" />
+    <link rel="prev" title="Tools for Generating Synthetic Data [omni.isaac.synthetic_utils]" href="../../omni.isaac.synthetic_utils/docs/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html">
+            <img src="../../../../_static/main_ov_logo_square.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Main Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core/docs/index.html">Core [omni.isaac.core]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core_nodes/docs/index.html">Core Omnigraph Nodes [omni.isaac.core_nodes]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html">Dynamic Control [omni.isaac.dynamic_control]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.kit/docs/index.html">Simulation Application [omni.isaac.kit]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.utils/docs/index.html">Utilities [omni.isaac.utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ui/docs/index.html">UI Utilities [omni.isaac.ui]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.kit.loop-isaac/docs/index.html">Time Stepping Control [omni.kit.loop-isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.cloner/docs/index.html">Isaac Cloner [omni.isaac.cloner]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.gym/docs/index.html">RL [omni.isaac.gym]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sensor Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.sensor/docs/index.html">Isaac Sensor Extension [omni.isaac.sensor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.range_sensor/docs/index.html">Range Based Sensor Simulation [omni.isaac.range_sensor]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Asset Conversion Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.urdf/docs/index.html">URDF Import Extension [omni.isaac.urdf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.mjcf/docs/index.html">MJCF Import Extension [omni.isaac.mjcf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.shapenet/docs/index.html">ShapeNet [omni.isaac.shapenet]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dofbot/docs/index.html">Dofbot Robot [omni.isaac.dofbot]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.franka/docs/index.html">Franka Robot [omni.isaac.franka]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.wheeled_robots/docs/index.html">Wheeled Robots [omni.isaac.wheeled_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.universal_robots/docs/index.html">Universal Robots [omni.isaac.universal_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.quadruped/docs/index.html">Quadruped Robots [omni.isaac.quadruped]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.manipulators/docs/index.html">Manipulators [omni.isaac.manipulators]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros_bridge/docs/index.html">ROS Bridge [omni.isaac.ros_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros2_bridge/docs/index.html">ROS2 Bridge [omni.isaac.ros2_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.debug_draw/docs/index.html">Debug Drawing [omni.isaac.debug_draw]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.motion_generation/docs/index.html">Motion Generation Extension [omni.isaac.motion_generation]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.lula/docs/index.html">Lula [omni.isaac.lula]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.surface_gripper/docs/index.html">Surface_gripper [omni.isaac.surface_gripper]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.synthetic_utils/docs/index.html">Tools for Generating Synthetic Data [omni.isaac.synthetic_utils]</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Occupancy Extension [omni.isaac.occupancy_map]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.replicator.isaac/docs/index.html">Replicator Isaac Extension [omni.replicator.isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.conveyor/docs/index.html">Conveyor [omni.isaac.conveyor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.examples_nodes/docs/index.html">Isaac Sim Examples Nodes [omni.isaac.examples_nodes]</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">isaac_sim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Occupancy Extension [omni.isaac.occupancy_map]</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="occupancy-extension-omni-isaac-occupancy-map">
+<h1>Occupancy Extension [omni.isaac.occupancy_map]<a class="headerlink" href="#occupancy-extension-omni-isaac-occupancy-map" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.occupancy_map._occupancy_map.Generator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Generator</span></span><a class="headerlink" href="#omni.isaac.occupancy_map._occupancy_map.Generator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<p>This class is used to generate an occupancy map for a USD stage.
+Assuming the stage has collision geometry information, the following code can be used to generate the occupancy map information</p>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">omni</span>
+<span class="kn">from</span> <span class="nn">omni.isaac.occupancy_map</span> <span class="kn">import</span> <span class="n">_occupancy_map</span>
+
+<span class="n">physx</span> <span class="o">=</span> <span class="n">omni</span><span class="o">.</span><span class="n">physx</span><span class="o">.</span><span class="n">acquire_physx_interface</span><span class="p">()</span>
+<span class="n">stage_id</span> <span class="o">=</span> <span class="n">omni</span><span class="o">.</span><span class="n">usd</span><span class="o">.</span><span class="n">get_context</span><span class="p">()</span><span class="o">.</span><span class="n">get_stage_id</span><span class="p">()</span>
+
+<span class="n">generator</span> <span class="o">=</span> <span class="n">_occupancy_map</span><span class="o">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">physx</span><span class="p">,</span> <span class="n">stage_id</span><span class="p">)</span>
+<span class="c1"># 0.05m cell size, output buffer will have 4 for occupied cells, 5 for unoccupied, and 6 for cells that cannot be seen</span>
+<span class="c1"># this assumes your usd stage units are in m, and not cm</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">update_settings</span><span class="p">(</span><span class="mf">.05</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="c1"># Set location to map from and the min and max bounds to map to</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">set_transform</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">generate2d</span><span class="p">()</span>
+<span class="c1"># Get locations of the occupied cells in the stage</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">get_occupied_positions</span><span class="p">()</span>
+<span class="c1"># Get computed 2d occupancy buffer</span>
+<span class="n">buffer</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">get_buffer</span><span class="p">()</span>
+<span class="c1"># Get dimensions for 2d buffer</span>
+<span class="n">dims</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">get_dimensions</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.occupancy_map._occupancy_map.Generator.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">omni.isaac.occupancy_map._occupancy_map.Generator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0:</span> <span class="pre">omni::physx::IPhysx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1:</span> <span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.occupancy_map._occupancy_map.Generator.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interface</strong> (<em>arg0 Pointer to PhysX</em>) – </p></li>
+<li><p><strong>map</strong> (<em>arg1 Stage ID for the USD stage to</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.occupancy_map._occupancy_map.Generator.generate2d">
+<span class="sig-name descname"><span class="pre">generate2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.occupancy_map._occupancy_map.Generator" title="omni.isaac.occupancy_map._occupancy_map.Generator"><span class="pre">omni.isaac.occupancy_map._occupancy_map.Generator</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.occupancy_map._occupancy_map.Generator.generate2d" title="Permalink to this definition"></a></dt>
+<dd><p>Main function that generates a map based on the settings and transform set. Assumes that a 2d map is generated and flattens the computed data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.occupancy_map._occupancy_map.Generator.generate3d">
+<span class="sig-name descname"><span class="pre">generate3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.occupancy_map._occupancy_map.Generator" title="omni.isaac.occupancy_map._occupancy_map.Generator"><span class="pre">omni.isaac.occupancy_map._occupancy_map.Generator</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.occupancy_map._occupancy_map.Generator.generate3d" title="Permalink to this definition"></a></dt>
+<dd><p>Main function that generates a map based on the settings and transform set. Assumes 3d generation, output is not flattened</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.occupancy_map._occupancy_map.Generator.get_buffer">
+<span class="sig-name descname"><span class="pre">get_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.occupancy_map._occupancy_map.Generator" title="omni.isaac.occupancy_map._occupancy_map.Generator"><span class="pre">omni.isaac.occupancy_map._occupancy_map.Generator</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#omni.isaac.occupancy_map._occupancy_map.Generator.get_buffer" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>2D array containing values for each cell in the occupancy map.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.occupancy_map._occupancy_map.Generator.get_colored_byte_buffer">
+<span class="sig-name descname"><span class="pre">get_colored_byte_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.occupancy_map._occupancy_map.Generator" title="omni.isaac.occupancy_map._occupancy_map.Generator"><span class="pre">omni.isaac.occupancy_map._occupancy_map.Generator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Int4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Int4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Int4</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#omni.isaac.occupancy_map._occupancy_map.Generator.get_colored_byte_buffer" title="Permalink to this definition"></a></dt>
+<dd><p>Convenience function to generate an image from the occupancy map</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Int4</span></code>) – RGBA Value used to denote an occupied cell</p></li>
+<li><p><strong>arg1</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Int4</span></code>) – RGBA Value used to denote an unoccupied cell</p></li>
+<li><p><strong>arg2</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Int4</span></code>) – RGBA Value used to denote unknown areas that could not be reached from the starting location</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Flattened buffer containing list of RGBA values for each pixel. Can be used to render as image directly</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.occupancy_map._occupancy_map.Generator.get_dimensions">
+<span class="sig-name descname"><span class="pre">get_dimensions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.occupancy_map._occupancy_map.Generator" title="omni.isaac.occupancy_map._occupancy_map.Generator"><span class="pre">omni.isaac.occupancy_map._occupancy_map.Generator</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">carb._carb.Int3</span></span></span><a class="headerlink" href="#omni.isaac.occupancy_map._occupancy_map.Generator.get_dimensions" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Dimensions for output buffer</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Int2</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.occupancy_map._occupancy_map.Generator.get_free_positions">
+<span class="sig-name descname"><span class="pre">get_free_positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.occupancy_map._occupancy_map.Generator" title="omni.isaac.occupancy_map._occupancy_map.Generator"><span class="pre">omni.isaac.occupancy_map._occupancy_map.Generator</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">carb._carb.Float3</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#omni.isaac.occupancy_map._occupancy_map.Generator.get_free_positions" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of 2d points in stage coordinates containing free locations.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float2</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.occupancy_map._occupancy_map.Generator.get_max_bound">
+<span class="sig-name descname"><span class="pre">get_max_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.occupancy_map._occupancy_map.Generator" title="omni.isaac.occupancy_map._occupancy_map.Generator"><span class="pre">omni.isaac.occupancy_map._occupancy_map.Generator</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">carb._carb.Float3</span></span></span><a class="headerlink" href="#omni.isaac.occupancy_map._occupancy_map.Generator.get_max_bound" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Maximum bound for generated occupancy map instage coordinates</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float2</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.occupancy_map._occupancy_map.Generator.get_min_bound">
+<span class="sig-name descname"><span class="pre">get_min_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.occupancy_map._occupancy_map.Generator" title="omni.isaac.occupancy_map._occupancy_map.Generator"><span class="pre">omni.isaac.occupancy_map._occupancy_map.Generator</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">carb._carb.Float3</span></span></span><a class="headerlink" href="#omni.isaac.occupancy_map._occupancy_map.Generator.get_min_bound" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Minimum bound for generated occupancy map instage coordinates</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float2</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.occupancy_map._occupancy_map.Generator.get_occupied_positions">
+<span class="sig-name descname"><span class="pre">get_occupied_positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.occupancy_map._occupancy_map.Generator" title="omni.isaac.occupancy_map._occupancy_map.Generator"><span class="pre">omni.isaac.occupancy_map._occupancy_map.Generator</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">carb._carb.Float3</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#omni.isaac.occupancy_map._occupancy_map.Generator.get_occupied_positions" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of 2d points in stage coordinates containing occupied locations.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float2</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.occupancy_map._occupancy_map.Generator.set_transform">
+<span class="sig-name descname"><span class="pre">set_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.occupancy_map._occupancy_map.Generator" title="omni.isaac.occupancy_map._occupancy_map.Generator"><span class="pre">omni.isaac.occupancy_map._occupancy_map.Generator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float3</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.occupancy_map._occupancy_map.Generator.set_transform" title="Permalink to this definition"></a></dt>
+<dd><p>Set origin and bounds for mapping</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>) – Origin in stage to start mapping from, must be in unoccupied space</p></li>
+<li><p><strong>arg1</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>) – Minimum bound to map up to</p></li>
+<li><p><strong>arg2</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>) – Maximum bound to map up to</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.occupancy_map._occupancy_map.Generator.update_settings">
+<span class="sig-name descname"><span class="pre">update_settings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.occupancy_map._occupancy_map.Generator" title="omni.isaac.occupancy_map._occupancy_map.Generator"><span class="pre">omni.isaac.occupancy_map._occupancy_map.Generator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.occupancy_map._occupancy_map.Generator.update_settings" title="Permalink to this definition"></a></dt>
+<dd><p>Updates settings used for generating the occupancy map</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>) – Size of the cell in stage units, resolution of the grid</p></li>
+<li><p><strong>arg1</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>) – Value used to denote an occupied cell</p></li>
+<li><p><strong>arg2</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>) – Value used to denote an unoccupied cell</p></li>
+<li><p><strong>arg3</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>) – Value used to denote unknown areas that could not be reached from the starting location</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018-2023, NVIDIA.
+      <span class="lastupdated">Last updated on Mar 16, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

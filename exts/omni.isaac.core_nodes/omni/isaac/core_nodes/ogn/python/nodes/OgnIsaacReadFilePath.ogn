@@ -1,0 +1,33 @@
+{
+    "IsaacReadFilePath": {
+        "version": 1,
+        "icon": "icons/isaac-sim.svg",
+        "description": "Loads contents of file when given path, if file exists",
+        "language": "Python",
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacCore",
+        "metadata": {
+            "uiName": "Isaac Read File Path"
+        },
+        "inputs": {
+            "path": {
+                "type": "path",
+                "description": "Input path to file",
+                "metadata": {
+                    "uiName": "Input Path"
+                },
+                "default": ""
+            }
+        },
+        "outputs": {
+            "fileContents": {
+                "type": "string",
+                "description": "Output contents of file at path, returns empty string if file is not found",
+                "metadata": {
+                    "uiName": "Output File Contents"
+                },
+                "default": ""
+            }
+        }
+    }
+}

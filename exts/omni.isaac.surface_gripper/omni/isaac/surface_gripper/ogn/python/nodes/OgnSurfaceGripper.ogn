@@ -1,0 +1,110 @@
+{
+    "SurfaceGripper" :
+    {
+        "version": 1,
+        "description": "Surface Gripper",
+        "language": "Python",
+        "categories":{
+            "isaacSim": "Surface Gripper inside Isaac Sim"
+        },
+        "scheduling": "compute-on-request",
+        "metadata": {
+            "uiName": "Surface Gripper"
+        },
+        "inputs": {
+            
+            "enabled": {
+                "type": "bool",
+                "description": "node does not execute if disabled",
+                "default": true
+            },
+            "ParentRigidBody": {
+                "type": "bundle",
+                "description" : "The rigid body that is used as a surface Gripper"
+            },
+            "GripPosition": {
+                "type": "bundle",
+                "description" : "The point at which objects will be gripped"
+            },
+            "GripThreshold":{
+                "type":"float",
+                "description" : "How far from an object it allows the gripper to lock in. Object will be pulled in this distance when gripper is closed",
+                "default" : 0.01
+            },
+            "ForceLimit":{
+                "type":"float",
+                "description" : "Gripper breaking force",
+                "default" : 1000000.0
+            },
+            "TorqueLimit":{
+                "type":"float",
+                "description" : "Torque breaking limit",
+                "default" : 1000000.0
+            },
+            "BendAngle":{
+                "type":"float",
+                "description" : "maximum bend angle, degrees",
+                "default" : 7.5
+            },
+            "Stiffness":{
+                "type":"float",
+                "description" : "Gripper stiffness",
+                "default" : 10000.0
+            },
+            "Damping":{
+                "type":"float",
+                "description" : "Gripper damping",
+                "default" : 1000.0
+            },
+            "DisableGravity":{
+                "type":"bool",
+                "description" : "flag to disable gravity of picked object to compensate for object's mass on robotic controllers",
+                "default" : true
+            },
+            "RetryClose":{
+                "type":"bool",
+                "description" : "Flag to indicate if gripper should keep attempting to close until it grips some object",
+                "default" : false
+            },
+            "onStep": {
+                "type": "execution",
+                "description": "step to animate textures"
+            },
+            "Delta": {
+                "type": "float",
+                "description": "time since last step in seconds"
+            },
+            "Close": {
+                "type": "execution",
+                "description": "call to close gripper"
+            },
+            "Open": {
+                "type": "execution",
+                "description": "call to Open gripper"
+            }
+        
+        },
+        "outputs":
+        {
+            "Closed":{
+                "type":"bool",
+                "description":"Surface gripper is closed or not"
+            },
+            "GripBroken":{
+                "type":"execution",
+                "description":"triggered when surface gripper unexpectedly breaks open"
+            }
+        },
+        "state": {
+            "Close": {
+                "type": "bool",
+                "description": "call to close gripper"
+            },
+            "Open": {
+                "type": "bool",
+                "description": "call to Open gripper"
+            }
+        }
+
+    }
+}

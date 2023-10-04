@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: urdf_parser_plugin
+Description: Description of urdf_parser_plugin
+Version: 1.13.2
+Cflags: -I${prefix}/include -I/usr/local/lib/urdfdom_headers/cmake/../../../include/urdfdom_headers
+Libs: -L${prefix}/lib 
+Requires: 

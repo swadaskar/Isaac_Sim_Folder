@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Utilities [omni.isaac.utils] &mdash; isaac_sim 2022.2.1-rc.14 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/omni-style.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/api-styles.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/mermaid-init.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+        <script src="https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js"></script>
+        <script>initMermaid();</script>
+        <script src="../../../../_static/version.js"></script>
+        <script src="../../../../_static/social-media.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="UI Utilities [omni.isaac.ui]" href="../../omni.isaac.ui/docs/index.html" />
+    <link rel="prev" title="Simulation Application [omni.isaac.kit]" href="../../omni.isaac.kit/docs/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html">
+            <img src="../../../../_static/main_ov_logo_square.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Main Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core/docs/index.html">Core [omni.isaac.core]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core_nodes/docs/index.html">Core Omnigraph Nodes [omni.isaac.core_nodes]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html">Dynamic Control [omni.isaac.dynamic_control]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.kit/docs/index.html">Simulation Application [omni.isaac.kit]</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Utilities [omni.isaac.utils]</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#math-utils">Math Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-omni.isaac.utils.scripts.commands">Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ui/docs/index.html">UI Utilities [omni.isaac.ui]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.kit.loop-isaac/docs/index.html">Time Stepping Control [omni.kit.loop-isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.cloner/docs/index.html">Isaac Cloner [omni.isaac.cloner]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.gym/docs/index.html">RL [omni.isaac.gym]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sensor Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.sensor/docs/index.html">Isaac Sensor Extension [omni.isaac.sensor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.range_sensor/docs/index.html">Range Based Sensor Simulation [omni.isaac.range_sensor]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Asset Conversion Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.urdf/docs/index.html">URDF Import Extension [omni.isaac.urdf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.mjcf/docs/index.html">MJCF Import Extension [omni.isaac.mjcf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.shapenet/docs/index.html">ShapeNet [omni.isaac.shapenet]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dofbot/docs/index.html">Dofbot Robot [omni.isaac.dofbot]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.franka/docs/index.html">Franka Robot [omni.isaac.franka]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.wheeled_robots/docs/index.html">Wheeled Robots [omni.isaac.wheeled_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.universal_robots/docs/index.html">Universal Robots [omni.isaac.universal_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.quadruped/docs/index.html">Quadruped Robots [omni.isaac.quadruped]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.manipulators/docs/index.html">Manipulators [omni.isaac.manipulators]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros_bridge/docs/index.html">ROS Bridge [omni.isaac.ros_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros2_bridge/docs/index.html">ROS2 Bridge [omni.isaac.ros2_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.debug_draw/docs/index.html">Debug Drawing [omni.isaac.debug_draw]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.motion_generation/docs/index.html">Motion Generation Extension [omni.isaac.motion_generation]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.lula/docs/index.html">Lula [omni.isaac.lula]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.surface_gripper/docs/index.html">Surface_gripper [omni.isaac.surface_gripper]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.synthetic_utils/docs/index.html">Tools for Generating Synthetic Data [omni.isaac.synthetic_utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.occupancy_map/docs/index.html">Occupancy Extension [omni.isaac.occupancy_map]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.replicator.isaac/docs/index.html">Replicator Isaac Extension [omni.replicator.isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.conveyor/docs/index.html">Conveyor [omni.isaac.conveyor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.examples_nodes/docs/index.html">Isaac Sim Examples Nodes [omni.isaac.examples_nodes]</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">isaac_sim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Utilities [omni.isaac.utils]</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="utilities-omni-isaac-utils">
+<h1>Utilities [omni.isaac.utils]<a class="headerlink" href="#utilities-omni-isaac-utils" title="Permalink to this headline"></a></h1>
+<p>The surface gripper extension provides an interface to the utilities package to be used with <code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control</span></code>.</p>
+<span class="target" id="module-omni.isaac.utils._isaac_utils.math"></span><section id="math-utils">
+<h2>Math Utils<a class="headerlink" href="#math-utils" title="Permalink to this headline"></a></h2>
+<p>This submodule provides math bindings for vector operations, and other facilitators such as <cite>lerp</cite> functions.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.math.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float3</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">carb._carb.Float3</span></span></span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.math.add" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>) – 3D vector</p></li>
+<li><p><strong>arg1</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>) – 3D vector</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">arg0</span> <span class="pre">+</span> <span class="pre">arg1</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.math.cross">
+<span class="sig-name descname"><span class="pre">cross</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float3</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">carb._carb.Float3</span></span></span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.math.cross" title="Permalink to this definition"></a></dt>
+<dd><p>Performs Cross product between 3D vectors
+:param arg0: 3D vector
+:type arg0: <code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>
+:param arg1: 3D vector
+:type arg1: <code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>cross poduct <code class="docutils literal notranslate"><span class="pre">arg0</span> <span class="pre">x</span> <span class="pre">arg1</span></code>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.math.dot">
+<span class="sig-name descname"><span class="pre">dot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.math.dot" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>dot(arg0: carb._carb.Float3, arg1: carb._carb.Float3) -&gt; float</p></li>
+</ol>
+<dl>
+<dt>Performs Dot product between 3D vectors</dt><dd><dl>
+<dt>Args:</dt><dd><p>arg0 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>): 3D vector</p>
+<p>arg1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>): 3D vector</p>
+</dd>
+</dl>
+<p>Returns:</p>
+<blockquote>
+<div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>: dot poduct <code class="docutils literal notranslate"><span class="pre">arg0</span> <span class="pre">*</span> <span class="pre">arg1</span></code>.</p>
+</div></blockquote>
+</dd>
+</dl>
+<ol class="arabic simple" start="2">
+<li><p>dot(arg0: carb._carb.Float4, arg1: carb._carb.Float4) -&gt; float</p></li>
+</ol>
+<dl>
+<dt>Performs Dot product between 4D vectors</dt><dd><dl>
+<dt>Args:</dt><dd><p>arg0 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>): 4D vector</p>
+<p>arg1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>): 4D vector</p>
+</dd>
+</dl>
+<p>Returns:</p>
+<blockquote>
+<div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>: dot poduct <code class="docutils literal notranslate"><span class="pre">arg0</span> <span class="pre">*</span> <span class="pre">arg1</span></code>.</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.math.get_basis_vector_x">
+<span class="sig-name descname"><span class="pre">get_basis_vector_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float4</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">carb._carb.Float3</span></span></span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.math.get_basis_vector_x" title="Permalink to this definition"></a></dt>
+<dd><p>Gets Basis vector X of quaternion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>) – Quaternion</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Basis Vector X</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.math.get_basis_vector_y">
+<span class="sig-name descname"><span class="pre">get_basis_vector_y</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float4</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">carb._carb.Float3</span></span></span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.math.get_basis_vector_y" title="Permalink to this definition"></a></dt>
+<dd><p>Gets Basis vector Y of quaternion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>) – Quaternion</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Basis Vector Y</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.math.get_basis_vector_z">
+<span class="sig-name descname"><span class="pre">get_basis_vector_z</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float4</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">carb._carb.Float3</span></span></span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.math.get_basis_vector_z" title="Permalink to this definition"></a></dt>
+<dd><p>Gets Basis vector Z of quaternion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>) – Quaternion</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Basis Vector Z</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.math.inverse">
+<span class="sig-name descname"><span class="pre">inverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.math.inverse" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>inverse(arg0: carb._carb.Float4) -&gt; carb._carb.Float4</p></li>
+</ol>
+<dl>
+<dt>Gets Inverse Quaternion</dt><dd><p>Args:</p>
+<blockquote>
+<div><p>arg0 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>): quaternion</p>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>: The inverse quaternion</p>
+</div></blockquote>
+</dd>
+</dl>
+<ol class="arabic simple" start="2">
+<li><p>inverse(arg0: omni.isaac.dynamic_control._dynamic_control.Transform) -&gt; omni.isaac.dynamic_control._dynamic_control.Transform</p></li>
+</ol>
+<dl>
+<dt>Gets Inverse Transform</dt><dd><p>Args:</p>
+<blockquote>
+<div><p>arg0 (<a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html#omni.isaac.dynamic_control._dynamic_control.Transform" title="omni.isaac.dynamic_control._dynamic_control.Transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control._dynamic_control.Transform</span></code></a>): Transform</p>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><p><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html#omni.isaac.dynamic_control._dynamic_control.Transform" title="omni.isaac.dynamic_control._dynamic_control.Transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control._dynamic_control.Transform</span></code></a>: The inverse Inverse Transform</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.math.lerp">
+<span class="sig-name descname"><span class="pre">lerp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.math.lerp" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>lerp(arg0: carb._carb.Float3, arg1: carb._carb.Float3, arg2: float) -&gt; carb._carb.Float3</p>
+<blockquote>
+<div><p>Performs Linear interpolation between points arg0 and arg1</p>
+<p>Args:</p>
+<blockquote>
+<div><p>arg0 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>): Point</p>
+<p>arg1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>): Point</p>
+<p>arg2 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>): distance from 0 to 1, where 0 is closest to arg0, and 1 is closest to arg1</p>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>: Interpolated point</p>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p>lerp(arg0: carb._carb.Float4, arg1: carb._carb.Float4, arg2: float) -&gt; carb._carb.Float4</p>
+<blockquote>
+<div><p>Performs Linear interpolation between quaternions arg0 and arg1</p>
+<p>Args:</p>
+<blockquote>
+<div><p>arg0 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>): Quaternion</p>
+<p>arg1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>): Quaternion</p>
+<p>arg2 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>): distance from 0 to 1, where 0 is closest to arg0, and 1 is closest to arg1</p>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>: Interpolated quaternion</p>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p>lerp(arg0: omni.isaac.dynamic_control._dynamic_control.Transform, arg1: omni.isaac.dynamic_control._dynamic_control.Transform, arg2: float) -&gt; omni.isaac.dynamic_control._dynamic_control.Transform</p>
+<blockquote>
+<div><p>Performs Linear interpolation between points arg0 and arg1</p>
+<p>Args:</p>
+<blockquote>
+<div><p>arg0 (<a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html#omni.isaac.dynamic_control._dynamic_control.Transform" title="omni.isaac.dynamic_control._dynamic_control.Transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control._dynamic_control.Transform</span></code></a>): Transform</p>
+<p>arg1 (<a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html#omni.isaac.dynamic_control._dynamic_control.Transform" title="omni.isaac.dynamic_control._dynamic_control.Transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control._dynamic_control.Transform</span></code></a>): Transform</p>
+<p>arg2 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>): distance from 0 to 1, where 0 is closest to arg0, and 1 is closest to arg1</p>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><p><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html#omni.isaac.dynamic_control._dynamic_control.Transform" title="omni.isaac.dynamic_control._dynamic_control.Transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control._dynamic_control.Transform</span></code></a>: Interpolated transform</p>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.math.mul">
+<span class="sig-name descname"><span class="pre">mul</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.math.mul" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>mul(arg0: carb._carb.Float3, arg1: float) -&gt; carb._carb.Float3</p></li>
+</ol>
+<blockquote>
+<div><p>Scales a 3D vector by a given value</p>
+<blockquote>
+<div><dl>
+<dt>Args:</dt><dd><p>arg0 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>): 3D vector</p>
+<p>arg1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>): scale factor</p>
+</dd>
+<dt>Returns:</dt><dd><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>: scaled vector.</p>
+</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>mul(arg0: carb._carb.Float4, arg1: float) -&gt; carb._carb.Float4</p></li>
+</ol>
+<blockquote>
+<div><p>Scales a 4D vector by a given value</p>
+<blockquote>
+<div><dl>
+<dt>Args:</dt><dd><p>arg0 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>): 4D vector</p>
+<p>arg1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>): scale factor</p>
+</dd>
+<dt>Returns:</dt><dd><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>: scaled vector.</p>
+</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>mul(arg0: carb._carb.Float4, arg1: carb._carb.Float4) -&gt; carb._carb.Float4</p></li>
+</ol>
+<blockquote>
+<div><p>Performs a Quaternion rotation between two 4D vectors</p>
+<blockquote>
+<div><dl>
+<dt>Args:</dt><dd><p>arg0 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>): first 4D quaternion vector</p>
+<p>arg1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>): second 4D quaternion vector</p>
+</dd>
+<dt>Returns:</dt><dd><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>: rotated 4D quaternion vector.</p>
+</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li><p>mul(arg0: omni.isaac.dynamic_control._dynamic_control.Transform, arg1: omni.isaac.dynamic_control._dynamic_control.Transform) -&gt; omni.isaac.dynamic_control._dynamic_control.Transform</p></li>
+</ol>
+<blockquote>
+<div><p>Performs a Forward Transform multiplication between the transforms</p>
+<blockquote>
+<div><dl>
+<dt>Args:</dt><dd><p>arg0 (<a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html#omni.isaac.dynamic_control._dynamic_control.Transform" title="omni.isaac.dynamic_control._dynamic_control.Transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control._dynamic_control.Transform</span></code></a>): First Transform</p>
+<p>arg1 (<a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html#omni.isaac.dynamic_control._dynamic_control.Transform" title="omni.isaac.dynamic_control._dynamic_control.Transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control._dynamic_control.Transform</span></code></a>): Second Transform</p>
+</dd>
+</dl>
+<p>Returns:</p>
+<blockquote>
+<div><p><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html#omni.isaac.dynamic_control._dynamic_control.Transform" title="omni.isaac.dynamic_control._dynamic_control.Transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control._dynamic_control.Transform</span></code></a>: <code class="docutils literal notranslate"><span class="pre">arg0</span> <span class="pre">*</span> <span class="pre">arg1</span></code></p>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.math.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.math.normalize" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>normalize(arg0: carb._carb.Float3) -&gt; carb._carb.Float3</p>
+<blockquote>
+<div><p>Gets normalized 3D vector</p>
+<p>Args:</p>
+<blockquote>
+<div><p>arg0 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>): 3D Vector</p>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>: Normalized 3D Vector</p>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p>normalize(arg0: carb._carb.Float4) -&gt; carb._carb.Float4</p>
+<blockquote>
+<div><p>Gets normalized 4D vector
+Args:</p>
+<blockquote>
+<div><p>arg0 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>): 4D Vector</p>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>: Normalized 4D Vector</p>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.math.rotate">
+<span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float3</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">carb._carb.Float3</span></span></span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.math.rotate" title="Permalink to this definition"></a></dt>
+<dd><p>rotates the 3D vector arg1 by the quaternion <cite>arg0</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>) – quaternion</p></li>
+<li><p><strong>arg1</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code>) – 3D Vector</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Rotated 3D Vector</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float3</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.math.slerp">
+<span class="sig-name descname"><span class="pre">slerp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.math.slerp" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>slerp(arg0: carb._carb.Float4, arg1: carb._carb.Float4, arg2: float) -&gt; carb._carb.Float4</p>
+<blockquote>
+<div><p>Performs Spherical Linear interpolation between quaternions arg0 and arg1</p>
+<p>Args:</p>
+<blockquote>
+<div><p>arg0 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>): Quaternion</p>
+<p>arg1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>): Quaternion</p>
+<p>arg2 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>): distance from 0 to 1, where 0 is closest to arg0, and 1 is closest to arg1</p>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">carb.Float4</span></code>: Interpolated quaternion</p>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p>slerp(arg0: omni.isaac.dynamic_control._dynamic_control.Transform, arg1: omni.isaac.dynamic_control._dynamic_control.Transform, arg2: float) -&gt; omni.isaac.dynamic_control._dynamic_control.Transform</p>
+<blockquote>
+<div><p>Performs Spherical Linear interpolation between points arg0 and arg1</p>
+<p>Args:</p>
+<blockquote>
+<div><p>arg0 (<a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html#omni.isaac.dynamic_control._dynamic_control.Transform" title="omni.isaac.dynamic_control._dynamic_control.Transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control._dynamic_control.Transform</span></code></a>): Transform</p>
+<p>arg1 (<a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html#omni.isaac.dynamic_control._dynamic_control.Transform" title="omni.isaac.dynamic_control._dynamic_control.Transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control._dynamic_control.Transform</span></code></a>): Transform</p>
+<p>arg2 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>): distance from 0 to 1, where 0 is closest to arg0, and 1 is closest to arg1</p>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><p><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html#omni.isaac.dynamic_control._dynamic_control.Transform" title="omni.isaac.dynamic_control._dynamic_control.Transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control._dynamic_control.Transform</span></code></a>: Interpolated transform</p>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.math.transform_inv">
+<span class="sig-name descname"><span class="pre">transform_inv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.math.transform_inv" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>transform_inv(arg0: omni.isaac.dynamic_control._dynamic_control.Transform, arg1: omni.isaac.dynamic_control._dynamic_control.Transform) -&gt; omni.isaac.dynamic_control._dynamic_control.Transform</p>
+<blockquote>
+<div><p>Computes local Transform of arg1 with respect to arg0: <cite>inv(arg0)*arg1</cite></p>
+<p>Args:</p>
+<blockquote>
+<div><p>arg0 (<cite>omni.isaac.dynamic_control._dynamic_control.Transform</cite>): origin Transform</p>
+<p>arg1 (<cite>omni.isaac.dynamic_control._dynamic_control.Transform</cite>): Transform</p>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><p><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html#omni.isaac.dynamic_control._dynamic_control.Transform" title="omni.isaac.dynamic_control._dynamic_control.Transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control._dynamic_control.Transform</span></code></a>: resulting transform of <code class="docutils literal notranslate"><span class="pre">inv(arg0)*arg1</span></code></p>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p>transform_inv(arg0: pxrInternal_v0_20__pxrReserved__::GfTransform, arg1: pxrInternal_v0_20__pxrReserved__::GfTransform) -&gt; pxrInternal_v0_20__pxrReserved__::GfTransform</p>
+<blockquote>
+<div><p>Computes local Transform of arg1 with respect to arg0: <cite>inv(arg0)*arg1</cite></p>
+<p>Args:</p>
+<blockquote>
+<div><p>arg0 (<cite>pxr.Transform</cite>): origin Transform</p>
+<p>arg1 (<cite>pxr.Transform</cite>): Transform</p>
+</div></blockquote>
+<p>Returns:</p>
+<blockquote>
+<div><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">oxr.Transform</span></code>: resulting transform of <code class="docutils literal notranslate"><span class="pre">inv(arg0)*arg1</span></code></p>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
+
+</section>
+<span class="target" id="module-omni.isaac.utils._isaac_utils.transforms"></span><dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.transforms.set_scale">
+<span class="sig-name descname"><span class="pre">set_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html#omni.isaac.dynamic_control._dynamic_control.DynamicControl" title="omni.isaac.dynamic_control._dynamic_control.DynamicControl"><span class="pre">omni.isaac.dynamic_control._dynamic_control.DynamicControl</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float3</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.transforms.set_scale" title="Permalink to this definition"></a></dt>
+<dd><p>Set scale for an object in the stage</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control._dynamic_control</span></code>) – handle to dynamic control api</p></li>
+<li><p><strong>arg1</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Stage ID</p></li>
+<li><p><strong>arg2</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb::Float3</span></code>) – scale</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.utils._isaac_utils.transforms.set_transform">
+<span class="sig-name descname"><span class="pre">set_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html#omni.isaac.dynamic_control._dynamic_control.DynamicControl" title="omni.isaac.dynamic_control._dynamic_control.DynamicControl"><span class="pre">omni.isaac.dynamic_control._dynamic_control.DynamicControl</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg4</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float4</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.utils._isaac_utils.transforms.set_transform" title="Permalink to this definition"></a></dt>
+<dd><p>Set transform for an object in the stage, handles physics objects if simulation is running using dynamic control</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.dynamic_control._dynamic_control</span></code>) – handle to dynamic control api</p></li>
+<li><p><strong>arg1</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Stage ID</p></li>
+<li><p><strong>arg2</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">carb::Float4</span></code>) – translation</p></li>
+<li><p><strong>arg2</strong> – rotation</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="module-omni.isaac.utils.scripts.commands">
+<span id="commands"></span><h2>Commands<a class="headerlink" href="#module-omni.isaac.utils.scripts.commands" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.utils.scripts.commands.IsaacSimDestroyPrim">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IsaacSimDestroyPrim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prim_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.utils.scripts.commands.IsaacSimDestroyPrim" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">omni.kit.commands.command.Command</span></code></p>
+<p>Command to set a delete a prim. This variant has less overhead than other commands as it doesn’t store an undo operation</p>
+<p>Typical usage example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">omni</span><span class="o">.</span><span class="n">kit</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="s2">&quot;IsaacSimDestroyPrim&quot;</span><span class="p">,</span>
+    <span class="n">prim_path</span><span class="o">=</span><span class="s2">&quot;/World/Prim,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.utils.scripts.commands.IsaacSimScalePrim">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IsaacSimScalePrim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prim_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float3</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.utils.scripts.commands.IsaacSimScalePrim" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">omni.kit.commands.command.Command</span></code></p>
+<p>Command to set a scale of a prim</p>
+<p>Typical usage example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">omni</span><span class="o">.</span><span class="n">kit</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="s2">&quot;IsaacSimScalePrim&quot;</span><span class="p">,</span>
+    <span class="n">prim_path</span><span class="o">=</span><span class="s2">&quot;/World/Prim,</span>
+    <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.utils.scripts.commands.IsaacSimSpawnPrim">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IsaacSimSpawnPrim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usd_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prim_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">translation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float3</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float4</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">1)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.utils.scripts.commands.IsaacSimSpawnPrim" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">omni.kit.commands.command.Command</span></code></p>
+<p>Command to spawn a new prim in the stage and set its transform. This uses dynamic_control to properly handle physics objects and articulation</p>
+<p>Typical usage example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">omni</span><span class="o">.</span><span class="n">kit</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="s2">&quot;IsaacSimSpawnPrim&quot;</span><span class="p">,</span>
+    <span class="n">usd_path</span><span class="o">=</span><span class="s2">&quot;/path/to/file.usd&quot;</span><span class="p">,</span>
+    <span class="n">prim_path</span><span class="o">=</span><span class="s2">&quot;/World/Prim,</span>
+    <span class="n">translation</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">rotation</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.utils.scripts.commands.IsaacSimTeleportPrim">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IsaacSimTeleportPrim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prim_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">translation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float3</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">carb._carb.Float4</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">1)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.utils.scripts.commands.IsaacSimTeleportPrim" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">omni.kit.commands.command.Command</span></code></p>
+<p>Command to set a transform of a prim. This uses dynamic_control to properly handle physics objects and articulation</p>
+<p>Typical usage example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">omni</span><span class="o">.</span><span class="n">kit</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="s2">&quot;IsaacSimTeleportPrim&quot;</span><span class="p">,</span>
+    <span class="n">prim_path</span><span class="o">=</span><span class="s2">&quot;/World/Prim,</span>
+    <span class="n">translation</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">rotation</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018-2023, NVIDIA.
+      <span class="lastupdated">Last updated on Mar 16, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

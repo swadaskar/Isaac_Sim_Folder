@@ -1,0 +1,26 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.1.0"
+category = "Simulation"
+title = "Lula Test Widget"
+description = "Run Simple Tests Using Lula Algorithms"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "lula"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+
+
+[dependencies]
+"omni.kit.uiapp" = {}
+"omni.isaac.ui" = {}
+"omni.isaac.core" = {}
+"omni.isaac.lula" = {}
+"omni.isaac.motion_generation" = {}
+
+[[python.module]]
+name = "omni.isaac.lula_test_widget"

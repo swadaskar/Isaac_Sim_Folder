@@ -1,0 +1,53 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "1.46.3"
+category = "Simulation"
+title = "Isaac Sim Core"
+description = "Core"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.isaac.dynamic_control" = {}
+"omni.isaac.core_archive" = {} # scipy
+"omni.isaac.ml_archive" = {} # torch
+"omni.physx.tensors" = {}
+"omni.kit.material.library" = {} # omni.kit.material
+"omni.kit.uiapp" = {}
+"omni.isaac.version" = {}
+
+
+[[python.module]]
+name = "omni.isaac.core"
+
+[[python.module]]
+name = "omni.isaac.core.tests"
+
+[[test]]
+dependencies = [
+    "omni.hydra.rtx",                       # "omni.hydra.pxr", Can we run and pass with Storm ?
+    "omni.kit.viewport.utility",
+    "omni.kit.viewport.window",
+    "omni.kit.primitive.mesh",
+    "omni.kit.material.library",
+]
+
+args = ["--/physics/cudaDevice=0"]
+
+stdoutFailPatterns.exclude = [
+    "*Invalid articulation pointer for*", # Per node tests won't have valid bundles
+]
+
+[settings]
+persistent.isaac.asset_root.default = "omniverse://localhost/NVIDIA/Assets/Isaac/2022.2.1"
+persistent.isaac.asset_root.nvidia = "omniverse://localhost/NVIDIA"
+persistent.isaac.asset_root.isaac = "omniverse://localhost/NVIDIA/Assets/Isaac/2022.2.1/Isaac"
+persistent.isaac.asset_root.cloud = "http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/2022.2.1"

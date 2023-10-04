@@ -1,0 +1,18 @@
+Metadata-Version: 2.1
+Name: launch-testing
+Version: 1.0.2
+Summary: Create tests which involve launch files and multiple processes.
+Home-page: https://github.com/ros2/launch
+Download-URL: https://github.com/ros2/launch/releases
+Author: Pete Baughman, Dirk Thomas, Esteve Fernandez
+Author-email: pete.baughman@apex.ai, dthomas@osrfoundation.org
+Maintainer: Aditya Pande, Michel Hidalgo
+Maintainer-email: aditya.pande@openrobotics.org, michel@ekumenlabs.com
+License: Apache License, Version 2.0
+Keywords: ROS
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development
+
+A package to create tests which involve launch files and multiple processes.

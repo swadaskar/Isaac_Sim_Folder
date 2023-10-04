@@ -1,0 +1,58 @@
+{
+    "IsaacPickPlaceController": {
+        "version": 1,
+        "description": "Pick-and-Place Controller for Articulated Robots",
+        "language": "Python",
+        "categories": {
+            "isaacSim": "Robot controller inside Isaac Sim"
+        },
+        "metadata": {
+            "uiName": "Pick-and-Place Controller"
+        },
+        "$comment": "The controller takes a robot, pick-place sequence timing, and pick and place targets",
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "The input execution"
+            },
+            "targetPrim": {
+                "type": "bundle",
+                "description": "The target robot prim"
+            },
+            "usePath": {
+                "type": "bool",
+                "description": "use robot and com path instead of selecting them from stage tree",
+                "default": false
+            },
+            "robotModel":{
+                "type": "string",
+                "description": "type of robot. Options are: UR, Franka, or Dofbot",
+                "default": ""
+            },            
+            "robotPrimPath":{
+                "type": "string",
+                "description": "path to the robot articulation root"
+            },
+            "pickingPosition":{
+                "type": "double[3]",
+                "description": "XYZ location to pick from",
+                "default": [0.25, 0.25, 0.0]
+            },
+            "placingPosition":{
+                "type": "double[3]",
+                "description": "XYZ location to place at",
+                "default": [0.25, -0.25, 0.0]
+            },
+            "endEffectorOffset":{
+                "type": "double[3]",
+                "description": "XYZ offset of end-effector from flange",
+                "default": [0.0, 0.0, 0.0]
+            },
+            "eventsDT":{
+                "type": "double[]",
+                "description": "timing between pick and place events",
+                "default": [0.01, 0.01, 1.0, 0.01, 0.01, 0.01, 0.01, 0.05, 0.01, 0.08]
+            }
+        }
+    }
+}

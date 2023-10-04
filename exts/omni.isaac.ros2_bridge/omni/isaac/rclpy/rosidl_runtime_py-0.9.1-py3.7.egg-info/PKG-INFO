@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: rosidl-runtime-py
+Version: 0.9.1
+Summary: Runtime utilities for working with generated ROS interfaces in Python.
+Home-page: https://github.com/ros2/rosidl_runtime_py
+Download-URL: https://github.com/ros2/rosidl_runtime_py/releases
+Author: Dirk Thomas
+Author-email: dthomas@osrfoundation.org
+Maintainer: Jacob Perron
+Maintainer-email: jacob@openrobotics.org
+License: Apache License, Version 2.0
+Platform: UNKNOWN
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+License-File: LICENSE
+
+This package provides functions for operations such as populating ROS messages and converting messages to different representations.
+

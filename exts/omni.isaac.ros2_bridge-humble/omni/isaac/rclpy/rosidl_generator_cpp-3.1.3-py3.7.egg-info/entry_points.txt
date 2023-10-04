@@ -1,0 +1,2 @@
+[rosidl_cli.command.generate.type_extensions]
+cpp = rosidl_generator_cpp.cli:GenerateCpp

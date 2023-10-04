@@ -1,0 +1,3 @@
+#!/usr/bin/env python3.7
+from rospy import rosconsole
+rosconsole.main()

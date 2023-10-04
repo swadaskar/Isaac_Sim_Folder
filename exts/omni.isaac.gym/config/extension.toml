@@ -1,0 +1,29 @@
+[gym]
+reloadable = true
+order = 0
+
+[package]
+version = "0.3.3"
+category = "Simulation"
+title = "Isaac Sim Gym"
+description = "Gym for RL"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.isaac.core" = {}
+"omni.isaac.cloner" = {}
+"omni.isaac.ml_archive" = {} # torch
+
+
+[[python.module]]
+name = "omni.isaac.gym"
+
+[[test]]
+timeout = 250000
+args = ["--/physics/cudaDevice=0"]

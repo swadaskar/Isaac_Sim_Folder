@@ -1,0 +1,24 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.4.0"
+category = "Simulation"
+title = "Simulated Environments for use in Isaac Sim"
+description = "Extension for programming simple environments for robots"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "samples", "environments"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+
+[dependencies]
+"omni.isaac.core" = {}
+
+[[python.module]]
+name = "omni.isaac.benchmark_environments"
+
+[[python.module]]
+name = "omni.isaac.benchmark_environments.tests"

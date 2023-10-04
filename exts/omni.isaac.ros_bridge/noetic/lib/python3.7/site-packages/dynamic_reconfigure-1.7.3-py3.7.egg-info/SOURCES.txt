@@ -1,0 +1,10 @@
+setup.py
+src/dynamic_reconfigure/__init__.py
+src/dynamic_reconfigure/client.py
+src/dynamic_reconfigure/encoding.py
+src/dynamic_reconfigure/parameter_generator.py
+src/dynamic_reconfigure/parameter_generator_catkin.py
+src/dynamic_reconfigure/server.py
+test/testclient.py
+test/testserver.py
+test/testserver_multiple_ns.py

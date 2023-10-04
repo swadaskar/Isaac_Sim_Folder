@@ -1,0 +1,47 @@
+[package]
+version = "0.3.9"
+category = "Simulation"
+title = "Isaac Sim Conveyor belt utility"
+description="Omnigraph Node for Defining the behavior of a linear conveyor belt"
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+repository = ""
+
+keywords = ["kit", "example"]
+
+
+
+[dependencies]
+"omni.kit.uiapp" = {}
+"omni.physx"={}
+"omni.timeline"={}
+"omni.isaac.ui"={}
+"omni.graph" = {}
+"omni.graph.core" = {}
+"omni.graph.action" = {}
+"omni.graph.nodes" = {}
+"omni.usd" = {}
+
+# Main module for the Python interface
+[[python.module]]
+name = "omni.isaac.conveyor"
+
+[[python.module]]
+name = "omni.isaac.conveyor.tests"
+
+
+[[native.plugin]]
+path = "bin/*.plugin"
+recursive = false
+
+# Watch the .ogn files for hot reloading (only works for Python files)
+[fswatcher.patterns]
+include = ["*.ogn", "*.py"]
+exclude = ["Ogn*Database.py"]
+
+[[test]]
+dependencies=[
+"usdrt.scenegraph",
+]
+    

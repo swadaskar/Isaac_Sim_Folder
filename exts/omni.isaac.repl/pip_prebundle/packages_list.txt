@@ -1,0 +1,6 @@
+jedi-0.18.2
+parso-0.8.3
+prompt-toolkit-3.0.20
+ptpython-3.0.18
+Pygments-2.14.0
+wcwidth-0.2.6

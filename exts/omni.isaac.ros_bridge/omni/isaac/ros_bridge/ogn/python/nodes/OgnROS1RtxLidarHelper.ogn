@@ -1,0 +1,65 @@
+{
+    "ROS1RtxLidarHelper" : {
+        "version" : 1,
+        "icon" : "icons/isaac-sim.svg",
+        "description" : "Handles automation of Lidar Sensor pipeline",
+        "language" : "Python",
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacRos",
+        "metadata" : {
+            "uiName" : "ROS1 RTX Lidar Helper"
+        },
+        "inputs": {
+            "execIn" : {
+                "type" : "execution",
+                "description": "Triggering this causes the sesnor pipeline to be generated"
+            },
+            "context" : {
+                "type" : "uint64",
+                "description": "ROS context handle, default of zero will use the global context",
+                "default" : 0
+            },
+            "nodeNamespace" : {
+                "type" : "string",
+                "description" : "Namespace of ROS1 Node, prepends and published/subscribed topic by the node namespace",
+                "default" : ""
+            },
+            "frameId": { 
+                "type" : "string",
+                "description" : "FrameID for the ROS1 message",
+                "default" : "sim_lidar"
+            },
+            "topicName": {
+                "type" : "string",
+                "description" : "Topic name for sensor data",
+                "default" : "scan"
+            },
+            "queueSize" : {
+                "type" : "uint64",
+                "description" : "Number of message to queue up before throwing away, in case messages are collected faster than they can be sent",
+                "default" : 10
+            },
+            "renderProductPath" : {
+                "type" : "token",
+                "description" : "Name of the render product path to publish lidar data"
+            },
+            "type": {
+                "type": "token",
+                "description": "Data to publsih from node",
+                "metadata": {
+                    "allowedTokens": {
+                        "laser_scan": "laser_scan",
+                        "point_cloud": "point_cloud"
+                    }
+                },
+                "default": "laser_scan"
+            },
+            "resetSimulationTimeOnStop": {
+                "type": "bool",
+                "description": "If True the simulation time will reset when stop is pressed, False means time increases monotonically",
+                "uiName": "Reset Time On Stop",
+                "default": false
+            }
+        }
+    }
+}

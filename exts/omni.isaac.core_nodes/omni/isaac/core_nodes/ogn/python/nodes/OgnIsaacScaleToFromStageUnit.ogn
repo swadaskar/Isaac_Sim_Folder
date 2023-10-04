@@ -1,0 +1,38 @@
+{
+    "OgnIsaacScaleToFromStageUnit": {
+        "version": 1,
+        "icon": "icons/isaac-sim.svg",
+        "description": [
+            "This node converts meters to/from stage units"
+        ],
+        "language": "Python",
+        "metadata": {
+            "uiName": "Scale To/From Stage Units"
+        },
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacCore",
+        "inputs": {
+            "conversion": {
+                "type": "token",
+                "description": "Convert meters to/from stage units",
+                "metadata": {
+                    "allowedTokens": {
+                        "toStage": "Convert to stage units",
+                        "toMeters": "Convert to meters"
+                    }
+                },
+                "default": "Convert to stage units"
+            },
+            "value": {
+                "type": ["numerics"],
+                "description": "The input value"
+            }
+        },
+        "outputs": {
+            "result": {
+                "type": ["numerics"],
+                "description": "The output value"
+            }
+        }
+    }
+}

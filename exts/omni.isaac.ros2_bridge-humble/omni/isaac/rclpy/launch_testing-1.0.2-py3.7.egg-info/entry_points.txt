@@ -1,0 +1,5 @@
+[console_scripts]
+launch_test = launch_testing.launch_test:main
+
+[pytest11]
+launch_testing = launch_testing.pytest.hooks

@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: rospack
+Description: Description of rospack
+Version: 2.6.2
+Cflags: -I${prefix}/include -I/workspace/boost_1_68_0/_install/include -I/usr/local/include
+Libs: -L${prefix}/lib -lrospack /usr/lib/x86_64-linux-gnu/libpython3.7m.so /workspace/boost_1_68_0/_install/lib/libboost_filesystem.so /workspace/boost_1_68_0/_install/lib/libboost_program_options.so /workspace/boost_1_68_0/_install/lib/libboost_system.so /usr/local/lib/libtinyxml2.a
+Requires: 

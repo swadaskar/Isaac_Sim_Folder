@@ -1,0 +1,38 @@
+[package]
+title = "Isaac Sim (Headless Native)"
+description = "Headless Isaac Sim with Native Livestream using Streaming Client"
+version = "2022.2.1"
+execFile = "isaac-sim.headless.native"
+
+# That makes it browsable in UI with "experience" filter
+keywords = ["experience", "app", "usd"]
+
+[dependencies]
+"omni.isaac.sim.base" = {}
+"omni.kit.livestream.native" = {}
+
+[settings]
+app.name = "Isaac-Sim"
+app.version = "2022.2.1"
+app.fastShutdown = true
+
+[settings.app.exts]
+folders.'++' = ["${app}/../exts", "${app}/../extscache"]
+
+[settings.app.livestream]
+proto = "ws"
+allowResize = true
+
+[settings.app.window]
+title = "Isaac Sim Headless Native"
+hideUi = false
+
+width = 1920
+height = 1080
+drawMouse = true
+
+[settings.exts."omni.kit.registry.nucleus"]
+registries = [
+    { name = "kit/public", url = "https://d1aiacozzchaiq.cloudfront.net/exts/kit/public/104.0/"},
+    { name = "kit/community", url = "https://dw290v42wisod.cloudfront.net/exts/kit/community" }
+]

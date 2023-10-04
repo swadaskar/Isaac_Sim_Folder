@@ -1,0 +1,58 @@
+{
+    "nodes": {
+        "omni.replicator.isaac.OgnCountIndices": {
+            "description": "Get length of array",
+            "version": 1,
+            "extension": "omni.replicator.isaac",
+            "language": "Python"
+        },
+        "omni.replicator.isaac.Dope": {
+            "description": "Gets poses of assets as required by ground truth file for DOPE training",
+            "version": 1,
+            "extension": "omni.replicator.isaac",
+            "language": "Python"
+        },
+        "omni.replicator.isaac.OgnIntervalFiltering": {
+            "description": "Outputs indices if their frame count is a multiple of the interval",
+            "version": 1,
+            "extension": "omni.replicator.isaac",
+            "language": "Python"
+        },
+        "omni.replicator.isaac.OgnOnRLFrame": {
+            "description": "Triggered every frame in an Rl setting",
+            "version": 1,
+            "extension": "omni.replicator.isaac",
+            "language": "Python"
+        },
+        "omni.replicator.isaac.Pose": {
+            "description": "This node outputs the poses of assets with semantic labels",
+            "version": 1,
+            "extension": "omni.replicator.isaac",
+            "language": "Python"
+        },
+        "omni.replicator.isaac.Random3f": {
+            "description": "This node outputs the poses of assets with semantic labels",
+            "version": 1,
+            "extension": "omni.replicator.isaac",
+            "language": "Python"
+        },
+        "omni.replicator.isaac.OgnWritePhysicsArticulationView": {
+            "description": "This node writes physics attributes to TensorAPI views",
+            "version": 1,
+            "extension": "omni.replicator.isaac",
+            "language": "Python"
+        },
+        "omni.replicator.isaac.OgnWritePhysicsRigidPrimView": {
+            "description": "This node writes physics attributes to TensorAPI views",
+            "version": 1,
+            "extension": "omni.replicator.isaac",
+            "language": "Python"
+        },
+        "omni.replicator.isaac.OgnWritePhysicsSimulationContext": {
+            "description": "This node writes physics attributes to TensorAPI views",
+            "version": 1,
+            "extension": "omni.replicator.isaac",
+            "language": "Python"
+        }
+    }
+}

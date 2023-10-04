@@ -1,0 +1,134 @@
+#usda 1.0
+(
+	subLayers = [
+    @usdGeom/schema.usda@
+	]
+)
+
+over "GLOBAL" (
+	customData = {
+	string libraryName = "rangeSensorSchema"
+	string libraryPath = "./"
+	string libraryPrefix = "RangeSensorSchema"
+	}
+)
+{
+
+}
+class "RangeSensor" (
+	  inherits = </Xformable>
+)
+{
+	bool enabled = true (doc = """Flag used to enable or disable this sensor""")
+
+	bool drawPoints = false (doc = """Set to true to draw debug points on sensor hit locations""")
+	bool drawLines = false (doc = """Set to true to draw debug lines representing sensor ray casts""")
+
+	float minRange = 0.4   (doc = """Minimum range for sensor to detect a hit""")
+	float maxRange = 100.0 (doc = """Maximum range for sensor to detect a hit""")
+}
+
+
+class Lidar "Lidar" (
+	  inherits = </RangeSensor>
+)
+{
+	float yawOffset = 0.0 (doc = """Offset along yaw axis to account for sensor having a different forward direction""")
+
+	float rotationRate = 20.0 (doc = """Rotation rate of sensor in Hz, set to zero to make sensor fire all rays at once""")
+	bool highLod = true (doc = """Enable High Lod for 3D Lidar sensor""")
+
+	float horizontalFov = 360.0 (doc = """Horizontal Field of View in degrees""")
+	float verticalFov = 30.0 (doc = """Vertical Field of View in degrees""")
+	float horizontalResolution = 0.4 (doc = """Degrees in between rays for horizontal axis""")
+	float verticalResolution = 4.0 (doc = """Degrees in between rays for vertical axis""")
+
+	bool enableSemantics = false (doc = """Set to true to get semantic information of sensor hit locations""")
+}
+
+
+class UltrasonicArray "UltrasonicArray" (
+	  inherits = </RangeSensor>
+)
+{
+	rel emitterPrims (doc = """List of emitter/receiver prims that are part of the array, zero indexed""")
+	rel firingGroups (doc = """List of UltrasonicFiringGroups, used to define the firing pattern for the array,""")
+	int numBins = 224 (doc = """Number of bins that emitters in this array outputs""")
+	bool useBRDF = false (doc = """Use angle of emitter/receiver relative to normal to compute intensity response""")
+    bool useUSSMaterialsForBRDF = false (doc = """Use Ultrasonic materials for BRDF calculation""")
+	bool useDistAttenuation = false (doc = """Use simplified Beer-Lambert model, negative exponential attenuation""")
+	float attenuationAlpha = 0.6 (doc = """Single attenuation parameter for simplified Beer-Lambert model""")
+
+	float horizontalFov = 60.0 (doc = """Horizontal Field of View in degrees""")
+	float verticalFov = 30.0 (doc = """Vertical Field of View in degrees""")
+	float horizontalResolution = 0.4 (doc = """Degrees in between rays for horizontal axis""")
+	float verticalResolution = 4.0 (doc = """Degrees in between rays for vertical axis""")
+}
+
+class UltrasonicEmitter "UltrasonicEmitter" (
+	  inherits = </Xformable>
+)
+{	
+	float perRayIntensity = 1.0 (doc = """The base value that is attenuated based on distance from sensor and angle of reflection""")
+	float yawOffset = 0.0 (doc = """Offset along yaw axis to account for sensor having a different forward direction""")
+	int[] adjacencyList (doc = """List of emitter ids for adjacent emitters, used to compute indirects when receiving. Zero indexed and must match the order in the array""")
+}
+
+class UltrasonicFiringGroup "UltrasonicFiringGroup" (
+	  inherits = </Typed>
+)
+{
+	int2[] emitterModes (doc = """List of (emitter id, firing mode) pairs for each sensor in this group to emit from. emitter id is zero indexed and must match the order in the array""")
+	int2[] receiverModes (doc = """List of (receiver id, firing mode) pairs to record envelopes for. Receiver id is zero indexed and must match the order in the array""")
+}
+
+class Generic "Generic" (
+	  inherits = </RangeSensor>
+)
+{
+	int samplingRate = 60 (doc = """sampling rate of the custom sensor data in Hz""")
+	bool streaming = True (doc = """Streaming lidar point data. Default to true""")
+}
+
+class "UltrasonicMaterialAPI"
+(
+    doc = """ Defines Ultrasonic (USS) material properties."""
+    inherits = </APISchemaBase>
+)
+{
+    float uss:perceptualRoughness = 0.0 (
+        customData = {
+            string apiName = "perceptualRoughness"
+        }
+
+        displayName = "Perceptual Roughness"
+        doc = """Perceptual Roughness. Unitless."""
+    )
+
+    float uss:reflectance = 0.0 (
+        customData = {
+            string apiName = "reflectance"
+        }
+
+        displayName = "Reflectance"
+        doc = """Reflectance. Unitless."""
+    )
+
+    float uss:metallic = 0.0 (
+        customData = {
+            string apiName = "metallic"
+        }
+
+        displayName = "Metallic"
+        doc = """Metallic. Unitless."""
+    )
+
+    float uss:base_color = 1.0 (
+        customData = {
+            string apiName = "base_color"
+        }
+
+        displayName = "Base Color"
+        doc = """Base Color. Unitless."""
+    )
+}

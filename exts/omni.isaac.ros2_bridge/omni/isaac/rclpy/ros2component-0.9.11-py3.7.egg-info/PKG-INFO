@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: ros2component
+Version: 0.9.11
+Summary: The component command for ROS 2 command line tools.
+Home-page: https://github.com/ros2/ros2cli/tree/master/ros2component
+Download-URL: https://github.com/ros2/ros2cli/releases
+Author: Michel Hidalgo
+Author-email: michel@ekumenlabs.com
+Maintainer: Michel Hidalgo
+Maintainer-email: michel@ekumenlabs.com
+License: Apache License, Version 2.0
+Platform: UNKNOWN
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+
+The package provides the component command for the ROS 2 command line tools.
+

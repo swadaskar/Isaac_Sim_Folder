@@ -1,0 +1,52 @@
+{
+    "nodes": {
+        "omni.isaac.sensor.IsaacComputeRTXLidarFlatScan": {
+            "description": "This node reads from the an RTX Lidar sensor and holds flat scan buffers",
+            "version": 1,
+            "extension": "omni.isaac.sensor",
+            "language": "C++"
+        },
+        "omni.isaac.sensor.IsaacComputeRTXLidarPointCloud": {
+            "description": "This node reads from the an RTX Lidar sensor and holds point cloud data buffers",
+            "version": 1,
+            "extension": "omni.isaac.sensor",
+            "language": "C++"
+        },
+        "omni.isaac.sensor.IsaacComputeRTXRadarPointCloud": {
+            "description": "This node reads from the an RTX Radar sensor and holds point cloud data buffers",
+            "version": 1,
+            "extension": "omni.isaac.sensor",
+            "language": "C++"
+        },
+        "omni.isaac.sensor.IsaacPrintRTXLidarInfo": {
+            "description": "process and print the raw RTX lidar data",
+            "version": 1,
+            "extension": "omni.isaac.sensor",
+            "language": "Python"
+        },
+        "omni.isaac.sensor.IsaacReadContactSensor": {
+            "description": "Node that reads out contact sensor data",
+            "version": 1,
+            "extension": "omni.isaac.sensor",
+            "language": "Python"
+        },
+        "omni.isaac.sensor.IsaacReadIMU": {
+            "description": "Node that reads out IMU linear acceleration, angular velocity and orientation data",
+            "version": 1,
+            "extension": "omni.isaac.sensor",
+            "language": "Python"
+        },
+        "omni.isaac.sensor.IsaacReadRTXLidarData": {
+            "description": "This node reads the data straight from the an RTX Lidar sensor.",
+            "version": 1,
+            "extension": "omni.isaac.sensor",
+            "language": "C++"
+        },
+        "omni.isaac.sensor.IsaacRenderVarToCpuPointer": {
+            "description": "This node gets a pointer to a render var that is stored on the CPU",
+            "version": 1,
+            "extension": "omni.isaac.sensor",
+            "language": "C++"
+        }
+    }
+}

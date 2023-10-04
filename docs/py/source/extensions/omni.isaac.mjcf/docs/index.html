@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MJCF Import Extension [omni.isaac.mjcf] &mdash; isaac_sim 2022.2.1-rc.14 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/omni-style.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/api-styles.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/mermaid-init.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+        <script src="https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js"></script>
+        <script>initMermaid();</script>
+        <script src="../../../../_static/version.js"></script>
+        <script src="../../../../_static/social-media.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="ShapeNet [omni.isaac.shapenet]" href="../../omni.isaac.shapenet/docs/index.html" />
+    <link rel="prev" title="URDF Import Extension [omni.isaac.urdf]" href="../../omni.isaac.urdf/docs/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html">
+            <img src="../../../../_static/main_ov_logo_square.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Main Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core/docs/index.html">Core [omni.isaac.core]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core_nodes/docs/index.html">Core Omnigraph Nodes [omni.isaac.core_nodes]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html">Dynamic Control [omni.isaac.dynamic_control]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.kit/docs/index.html">Simulation Application [omni.isaac.kit]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.utils/docs/index.html">Utilities [omni.isaac.utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ui/docs/index.html">UI Utilities [omni.isaac.ui]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.kit.loop-isaac/docs/index.html">Time Stepping Control [omni.kit.loop-isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.cloner/docs/index.html">Isaac Cloner [omni.isaac.cloner]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.gym/docs/index.html">RL [omni.isaac.gym]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sensor Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.sensor/docs/index.html">Isaac Sensor Extension [omni.isaac.sensor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.range_sensor/docs/index.html">Range Based Sensor Simulation [omni.isaac.range_sensor]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Asset Conversion Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.urdf/docs/index.html">URDF Import Extension [omni.isaac.urdf]</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MJCF Import Extension [omni.isaac.mjcf]</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mjcf-import-commands">MJCF Import Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.shapenet/docs/index.html">ShapeNet [omni.isaac.shapenet]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dofbot/docs/index.html">Dofbot Robot [omni.isaac.dofbot]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.franka/docs/index.html">Franka Robot [omni.isaac.franka]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.wheeled_robots/docs/index.html">Wheeled Robots [omni.isaac.wheeled_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.universal_robots/docs/index.html">Universal Robots [omni.isaac.universal_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.quadruped/docs/index.html">Quadruped Robots [omni.isaac.quadruped]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.manipulators/docs/index.html">Manipulators [omni.isaac.manipulators]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros_bridge/docs/index.html">ROS Bridge [omni.isaac.ros_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros2_bridge/docs/index.html">ROS2 Bridge [omni.isaac.ros2_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.debug_draw/docs/index.html">Debug Drawing [omni.isaac.debug_draw]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.motion_generation/docs/index.html">Motion Generation Extension [omni.isaac.motion_generation]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.lula/docs/index.html">Lula [omni.isaac.lula]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.surface_gripper/docs/index.html">Surface_gripper [omni.isaac.surface_gripper]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.synthetic_utils/docs/index.html">Tools for Generating Synthetic Data [omni.isaac.synthetic_utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.occupancy_map/docs/index.html">Occupancy Extension [omni.isaac.occupancy_map]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.replicator.isaac/docs/index.html">Replicator Isaac Extension [omni.replicator.isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.conveyor/docs/index.html">Conveyor [omni.isaac.conveyor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.examples_nodes/docs/index.html">Isaac Sim Examples Nodes [omni.isaac.examples_nodes]</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">isaac_sim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>MJCF Import Extension [omni.isaac.mjcf]</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mjcf-import-extension-omni-isaac-mjcf">
+<h1>MJCF Import Extension [omni.isaac.mjcf]<a class="headerlink" href="#mjcf-import-extension-omni-isaac-mjcf" title="Permalink to this headline"></a></h1>
+<section id="mjcf-import-commands">
+<h2>MJCF Import Commands<a class="headerlink" href="#mjcf-import-commands" title="Permalink to this headline"></a></h2>
+<p>The following commands can be used to simplify the import process.
+Below is a sample demonstrating how to import the Ant MJCF included with this extension</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">omni.kit.commands</span>
+<span class="linenos"> 2</span><span class="kn">from</span> <span class="nn">pxr</span> <span class="kn">import</span> <span class="n">UsdLux</span><span class="p">,</span> <span class="n">Sdf</span><span class="p">,</span> <span class="n">Gf</span><span class="p">,</span> <span class="n">UsdPhysics</span><span class="p">,</span> <span class="n">PhysicsSchemaTools</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="c1"># setting up import configuration:</span>
+<span class="linenos"> 5</span><span class="n">status</span><span class="p">,</span> <span class="n">import_config</span> <span class="o">=</span> <span class="n">omni</span><span class="o">.</span><span class="n">kit</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;MJCFCreateImportConfig&quot;</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="n">import_config</span><span class="o">.</span><span class="n">set_fix_base</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="n">import_config</span><span class="o">.</span><span class="n">set_import_inertia_tensor</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="c1"># Get path to extension data:</span>
+<span class="linenos">10</span><span class="n">ext_manager</span> <span class="o">=</span> <span class="n">omni</span><span class="o">.</span><span class="n">kit</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">get_app</span><span class="p">()</span><span class="o">.</span><span class="n">get_extension_manager</span><span class="p">()</span>
+<span class="linenos">11</span><span class="n">ext_id</span> <span class="o">=</span> <span class="n">ext_manager</span><span class="o">.</span><span class="n">get_enabled_extension_id</span><span class="p">(</span><span class="s2">&quot;omni.isaac.mjcf&quot;</span><span class="p">)</span>
+<span class="linenos">12</span><span class="n">extension_path</span> <span class="o">=</span> <span class="n">ext_manager</span><span class="o">.</span><span class="n">get_extension_path</span><span class="p">(</span><span class="n">ext_id</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="c1"># import MJCF</span>
+<span class="linenos">15</span><span class="n">omni</span><span class="o">.</span><span class="n">kit</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="linenos">16</span>    <span class="s2">&quot;MJCFCreateAsset&quot;</span><span class="p">,</span>
+<span class="linenos">17</span>    <span class="n">mjcf_path</span><span class="o">=</span><span class="n">extension_path</span> <span class="o">+</span> <span class="s2">&quot;/data/mjcf/nv_ant.xml&quot;</span><span class="p">,</span>
+<span class="linenos">18</span>    <span class="n">import_config</span><span class="o">=</span><span class="n">import_config</span><span class="p">,</span>
+<span class="linenos">19</span>    <span class="n">prim_path</span><span class="o">=</span><span class="s2">&quot;/ant&quot;</span>
+<span class="linenos">20</span><span class="p">)</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="c1"># get stage handle</span>
+<span class="linenos">23</span><span class="n">stage</span> <span class="o">=</span> <span class="n">omni</span><span class="o">.</span><span class="n">usd</span><span class="o">.</span><span class="n">get_context</span><span class="p">()</span><span class="o">.</span><span class="n">get_stage</span><span class="p">()</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="c1"># enable physics</span>
+<span class="linenos">26</span><span class="n">scene</span> <span class="o">=</span> <span class="n">UsdPhysics</span><span class="o">.</span><span class="n">Scene</span><span class="o">.</span><span class="n">Define</span><span class="p">(</span><span class="n">stage</span><span class="p">,</span> <span class="n">Sdf</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/physicsScene&quot;</span><span class="p">))</span>
+<span class="linenos">27</span><span class="c1"># set gravity</span>
+<span class="linenos">28</span><span class="n">scene</span><span class="o">.</span><span class="n">CreateGravityDirectionAttr</span><span class="p">()</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">Gf</span><span class="o">.</span><span class="n">Vec3f</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">))</span>
+<span class="linenos">29</span><span class="n">scene</span><span class="o">.</span><span class="n">CreateGravityMagnitudeAttr</span><span class="p">()</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="mf">9.81</span><span class="p">)</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="c1"># add lighting</span>
+<span class="linenos">32</span><span class="n">distantLight</span> <span class="o">=</span> <span class="n">UsdLux</span><span class="o">.</span><span class="n">DistantLight</span><span class="o">.</span><span class="n">Define</span><span class="p">(</span><span class="n">stage</span><span class="p">,</span> <span class="n">Sdf</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/DistantLight&quot;</span><span class="p">))</span>
+<span class="linenos">33</span><span class="n">distantLight</span><span class="o">.</span><span class="n">CreateIntensityAttr</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+<span class="target" id="module-omni.isaac.mjcf.scripts.commands"></span><dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.mjcf.scripts.commands.MJCFCreateAsset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MJCFCreateAsset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mjcf_path:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">import_config=&lt;omni.isaac.mjcf._mjcf.ImportConfig</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prim_path:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_path:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.mjcf.scripts.commands.MJCFCreateAsset" title="Permalink to this definition"></a></dt>
+<dd><p>This command parses and imports a given mjcf file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – The absolute path the mjcf file</p></li>
+<li><p><strong>arg1</strong> (<a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></code></a>) – Import configuration</p></li>
+<li><p><strong>arg2</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Path to the robot on the USD stage</p></li>
+<li><p><strong>arg3</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – destination path for robot usd. Default is “” which will load the robot in-memory on the open stage.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.mjcf.scripts.commands.MJCFCreateImportConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MJCFCreateImportConfig</span></span><a class="headerlink" href="#omni.isaac.mjcf.scripts.commands.MJCFCreateImportConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Returns an ImportConfig object that can be used while parsing and importing.
+Should be used with the <cite>MJCFCreateAsset</cite> command</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Parsed MJCF stored in an internal structure.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-omni.isaac.mjcf._mjcf"></span><p>This extension provides an interface to the MJCF importer.</p>
+<p class="rubric">Example</p>
+<p>Setup the configuration parameters before importing.
+Files must be parsed before imported.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">from</span><span class="w"> </span><span class="n">omni</span><span class="p">.</span><span class="n">isaac</span><span class="p">.</span><span class="n">mjcf</span><span class="w"> </span><span class="k">import</span><span class="w"> </span><span class="n">_mjcf</span><span class="w"></span>
+<span class="n">mjcf_interface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_mjcf</span><span class="p">.</span><span class="n">acquire_mjcf_interface</span><span class="p">()</span><span class="w"></span>
+
+<span class="cp"># setup config params</span>
+<span class="n">import_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_mjcf</span><span class="p">.</span><span class="n">ImportConfig</span><span class="p">()</span><span class="w"></span>
+<span class="n">import_config</span><span class="p">.</span><span class="n">fix_base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">True</span><span class="w"></span>
+
+<span class="cp"># parse and import file</span>
+<span class="n">mjcf_interface</span><span class="p">.</span><span class="n">create_asset_mjcf</span><span class="p">(</span><span class="n">mjcf_path</span><span class="p">,</span><span class="w"> </span><span class="n">prim_path</span><span class="p">,</span><span class="w"> </span><span class="n">import_config</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Refer to the sample documentation for more examples and usage</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.Mjcf">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Mjcf</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.Mjcf" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.Mjcf.create_asset_mjcf">
+<span class="sig-name descname"><span class="pre">create_asset_mjcf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.Mjcf" title="omni.isaac.mjcf._mjcf.Mjcf"><span class="pre">omni.isaac.mjcf._mjcf.Mjcf</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.Mjcf.create_asset_mjcf" title="Permalink to this definition"></a></dt>
+<dd><p>Parse and import MJCF file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – The absolute path to the mjcf</p></li>
+<li><p><strong>arg1</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Path to the robot on the USD stage</p></li>
+<li><p><strong>arg2</strong> (<a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></code></a>) – Import configuration</p></li>
+<li><p><strong>arg3</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – optional: path to stage to use for importing. leaving it empty will import on open stage. If the open stage is a new stage, textures will not load.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ImportConfig</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="Permalink to this definition"></a></dt>
+<dd><dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.convex_decomp">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">convex_decomp</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.convex_decomp" title="Permalink to this definition"></a></dt>
+<dd><p>Decompose a convex mesh into smaller pieces for a closer fit</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.create_body_for_fixed_joint">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_body_for_fixed_joint</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.create_body_for_fixed_joint" title="Permalink to this definition"></a></dt>
+<dd><p>creates body for fixed joint</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.create_physics_scene">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_physics_scene</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.create_physics_scene" title="Permalink to this definition"></a></dt>
+<dd><p>add a physics scene to the stage on import</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.default_drive_strength">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_drive_strength</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.default_drive_strength" title="Permalink to this definition"></a></dt>
+<dd><p>default drive stiffness used for joints</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.density">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">density</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.density" title="Permalink to this definition"></a></dt>
+<dd><p>default density used for links</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.distance_scale">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distance_scale</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.distance_scale" title="Permalink to this definition"></a></dt>
+<dd><p>Set the unit scaling factor, 1.0 means meters, 100.0 means cm</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.fix_base">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fix_base</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.fix_base" title="Permalink to this definition"></a></dt>
+<dd><p>Create fix joint for base link</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.import_inertia_tensor">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">import_inertia_tensor</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.import_inertia_tensor" title="Permalink to this definition"></a></dt>
+<dd><p>Import inertia tensor from mjcf, if not specified in mjcf it will import as identity</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.instanceable_usd_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instanceable_usd_path</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.instanceable_usd_path" title="Permalink to this definition"></a></dt>
+<dd><p>USD file to store instanceable mehses in</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.make_default_prim">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">make_default_prim</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.make_default_prim" title="Permalink to this definition"></a></dt>
+<dd><p>set imported robot as default prim</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.make_instanceable">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">make_instanceable</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.make_instanceable" title="Permalink to this definition"></a></dt>
+<dd><p>Creates an instanceable version of the asset. All meshes will be placed in a separate USD file</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.merge_fixed_joints">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">merge_fixed_joints</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.merge_fixed_joints" title="Permalink to this definition"></a></dt>
+<dd><p>Consolidating links that are connected by fixed joints</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.override_com">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">override_com</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.override_com" title="Permalink to this definition"></a></dt>
+<dd><p>whether to compute the center of mass from geometry and override values given in the original asset</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.override_inertia_tensor">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">override_inertia_tensor</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.override_inertia_tensor" title="Permalink to this definition"></a></dt>
+<dd><p>Whether to compute the inertia tensor from geometry and override values given in the original asset</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.self_collision">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">self_collision</span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.self_collision" title="Permalink to this definition"></a></dt>
+<dd><p>Self collisions between links in the articulation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_convex_decomp">
+<span class="sig-name descname"><span class="pre">set_convex_decomp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_convex_decomp" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_create_body_for_fixed_joint">
+<span class="sig-name descname"><span class="pre">set_create_body_for_fixed_joint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_create_body_for_fixed_joint" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_create_physics_scene">
+<span class="sig-name descname"><span class="pre">set_create_physics_scene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_create_physics_scene" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_default_drive_strength">
+<span class="sig-name descname"><span class="pre">set_default_drive_strength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_default_drive_strength" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_density">
+<span class="sig-name descname"><span class="pre">set_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_density" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_distance_scale">
+<span class="sig-name descname"><span class="pre">set_distance_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_distance_scale" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_fix_base">
+<span class="sig-name descname"><span class="pre">set_fix_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_fix_base" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_import_inertia_tensor">
+<span class="sig-name descname"><span class="pre">set_import_inertia_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_import_inertia_tensor" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_instanceable_usd_path">
+<span class="sig-name descname"><span class="pre">set_instanceable_usd_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_instanceable_usd_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_make_default_prim">
+<span class="sig-name descname"><span class="pre">set_make_default_prim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_make_default_prim" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_make_instanceable">
+<span class="sig-name descname"><span class="pre">set_make_instanceable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_make_instanceable" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_merge_fixed_joints">
+<span class="sig-name descname"><span class="pre">set_merge_fixed_joints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_merge_fixed_joints" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_override_com">
+<span class="sig-name descname"><span class="pre">set_override_com</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_override_com" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_override_inertia">
+<span class="sig-name descname"><span class="pre">set_override_inertia</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_override_inertia" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.mjcf._mjcf.ImportConfig.set_self_collision">
+<span class="sig-name descname"><span class="pre">set_self_collision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.mjcf._mjcf.ImportConfig" title="omni.isaac.mjcf._mjcf.ImportConfig"><span class="pre">omni.isaac.mjcf._mjcf.ImportConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.mjcf._mjcf.ImportConfig.set_self_collision" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018-2023, NVIDIA.
+      <span class="lastupdated">Last updated on Mar 16, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

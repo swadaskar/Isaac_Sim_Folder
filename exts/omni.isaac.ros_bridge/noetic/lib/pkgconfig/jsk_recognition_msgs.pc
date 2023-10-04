@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: jsk_recognition_msgs
+Description: Description of jsk_recognition_msgs
+Version: 1.2.15
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: std_msgs sensor_msgs geometry_msgs pcl_msgs jsk_footstep_msgs

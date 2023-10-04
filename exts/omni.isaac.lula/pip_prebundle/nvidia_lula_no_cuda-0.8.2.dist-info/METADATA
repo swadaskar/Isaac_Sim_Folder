@@ -1,0 +1,95 @@
+Metadata-Version: 2.1
+Name: nvidia-lula-no-cuda
+Version: 0.8.2
+Summary: A general set of awesome robotics libraries and tools.
+Home-page: https://srl.gitlab-master-pages.nvidia.com/lula/
+License: NVIDIA Proprietary
+Platform: UNKNOWN
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: Unix
+Classifier: Intended Audience :: Developers
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: Implementation :: Pybind11
+Classifier: Programming Language :: C++
+Classifier: Topic :: Scientific/Engineering :: Robotics
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Provides-Extra: ci
+Requires-Dist: autopep8 ; extra == 'ci'
+Requires-Dist: flake8 ; extra == 'ci'
+Requires-Dist: flake8-docstrings ; extra == 'ci'
+Requires-Dist: pytest ; extra == 'ci'
+Requires-Dist: pytest-cov ; extra == 'ci'
+Requires-Dist: pyyaml ; extra == 'ci'
+
+<p align="center">
+<img src="docs/sphinx/images/nvidia_logo.png" width="200" /></p>
+
+# Lula: A Motion Generation Library for Robotics
+
+<h4>
+    <a href="https://gitlab-master.nvidia.com/srl/lula">Homepage</a> |
+    <a href="https://srl.gitlab-master-pages.nvidia.com/lula/">Docs</a> (
+    <a href="https://srl.gitlab-master-pages.nvidia.com/lula/getting_started.html">Getting Started</a> |
+    <a href="https://srl.gitlab-master-pages.nvidia.com/lula/examples.html">Examples</a> |
+    <a href="https://srl.gitlab-master-pages.nvidia.com/lula/tutorials.html">Tutorials</a> |
+    <a href="https://srl.gitlab-master-pages.nvidia.com/lula/development_operations.html">Dev Ops</a> |
+    <a href="https://srl.gitlab-master-pages.nvidia.com/lula/api/index.html">API</a> )
+</h4>
+
+Lula is a high-performance motion generation library for robotics, focused mainly on manipulation.
+Routines are provided for kinematics and inverse kinematics, obstacle-aware global planning,
+reactive control via the mathematical frameworks of RMPflow and geometric fabrics, and more
+traditional time-optimal trajectory generation for paths given by any number of moves in configuration
+space (joint space) and/or task space.  Robots with any number of degrees of freedom are supported.
+
+Lula is implemented in C++ and provides a complete set of Python bindings.  Although developed as a
+standalone library, Lula also serves as the foundation of
+[Omniverse Isaac Sim's](https://developer.nvidia.com/isaac-sim) motion generation capabilities.
+
+See the [documentation](https://srl.gitlab-master-pages.nvidia.com/lula/) for a full overview of features.
+
+
+## Quick Start
+
+### C++ Quick Start
+
+```bash
+git clone https://gitlab-master.nvidia.com/srl/lula
+cd lula
+./setup.sh
+mkdir build
+cd build
+cmake -DENABLE_OPEN3D=ON ..
+make
+sudo make install
+./examples/rmpflow_examples/franka_rmpflow_example
+```
+
+See the [Getting Started page](https://srl.gitlab-master-pages.nvidia.com/lula/gettting_started.html) for more details.
+
+### Python Quick Start
+
+```bash
+  pip3 install -i https://<username>:<token>@gitlab-master.nvidia.com/api/v4/projects/39931/packages/pypi/simple
+```
+
+```python
+import lula
+```
+
+See the [Getting Started page](https://srl.gitlab-master-pages.nvidia.com/lula/gettting_started.html) for more details.
+
+
+## Quick Demo
+
+The following example shows an RMPflow policy driving the end effector of a Franka arm towards a Cartesian target (shown in orange) while avoiding obstacles (shown in blue). After building, the example can be run from the ``build`` directory using:
+
+```bash
+./examples/rmpflow_examples/franka_rmpflow_example
+```
+
+<img src="docs/sphinx/images/franka_rmpflow_example.gif" width="600" /></p>
+
+

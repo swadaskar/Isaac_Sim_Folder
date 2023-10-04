@@ -1,0 +1,3 @@
+setup.py
+src/sensor_msgs/__init__.py
+src/sensor_msgs/point_cloud2.py

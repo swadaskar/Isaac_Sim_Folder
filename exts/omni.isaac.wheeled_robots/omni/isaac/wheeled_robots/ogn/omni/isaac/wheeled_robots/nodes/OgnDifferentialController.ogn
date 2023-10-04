@@ -1,0 +1,68 @@
+{
+    "DifferentialController": {
+        "version": 1,
+        "description": "Differential Controller",
+        "language": "Python",
+        "categories": {
+            "isaacSim": "robot controller inside Isaac Sim"
+        },
+        "metadata": {
+            "uiName": "Differential Controller"
+        },
+        "$comment": "Use the wheel radius and the distance between the wheels to calculate the desired wheels speed when given a desired vehicle speed.",
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "The input execution"
+            },
+            "wheelRadius": {
+                "type": "double",
+                "description": "radius of the wheels"
+            },
+            "wheelDistance": {
+                "type": "double",
+                "description": "distance between the two wheels"
+            },
+            "maxLinearSpeed":{
+                "type": "double",
+                "description": "max linear speed allowed for vehicle"
+            },
+            "maxAngularSpeed":{
+                "type": "double",
+                "description": "max angular speed allowed for vehicle"
+            },
+            "maxWheelSpeed":{
+                "type": "double",
+                "description": "max wheel speed allowed"
+            },
+            "linearVelocity":{
+                "type": "double",
+                "description": "desired linear velocity",
+                "metadata": {
+                    "uiName": "Linear Velocity"
+                }
+            },
+            "angularVelocity":{
+                "type": "double",
+                "description": "desired rotation velocity",
+                "metadata": {
+                    "uiName": "Angular Velocity"
+                }
+            }
+        },
+        "outputs":{
+            "positionCommand":{
+                "type": "double[]",
+                "description": "position commands"
+            },
+            "velocityCommand":{
+                "type": "double[]",
+                "description": "velocity commands"
+            },            
+            "effortCommand":{
+                "type": "double[]",
+                "description": "effort commands"
+            }            
+        }
+    }
+}

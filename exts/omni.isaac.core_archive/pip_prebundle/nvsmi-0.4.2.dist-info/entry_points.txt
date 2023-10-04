@@ -1,0 +1,3 @@
+[console_scripts]
+nvsmi=nvsmi:_main
+

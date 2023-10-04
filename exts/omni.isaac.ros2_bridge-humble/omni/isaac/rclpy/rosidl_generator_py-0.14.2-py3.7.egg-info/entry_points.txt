@@ -1,0 +1,2 @@
+[rosidl_cli.command.generate.type_extensions]
+py = rosidl_generator_py.cli:GeneratePython

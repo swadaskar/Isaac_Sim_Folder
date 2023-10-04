@@ -1,0 +1,8 @@
+{
+    "end_effector_frame_name": "right_gripper",
+    "relative_asset_paths": {
+        "robot_description_path" : "../../../motion_policy_configs/franka/rmpflow/robot_descriptor.yaml",
+        "urdf_path": "../../../motion_policy_configs/franka/lula_franka_gen.urdf",
+        "rrt_config_path" : "franka_planner_config.yaml"
+    }
+}

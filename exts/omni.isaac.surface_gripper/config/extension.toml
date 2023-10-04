@@ -1,0 +1,37 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.4.0"
+category = "Simulation"
+title = "Isaac Sim Surface Gripper"
+description = "Helper to model Suction and Distance based grippers"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "physics", "inspect",]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.isaac.dynamic_control" = {}
+"omni.isaac.ui" = {}
+"omni.isaac.core" = {}
+"omni.graph.tools" = {}
+"omni.graph" = {}
+
+# Watch the .ogn files for hot reloading (only for Python files)
+[fswatcher.patterns]
+include = ["*.ogn", "*.py"]
+exclude = ["Ogn*Database.py"]
+
+[[python.module]]
+name = "omni.isaac.surface_gripper"
+
+[[python.module]]
+name = "omni.isaac.surface_gripper.tests"
+
+[[test]]
+dependencies = ["omni.isaac.utils"]

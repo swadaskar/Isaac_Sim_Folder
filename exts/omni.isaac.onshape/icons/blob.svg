@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 32 32" width="512" height="512" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g transform="matrix(1.280569, 0, 0, 1.280569, -28.179628, -9.61138)" style="">
+        <path d="M 24 9 C 24 8.448 24.448 8 25 8 L 38.172 8 C 38.702 8 39.211 8.211 39.586 8.586 L 44.414 13.414 C 44.789 13.789 45 14.298 45 14.828 L 45 31 C 45 31.552 44.552 32 44 32 L 25 32 C 24.448 32 24 31.552 24 31 L 24 9 Z" fill="#999999" />
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M 37.5 9.5 L 25.5 9.5 L 25.5 30.5 L 43.5 30.5 L 43.5 15.5 L 37.5 15.5 L 37.5 9.5 Z M 42.75 14 L 39 10.25 L 39 14 L 42.75 14 Z" fill="white" />
+    </g>
+</svg>

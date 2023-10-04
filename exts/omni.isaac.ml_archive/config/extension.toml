@@ -1,0 +1,33 @@
+[core]
+# Load as early as possible
+order = -1000
+reloadable = false
+
+[package]
+version = "1.1.0"
+category = "Internal"
+title = "Isaac Sim ML Pip Archive"
+description = "Pip packages needed by isaac sim extensions"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "pip"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.kit.pipapi" = {} # We need it so that we can use [python.pipapi].
+"omni.kit.pip_archive" = {} # import the base kit python archive
+"omni.isaac.core_archive" = {} # pull in the main isaac sim pip archive
+"omni.pip.torch" = {tag = "1_13_1"} # pull in torch
+
+
+# Just importing one will add whole folder (pip_prebundle) to sys.path.
+[[python.module]]
+name = "gym"
+path = "pip_prebundle"
+
+# That is empty module, added here only to make tests discoverable in test run
+[[python.module]]
+name = "omni.isaac.ml_archive"

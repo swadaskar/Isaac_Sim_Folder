@@ -1,0 +1,48 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "1.2.0"
+category = "Simulation"
+title = "Robot Benchmark"
+description = "Extension for benchmark testing combinations of environment/robot/motion policy"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "benchmarking", "manipulation"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+
+[dependencies]
+"omni.kit.uiapp" = {}
+"omni.isaac.ui" = {}
+"omni.physx" = {}
+"omni.isaac.dynamic_control" = {}
+"omni.isaac.motion_generation" = {}
+"omni.isaac.benchmark_environments" = {}
+"omni.kit.viewport.window" = {}
+"omni.isaac.franka" = {}
+"omni.isaac.universal_robots" = {}
+
+[[python.module]]
+name = "omni.isaac.robot_benchmark.user"
+
+[[python.module]]
+name = "omni.isaac.robot_benchmark.user_template"
+
+[[python.module]]
+name = "omni.isaac.robot_benchmark"
+
+[[python.module]]
+name = "omni.isaac.robot_benchmark.tests"
+
+
+[[test]]
+dependencies = [
+    "omni.hydra.rtx",                       # "omni.hydra.pxr", Can we run and pass with Storm ?
+    "omni.kit.viewport.utility",
+    "omni.kit.viewport.window",
+    "omni.kit.primitive.mesh",
+    "omni.kit.material.library",
+]

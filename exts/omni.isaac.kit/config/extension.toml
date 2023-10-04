@@ -1,0 +1,23 @@
+[core]
+reloadable = false
+order = 0
+
+[package]
+version = "1.4.1"
+category = "Simulation"
+title = "Isaac Sim Kit Helpers"
+description = "This Extension that provides a way to launch a python app"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "kit", "python"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+toggleable = false
+
+[dependencies]
+"omni.usd" = {}
+
+[[python.module]]
+name = "omni.isaac.kit"

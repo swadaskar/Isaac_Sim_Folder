@@ -1,0 +1,53 @@
+#displayed application name
+name = "Isaac Sim"
+#displayed before application name in launcher
+productArea = "Omniverse"
+version = "2022.2.1"
+
+#unique identifier for component, all lower case, persists between versions
+slug = "isaac_sim"
+## install and launch instructions by environment
+[defaults.windows-x86_64]
+url = ""
+entrypoint = "${productRoot}/isaac-sim.selector.bat"
+args = []
+
+[defaults.windows-x86_64.environment]
+
+[defaults.windows-x86_64.install]
+pre-install = ""
+pre-install-args = []
+install = ""
+install-args = []
+post-install = "${productRoot}/omni.isaac.sim.post.install.bat"
+post-install-args = ">${productRoot}/omni.isaac.sim.post.install.log"
+
+[defaults.windows-x86_64.uninstall]
+pre-uninstall = ""
+pre-uninstall-args = []
+uninstall = ""
+uninstall-args = []
+post-uninstall = ""
+post-uninstall-args = []
+
+[defaults.linux-x86_64]
+url = ""
+entrypoint = "${productRoot}/isaac-sim.selector.sh"
+args = []
+[defaults.linux-x86_64.environment]
+
+[defaults.linux-x86_64.install]
+pre-install = ""
+pre-install-args = []
+install = ""
+install-args = []
+post-install = "${productRoot}/omni.isaac.sim.post.install.sh"
+post-install-args = ">${productRoot}/omni.isaac.sim.post.install.log"
+
+[defaults.linux-x86_64.uninstall]
+pre-uninstall = ""
+pre-uninstall-args = []
+uninstall = ""
+uninstall-args = []
+post-uninstall = ""
+post-uninstall-args = []

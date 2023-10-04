@@ -1,0 +1,7 @@
+setup.py
+scripts/rosbag
+src/rosbag/__init__.py
+src/rosbag/bag.py
+src/rosbag/migration.py
+src/rosbag/rosbag_main.py
+test/test_roundtrip.py

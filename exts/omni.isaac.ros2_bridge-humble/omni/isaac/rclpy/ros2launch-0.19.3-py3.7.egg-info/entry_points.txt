@@ -1,0 +1,2 @@
+[ros2cli.command]
+launch = ros2launch.command.launch:LaunchCommand

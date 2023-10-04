@@ -1,0 +1,10 @@
+setup.py
+scripts/rostest
+src/rostest/__init__.py
+src/rostest/rostest_main.py
+src/rostest/rostest_parent.py
+src/rostest/rostestutil.py
+src/rostest/runner.py
+test/test_clean_master.py
+test/test_distro_version.py
+test/test_dotname.py

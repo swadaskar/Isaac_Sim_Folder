@@ -1,0 +1,23 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.4.0"
+category = "Simulation"
+title = "Isaac Franka Robot"
+description = "Isaac Franka Robot Helper Class"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+
+[dependencies]
+"omni.isaac.core" = {}
+"omni.isaac.motion_generation" = {}
+"omni.isaac.manipulators" = {}
+
+[[python.module]]
+name = "omni.isaac.franka"

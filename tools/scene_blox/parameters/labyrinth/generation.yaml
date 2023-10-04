@@ -1,0 +1,26 @@
+tile_size: 5.0
+fixed_prims:
+  - prim_path: /Environment/Sky
+    usd: /NVIDIA/Assets/Skies/Dynamic/CumulusHeavy.usd
+    semantic: sky
+    world_pose:
+      position: [0, 0, 0]
+      orientation: [90, 0, 0]
+cross:
+  usd: /Isaac/Samples/Scene_Blox/Tutorial/cross.usd
+  generation:
+    - config: hazards_corridors.yaml
+corridor:
+  usd: /Isaac/Samples/Scene_Blox/Tutorial/corridor.usd
+  generation:
+    - config: hazards_corridors.yaml
+corner:
+  usd: /Isaac/Samples/Scene_Blox/Tutorial/corner.usd
+  generation:
+    - config: ["None", "obstacle_pile_2.yaml"]
+      weights: [0.7, 0.3]
+dead_end:
+  usd: /Isaac/Samples/Scene_Blox/Tutorial/dead_end.usd
+  generation:
+    - config: ["obstacle_pile_1.yaml", "obstacle_pile_2.yaml"]
+      weights: [0.5, 0.5]

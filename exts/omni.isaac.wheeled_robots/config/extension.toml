@@ -1,0 +1,42 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.6.3"
+category = "Simulation"
+title = "Wheeled Drives"
+description = "This extension provides wheeled robots utilities"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "physics", "analyze", "tune"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.physx" = {}
+"omni.isaac.core" = {}
+"omni.isaac.core_nodes" = {}
+"omni.isaac.ui" = {}
+"omni.isaac.dynamic_control" = {}
+"omni.isaac.core_archive" = {} # scipy, osqp, qdldl
+"omni.graph" = {}
+"omni.graph.tools" = {}
+
+[[python.module]]
+name = "omni.isaac.wheeled_robots"
+
+[[python.module]]
+name = "omni.isaac.wheeled_robots.tests"
+
+[fswatcher.patterns]
+include = ["*.ogn", "*.py"]
+exclude = ["Ogn*Database.py"]
+
+
+[[test]]
+stdoutFailPatterns.exclude = [
+    "*Invalid Bundle object in Py_Bundle in getPrimPath*", # Per node tests won't have valid bundles
+]

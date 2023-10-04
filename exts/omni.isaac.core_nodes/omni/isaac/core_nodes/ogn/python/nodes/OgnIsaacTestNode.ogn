@@ -1,0 +1,29 @@
+{
+    "IsaacTestNode": {
+        "version": 1,
+        "icon": "icons/isaac-sim.svg",
+        "description": "Isaac Sim Test Node",
+        "language": "Python",
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacCore",
+        "metadata": {
+            "uiName": "Isaac Test Node"
+        },
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "The input execution"
+            },
+            "input": {
+                "type": "string",
+                "description": "string passed here is returned on the output of this node"
+            }
+        },
+        "outputs": {
+            "output": {
+                "type": "string",
+                "description": "return the value of input"
+            }
+        }
+    }
+}

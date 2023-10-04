@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: robot_state_publisher
+Description: Description of robot_state_publisher
+Version: 1.15.2
+Cflags: -I${prefix}/include -I/workspace/noetic_ws/install/include -I/usr/local/include/eigen3 -I/usr/local/lib/urdfdom_headers/cmake/../../../include/urdfdom_headers
+Libs: -L${prefix}/lib -lrobot_state_publisher_solver -ljoint_state_listener /workspace/noetic_ws/install/lib/liborocos-kdl.so.1.5.1
+Requires: kdl_parser roscpp rosconsole rostime sensor_msgs tf2_ros tf2_kdl

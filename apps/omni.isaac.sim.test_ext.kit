@@ -1,0 +1,82 @@
+[package]
+title = "Isaac Extension Test Run Environment"
+version = "1.0.0"
+keywords = ["app"]
+
+[dependencies]
+# Uncomment to enable python debugger
+# "omni.kit.debug.python" = {}
+
+[settings]
+app.name = "Isaac-Sim"
+# Wait for native debugger to connect
+# app.waitForDebugger = true
+# isaac settings
+omni.kit.plugin.syncUsdLoads = true
+rtx.hydra.materialSyncLoads = true
+rtx.hydra.enableSemanticSchema = true
+rtx.materialDb.syncLoads = true
+# 'rtx-transient'.resourcemanager.enableTextureStreaming = true
+# rtx.descriptorSets=60000
+# rtx.reservedDescriptors=500000
+# rtx.sceneDb.maxInstances=1000000
+# omni.replicator.RTSubframes=1
+persistent.app.stage.upAxis = "Z"
+persistent.app.viewport.displayOptions = 31951
+persistent.simulation.minFrameRate = 15
+persistent.simulation.defaultMetersPerUnit = 1.0
+# persistent.omnigraph.allowGlobalImplicitGraph=false
+# app.content.emptyStageOnStart = true
+app.file.ignoreUnsavedOnExit = true
+app.settings.persistent = false
+app.settings.flatCacheStageFrameHistoryCount = 3 # needed for omni.syntheticdata
+app.hydraEngine.waitIdle = true
+app.hydra.aperture.conform = 4 # Don't modify camera prim, stretch the image so it fits
+app.asyncRendering = false
+app.asyncRenderingLowLatency = false
+app.renderer.skipWhileMinimized = false
+app.renderer.sleepMsOnFocus = 0
+app.renderer.sleepMsOutOfFocus = 0
+app.fastShutdown=1
+app.viewport.createCameraModelRep=false # needed for replicator
+renderer.multiGpu.enabled = true
+renderer.multiGpu.autoEnable = true
+exts."omni.kit.pipapi".installCheckIgnoreVersion = true
+exts."omni.kit.window.viewport".blockingGetViewportDrawable = true
+exts."omni.kit.thumbnails.usd".thumbnail_on_save = false
+exts."omni.kit.viewport.window".startup.windowName="Viewport" # Rename from viewport next
+# settings from the base app
+persistent.omnigraph.updateToUsd = false
+persistent.physics.updateToUsd = true
+persistent.physics.updateVelocitiesToUsd = true
+persistent.physics.useFastCache = false
+persistent.physics.visualizationDisplayJoints = false
+# crashreporter.enabled = false
+crashreporter.alwaysUpload = false
+crashreporter.skipOldDumpUpload = true
+crashreporter.url=""
+# Register extension folder from this repo in kit
+[settings.app.exts]
+folders.'++' = ["${app}/../exts", "${app}/../extscache"]
+
+[settings.exts."omni.kit.debug.python"]
+# Host and port for listen to debugger for
+# host = "127.0.0.1"
+# port = 3000
+
+# Block until client (debugger) connected
+# waitForClient = true
+
+# break immediately (also waits for client)
+# break = true
+
+[settings.exts."omni.kit.test"]
+# Run only selected tests, wildcards supported
+# runTestsFilter = "*test name here*"
+
+# Default extension test timeout (can be overriden by extensions), in seconds:
+testExtDefaultTimeout = 600
+
+# This forces extensions to be local when testing
+[settings.exts."omni.kit.registry.nucleus"]
+registries = []

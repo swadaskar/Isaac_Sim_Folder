@@ -1,0 +1,61 @@
+#usda 1.0
+(
+	subLayers = [
+    @usdGeom/schema.usda@
+	]
+)
+
+over "GLOBAL" (
+	customData = {
+	string libraryName = "isaacSensorSchema"
+	string libraryPath = "./"
+	string libraryPrefix = "IsaacSensorSchema"
+	}
+)
+{
+
+}
+class "IsaacBaseSensor" (
+	  inherits = </Xformable>
+)
+{
+	bool enabled = true (doc = """Set to True to enable this sensor, False to Disable""")
+	bool visualize = true (doc = """Set to True to visualize this sensor, False to hide the debug visualization""")
+}
+
+class "IsaacRtxLidarSensorAPI" (
+	  inherits = </APISchemaBase>
+	  customData = {
+        token apiSchemaType = "singleApply"
+      }
+)
+{
+}
+
+class "IsaacRtxRadarSensorAPI" (
+	  inherits = </APISchemaBase>
+	  customData = {
+        token apiSchemaType = "singleApply"
+      }
+)
+{
+}
+
+
+class IsaacContactSensor "IsaacContactSensor" (
+	  inherits = </IsaacBaseSensor>
+)
+{
+	float2 threshold = (0.01, 100000.0) (doc = """Min, Max force that is detected by this sensor, units in (kg) * (stage length unit) / (second)^2""")
+	float radius = -1 (doc = """Radius of the contact sensor, unit in stage length unit""")
+	float4 color = (1,1,1,1) (doc = """Color of the contact sensor sphere, R, G, B, A""")
+	float sensorPeriod = 0.0025 (doc = """Time between each sensor measurement, unit in simulator seconds""")
+}
+
+
+class IsaacImuSensor "IsaacImuSensor" (
+	  inherits = </IsaacBaseSensor>
+)
+{
+	float sensorPeriod = 0.01(doc = """Time between each sensor measurement, unit in simulator seconds""")
+}

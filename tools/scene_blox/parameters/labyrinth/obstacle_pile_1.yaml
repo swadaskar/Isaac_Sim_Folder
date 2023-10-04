@@ -1,0 +1,16 @@
+root_prim: obstacles
+generated:
+  - name: pile
+    path: pile
+    semantic: obstacle
+    usd_config:
+      root: /Isaac/Samples/Scene_Blox/Tutorial/
+      search_depth: 0
+      filter: obstacle_pile.usd
+    position:
+      base: [0, 0, 0]
+    orientation:
+      base: [0, 0, 0]
+    physics:
+      apply_children: true
+      collision: convexHull

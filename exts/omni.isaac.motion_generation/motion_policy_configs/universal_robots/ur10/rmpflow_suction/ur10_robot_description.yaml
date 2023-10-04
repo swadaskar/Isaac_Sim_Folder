@@ -1,0 +1,115 @@
+# Copyright (c) 2020, NVIDIA CORPORATION. All rights reserved.
+#
+# NVIDIA CORPORATION and its licensors retain all intellectual property
+# and proprietary rights in and to this software, related documentation
+# and any modifications thereto. Any use, reproduction, disclosure or
+# distribution of this software and related documentation without an express
+# license agreement from NVIDIA CORPORATION is strictly prohibited.
+
+# The robot description file defines the generalized coordinates and how to map
+# those to the underlying URDF DOFs.
+
+api_version: 1.0
+
+# Defines the generalized coordinates. Each generalized coordinate is assumed
+# to have an entry in the URDF, except when otherwise specified below under
+# cspace_urdf_bridge.
+cspace:
+  - shoulder_pan_joint
+  - shoulder_lift_joint
+  - elbow_joint
+  - wrist_1_joint
+  - wrist_2_joint
+  - wrist_3_joint
+
+root_link: world
+subtree_root_link: base_link
+
+default_q: [-1.57, -1.57, -1.57, -1.57, 1.57, 0]
+
+# Most dimensions of the cspace have a direct corresponding element
+# in the URDF. This list of rules defines how unspecified coordinates
+# should be extracted.
+cspace_to_urdf_rules:
+  # Example:
+  # - {name: robot_finger_joint1, rule: fixed, value: 0.025}
+
+composite_task_spaces: []
+
+collision_spheres:
+  - upper_arm_link:
+      - center: [0.0, -0.045, 0.01]
+        radius: 0.1
+      - center: [0.0, -0.045, 0.06]
+        radius: 0.09
+      - center: [0.0, -0.045, 0.12]
+        radius: 0.06
+      - center: [0.0, -0.045, 0.18]
+        radius: 0.06
+      - center: [0.0, -0.045, 0.24]
+        radius: 0.06
+      - center: [0.0, -0.045, 0.3]
+        radius: 0.06
+      - center: [0.0, -0.045, 0.36]
+        radius: 0.06
+      - center: [0.0, -0.045, 0.42]
+        radius: 0.06
+      - center: [0.0, -0.045, 0.48]
+        radius: 0.06
+      - center: [0.0, -0.045, 0.54]
+        radius: 0.06
+      - center: [0.0, -0.045, 0.6]
+        radius: 0.08
+  - forearm_link:
+      - center: [0.0, 0.0, 0.0]
+        radius: 0.08
+      - center: [0.0, 0.0, 0.06]
+        radius: 0.07
+      - center: [0.0, 0.0, 0.12]
+        radius: 0.05
+      - center: [0.0, 0.0, 0.18]
+        radius: 0.05
+      - center: [0.0, 0.0, 0.24]
+        radius: 0.05
+      - center: [0.0, 0.0, 0.30]
+        radius: 0.05
+      - center: [0.0, 0.0, 0.36]
+        radius: 0.05
+      - center: [0.0, 0.0, 0.42]
+        radius: 0.05
+      - center: [0.0, 0.0, 0.48]
+        radius: 0.05
+      - center: [0.0, 0.0, 0.54]
+        radius: 0.05
+      - center: [0.0, 0.0, 0.57]
+        radius: 0.065
+  - wrist_1_link:
+      - center: [0.0, 0.0, 0.0]
+        radius: 0.05
+      - center: [0.0, 0.055, 0.0]
+        radius: 0.05
+      - center: [0.0, 0.11, 0.0]
+        radius: 0.065
+  - wrist_2_link:
+      - center: [0.0, 0.0, 0.0]
+        radius: 0.05
+      - center: [0.0, 0.0, 0.055]
+        radius: 0.05
+      - center: [0.0, 0, 0.11]
+        radius: 0.065
+  - wrist_3_link:
+      - center: [0.0, 0.0, 0.0]
+        radius: 0.045
+      - center: [0.0, 0.05, 0.0]
+        radius: 0.05
+  - ee_link:
+      - center: [0, 0, 0]
+        radius: 0.03
+      - center: [0.027, 0.0, 0.0]
+        radius: 0.03
+      - center: [0.054, 0.0, 0.0]
+        radius: 0.03
+      - center: [0.081, 0.0, 0.0]
+        radius: 0.03
+      - center: [0.108, 0.0, 0.0]
+        radius: 0.03

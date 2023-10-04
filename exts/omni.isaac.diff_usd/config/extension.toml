@@ -1,0 +1,30 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "1.0.1"
+category = "Tool"
+title = "Isaac Sim Diff USD"
+description = "Compare the attributes of primitives."
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "diff", "tool"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+preview_image = "data/preview.png"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.isaac.ui" = {}
+"omni.kit.pip_archive" = {}
+
+[[python.module]]
+name = "omni.isaac.diff_usd"
+
+[[python.module]]
+name = "omni.isaac.diff_usd.tests"
+
+[[test]]
+args = ["--/exts/omni.kit.renderer.core/compatibilityMode=true"]

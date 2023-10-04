@@ -1,0 +1,62 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnROS2PublishOdometry.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_ros2_bridge_ROS2PublishOdometry" (
+        docs="""This node publishes odometry as a ROS2 Odometry message"""
+    )
+    {
+        token node:type = "omni.isaac.ros2_bridge.ROS2PublishOdometry"
+        int node:typeVersion = 1
+
+        # 13 attributes
+        custom vector3d inputs:angularVelocity = (0.0, 0.0, 0.0) (
+            docs="""Angular velocity vector in rad/s"""
+        )
+        custom string inputs:chassisFrameId = "base_link" (
+            docs="""FrameId for robot chassis frame"""
+        )
+        custom uint64 inputs:context = 0 (
+            docs="""ROS2 context handle, Default of zero will use the default global context"""
+        )
+        custom uint inputs:execIn (
+            docs="""The input execution port"""
+        )
+        custom vector3d inputs:linearVelocity = (0.0, 0.0, 0.0) (
+            docs="""Linear velocity vector in m/s"""
+        )
+        custom string inputs:nodeNamespace = "" (
+            docs="""Namespace of ROS2 Node, prepends any published/subscribed topic by the node namespace"""
+        )
+        custom string inputs:odomFrameId = "odom" (
+            docs="""FrameId for ROS2 odometry message"""
+        )
+        custom quatd inputs:orientation = (1.0, 0.0, 0.0, 0.0) (
+            docs="""Orientation as a quaternion (IJKR)"""
+        )
+        custom vector3d inputs:position = (0.0, 0.0, 0.0) (
+            docs="""Position vector in meters"""
+        )
+        custom uint64 inputs:queueSize = 10 (
+            docs="""The number of messages to queue up before throwing some away, in case messages are collected faster than they can be sent"""
+        )
+        custom vector3d inputs:robotFront = (1.0, 0.0, 0.0) (
+            docs="""The front of the robot"""
+        )
+        custom double inputs:timeStamp = 0.0 (
+            docs="""ROS2 Timestamp in seconds"""
+        )
+        custom string inputs:topicName = "odom" (
+            docs="""Name of ROS2 Topic"""
+        )
+    }
+}

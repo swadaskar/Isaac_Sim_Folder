@@ -1,0 +1,106 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnIsaacComputeRTXRadarPointCloud.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_sensor_IsaacComputeRTXRadarPointCloud" (
+        docs="""This node reads from the an RTX Radar sensor and holds point cloud data buffers"""
+    )
+    {
+        token node:type = "omni.isaac.sensor.IsaacComputeRTXRadarPointCloud"
+        int node:typeVersion = 1
+
+        # 3 attributes
+        custom uint64 inputs:cpuPointer = 0 (
+            docs="""CPU Pointer to Radar render result."""
+        )
+        custom uint inputs:execIn (
+            docs="""The input execution port"""
+        )
+        custom matrix4d inputs:transform = ((1.0, 0.0, 0.0, 0.0), (0.0, 1.0, 0.0, 0.0), (0.0, 0.0, 1.0, 0.0), (0.0, 0.0, 0.0, 1.0)) (
+            docs="""The matrix to transform the points by"""
+        )
+
+        # 24 attributes
+        custom float[] outputs:azimuth = [] (
+            docs="""Azimuth angle (radians)"""
+        )
+        custom uint64 outputs:cycleCnt (
+            docs="""Scan cycle count"""
+        )
+        custom float[] outputs:elevation = [] (
+            docs="""Angle of elevation (radians)"""
+        )
+        custom uint outputs:execOut (
+            docs="""Output execution triggers when Radar sensor has data"""
+        )
+        custom uint[] outputs:materialId = [] (
+            docs="""material ID"""
+        )
+        custom float outputs:maxAzRad (
+            docs="""The max unambiguous azimuth for the scan"""
+        )
+        custom float outputs:maxElRad (
+            docs="""The max unambiguous elevation for the scan"""
+        )
+        custom float outputs:maxRangeM (
+            docs="""The max unambiguous range for the scan"""
+        )
+        custom float outputs:maxVelMps (
+            docs="""The max unambiguous velocity for the scan"""
+        )
+        custom float outputs:minAzRad (
+            docs="""The min unambiguous azimuth for the scan"""
+        )
+        custom float outputs:minElRad (
+            docs="""The min unambiguous elevation for the scan"""
+        )
+        custom float outputs:minVelMps (
+            docs="""The min unambiguous velocity for the scan"""
+        )
+        custom uint outputs:numDetections (
+            docs="""The number of valid detections in the array"""
+        )
+        custom uint[] outputs:objectId = [] (
+            docs="""object ID"""
+        )
+        custom point3f[] outputs:pointCloudData = [] (
+            docs="""Buffer of 3d points containing point cloud data in Radar coordinates"""
+        )
+        custom float[] outputs:radialDistance = [] (
+            docs="""Radial distance (m)"""
+        )
+        custom float[] outputs:radialVelocity = [] (
+            docs="""Radial velocity (m/s)"""
+        )
+        custom float[] outputs:rcs = [] (
+            docs="""Radar cross section in decibels referenced to a square meter (dBsm)"""
+        )
+        custom uchar outputs:scanIdx (
+            docs="""Scan index for sensors with multi scan support"""
+        )
+        custom uint[] outputs:semanticId = [] (
+            docs="""semantic ID"""
+        )
+        custom uchar outputs:sensorID (
+            docs="""Sensor Id for sensor that generated the scan"""
+        )
+        custom uint64 outputs:syncData (
+            docs="""Pointer to SyncData Sync primitives for syncing with model"""
+        )
+        custom uint64 outputs:timeStampNS (
+            docs="""Scan timestamp in nanoseconds"""
+        )
+        custom matrix4d outputs:transform (
+            docs="""The input matrix transformed from Radar to World"""
+        )
+    }
+}

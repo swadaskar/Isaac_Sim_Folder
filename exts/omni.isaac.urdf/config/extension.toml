@@ -1,0 +1,57 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.5.9"
+category = "Simulation"
+title = "Isaac Sim URDF Importer"
+description = "URDF Importer for Isaac Sim"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "urdf", "import"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.kit.uiapp" = {}
+"omni.isaac.ui" = {}
+"omni.kit.window.filepicker" = {}
+"omni.kit.window.content_browser" = {}
+"omni.kit.viewport.utility" = {}
+"omni.kit.pip_archive" = {} # pulls in pillow
+"omni.physx" = {} 
+
+[[python.module]]
+name = "omni.isaac.urdf"
+
+[[python.module]]
+name = "omni.isaac.urdf.tests"
+
+[[python.module]]
+name = "omni.isaac.urdf.scripts.samples.import_carter"
+
+[[python.module]]
+name = "omni.isaac.urdf.scripts.samples.import_franka"
+
+[[python.module]]
+name = "omni.isaac.urdf.scripts.samples.import_kaya"
+
+[[python.module]]
+name = "omni.isaac.urdf.scripts.samples.import_ur10"
+
+[[native.plugin]]
+path = "bin/*.plugin"
+recursive = false
+
+
+[[test]]
+# this is to catch issues where our assimp is out of sync with the one that comes with 
+# asset importer as this can cause segfaults due to binary incompatibility. 
+dependencies = ["omni.kit.tool.asset_importer"]
+
+stdoutFailPatterns.exclude = [
+    "*extension object is still alive, something holds a reference on it*", # exclude warning as failure
+]

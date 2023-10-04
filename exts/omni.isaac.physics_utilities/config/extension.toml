@@ -1,0 +1,29 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.1.1"
+category = "Simulation"
+title = "Isaac Sim Physics Utilities"
+description = "Collision and Physics Utils"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "physics", "utils",]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.physx" = {}
+"omni.isaac.ui" = {}
+
+[[python.module]]
+name = "omni.isaac.physics_utilities"
+
+[[python.module]]
+name = "omni.isaac.physics_utilities.tests"
+
+[[test]]
+args = ["--/exts/omni.kit.renderer.core/compatibilityMode=true"]

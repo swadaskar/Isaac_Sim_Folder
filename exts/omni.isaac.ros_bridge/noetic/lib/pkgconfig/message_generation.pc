@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: message_generation
+Description: Description of message_generation
+Version: 0.4.1
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: gencpp geneus gennodejs genlisp genmsg genpy

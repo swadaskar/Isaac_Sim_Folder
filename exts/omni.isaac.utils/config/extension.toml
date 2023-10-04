@@ -1,0 +1,35 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.2.4"
+category = "Simulation"
+title = "Isaac Sim Utilities"
+description = "Isaac Sim Utility Extensions"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "utils"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.physx" = {}
+"omni.usdphysics" = {}
+"omni.isaac.dynamic_control" = {}
+"omni.client" = {}
+"omni.kit.menu.utils" = {}
+"omni.isaac.core" = {}
+"omni.isaac.ui" = {}
+
+[[python.module]]
+name = "omni.isaac.utils"
+
+[[python.module]]
+name = "omni.isaac.utils.tests"
+
+[[python.module]]
+name = "omni.isaac.utils.scripts.create_menu"
+public = false

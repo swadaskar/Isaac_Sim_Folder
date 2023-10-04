@@ -1,0 +1,60 @@
+{
+	"Franka":{
+		"RMPflow" : "./franka/rmpflow/config.json",
+		"RMPflowNoFeedback" : "./franka/rmpflow/config_no_feedback.json",
+		"RMPflowCortex" : "./franka/rmpflow/config_cortex.json"
+	},
+	"UR3":{
+		"RMPflow" : "./universal_robots/ur3/rmpflow/config.json"
+	},
+	"UR3e":{
+		"RMPflow" : "./universal_robots/ur3e/rmpflow/config.json"
+	},
+	"UR5":{
+		"RMPflow" : "./universal_robots/ur5/rmpflow/config.json"
+	},
+	"UR5e":{
+		"RMPflow" : "./universal_robots/ur5e/rmpflow/config.json"
+	},
+	"UR10":{
+		"RMPflow" : "./universal_robots/ur10/rmpflow/config.json",
+		"RMPflowCortex" : "./universal_robots/ur10/rmpflow_suction/config_cortex.json",
+		"RMPflowSuction" : "./universal_robots/ur10/rmpflow_suction/config.json"
+	},
+	"UR10e":{
+		"RMPflow" : "./universal_robots/ur10e/rmpflow/config.json"
+	},
+	"UR16e":{
+		"RMPflow" : "./universal_robots/ur16e/rmpflow/config.json"
+	},
+	"Rizon4":{
+		"RMPflow": "./Flexiv/rizon4/rmpflow/config.json"
+	},
+	"DofBot":{
+		"RMPflow" : "./dofbot/rmpflow/config.json"
+	},
+	"Cobotta_Pro_900":{
+		"RMPflow" : "./Denso/cobotta_pro_900/rmpflow/config.json"
+	},
+	"Cobotta_Pro_1300":{
+		"RMPflow" : "./Denso/cobotta_pro_1300/rmpflow/config.json"
+	},
+	"RS007L":{
+		"RMPflow": "./Kawasaki/rs007l/rmpflow/config.json"
+	},
+	"RS007N":{
+		"RMPflow": "./Kawasaki/rs007n/rmpflow/config.json"
+	},
+	"RS013N":{
+		"RMPflow": "./Kawasaki/rs013n/rmpflow/config.json"
+	},
+	"RS025N":{
+		"RMPflow": "./Kawasaki/rs025n/rmpflow/config.json"
+	},
+	"RS080N":{
+		"RMPflow": "./Kawasaki/rs080n/rmpflow/config.json"
+	},
+	"FestoCobot":{
+		"RMPflow": "./Festo/Cobot/rmpflow/config.json"
+	}
+}

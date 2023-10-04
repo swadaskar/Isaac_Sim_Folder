@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: geneus
+Description: Description of geneus
+Version: 3.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: genmsg

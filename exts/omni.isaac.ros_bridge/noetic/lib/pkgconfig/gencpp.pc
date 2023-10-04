@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: gencpp
+Description: Description of gencpp
+Version: 0.7.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: genmsg

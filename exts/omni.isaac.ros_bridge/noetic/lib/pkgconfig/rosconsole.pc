@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: rosconsole
+Description: Description of rosconsole
+Version: 1.14.3
+Cflags: -I${prefix}/include -I/workspace/boost_1_68_0/_install/include
+Libs: -L${prefix}/lib -lrosconsole -lrosconsole_log4cxx -lrosconsole_backend_interface /usr/local/lib/liblog4cxx.so /workspace/boost_1_68_0/_install/lib/libboost_regex.so /workspace/boost_1_68_0/_install/lib/libboost_system.so /workspace/boost_1_68_0/_install/lib/libboost_thread.so -lpthread /workspace/boost_1_68_0/_install/lib/libboost_chrono.so /workspace/boost_1_68_0/_install/lib/libboost_date_time.so /workspace/boost_1_68_0/_install/lib/libboost_atomic.so
+Requires: cpp_common rostime

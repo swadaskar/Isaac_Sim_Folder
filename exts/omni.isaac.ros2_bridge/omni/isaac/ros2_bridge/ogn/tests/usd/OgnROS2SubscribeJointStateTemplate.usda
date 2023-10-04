@@ -1,0 +1,58 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnROS2SubscribeJointState.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_ros2_bridge_ROS2SubscribeJointState" (
+        docs="""This node subscribes to a joint state command of a robot in a ROS2 JointState message"""
+    )
+    {
+        token node:type = "omni.isaac.ros2_bridge.ROS2SubscribeJointState"
+        int node:typeVersion = 2
+
+        # 5 attributes
+        custom uint64 inputs:context = 0 (
+            docs="""ROS2 context handle, Default of zero will use the default global context"""
+        )
+        custom uint inputs:execIn (
+            docs="""The input execution port"""
+        )
+        custom string inputs:nodeNamespace = "" (
+            docs="""Namespace of ROS2 Node, prepends any published/subscribed topic by the node namespace"""
+        )
+        custom uint64 inputs:queueSize = 10 (
+            docs="""The number of messages to queue up before throwing some away, in case messages are collected faster than they can be sent"""
+        )
+        custom string inputs:topicName = "joint_command" (
+            docs="""Name of ROS2 Topic"""
+        )
+
+        # 6 attributes
+        custom double[] outputs:effortCommand (
+            docs="""Effort commands"""
+        )
+        custom uint outputs:execOut (
+            docs="""Output execution triggers when a new message is received"""
+        )
+        custom token[] outputs:jointNames (
+            docs="""Commanded joint names"""
+        )
+        custom double[] outputs:positionCommand (
+            docs="""Position commands"""
+        )
+        custom double outputs:timeStamp = 0.0 (
+            docs="""ROS2 Timestamp in seconds"""
+        )
+        custom double[] outputs:velocityCommand (
+            docs="""Velocity commands"""
+        )
+    }
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.79.0 commit date:2018-03-22, commit time:14:10, hash:f4dc9f9d68b</authoring_tool>
+    </contributor>
+    <created>2019-03-01T17:09:40</created>
+    <modified>2019-03-01T17:09:40</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images/>
+  <library_effects/>
+  <library_geometries>
+    <geometry id="Circle_001-mesh" name="Circle.001">
+      <mesh>
+        <source id="Circle_001-mesh-positions">
+          <float_array id="Circle_001-mesh-positions-array" count="60">-0.9271904 1.210749 -0.03229302 0.1410943 -0.6395744 -0.03229302 0.9271902 1.210749 -0.03229302 -0.141094 -0.6395743 -0.03229302 -1.068284 0.9663663 -0.03229302 1.068284 0.9663665 -0.03229302 -0.9271904 1.210749 0.193758 0.9271902 1.210749 0.193758 0.1410943 -0.6395744 0.193758 -0.141094 -0.6395743 0.193758 -1.068284 0.9663663 0.193758 1.068284 0.9663665 0.193758 -0.7901274 0.4845841 0.193758 0.7901274 0.4845841 0.193758 -0.7901274 0.4845841 1.042184 -1.068284 0.9663663 1.042184 -0.9271904 1.210749 1.042184 0.9271902 1.210749 1.042184 1.068284 0.9663665 1.042184 0.7901274 0.4845841 1.042184</float_array>
+          <technique_common>
+            <accessor source="#Circle_001-mesh-positions-array" count="20" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Circle_001-mesh-normals">
+          <float_array id="Circle_001-mesh-normals-array" count="84">-0.8660254 -0.5 0 -0.8660256 0.4999997 0 0.8660255 -0.5 0 0.8660254 0.5 0 -2.11223e-7 -1 0 -1.2857e-7 1 0 0 0 -1 0 0 1 0 0 1 -1.2857e-7 1 0 0.8660256 -0.4999998 0 -0.8660256 0.4999998 0 -0.8660255 -0.5 0 0 -1 0 0.8660256 0.4999998 0 -0.8660253 -0.5000001 -1.24418e-7 -0.8660253 -0.5000001 0 0.8660255 -0.4999999 -4.26575e-7 0.8660256 -0.4999997 0 0.8660256 0.4999997 0 0 0 -1 0 0 -1 0 0 1 4.3842e-7 0 1 0.8660257 -0.4999997 0 -0.8660258 0.4999995 0 -0.8660254 -0.5000002 0 0.8660256 0.5 0</float_array>
+          <technique_common>
+            <accessor source="#Circle_001-mesh-normals-array" count="28" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Circle_001-mesh-vertices">
+          <input semantic="POSITION" source="#Circle_001-mesh-positions"/>
+        </vertices>
+        <triangles count="36">
+          <input semantic="VERTEX" source="#Circle_001-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Circle_001-mesh-normals" offset="1"/>
+          <p>12 0 10 0 4 0 10 1 0 1 4 1 13 2 8 2 1 2 7 3 5 3 2 3 8 4 3 4 1 4 6 5 2 5 0 5 5 6 1 6 3 6 13 7 9 7 8 7 17 8 16 8 19 8 6 9 17 9 7 9 11 10 19 10 13 10 10 11 16 11 6 11 12 12 15 12 10 12 13 13 14 13 12 13 7 14 18 14 11 14 4 15 3 15 12 15 3 16 9 16 12 16 10 1 6 1 0 1 1 17 5 17 13 17 5 18 11 18 13 18 7 19 11 19 5 19 8 4 9 4 3 4 6 9 7 9 2 9 3 20 4 20 0 20 0 21 2 21 3 21 2 21 5 21 3 21 13 22 12 22 9 22 15 22 14 22 16 22 14 22 19 22 16 22 19 23 18 23 17 23 6 9 16 9 17 9 11 24 18 24 19 24 10 25 15 25 16 25 12 26 14 26 15 26 13 13 19 13 14 13 7 27 17 27 18 27</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Circle" name="Circle" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#Circle_001-mesh" name="Circle"/>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

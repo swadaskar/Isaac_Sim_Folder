@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: rostime
+Description: Description of rostime
+Version: 0.7.2
+Cflags: -I${prefix}/include -I/workspace/boost_1_68_0/_install/include
+Libs: -L${prefix}/lib -lrostime /workspace/boost_1_68_0/_install/lib/libboost_date_time.so /workspace/boost_1_68_0/_install/lib/libboost_system.so /workspace/boost_1_68_0/_install/lib/libboost_thread.so -lpthread /workspace/boost_1_68_0/_install/lib/libboost_chrono.so /workspace/boost_1_68_0/_install/lib/libboost_atomic.so
+Requires: cpp_common

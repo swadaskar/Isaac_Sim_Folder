@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: kdl_parser
+Description: Description of kdl_parser
+Version: 1.14.2
+Cflags: -I${prefix}/include -I/workspace/noetic_ws/install/include -I/usr/local/include/eigen3 -I/usr/local/include
+Libs: -L${prefix}/lib -lkdl_parser /workspace/noetic_ws/install/lib/liborocos-kdl.so.1.5.1 /usr/local/lib/libtinyxml.so /usr/local/lib/libtinyxml2.a
+Requires: rosconsole urdf

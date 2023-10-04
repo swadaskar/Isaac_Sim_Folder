@@ -1,0 +1,25 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.1.3"
+category = "Simulation"
+title = "Articulation Inspector"
+description = "This extension can inspect and modify the properties of an articulation."
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "physics", "analyze", "inspect"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.physx" = {}
+"omni.isaac.core" = {}
+"omni.isaac.dynamic_control" = {}
+"omni.isaac.ui" = {}
+
+[[python.module]]
+name = "omni.isaac.articulation_inspector"

@@ -1,0 +1,14 @@
+webbot-0.34.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+webbot-0.34.dist-info/LICENSE,sha256=OZlx-5emdIH9K4jdmdsGc_5FK5h1BP9JsqHdE8l3IB8,35126
+webbot-0.34.dist-info/METADATA,sha256=LjUFPjflmXaueMr-k8U1WCzqgEF1Gtd8mlGx4sflkr4,4209
+webbot-0.34.dist-info/RECORD,,
+webbot-0.34.dist-info/REQUESTED,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+webbot-0.34.dist-info/WHEEL,sha256=EVRjI69F5qVjm_YgqcTXPnTAv3BfSUr0WVAHuSP3Xoo,92
+webbot-0.34.dist-info/top_level.txt,sha256=Pl9MZBHMbxhGmWDMyu39sOElbbXG0LE45qrMmh6-X8k,7
+webbot/__init__.py,sha256=IxBX0ZGZebYZqcDoPrvihRwygYh5wIAAhRrFO-e_j7M,28
+webbot/__pycache__/__init__.cpython-37.pyc,,
+webbot/__pycache__/webbot.cpython-37.pyc,,
+webbot/drivers/chrome_linux,sha256=yYoXkeRARSMSX5zhLRNxT3Uj5LiU56GwzobRyJMf_u0,8103592
+webbot/drivers/chrome_mac,sha256=sy-Tecd9wd2oJChPPnh94Z_o23O7GvEoliXqfWjVgH4,12085652
+webbot/drivers/chrome_windows.exe,sha256=ZyQDr-3raTnmEPE1Fy-iy2noq81uu5LMpZLoQDHpQ9E,6430208
+webbot/webbot.py,sha256=kenD9WigyLQy2X_2-l5jD7AYSwzTyS0KvM_tVkbWoxM,27336

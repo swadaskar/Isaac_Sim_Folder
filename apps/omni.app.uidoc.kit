@@ -1,0 +1,28 @@
+[package]
+title = "Omni UI Documentation"
+description = "A Standalone UI for ui example"
+version = "2022.2"
+
+# That makes it browsable in UI with "experience" filter
+keywords = ["kit", "experience", "example", "ui"]
+
+[dependencies]
+"omni.kit.uiapp" = {}
+"omni.example.ui" = {}
+"omni.kit.commands" = { order = -100}
+"omni.usd" = { order = -100}
+
+[settings]
+app.settings.standalone_mode = true
+app.window.title = "Omni UI Documentation"
+
+app.runLoops.main.rateLimitEnabled = true
+app.runLoops.main.rateLimitFrequency = 60
+app.runLoops.main.rateLimitUseBusyLoop = false
+
+# faster load time as not need for RTX
+exts."omni.kit.renderer.core".compatibilityMode = true
+
+# Register extension folder from this repo in kit
+[settings.app.exts]
+folders.'++' = ["${app}/../exts", "${app}/../extscache"]

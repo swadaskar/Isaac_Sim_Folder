@@ -1,0 +1,184 @@
+{
+	"class": "Simple",
+	"type": "Asphalt",
+	"name": "Standard",
+	"variant": "Weathered",
+	
+	"BulkProperties":
+	{
+		"solar_absorptivity":
+		{
+			"val": 0.722,
+			"units": "unitless"
+		},
+		"thermal_conductivity":
+		{
+			"val": 0.763,
+			"units": "W/m/K"
+		},
+		"specific_heat":
+		{
+			"val": 907,
+			"units": "J/kg/K"
+		},
+		"density":
+		{
+			"val": 2243,
+			"units": "kg/m**3"
+		},
+		"compressibility":
+		{
+			"val": 1.0e-10,
+			"units": "1/Pa"
+		},
+		"thickness":
+		{
+			"val": 0.1,
+			"units": "meters"
+		},
+		"porosity":
+		{
+			"val": 1.0,
+			"units": "unitless"
+		}
+	},
+	
+	"SpectralData":
+	[
+		{
+			"wavelength": 
+			{
+				"val": 905e-9,
+				"units": "meters"
+			},
+			"permittivity":
+			{
+				"real": 2.67,
+				"imag": 0.09,
+				"units": "unitless"
+			},
+			"permeability":
+			{
+				"real": 1,
+				"imag": 0,
+				"units": "unitless"
+			},
+			"refractive_index":
+			{
+				"real": 1.634,
+				"imag": 0.0275,
+				"units": "unitless"
+			},
+			"lobewidth":
+			{
+				"val": 38,
+				"units": "degrees"
+			},
+			"diffuse_albedo":
+			{
+				"val": 0.2,
+				"units": "unitless"
+			},
+			"emissivity":
+			{
+				"val": 0.942,
+				"units": "unitless"
+			},
+			"BaseRCS":
+			{
+				"val": 1,
+				"units": "m**2"
+			}
+		},
+		{
+			"wavelength": 
+			{
+				"val": 1.55e-6,
+				"units": "meters"
+			},
+			"permittivity":
+			{
+				"real": 2.82,
+				"imag": 0.513,
+				"units": "unitless"
+			},
+			"permeability":
+			{
+				"real": 1,
+				"imag": 0,
+				"units": "unitless"
+			},
+			"refractive_index":
+			{
+				"real": 1.616,
+				"imag": 0.152,
+				"units": "unitless"
+			},
+			"lobewidth":
+			{
+				"val": 34,
+				"units": "degrees"
+			},
+			"diffuse_albedo":
+			{
+				"val": 0.23,
+				"units": "unitless"
+			},
+			"emissivity":
+			{
+				"val": 0.91,
+				"units": "unitless"
+			},
+			"BaseRCS":
+			{
+				"val": 1,
+				"units": "m**2"
+			}
+		},
+		{
+			"wavelength": 
+			{
+				"val": 3.9e-3,
+				"units": "meters"
+			},
+			"permittivity":
+			{
+				"real": 3.18,
+				"imag": 0.13,
+				"units": "unitless"
+			},
+			"permeability":
+			{
+				"real": 1,
+				"imag": 0,
+				"units": "unitless"
+			},
+			"refractive_index":
+			{
+				"real": 1.78,
+				"imag": 0.036,
+				"units": "unitless"
+			},
+			"lobewidth":
+			{
+				"val": 22,
+				"units": "degrees"
+			},
+			"diffuse_albedo":
+			{
+				"val": 0.28,
+				"units": "unitless"
+			},
+			"emissivity":
+			{
+				"val": 0.91,
+				"units": "unitless"
+			},
+			"BaseRCS":
+			{
+				"val": 1,
+				"units": "m**2"
+			}
+		}
+	]
+}

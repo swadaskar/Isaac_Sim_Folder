@@ -1,0 +1,31 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnIsaacReadFilePath.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_core_nodes_IsaacReadFilePath" (
+        docs="""Loads contents of file when given path, if file exists"""
+    )
+    {
+        token node:type = "omni.isaac.core_nodes.IsaacReadFilePath"
+        int node:typeVersion = 1
+
+        # 1 attribute
+        custom string inputs:path = "" (
+            docs="""Input path to file"""
+        )
+
+        # 1 attribute
+        custom string outputs:fileContents = "" (
+            docs="""Output contents of file at path, returns empty string if file is not found"""
+        )
+    }
+}

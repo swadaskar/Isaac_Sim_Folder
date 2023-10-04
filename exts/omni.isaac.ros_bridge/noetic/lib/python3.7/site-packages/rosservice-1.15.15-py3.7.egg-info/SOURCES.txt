@@ -1,0 +1,3 @@
+setup.py
+scripts/rosservice
+src/rosservice/__init__.py

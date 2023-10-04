@@ -1,0 +1,53 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnROS2PublishRawTransformTree.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_ros2_bridge_ROS2PublishRawTransformTree" (
+        docs="""This node publishes a user-defined transformation between any two coordinate frames as a ROS2 Transform Tree"""
+    )
+    {
+        token node:type = "omni.isaac.ros2_bridge.ROS2PublishRawTransformTree"
+        int node:typeVersion = 1
+
+        # 10 attributes
+        custom string inputs:childFrameId = "base_link" (
+            docs="""Child frameId for ROS2 TF message"""
+        )
+        custom uint64 inputs:context = 0 (
+            docs="""ROS2 context handle, Default of zero will use the default global context"""
+        )
+        custom uint inputs:execIn (
+            docs="""The input execution port"""
+        )
+        custom string inputs:nodeNamespace = "" (
+            docs="""Namespace of ROS2 Node, prepends any published/subscribed topic by the node namespace"""
+        )
+        custom string inputs:parentFrameId = "odom" (
+            docs="""Parent frameId for ROS2 TF message"""
+        )
+        custom uint64 inputs:queueSize = 10 (
+            docs="""The number of messages to queue up before throwing some away, in case messages are collected faster than they can be sent"""
+        )
+        custom quatd inputs:rotation = (1.0, 0.0, 0.0, 0.0) (
+            docs="""Rotation as a quaternion (IJKR)"""
+        )
+        custom double inputs:timeStamp = 0.0 (
+            docs="""ROS2 Timestamp in seconds"""
+        )
+        custom string inputs:topicName = "tf" (
+            docs="""Name of ROS2 Topic"""
+        )
+        custom vector3d inputs:translation = (0.0, 0.0, 0.0) (
+            docs="""Translation vector in meters"""
+        )
+    }
+}

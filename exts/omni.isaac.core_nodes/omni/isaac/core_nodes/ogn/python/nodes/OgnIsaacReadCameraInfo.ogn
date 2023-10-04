@@ -1,0 +1,75 @@
+{
+    "IsaacReadCameraInfo": {
+        "version": 2,
+        "icon": "icons/isaac-sim.svg",
+        "description": "Isaac Sim node that reads camera info for a viewport",
+        "language": "Python",
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacCore",
+        "metadata": {
+            "uiName": "Isaac Read Camera Info"
+        },
+        "inputs": {
+            "viewport": {
+                "type": "token",
+                "description": "Name of the viewport, or empty for the default viewport"
+            },
+            "renderProductPath": {
+                "type": "token",
+                "description": "Path of the render product"
+            }
+        },
+        "outputs": {
+            "width": {
+                "type": "uint",
+                "description": "Width for output image"
+            },
+            "height": {
+                "type": "uint",
+                "description": "Height for output image"
+            },
+            "focalLength":{
+                "type":"float",
+                "description": ""
+            },
+            "horizontalAperture":{
+                "type":"float",
+                "description": ""
+            },
+            "verticalAperture":{
+                "type":"float",
+                "description": ""
+            },
+            "horizontalOffset":{
+                "type":"float",
+                "description": ""
+            },
+            "verticalOffset":{
+                "type":"float",
+                "description": ""
+            },
+            "projectionType":{
+                "type":"token",
+                "description": ""
+            },
+            "cameraFisheyeParams": {
+                "type": "float[]",
+                "description": "Camera fisheye projection parameters"
+            }
+        },
+        "tests": [
+            {
+                "description": "Test Camera Info",
+                "setup": {
+                    "create_nodes": [["TestNode", "omni.isaac.core_nodes.IsaacReadCameraInfo"]]
+                },
+                "inputs":{
+                    "renderProductPath": "/Render/RenderProduct_omni_kit_widget_viewport_ViewportTexture_0"
+                },
+                "outputs": {
+                    "focalLength": 18.14756202697754
+                }
+            }
+        ]
+    }
+}

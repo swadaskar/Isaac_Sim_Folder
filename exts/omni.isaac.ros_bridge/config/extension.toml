@@ -1,0 +1,83 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "1.11.2"
+category = "Simulation"
+title = "ROS Bridge"
+description = "ROS Bridge"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "ROS"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+
+[dependencies]
+"omni.kit.uiapp" = {}
+"omni.isaac.dynamic_control" = {}
+"omni.isaac.range_sensor" = {}
+"omni.isaac.core" = {}
+"omni.isaac.core_nodes" = {}
+"omni.isaac.sensor" = {}
+"omni.syntheticdata" = {}
+"omni.replicator.core" = {}
+"omni.usd.schema.isaac" = {}
+"omni.kit.pip_archive" = {} # Pull in pip_archive to make sure psutil is found and not installed
+"omni.graph" = {}
+"omni.graph.tools" = {}
+"omni.kit.usd_undo" = {}
+"omni.usd" = {}
+"omni.kit.async_engine" = {}
+"usdrt.scenegraph" = {}
+
+[[python.module]]
+name = "omni.isaac.ros_bridge"
+
+[[python.module]]
+name = "omni.isaac.rospy"
+
+[[python.module]]
+name = "omni.isaac.ros_bridge.tests"
+public = false
+
+#[[python.module]]
+#name = "omni.isaac.ros_bridge.ogn.tests"
+
+[[python.module]]
+name = "omni.isaac.ros_bridge.scripts.samples.ros_samples"
+
+[[python.module]]
+name = "omni.isaac.ros_bridge.scripts.samples.ros_moveit_sample"
+
+[[native.plugin]]
+path = "bin/omni.isaac.ros_bridge.plugin"
+recursive = false
+
+[fswatcher.paths]
+exclude = ["*/noetic*", "*/bin", "*/__pycache__/*", "*/.git/*"]
+
+[fswatcher.patterns]
+include = ["*.ogn", "*.py", "*.toml"]
+exclude = ["Ogn*Database.py"]
+
+[settings]
+exts."omni.isaac.ros_bridge".nodeName = "OmniIsaacRosBridge"
+
+[[test]]
+dependencies = [
+    "omni.graph.ui",
+    "omni.isaac.wheeled_robots",
+]
+
+stdoutFailPatterns.exclude = [
+    "*WARNING: cannot load logging configuration file*", # exclude warning as failure
+    "*[Error] [carb.flatcache.plugin] Error: UsdRelationship * has multiple targets, which is not supported*",
+    "*[Error] [omni.graph] Tried to set a value on AttributeData*",
+    "*[Error] [omni.graph] AttributeError: Attempted to get array size of non-array attribute inputs:jointNames*",
+    "*[Error] [carb.flatcache.plugin] Error: * UsdRelationship not supported in GetPrimArrayAttr*",
+    "*[Error] [carb.flatcache.plugin] removePath called on non-existent path*",
+    "*[Error] [omni.graph.core.plugin] /TestGraph/Template_omni_isaac_ros_bridge_ROS1PublishImage: Width 0 or height 0 is not valid*",
+    "*[Error] [omni.graph.core.plugin] /TestGraph/Template_omni_isaac_ros_bridge_ROS1PublishLaserScan: Number of rows must be equal to 1. High LOD not supported for LaserScan, only 2D Lidar Supported for LaserScan. Please disable Lidar High LOD setting*",
+]

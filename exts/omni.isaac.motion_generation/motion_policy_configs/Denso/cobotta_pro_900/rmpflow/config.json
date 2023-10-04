@@ -1,0 +1,10 @@
+{
+    "end_effector_frame_name": "gripper_center",
+    "maximum_substep_size" : 0.00334,
+    "ignore_robot_state_updates" : false,
+    "relative_asset_paths": {
+        "robot_description_path" : "robot_descriptor.yaml",
+        "urdf_path": "../cobotta_pro_900_gripper_frame.urdf",
+        "rmpflow_config_path" : "cobotta_rmpflow_common.yaml"
+    }
+}

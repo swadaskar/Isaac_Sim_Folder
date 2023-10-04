@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: actionlib
+Description: Description of actionlib
+Version: 1.14.0
+Cflags: -I${prefix}/include -I/workspace/boost_1_68_0/_install/include
+Libs: -L${prefix}/lib -lactionlib /workspace/boost_1_68_0/_install/lib/libboost_thread.so -lpthread /workspace/boost_1_68_0/_install/lib/libboost_chrono.so /workspace/boost_1_68_0/_install/lib/libboost_system.so /workspace/boost_1_68_0/_install/lib/libboost_date_time.so /workspace/boost_1_68_0/_install/lib/libboost_atomic.so
+Requires: actionlib_msgs message_runtime roscpp std_msgs

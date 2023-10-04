@@ -1,0 +1,42 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.23.2"
+category = "Simulation"
+title = "Isaac Sim Core OmniGraph Nodes"
+description = "Core"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.isaac.core" = {}
+"omni.replicator.core" = {}
+"omni.graph" = {}
+"omni.kit.viewport.window" = {}
+"omni.kit.viewport.utility" = {}
+
+[[python.module]]
+name = "omni.isaac.core_nodes"
+
+[[python.module]]
+name = "omni.isaac.core_nodes.tests"
+
+[[native.plugin]]
+path = "bin/*.plugin"
+recursive = false
+
+[fswatcher.patterns]
+include = ["*.ogn", "*.py"]
+exclude = ["Ogn*Database.py"]
+
+[[test]]
+stdoutFailPatterns.exclude = [
+    "*Invalid Bundle object in Py_Bundle in getPrimPath*", # Per node tests won't have valid bundles
+]

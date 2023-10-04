@@ -1,0 +1,84 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnSurfaceGripper.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_surface_gripper_SurfaceGripper" (
+        docs="""Surface Gripper"""
+    )
+    {
+        token node:type = "omni.isaac.surface_gripper.SurfaceGripper"
+        int node:typeVersion = 1
+
+        # 15 attributes
+        custom float inputs:BendAngle = 7.5 (
+            docs="""maximum bend angle, degrees"""
+        )
+        custom uint inputs:Close (
+            docs="""call to close gripper"""
+        )
+        custom float inputs:Damping = 1000.0 (
+            docs="""Gripper damping"""
+        )
+        custom float inputs:Delta = 0.0 (
+            docs="""time since last step in seconds"""
+        )
+        custom bool inputs:DisableGravity = true (
+            docs="""flag to disable gravity of picked object to compensate for object's mass on robotic controllers"""
+        )
+        custom float inputs:ForceLimit = 1000000.0 (
+            docs="""Gripper breaking force"""
+        )
+        custom rel inputs:GripPosition (
+            docs="""The point at which objects will be gripped"""
+        )
+        custom float inputs:GripThreshold = 0.01 (
+            docs="""How far from an object it allows the gripper to lock in. Object will be pulled in this distance when gripper is closed"""
+        )
+        custom uint inputs:Open (
+            docs="""call to Open gripper"""
+        )
+        custom rel inputs:ParentRigidBody (
+            docs="""The rigid body that is used as a surface Gripper"""
+        )
+        custom bool inputs:RetryClose = false (
+            docs="""Flag to indicate if gripper should keep attempting to close until it grips some object"""
+        )
+        custom float inputs:Stiffness = 10000.0 (
+            docs="""Gripper stiffness"""
+        )
+        custom float inputs:TorqueLimit = 1000000.0 (
+            docs="""Torque breaking limit"""
+        )
+        custom bool inputs:enabled = true (
+            docs="""node does not execute if disabled"""
+        )
+        custom uint inputs:onStep (
+            docs="""step to animate textures"""
+        )
+
+        # 2 attributes
+        custom bool outputs:Closed (
+            docs="""Surface gripper is closed or not"""
+        )
+        custom uint outputs:GripBroken (
+            docs="""triggered when surface gripper unexpectedly breaks open"""
+        )
+
+        # 2 attributes
+        custom bool state:Close (
+            docs="""call to close gripper"""
+        )
+        custom bool state:Open (
+            docs="""call to Open gripper"""
+        )
+    }
+}

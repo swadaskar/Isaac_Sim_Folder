@@ -1,0 +1,59 @@
+[package]
+title = "Isaac Sim"
+description = "Main Omniverse Isaac Sim Application"
+version = "2022.2.1"
+execFile = "isaac-sim"
+
+# That makes it browsable in UI with "experience" filter
+keywords = ["experience", "app", "usd"]
+
+[dependencies]
+"omni.isaac.sim.base" = {}
+"omni.physx.flatcache" = {}
+"usdrt.scenegraph" = {}
+# "omni.kit.splash" = { order = -5000}
+
+[settings]
+app.name = "Isaac-Sim"
+app.version = "2022.2.1"
+app.fastShutdown = true
+foundation.verifyOsVersion.enabled = false
+
+[settings.app.exts]
+folders.'++' = ["${app}/../exts", "${app}/../extscache"]
+
+# [settings.app.window]
+# drawMouse = true
+
+[settings.app.livestream.websocket]
+capture_mode = "disabled"
+bitrate = 32777216
+iframe_interval = 20
+framerate_limit = 120
+
+# Splash Setup
+################################
+# exts."omni.kit.window.splash".imagePath = "${app}/../exts/omni.isaac.splash/data/isaac_splash_screen_daily@1x.png"
+# exts.'omni.kit.splash'.splash_app = "${app}/omni.isaac.sim.splash.kit"
+
+[settings.exts."omni.kit.registry.nucleus"]
+registries = [
+    { name = "kit/public", url = "https://d1aiacozzchaiq.cloudfront.net/exts/kit/public/104.0/"},
+    { name = "kit/community", url = "https://dw290v42wisod.cloudfront.net/exts/kit/community" }
+]
+
+[settings.exts."omni.kit.window.content_browser"]
+enable_thumbnail_generation_images = false # temp fix to avoid leaking python processes
+
+
+
+[settings]
+app.useFabricSceneDelegate = false
+[settings.persistent]
+omnigraph.updateToUsd = false
+omnihydra.useFastSceneDelegate = true
+omnihydra.useSceneGraphInstancing = true
+physics.updateToUsd = false
+physics.updateVelocitiesToUsd = false
+physics.updateForceSensorsToUsd = false
+physics.visualizationDisplayJoints = false

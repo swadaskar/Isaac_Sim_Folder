@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: angles
+Version: 1.9.13
+Summary: This package provides a set of simple math utilities to work with angles. The utilities cover simple things like normalizing an angle and conversion between degrees and radians. But even if you're ...
+Home-page: http://wiki.ros.org/angles
+Author: John Hsu
+Author-email: hsu@osrfoundation.org
+Maintainer: Tully Foote
+Maintainer-email: tfoote@osrfoundation.org
+License: BSD
+
+This package provides a set of simple math utilities to work with angles. The utilities cover simple things like normalizing an angle and conversion between degrees and radians. But even if you're trying to calculate things like the shortest angular distance between two joint space positions of your robot, but the joint motion is constrained by joint limits, this package is what you need. The code in this package is stable and well tested. There are no plans for major changes in the near future.

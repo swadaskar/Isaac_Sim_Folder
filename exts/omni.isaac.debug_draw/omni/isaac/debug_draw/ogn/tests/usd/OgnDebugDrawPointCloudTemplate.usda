@@ -1,0 +1,41 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnDebugDrawPointCloud.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_debug_draw_DebugDrawPointCloud" (
+        docs="""Take a point cloud as input and display it in the scene."""
+    )
+    {
+        token node:type = "omni.isaac.debug_draw.DebugDrawPointCloud"
+        int node:typeVersion = 1
+
+        # 6 attributes
+        custom color4f inputs:color = (0.75, 0.75, 1, 1) (
+            docs="""Color of points"""
+        )
+        custom bool inputs:depthTest = true (
+            docs="""If true, the points will not render when behind other objects."""
+        )
+        custom uint inputs:execIn (
+            docs="""The input execution port"""
+        )
+        custom point3f[] inputs:pointCloudData = [] (
+            docs="""Buffer of 3d points containing point cloud data"""
+        )
+        custom matrix4d inputs:transform = ((1.0, 0.0, 0.0, 0.0), (0.0, 1.0, 0.0, 0.0), (0.0, 0.0, 1.0, 0.0), (0.0, 0.0, 0.0, 1.0)) (
+            docs="""The matrix to transform the points by"""
+        )
+        custom float inputs:width = 0.02 (
+            docs="""Size of points"""
+        )
+    }
+}

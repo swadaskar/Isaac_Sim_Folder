@@ -1,0 +1,5 @@
+setup.py
+scripts/rosnode
+src/rosnode/__init__.py
+test/test_rosnode.py
+test/test_rosnode_command_offline.py

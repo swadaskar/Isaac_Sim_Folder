@@ -1,0 +1,55 @@
+{
+    "IsaacArticulationController": {
+        "version": 1,
+        "description": "Controller for articulated robots",
+        "language": "Python",
+        "categories": {
+            "isaacSim": "robot controller inside Isaac Sim"
+        },
+        "metadata": {
+            "uiName": "Articulation Controller"
+        },
+        "$comment": "The controller takes either joint names or joint indices, and move them by the given position/velocity/effort commands",
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "The input execution"
+            },
+            "targetPrim": {
+                "type": "bundle",
+                "description": "The target robot prim"
+            },
+            "usePath": {
+                "type": "bool",
+                "description": "use robot and com path instead of selecting them from stage tree",
+                "default": true
+            },            
+            "robotPath":{
+                "type": "string",
+                "description": "path to the robot articulation root"
+            },
+            "jointNames":{
+                "type": "token[]",
+                "description": "commanded joint names",
+                "$comment": "Use either Joint Names or Joint Indices, if neither is given, default to all joints"
+            },
+            "jointIndices":{
+                "type": "int[]",
+                "description": "commanded joint indices",
+                "$comment": "Use either Joint Names or Joint Indices, if neither is given, default to all joints"
+            },
+            "positionCommand":{
+                "type": "double[]",
+                "description": "position commands"
+            },
+            "velocityCommand":{
+                "type": "double[]",
+                "description": "velocity commands"
+            },            
+            "effortCommand":{
+                "type": "double[]",
+                "description": "effort commands"
+            }            
+        }
+    }
+}

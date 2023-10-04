@@ -1,0 +1,2 @@
+[rosidl_cli.command.generate.typesupport_extensions]
+fastrtps_c = rosidl_typesupport_fastrtps_c.cli:GenerateFastRTPSCTypesupport

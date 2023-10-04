@@ -1,0 +1,52 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.8.1"
+category = "Simulation"
+title = "Isaac Sim Range Sensor"
+description = "Range based sensor simulation using physx"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "physics", "sensor", "lidar"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.kit.uiapp" = {}
+"omni.kit.menu.utils" = {}
+"omni.physx" = {}
+"omni.usdphysics" = {}
+"omni.isaac.debug_draw" = {}
+"omni.timeline" = {} # needed for simulation to start
+"omni.kit.viewport.window" = {}
+"omni.usd.schema.isaac" = {}
+"omni.syntheticdata" = {}
+"omni.kit.pip_archive" = {} # pulls in numpy
+"omni.isaac.ui" = {}
+"omni.isaac.core" = {}
+"omni.graph" = {}
+"usdrt.scenegraph" = {}
+
+[[python.module]]
+name = "omni.isaac.range_sensor"
+
+[[python.module]]
+name = "omni.isaac.range_sensor.scripts.samples.lidar_info"
+
+[[python.module]]
+name = "omni.isaac.range_sensor.scripts.samples.ultrasonic_info"
+
+[[python.module]]
+name = "omni.isaac.range_sensor.scripts.samples.generic_info"
+
+[[python.module]]
+name = "omni.isaac.range_sensor.tests"
+public = false
+
+[[native.plugin]]
+path = "bin/*.plugin"
+recursive = false

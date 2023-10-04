@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IsaacComputeRTXLidarPointCloud &mdash; isaac_sim 2022.2.1-rc.14 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/omni-style.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/api-styles.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/mermaid-init.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+        <script src="https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js"></script>
+        <script>initMermaid();</script>
+        <script src="../../../../_static/version.js"></script>
+        <script src="../../../../_static/social-media.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html">
+            <img src="../../../../_static/main_ov_logo_square.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Main Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core/docs/index.html">Core [omni.isaac.core]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core_nodes/docs/index.html">Core Omnigraph Nodes [omni.isaac.core_nodes]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html">Dynamic Control [omni.isaac.dynamic_control]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.kit/docs/index.html">Simulation Application [omni.isaac.kit]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.utils/docs/index.html">Utilities [omni.isaac.utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ui/docs/index.html">UI Utilities [omni.isaac.ui]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.kit.loop-isaac/docs/index.html">Time Stepping Control [omni.kit.loop-isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.cloner/docs/index.html">Isaac Cloner [omni.isaac.cloner]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.gym/docs/index.html">RL [omni.isaac.gym]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sensor Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Isaac Sensor Extension [omni.isaac.sensor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.range_sensor/docs/index.html">Range Based Sensor Simulation [omni.isaac.range_sensor]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Asset Conversion Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.urdf/docs/index.html">URDF Import Extension [omni.isaac.urdf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.mjcf/docs/index.html">MJCF Import Extension [omni.isaac.mjcf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.shapenet/docs/index.html">ShapeNet [omni.isaac.shapenet]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dofbot/docs/index.html">Dofbot Robot [omni.isaac.dofbot]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.franka/docs/index.html">Franka Robot [omni.isaac.franka]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.wheeled_robots/docs/index.html">Wheeled Robots [omni.isaac.wheeled_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.universal_robots/docs/index.html">Universal Robots [omni.isaac.universal_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.quadruped/docs/index.html">Quadruped Robots [omni.isaac.quadruped]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.manipulators/docs/index.html">Manipulators [omni.isaac.manipulators]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros_bridge/docs/index.html">ROS Bridge [omni.isaac.ros_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros2_bridge/docs/index.html">ROS2 Bridge [omni.isaac.ros2_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.debug_draw/docs/index.html">Debug Drawing [omni.isaac.debug_draw]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.motion_generation/docs/index.html">Motion Generation Extension [omni.isaac.motion_generation]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.lula/docs/index.html">Lula [omni.isaac.lula]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.surface_gripper/docs/index.html">Surface_gripper [omni.isaac.surface_gripper]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.synthetic_utils/docs/index.html">Tools for Generating Synthetic Data [omni.isaac.synthetic_utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.occupancy_map/docs/index.html">Occupancy Extension [omni.isaac.occupancy_map]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.replicator.isaac/docs/index.html">Replicator Isaac Extension [omni.replicator.isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.conveyor/docs/index.html">Conveyor [omni.isaac.conveyor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.examples_nodes/docs/index.html">Isaac Sim Examples Nodes [omni.isaac.examples_nodes]</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">isaac_sim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>IsaacComputeRTXLidarPointCloud</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="isaaccomputertxlidarpointcloud">
+<h1>IsaacComputeRTXLidarPointCloud<a class="headerlink" href="#isaaccomputertxlidarpointcloud" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>[‘This node reads from the an RTX Lidar sensor and holds point cloud data buffers’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution port.</p></li>
+<li><p><strong>cpuPointer</strong> (<em>uint64</em>): CPU Pointer to LiDAR render result.</p></li>
+<li><p><strong>keepOnlyPositiveDistance</strong> (<em>bool</em>): Keep points only if the return distance is &gt; 0. Default to True.</p></li>
+<li><p><strong>accuracyErrorAzimuthDeg</strong> (<em>float</em>): Accuracy error of azimuth in degrees applied to all points equally.</p></li>
+<li><p><strong>accuracyErrorElevationDeg</strong> (<em>float</em>): Accuracy error of elevation in degrees applied to all points equally.</p></li>
+<li><p><strong>accuracyErrorPosition</strong> (<em>float[3]</em>): Position offset applied to all points equally.</p></li>
+<li><p><strong>renderProductPath</strong> (<em>token</em>): Path of the renderProduct to wait for being rendered.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): Output execution triggers when lidar sensor has data.</p></li>
+<li><p><strong>toWorldMatrix</strong> (<em>matrixd[4]</em>): The transform matrix from lidar to world coordinates.</p></li>
+<li><p><strong>pointCloudData</strong> (<em>pointf[3][]</em>): Buffer of 3d points containing point cloud data in Lidar coordinates.</p></li>
+<li><p><strong>intensity</strong> (<em>float[]</em>): intensity [0,1].</p></li>
+<li><p><strong>range</strong> (<em>float[]</em>): range in m.</p></li>
+<li><p><strong>azimuth</strong> (<em>float[]</em>): azimuth in rad [-pi,pi].</p></li>
+<li><p><strong>elevation</strong> (<em>float[]</em>): elevation in rad [-pi/2, pi/2].</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacrendervartocpupointer">
+<h1>IsaacRenderVarToCpuPointer<a class="headerlink" href="#isaacrendervartocpupointer" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>[‘This node gets a pointer to a render var that is stored on the CPU’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>renderVar</strong> (<em>token</em>): Name of the renderVar.</p></li>
+<li><p><strong>exec</strong> (<em>execution</em>): Trigger.</p></li>
+<li><p><strong>renderResults</strong> (<em>uint64</em>): Render results pointer.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>cpuPointer</strong> (<em>uint64</em>): Pointer to render var on CPU.</p></li>
+<li><p><strong>bufferSize</strong> (<em>uint64</em>): Size (in bytes) of the buffer.</p></li>
+<li><p><strong>exec</strong> (<em>execution</em>): Executes when the event is received.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaaccomputertxradarpointcloud">
+<h1>IsaacComputeRTXRadarPointCloud<a class="headerlink" href="#isaaccomputertxradarpointcloud" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>[‘This node reads from the an RTX Radar sensor and holds point cloud data buffers’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution port.</p></li>
+<li><p><strong>cpuPointer</strong> (<em>uint64</em>): CPU Pointer to Radar render result.</p></li>
+<li><p><strong>transform</strong> (<em>matrixd[4]</em>): The matrix to transform the points by.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): Output execution triggers when Radar sensor has data.</p></li>
+<li><p><strong>transform</strong> (<em>matrixd[4]</em>): The input matrix transformed from Radar to World.</p></li>
+<li><p><strong>syncData</strong> (<em>uint64</em>): Pointer to SyncData Sync primitives for syncing with model.</p></li>
+<li><p><strong>sensorID</strong> (<em>uchar</em>): Sensor Id for sensor that generated the scan.</p></li>
+<li><p><strong>scanIdx</strong> (<em>uchar</em>): Scan index for sensors with multi scan support.</p></li>
+<li><p><strong>timeStampNS</strong> (<em>uint64</em>): Scan timestamp in nanoseconds.</p></li>
+<li><p><strong>cycleCnt</strong> (<em>uint64</em>): Scan cycle count.</p></li>
+<li><p><strong>maxRangeM</strong> (<em>float</em>): The max unambiguous range for the scan.</p></li>
+<li><p><strong>minVelMps</strong> (<em>float</em>): The min unambiguous velocity for the scan.</p></li>
+<li><p><strong>maxVelMps</strong> (<em>float</em>): The max unambiguous velocity for the scan.</p></li>
+<li><p><strong>minAzRad</strong> (<em>float</em>): The min unambiguous azimuth for the scan.</p></li>
+<li><p><strong>maxAzRad</strong> (<em>float</em>): The max unambiguous azimuth for the scan.</p></li>
+<li><p><strong>minElRad</strong> (<em>float</em>): The min unambiguous elevation for the scan.</p></li>
+<li><p><strong>maxElRad</strong> (<em>float</em>): The max unambiguous elevation for the scan.</p></li>
+<li><p><strong>numDetections</strong> (<em>uint</em>): The number of valid detections in the array.</p></li>
+<li><p><strong>pointCloudData</strong> (<em>pointf[3][]</em>): Buffer of 3d points containing point cloud data in Radar coordinates.</p></li>
+<li><p><strong>radialDistance</strong> (<em>float[]</em>): Radial distance (m).</p></li>
+<li><p><strong>radialVelocity</strong> (<em>float[]</em>): Radial velocity (m/s).</p></li>
+<li><p><strong>azimuth</strong> (<em>float[]</em>): Azimuth angle (radians).</p></li>
+<li><p><strong>elevation</strong> (<em>float[]</em>): Angle of elevation (radians).</p></li>
+<li><p><strong>rcs</strong> (<em>float[]</em>): Radar cross section in decibels referenced to a square meter (dBsm).</p></li>
+<li><p><strong>semanticId</strong> (<em>uint[]</em>): semantic ID.</p></li>
+<li><p><strong>materialId</strong> (<em>uint[]</em>): material ID.</p></li>
+<li><p><strong>objectId</strong> (<em>uint[]</em>): object ID.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaaccomputertxlidarflatscan">
+<h1>IsaacComputeRTXLidarFlatScan<a class="headerlink" href="#isaaccomputertxlidarflatscan" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>[‘This node reads from the an RTX Lidar sensor and holds flat scan buffers’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution port.</p></li>
+<li><p><strong>cpuPointer</strong> (<em>uint64</em>): CPU Pointer to LiDAR render result.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): Output execution triggers when lidar sensor has data.</p></li>
+<li><p><strong>horizontalFov</strong> (<em>float</em>): Horizontal Field of View in degrees.</p></li>
+<li><p><strong>horizontalResolution</strong> (<em>float</em>): Degrees in between rays for horizontal axis.</p></li>
+<li><p><strong>depthRange</strong> (<em>float[2]</em>): The min and max range for sensor to detect a hit [min, max].</p></li>
+<li><p><strong>rotationRate</strong> (<em>float</em>): Rotation rate of sensor in Hz.</p></li>
+<li><p><strong>linearDepthData</strong> (<em>float[]</em>): Buffer array containing linear depth data.</p></li>
+<li><p><strong>intensitiesData</strong> (<em>uchar[]</em>): Buffer array containing intensities data.</p></li>
+<li><p><strong>numRows</strong> (<em>int</em>): Number of rows in buffers.</p></li>
+<li><p><strong>numCols</strong> (<em>int</em>): Number of columns in buffers.</p></li>
+<li><p><strong>azimuthRange</strong> (<em>float[2]</em>): The azimuth range [min, max].</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacreadrtxlidardata">
+<h1>IsaacReadRTXLidarData<a class="headerlink" href="#isaacreadrtxlidardata" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>[‘This node reads the data straight from the an RTX Lidar sensor.’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution port.</p></li>
+<li><p><strong>cpuPointer</strong> (<em>uint64</em>): CPU Pointer to LiDAR render result.</p></li>
+<li><p><strong>keepOnlyPositiveDistance</strong> (<em>bool</em>): Keep points only if the return distance is &gt; 0. Default to True.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): Output execution triggers when lidar sensor has data.</p></li>
+<li><p><strong>intensity</strong> (<em>float[]</em>): intensity [0,1].</p></li>
+<li><p><strong>distance</strong> (<em>float[]</em>): distance in m.</p></li>
+<li><p><strong>azimuth</strong> (<em>float[]</em>): azimuth in rad [-pi,pi].</p></li>
+<li><p><strong>elevation</strong> (<em>float[]</em>): elevation in rad [-pi/2, pi/2].</p></li>
+<li><p><strong>velocityMs</strong> (<em>pointf[3][]</em>): velocity at hit point in sensor coordinates [m/s].</p></li>
+<li><p><strong>echoId</strong> (<em>uint[]</em>): echo id in ascending order.</p></li>
+<li><p><strong>emitterId</strong> (<em>uint[]</em>): beam/laser detector id.</p></li>
+<li><p><strong>beamId</strong> (<em>uint[]</em>): beam/laser detector id.</p></li>
+<li><p><strong>materialId</strong> (<em>uint[]</em>): hit point material id.</p></li>
+<li><p><strong>hitPointNormal</strong> (<em>pointf[3][]</em>): hit point Normal.</p></li>
+<li><p><strong>tick</strong> (<em>uint[]</em>): tick of point.</p></li>
+<li><p><strong>objectId</strong> (<em>uint64[]</em>): hit point object id.</p></li>
+<li><p><strong>timeStampNs</strong> (<em>uint64[]</em>): absolute timeStamp in nano seconds.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacreadimu">
+<h1>IsaacReadIMU<a class="headerlink" href="#isaacreadimu" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>Node that reads out IMU linear acceleration, angular velocity and orientation data</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution port.</p></li>
+<li><p><strong>imuPrim</strong> (<em>bundle</em>): Usd prim reference to the IMU prim.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): Output execution triggers when sensor has data.</p></li>
+<li><p><strong>linAcc</strong> (<em>vectord[3]</em>): Linear acceleration IMU reading.</p></li>
+<li><p><strong>angVel</strong> (<em>vectord[3]</em>): Angular velocity IMU reading.</p></li>
+<li><p><strong>orientation</strong> (<em>quatd[4]</em>): Relative orientation as quaternion.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacreadcontactsensor">
+<h1>IsaacReadContactSensor<a class="headerlink" href="#isaacreadcontactsensor" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>Node that reads out contact sensor data</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution port.</p></li>
+<li><p><strong>csPrim</strong> (<em>bundle</em>): USD prim reference to contact sensor prim.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): Output execution triggers when sensor has data.</p></li>
+<li><p><strong>inContact</strong> (<em>bool</em>): Bool that registers current sensor contact.</p></li>
+<li><p><strong>value</strong> (<em>float</em>): Contact force value reading (N).</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacprintrtxlidarinfo">
+<h1>IsaacPrintRTXLidarInfo<a class="headerlink" href="#isaacprintrtxlidarinfo" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>[‘process and print the raw RTX lidar data’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution port.</p></li>
+<li><p><strong>cpuPointer</strong> (<em>uint64</em>): Pointer to LiDAR render result.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacprintrtxradarinfo">
+<h1>IsaacPrintRTXRadarInfo<a class="headerlink" href="#isaacprintrtxradarinfo" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>[‘process and print the raw RTX Radar data’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution port.</p></li>
+<li><p><strong>cpuPointer</strong> (<em>uint64</em>): Pointer to Radar render result.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018-2023, NVIDIA.
+      <span class="lastupdated">Last updated on Mar 16, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

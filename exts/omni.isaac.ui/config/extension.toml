@@ -1,0 +1,42 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.8.0"
+category = "Simulation"
+title = "Isaac Sim UI Utilities"
+description = "Core UI Elements for Isaac Sim"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "ui",]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.kit.uiapp" = {}
+"omni.kit.menu.utils" = {}
+"omni.kit.window.extensions" = {}
+"omni.kit.window.property" = {}
+"omni.kit.window.filepicker" = {}
+"omni.kit.pip_archive" = {} # pulls in pyperclip
+"omni.graph" = {}
+"omni.graph.action" = {}
+"omni.graph.visualization.nodes" = {}
+"omni.isaac.core" = {}
+
+[[python.module]]
+name = "omni.isaac.ui"
+
+[[python.module]]
+name = "omni.isaac.ui.tests"
+
+[[test]]
+
+dependencies = [
+    "omni.hydra.rtx",                       # "omni.hydra.pxr", Can we run and pass with Storm ?
+    "omni.kit.viewport.utility",
+    "omni.kit.viewport.window",
+]

@@ -1,0 +1,39 @@
+{
+    "IsaacSetViewportResolution": {
+        "version": 1,
+        "icon": "icons/isaac-sim.svg",
+        "description": "Isaac Sim node that sets the resolution on a viewport",
+        "language": "Python",
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacCore",
+        "metadata": {
+            "uiName": "Isaac Set Viewport Resolution"
+        },
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "Input execution trigger"
+            },
+            "viewport": {
+                "type": "token",
+                "description": "Name of viewport to set resolution of"
+            },
+            "width": {
+                "type": "uint",
+                "description": "Width of the viewport, in pixels",
+                "default": 1280
+            },
+            "height": {
+                "type": "uint",
+                "description": "Height of the viewport, in pixels",
+                "default": 720
+            }
+        },
+        "outputs": {
+            "execOut": {
+                "type": "execution",
+                "description": "Input execution trigger"
+            }
+        }
+    }
+}

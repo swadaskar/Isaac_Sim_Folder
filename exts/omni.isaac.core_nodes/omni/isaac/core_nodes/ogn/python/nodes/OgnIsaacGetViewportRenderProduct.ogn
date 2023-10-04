@@ -1,0 +1,34 @@
+{
+    "IsaacGetViewportRenderProduct": {
+        "version": 1,
+        "icon": "icons/isaac-sim.svg",
+        "description": "Isaac Sim node that returns the render product for a given viewport",
+        "language": "Python",
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacCore",
+        "metadata": {
+            "uiName": "Isaac Get Viewport Render Product"
+        },
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "Input execution trigger"
+            },
+            "viewport": {
+                "type": "token",
+                "description": "Name of the viewport to get renderproduct for"
+            }
+
+        },
+        "outputs": {
+            "renderProductPath": {
+                "type": "token",
+                "description": "Render product path for the created hydra texture"
+            },
+            "execOut": {
+                "type": "execution",
+                "description": "Output execution trigger"
+            }
+        }
+    }
+}

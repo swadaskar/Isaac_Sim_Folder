@@ -1,0 +1,27 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.1.6"
+category = "Other"
+title = "Distance Unit Converter"
+description="Utility tool to change the USD stage units per meter parameter. Converts most linear attributes that are bound by the units per meter stage attribute."
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "utils"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.isaac.ui" = {}
+"omni.kit.menu.utils" = {}
+"omni.usdphysics" = {}
+"omni.usd.schema.isaac" = {}
+"omni.physx" = {}
+
+
+[[python.module]]
+name = "omni.isaac.unit_converter"

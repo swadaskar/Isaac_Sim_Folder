@@ -1,0 +1,48 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.2.4"
+category = "Rendering"
+title = "Isaac Sim Asset Browser"
+description = "A browser for Isaac Sim assets"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "browser", "asset"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+preview_image = "data/preview.png"
+icon = "data/icon.svg"
+feature = true
+# writeTarget.kit = true
+
+[dependencies]
+"omni.kit.browser.folder.core" = {}
+"omni.kit.commands" = {}
+"omni.usd" = {}
+"omni.kit.viewport.utility" = { }
+"omni.kit.tool.collect" = { optional=true }
+
+# Main python module this extension provides, it will be publicly available as "import omni.isaac.asset_browser".
+[[python.module]]
+name = "omni.isaac.asset_browser"
+
+[settings]
+exts."omni.isaac.asset_browser".folders = [
+    "http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/2022.2.1/Isaac/Robots",
+    "http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/2022.2.1/Isaac/People",
+    "http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/2022.2.1/Isaac/Props",
+    "http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/2022.2.1/Isaac/Environments",
+    "http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/2022.2.1/Isaac/Samples",
+    "http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/2022.2.1/Isaac/Sensors",
+]
+exts."omni.isaac.asset_browser".instanceable = []
+exts."omni.isaac.asset_browser".data.timeout = 5
+exts."omni.isaac.asset_browser".visible_after_startup = true
+
+[[test]]
+dependencies = [
+    "omni.kit.renderer.core",
+    "omni.kit.renderer.capture",
+]

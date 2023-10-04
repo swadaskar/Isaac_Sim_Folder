@@ -1,0 +1,34 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnIsaacReadSimulationTime.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_core_nodes_IsaacReadSimulationTime" (
+        docs="""Holds values related to simulation timestamps"""
+    )
+    {
+        token node:type = "omni.isaac.core_nodes.IsaacReadSimulationTime"
+        int node:typeVersion = 1
+
+        # 2 attributes
+        custom bool inputs:resetOnStop = false (
+            docs="""If True the simulation time will reset when stop is pressed, False means time increases monotonically"""
+        )
+        custom int64 inputs:swhFrameNumber = 0 (
+            docs="""Optional fabric frame number, leave as zero to get the latest simulation frame time"""
+        )
+
+        # 1 attribute
+        custom double outputs:simulationTime (
+            docs="""Current Simulation Time in Seconds"""
+        )
+    }
+}

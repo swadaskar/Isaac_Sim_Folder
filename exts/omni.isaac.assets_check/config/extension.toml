@@ -1,0 +1,22 @@
+[package]
+version = "0.3.2"
+category = "Setup"
+title = "Isaac Sim Assets Check"
+description = "This Extension checks if the assets are updated."
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac"]
+changelog = "docs/CHANGELOG.md"
+toggleable = false
+
+[dependencies]
+"omni.usd" = {}
+"omni.ui" = { order = -100 }
+
+# Isaac Sim Core Extensions 
+"omni.isaac.core" = {}
+
+[[python.module]]
+name = "omni.isaac.assets_check"
+
+

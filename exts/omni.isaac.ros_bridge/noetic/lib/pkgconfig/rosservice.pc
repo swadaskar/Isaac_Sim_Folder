@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: rosservice
+Description: Description of rosservice
+Version: 1.15.15
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,6 @@
+{
+    "categoryDefinitions": {
+        "$description": "These categories are applied core isaac sim nodes",
+        "isaacCore": "Nodes implementing core isaac sim functionality "
+    }
+}

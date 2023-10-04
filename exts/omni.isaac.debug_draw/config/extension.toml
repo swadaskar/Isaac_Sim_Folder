@@ -1,0 +1,45 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.2.3"
+category = "Simulation"
+title = "Isaac Sim Debug Drawing"
+description = "Persistent Debug Drawing Helpers"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "physics", "inspect",]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+# Other extensions that must be loaded before this one
+[dependencies]
+"omni.graph" = {}
+"omni.graph.tools" = {}
+"omni.debugdraw" = {}
+# needed to access drawing interfaces:
+"omni.kit.renderer.core" = {}
+"omni.kit.viewport.window" = {}
+"omni.hydra.rtx" = {}
+# The generated tests will make use of these modules
+"omni.usd" = {}
+"omni.kit.async_engine" = {}
+
+[[python.module]]
+name = "omni.isaac.debug_draw"
+
+[[python.module]]
+name = "omni.isaac.debug_draw.tests"
+
+# Watch the .ogn files for hot reloading (only for Python files)
+[fswatcher.patterns]
+include = ["*.ogn", "*.py"]
+exclude = ["Ogn*Database.py"]
+
+
+[[native.plugin]]
+path = "bin/*.plugin"
+recursive = false

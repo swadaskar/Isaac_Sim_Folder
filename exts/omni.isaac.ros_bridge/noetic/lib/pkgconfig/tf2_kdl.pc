@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: tf2_kdl
+Description: Description of tf2_kdl
+Version: 0.7.6
+Cflags: -I${prefix}/include -I/usr/local/include/eigen3 -I/workspace/noetic_ws/install/include
+Libs: -L${prefix}/lib /workspace/noetic_ws/install/lib/liborocos-kdl.so.1.5.1
+Requires: 

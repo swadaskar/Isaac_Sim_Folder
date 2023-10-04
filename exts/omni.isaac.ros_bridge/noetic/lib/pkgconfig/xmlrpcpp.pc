@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: xmlrpcpp
+Description: Description of xmlrpcpp
+Version: 1.15.15
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lxmlrpcpp
+Requires: cpp_common rostime

@@ -1,0 +1,5 @@
+setup.py
+scripts/rostopic
+src/rostopic/__init__.py
+test/test_rostopic.py
+test/test_rostopic_command_line_offline.py

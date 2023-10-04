@@ -1,0 +1,36 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "1.0.4"
+category = "Utility"
+title = "Isaac Sim Partition Generator"
+description = "Generates Partitioned Sub-Levels"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "partition","export"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.graph.core" = {}
+"omni.isaac.core" = {}
+"omni.isaac.ui" = {}
+"omni.kit.test" = {}
+"omni.kit.uiapp" = {}
+"omni.kit.window.filepicker" = {}
+"omni.kit.window.preferences" = {}
+"omni.kit.widget.settings" = {}
+
+[[python.module]]
+name = "omni.isaac.partition"
+
+[[python.module]]
+name = "omni.isaac.partition.tests"
+
+[[native.plugin]]
+path = "bin/omni.isaac.partition.plugin"
+recursive = false

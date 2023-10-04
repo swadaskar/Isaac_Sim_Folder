@@ -1,0 +1,6 @@
+setup.py
+src/angles/__init__.py
+src/angles.egg-info/PKG-INFO
+src/angles.egg-info/SOURCES.txt
+src/angles.egg-info/dependency_links.txt
+src/angles.egg-info/top_level.txt

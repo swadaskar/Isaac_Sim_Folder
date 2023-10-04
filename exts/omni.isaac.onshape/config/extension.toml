@@ -1,0 +1,31 @@
+display_name = "Onshape Importer"
+
+[package]
+version = "0.6.2"
+category = "Importer"
+title = "Onshape Importer"
+description = "Import Onshape Documents into Omniverse"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+preview_image = "data/preview.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.kit.uiapp" = {}
+"omni.kit.commands" = {}
+"omni.kit.window.filepicker" = {}
+"omni.kit.menu.utils" = {}
+"omni.kit.window.preferences" = {}
+"omni.timeline" = {}
+"omni.physx" = {}
+
+[[python.module]]
+name = "omni.isaac.onshape"
+
+[python.pipapi]
+requirements = ["certifi==2021.5.30","requests==2.28.1", "pint==0.17.0","packaging==21.0","oauthlib==3.1.1"]
+use_online_index = true

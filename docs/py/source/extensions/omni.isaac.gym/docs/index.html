@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RL [omni.isaac.gym] &mdash; isaac_sim 2022.2.1-rc.14 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/omni-style.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/api-styles.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/mermaid-init.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+        <script src="https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js"></script>
+        <script>initMermaid();</script>
+        <script src="../../../../_static/version.js"></script>
+        <script src="../../../../_static/social-media.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Isaac Sensor Extension [omni.isaac.sensor]" href="../../omni.isaac.sensor/docs/index.html" />
+    <link rel="prev" title="Isaac Cloner [omni.isaac.cloner]" href="../../omni.isaac.cloner/docs/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html">
+            <img src="../../../../_static/main_ov_logo_square.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Main Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core/docs/index.html">Core [omni.isaac.core]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core_nodes/docs/index.html">Core Omnigraph Nodes [omni.isaac.core_nodes]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html">Dynamic Control [omni.isaac.dynamic_control]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.kit/docs/index.html">Simulation Application [omni.isaac.kit]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.utils/docs/index.html">Utilities [omni.isaac.utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ui/docs/index.html">UI Utilities [omni.isaac.ui]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.kit.loop-isaac/docs/index.html">Time Stepping Control [omni.kit.loop-isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.cloner/docs/index.html">Isaac Cloner [omni.isaac.cloner]</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">RL [omni.isaac.gym]</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-omni.isaac.gym.vec_env.vec_env_base">Base Environment Wrapper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-omni.isaac.gym.vec_env.vec_env_mt">Multi-Threaded Environment Wrapper</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sensor Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.sensor/docs/index.html">Isaac Sensor Extension [omni.isaac.sensor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.range_sensor/docs/index.html">Range Based Sensor Simulation [omni.isaac.range_sensor]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Asset Conversion Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.urdf/docs/index.html">URDF Import Extension [omni.isaac.urdf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.mjcf/docs/index.html">MJCF Import Extension [omni.isaac.mjcf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.shapenet/docs/index.html">ShapeNet [omni.isaac.shapenet]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dofbot/docs/index.html">Dofbot Robot [omni.isaac.dofbot]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.franka/docs/index.html">Franka Robot [omni.isaac.franka]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.wheeled_robots/docs/index.html">Wheeled Robots [omni.isaac.wheeled_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.universal_robots/docs/index.html">Universal Robots [omni.isaac.universal_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.quadruped/docs/index.html">Quadruped Robots [omni.isaac.quadruped]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.manipulators/docs/index.html">Manipulators [omni.isaac.manipulators]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros_bridge/docs/index.html">ROS Bridge [omni.isaac.ros_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros2_bridge/docs/index.html">ROS2 Bridge [omni.isaac.ros2_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.debug_draw/docs/index.html">Debug Drawing [omni.isaac.debug_draw]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.motion_generation/docs/index.html">Motion Generation Extension [omni.isaac.motion_generation]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.lula/docs/index.html">Lula [omni.isaac.lula]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.surface_gripper/docs/index.html">Surface_gripper [omni.isaac.surface_gripper]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.synthetic_utils/docs/index.html">Tools for Generating Synthetic Data [omni.isaac.synthetic_utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.occupancy_map/docs/index.html">Occupancy Extension [omni.isaac.occupancy_map]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.replicator.isaac/docs/index.html">Replicator Isaac Extension [omni.replicator.isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.conveyor/docs/index.html">Conveyor [omni.isaac.conveyor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.examples_nodes/docs/index.html">Isaac Sim Examples Nodes [omni.isaac.examples_nodes]</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">isaac_sim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>RL [omni.isaac.gym]</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="rl-omni-isaac-gym">
+<h1>RL [omni.isaac.gym]<a class="headerlink" href="#rl-omni-isaac-gym" title="Permalink to this headline"></a></h1>
+<section id="module-omni.isaac.gym.vec_env.vec_env_base">
+<span id="base-environment-wrapper"></span><h2>Base Environment Wrapper<a class="headerlink" href="#module-omni.isaac.gym.vec_env.vec_env_base" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VecEnvBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_livestream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_viewport</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase" title="Permalink to this definition"></a></dt>
+<dd><p>This class provides a base interface for connecting RL policies with task implementations.
+APIs provided in this interface follow the interface in gym.Env.
+This class also provides utilities for initializing simulation apps, creating the World,
+and registering a task.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.action_space">
+<span class="sig-name descname"><span class="pre">action_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">gym.spaces.space.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">gym.core.ActType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.action_space" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.close" title="Permalink to this definition"></a></dt>
+<dd><p>Closes simulation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'render_modes':</span> <span class="pre">[]}</span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.metadata" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.np_random">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">np_random</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.random._generator.Generator</span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.np_random" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the environment’s internal <code class="xref py py-attr docutils literal notranslate"><span class="pre">_np_random</span></code> that if not set will initialise with a random seed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.num_envs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_envs</span></span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.num_envs" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves number of environments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of environments.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>num_envs(int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.observation_space">
+<span class="sig-name descname"><span class="pre">observation_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">gym.spaces.space.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">gym.core.ObsType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.observation_space" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'human'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.render" title="Permalink to this definition"></a></dt>
+<dd><p>Step the renderer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> (<em>str</em>) – Select mode of rendering based on OpenAI environments.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.render_mode">
+<span class="sig-name descname"><span class="pre">render_mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.render_mode" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.reset" title="Permalink to this definition"></a></dt>
+<dd><p>Resets the task and updates observations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.reward_range">
+<span class="sig-name descname"><span class="pre">reward_range</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(-inf,</span> <span class="pre">inf)</span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.reward_range" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.seed" title="Permalink to this definition"></a></dt>
+<dd><p>Sets a seed. Pass in -1 for a random seed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>int</em>) – Seed to set. Defaults to -1.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Seed that was set.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>seed (int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.set_task">
+<span class="sig-name descname"><span class="pre">set_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'numpy'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_sim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.set_task" title="Permalink to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Creates a World object and adds Task to World.</dt><dd><p>Initializes and registers task to the environment interface.
+Triggers task start-up.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>task</strong> (<em>RLTask</em>) – The task to register to the env.</p></li>
+<li><p><strong>backend</strong> (<em>str</em>) – Backend to use for task. Can be “numpy” or “torch”. Defaults to “numpy”.</p></li>
+<li><p><strong>sim_params</strong> (<em>dict</em>) – Simulation parameters for physics settings. Defaults to None.</p></li>
+<li><p><strong>init_sim</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Automatically starts simulation. Defaults to True.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.spec">
+<span class="sig-name descname"><span class="pre">spec</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">EnvSpec</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.spec" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.step" title="Permalink to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Basic implementation for stepping simulation.</dt><dd><p>Can be overriden by inherited Env classes
+to satisfy requirements of specific RL libraries. This method passes actions to task
+for processing, steps simulation, and computes observations, rewards, and resets.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>actions</strong> (<em>Union</em><em>[</em><em>numpy.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Actions buffer from policy.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Buffer of observation data.
+rewards(Union[numpy.ndarray, torch.Tensor]): Buffer of rewards data.
+dones(Union[numpy.ndarray, torch.Tensor]): Buffer of resets/dones data.
+info(dict): Dictionary of extras data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>observations(Union[numpy.ndarray, torch.Tensor])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.unwrapped">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unwrapped</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">gym.core.Env</span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_base.VecEnvBase.unwrapped" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the base non-wrapped environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The base non-wrapped gym.Env instance</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Env</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-omni.isaac.gym.vec_env.vec_env_mt">
+<span id="multi-threaded-environment-wrapper"></span><h2>Multi-Threaded Environment Wrapper<a class="headerlink" href="#module-omni.isaac.gym.vec_env.vec_env_mt" title="Permalink to this headline"></a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.TaskStopException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TaskStopException</span></span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.TaskStopException" title="Permalink to this definition"></a></dt>
+<dd><p>Exception class for signalling task termination.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.TaskStopException.args">
+<span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.TaskStopException.args" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.TaskStopException.with_traceback">
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.TaskStopException.with_traceback" title="Permalink to this definition"></a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.TrainerMT">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TrainerMT</span></span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.TrainerMT" title="Permalink to this definition"></a></dt>
+<dd><p>A base abstract trainer class for controlling starting and stopping of RL policy.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.TrainerMT.run">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.TrainerMT.run" title="Permalink to this definition"></a></dt>
+<dd><p>Runs RL loop in a new thread</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.TrainerMT.stop">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.TrainerMT.stop" title="Permalink to this definition"></a></dt>
+<dd><p>Stop RL thread</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VecEnvMT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_livestream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_viewport</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT" title="Permalink to this definition"></a></dt>
+<dd><p>This class provides a base interface for connecting RL policies with task implementations
+in a multi-threaded fashion. RL policies using this class will run on a different thread
+than the thread simulation runs on. This can be useful for interacting with the UI before,
+during, and after running RL policies. Data sharing between threads happen through message
+passing on multi-threaded queues.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.action_space">
+<span class="sig-name descname"><span class="pre">action_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">gym.spaces.space.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">gym.core.ActType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.action_space" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.clear_queues">
+<span class="sig-name descname"><span class="pre">clear_queues</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.clear_queues" title="Permalink to this definition"></a></dt>
+<dd><p>Clears all queues.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.close" title="Permalink to this definition"></a></dt>
+<dd><p>Closes simulation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.get_actions">
+<span class="sig-name descname"><span class="pre">get_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.get_actions" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves actions from policy by waiting for actions to be sent to the queue from the RL thread.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>block</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Whether to block thread when waiting for data.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>actions buffer retrieved from queue.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>actions (Union[np.ndarray, torch.Tensor, None])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.get_data" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves data from task by waiting for data dictionary to be sent to the queue from the simulation thread.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>block</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Whether to block thread when waiting for data.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>data dictionary retrieved from queue.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>actions (Union[np.ndarray, torch.Tensor, None])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.initialize" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes queues for sharing data across threads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>action_queue</strong> (<em>queue.Queue</em>) – Queue for passing actions from policy to task.</p></li>
+<li><p><strong>data_queue</strong> (<em>queue.Queue</em>) – Queue for passing data from task to policy.</p></li>
+<li><p><strong>timeout</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Seconds to wait for data when queue is empty. An exception will
+be thrown when the timeout limit is reached. Defaults to 30 seconds.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'render_modes':</span> <span class="pre">[]}</span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.metadata" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.np_random">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">np_random</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.random._generator.Generator</span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.np_random" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the environment’s internal <code class="xref py py-attr docutils literal notranslate"><span class="pre">_np_random</span></code> that if not set will initialise with a random seed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.num_envs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_envs</span></span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.num_envs" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves number of environments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of environments.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>num_envs(int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.observation_space">
+<span class="sig-name descname"><span class="pre">observation_space</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">gym.spaces.space.Space</span><span class="p"><span class="pre">[</span></span><span class="pre">gym.core.ObsType</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.observation_space" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'human'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.render" title="Permalink to this definition"></a></dt>
+<dd><p>Step the renderer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> (<em>str</em>) – Select mode of rendering based on OpenAI environments.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.render_mode">
+<span class="sig-name descname"><span class="pre">render_mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.render_mode" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.reset" title="Permalink to this definition"></a></dt>
+<dd><p>Resets the task and updates observations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.reward_range">
+<span class="sig-name descname"><span class="pre">reward_range</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(-inf,</span> <span class="pre">inf)</span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.reward_range" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.run" title="Permalink to this definition"></a></dt>
+<dd><p>Main loop for controlling simulation and task stepping.
+This method is responsible for starting simulation, stepping task and simulation,
+collecting buffers from task, sending data to policy, and retrieving actions from policy.
+It also deals with the case when the policy terminates on completion and continues
+the simulation thread so that UI does not get affected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>trainer</strong> (<a class="reference internal" href="#omni.isaac.gym.vec_env.vec_env_mt.TrainerMT" title="omni.isaac.gym.vec_env.vec_env_mt.TrainerMT"><em>TrainerMT</em></a>) – A Trainer object that implements APIs for starting and stopping RL thread.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.seed" title="Permalink to this definition"></a></dt>
+<dd><p>Sets a seed. Pass in -1 for a random seed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>int</em>) – Seed to set. Defaults to -1.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Seed that was set.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>seed (int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.send_actions">
+<span class="sig-name descname"><span class="pre">send_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.send_actions" title="Permalink to this definition"></a></dt>
+<dd><p>Sends actions from RL thread to simulation thread by adding actions to queue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>actions</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – actions buffer to be added to queue.</p></li>
+<li><p><strong>block</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Whether to block thread when writing to queue.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.send_data">
+<span class="sig-name descname"><span class="pre">send_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.send_data" title="Permalink to this definition"></a></dt>
+<dd><p>Sends data from task thread to RL thread by adding data to queue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>dict</em>) – Dictionary containing task data.</p></li>
+<li><p><strong>block</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Whether to block thread when writing to queue.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.set_task">
+<span class="sig-name descname"><span class="pre">set_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'numpy'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_sim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.set_task" title="Permalink to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Creates a World object and adds Task to World.</dt><dd><p>Initializes and registers task to the environment interface.
+Triggers task start-up.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>task</strong> (<em>RLTask</em>) – The task to register to the env.</p></li>
+<li><p><strong>backend</strong> (<em>str</em>) – Backend to use for task. Can be “numpy” or “torch”. Defaults to “numpy”.</p></li>
+<li><p><strong>sim_params</strong> (<em>dict</em>) – Simulation parameters for physics settings. Defaults to None.</p></li>
+<li><p><strong>init_sim</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Automatically starts simulation. Defaults to True.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.spec">
+<span class="sig-name descname"><span class="pre">spec</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">EnvSpec</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.spec" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.step" title="Permalink to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Basic implementation for stepping simulation.</dt><dd><p>Can be overriden by inherited Env classes
+to satisfy requirements of specific RL libraries. This method passes actions to task
+for processing, steps simulation, and computes observations, rewards, and resets.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>actions</strong> (<em>Union</em><em>[</em><em>numpy.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Actions buffer from policy.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Buffer of observation data.
+rewards(Union[numpy.ndarray, torch.Tensor]): Buffer of rewards data.
+dones(Union[numpy.ndarray, torch.Tensor]): Buffer of resets/dones data.
+info(dict): Dictionary of extras data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>observations(Union[numpy.ndarray, torch.Tensor])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.unwrapped">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unwrapped</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">gym.core.Env</span></em><a class="headerlink" href="#omni.isaac.gym.vec_env.vec_env_mt.VecEnvMT.unwrapped" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the base non-wrapped environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The base non-wrapped gym.Env instance</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Env</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018-2023, NVIDIA.
+      <span class="lastupdated">Last updated on Mar 16, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

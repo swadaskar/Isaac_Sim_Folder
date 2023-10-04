@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: urdf
+Description: Description of urdf
+Version: 1.13.2
+Cflags: -I${prefix}/include -I/usr/local/lib/urdfdom_headers/cmake/../../../include/urdfdom_headers -I/usr/local/lib/urdfdom/cmake/../../../include/urdfdom -I/usr/local/include -I/workspace/boost_1_68_0/_install/include
+Libs: -L${prefix}/lib -lurdf /usr/local/lib/liburdfdom_sensor.so /usr/local/lib/liburdfdom_model_state.so /usr/local/lib/liburdfdom_model.so /usr/local/lib/liburdfdom_world.so /usr/local/lib/libconsole_bridge.so.1.0 /workspace/boost_1_68_0/_install/lib/libboost_thread.so -lpthread /workspace/boost_1_68_0/_install/lib/libboost_chrono.so /workspace/boost_1_68_0/_install/lib/libboost_system.so /workspace/boost_1_68_0/_install/lib/libboost_date_time.so /workspace/boost_1_68_0/_install/lib/libboost_atomic.so /usr/local/lib/libtinyxml.so /usr/local/lib/libtinyxml2.a
+Requires: pluginlib rosconsole_bridge roscpp

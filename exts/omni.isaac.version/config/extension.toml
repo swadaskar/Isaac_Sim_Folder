@@ -1,0 +1,21 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "1.0.0"
+category = "Other"
+title = "Isaac Sim Version"
+description = "Isaac Sim Version"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+
+[dependencies]
+
+
+[[python.module]]
+name = "omni.isaac.version"

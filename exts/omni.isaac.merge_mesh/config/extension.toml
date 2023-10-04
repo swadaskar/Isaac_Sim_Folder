@@ -1,0 +1,28 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.1.2"
+category = "Simulation"
+title = "Isaac Sim Merge Mesh"
+description = "Inspect Physics Merge Mesh Utility"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "merge", "mesh",]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.isaac.ui" = {}
+
+[[python.module]]
+name = "omni.isaac.merge_mesh"
+
+[[python.module]]
+name = "omni.isaac.merge_mesh.tests"
+
+[[test]]
+args = ["--/exts/omni.kit.renderer.core/compatibilityMode=true"]

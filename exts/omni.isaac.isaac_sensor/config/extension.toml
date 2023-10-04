@@ -1,0 +1,20 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "2.0.0"
+category = "Simulation"
+title = "Deprecated: Isaac Sim Isaac Sensor Simulation"
+description = "Deprecated, renamed to omni.isaac.sensor"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "sensors", "deprecated"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+
+[[python.module]]
+name = "omni.isaac.isaac_sensor"

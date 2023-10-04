@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: roscpp_serialization
+Description: Description of roscpp_serialization
+Version: 0.7.2
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lroscpp_serialization
+Requires: cpp_common roscpp_traits rostime

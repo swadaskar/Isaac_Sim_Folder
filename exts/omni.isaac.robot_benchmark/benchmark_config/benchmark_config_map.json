@@ -1,0 +1,21 @@
+{
+	"Franka":
+	{
+		"environment_config_paths" : 
+		{
+			"Cubby" : "./environment_configs/franka/cubby_config.json",
+			"Evasion" : "./environment_configs/franka/evasion_config.json"
+		}
+	},
+	"UR10":
+	{
+		"environment_config_paths" : 
+		{
+			"Cubby" : "./environment_configs/ur10/cubby_config.json",
+			"Evasion" : "./environment_configs/ur10/evasion_config.json",
+			"Guillotine" : "./environment_configs/ur10/guillotine_config.json",
+			"Windmill" : "./environment_configs/ur10/windmill_config.json",
+			"Window" : "./environment_configs/ur10/window_config.json"
+		}
+	}
+}

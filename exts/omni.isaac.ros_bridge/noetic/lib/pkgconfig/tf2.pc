@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: tf2
+Description: Description of tf2
+Version: 0.7.6
+Cflags: -I${prefix}/include -I/usr/local/include
+Libs: -L${prefix}/lib -ltf2 /usr/local/lib/libconsole_bridge.so.1.0
+Requires: geometry_msgs tf2_msgs rostime

@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: roslaunch
+Description: Description of roslaunch
+Version: 1.15.15
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

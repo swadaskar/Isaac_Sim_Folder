@@ -1,0 +1,88 @@
+{
+    "ROS1CameraHelper": {
+        "version": 2,
+        "icon": "icons/isaac-sim.svg",
+        "description": "This node handles automation of the camera sensor pipeline",
+        "language": "Python",
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacRos",
+        "metadata": {
+            "uiName": "ROS1 Camera Helper"
+        },
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "Triggering this causes the sensor pipeline to be generated"
+            },
+            "nodeNamespace": {
+                "type": "string",
+                "description": "Namespace of ROS1 Node, prepends any published/subscribed topic by the node namespace",
+                "default": ""
+            },
+            "frameId": {
+                "type": "string",
+                "description": "FrameId for ROS1 message",
+                "default": "sim_camera"
+            },
+            "topicName": {
+                "type": "string",
+                "description": "Topic name for sensor data",
+                "default": "rgb"
+            },
+            "queueSize": {
+                "type": "uint64",
+                "description": "The number of messages to queue up before throwing some away, in case messages are collected faster than they can be sent",
+                "default": 10
+            },
+            "viewport": {
+                "type": "token",
+                "description": "DEPRECATED, use renderProductPath. Name of the desired viewport to publish"
+            },
+            "renderProductPath": {
+                "type": "token",
+                "description": "Path of the render product used for capturing data"
+            },
+            "type": {
+                "type": "token",
+                "description": "",
+                "metadata": {
+                    "allowedTokens": {
+                        "rgb": "rgb",
+                        "depth": "depth",
+                        "depth_pcl": "depth_pcl",
+                        "instance_segmentation": "instance_segmentation",
+                        "semantic_segmentation": "semantic_segmentation",
+                        "bbox_2d_tight": "bbox_2d_tight",
+                        "bbox_2d_loose": "bbox_2d_loose",
+                        "bbox_3d": "bbox_3d",
+                        "camera_info": "camera_info"
+                    }
+                },
+                "default": "rgb"
+            },
+            "enableSemanticLabels": {
+                "type": "bool",
+                "description": "Enable publishing of semantic labels, applies only to instance_segmentation, semantic_segmentation, bbox_2d_tight, bbox_2d_loose, bbox_3d"
+            },
+            "semanticLabelsTopicName": {
+                "type": "string",
+                "description": "Topic name used for publishing semantic labels, applies only to instance_segmentation, semantic_segmentation, bbox_2d_tight, bbox_2d_loose, bbox_3d",
+                "default": "semantic_labels"
+            },
+            "stereoOffset": {
+                "type": "float[2]",
+                "description": "Stereo offset (Tx, Ty) used when publishing the camera info topic",
+                "default": [
+                    0,
+                    0
+                ]
+            },
+            "resetSimulationTimeOnStop": {
+                "type": "bool",
+                "description": "If True the simulation time will reset when stop is pressed, False means time increases monotonically",
+                "uiName": "Reset Time On Stop",
+                "default": false
+            }
+        }
+    }
+}

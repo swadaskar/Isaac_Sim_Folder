@@ -1,0 +1,1 @@
+This ./ur10 folder is being left here to support legacy usage, but there is an effective copy in the ./universal_robots/ur10 folder.  This folder will not be referenced in any future Isaac Sim code and will not be included in the next release.

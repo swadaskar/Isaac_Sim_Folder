@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Core Omnigraph Nodes [omni.isaac.core_nodes] &mdash; isaac_sim 2022.2.1-rc.14 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/omni-style.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/api-styles.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/mermaid-init.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+        <script src="https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js"></script>
+        <script>initMermaid();</script>
+        <script src="../../../../_static/version.js"></script>
+        <script src="../../../../_static/social-media.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Dynamic Control [omni.isaac.dynamic_control]" href="../../omni.isaac.dynamic_control/docs/index.html" />
+    <link rel="prev" title="Core [omni.isaac.core]" href="../../omni.isaac.core/docs/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html">
+            <img src="../../../../_static/main_ov_logo_square.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Main Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core/docs/index.html">Core [omni.isaac.core]</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Core Omnigraph Nodes [omni.isaac.core_nodes]</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#isaacgenerate32fc1">IsaacGenerate32FC1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaacconvertdepthtopointcloud">IsaacConvertDepthToPointCloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaacreadsimulationtime">IsaacReadSimulationTime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaacconvertrgbatorgb">IsaacConvertRGBAToRGB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaacreadsystemtime">IsaacReadSystemTime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaaccomputeodometry">IsaacComputeOdometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaacreadcamerainfo">IsaacReadCameraInfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaactestnode">IsaacTestNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaaccreaterenderproduct">IsaacCreateRenderProduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaacgetviewportrenderproduct">IsaacGetViewportRenderProduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaacgeneratergba">IsaacGenerateRGBA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ognisaacscaletofromstageunit">OgnIsaacScaleToFromStageUnit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaaccreateviewport">IsaacCreateViewport</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaacreadfilepath">IsaacReadFilePath</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaacsetviewportresolution">IsaacSetViewportResolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaacarticulationcontroller">IsaacArticulationController</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaacsetcameraonrenderproduct">IsaacSetCameraOnRenderProduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaacsimulationgate">IsaacSimulationGate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isaacreadenvvar">IsaacReadEnvVar</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html">Dynamic Control [omni.isaac.dynamic_control]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.kit/docs/index.html">Simulation Application [omni.isaac.kit]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.utils/docs/index.html">Utilities [omni.isaac.utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ui/docs/index.html">UI Utilities [omni.isaac.ui]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.kit.loop-isaac/docs/index.html">Time Stepping Control [omni.kit.loop-isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.cloner/docs/index.html">Isaac Cloner [omni.isaac.cloner]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.gym/docs/index.html">RL [omni.isaac.gym]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sensor Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.sensor/docs/index.html">Isaac Sensor Extension [omni.isaac.sensor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.range_sensor/docs/index.html">Range Based Sensor Simulation [omni.isaac.range_sensor]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Asset Conversion Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.urdf/docs/index.html">URDF Import Extension [omni.isaac.urdf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.mjcf/docs/index.html">MJCF Import Extension [omni.isaac.mjcf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.shapenet/docs/index.html">ShapeNet [omni.isaac.shapenet]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dofbot/docs/index.html">Dofbot Robot [omni.isaac.dofbot]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.franka/docs/index.html">Franka Robot [omni.isaac.franka]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.wheeled_robots/docs/index.html">Wheeled Robots [omni.isaac.wheeled_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.universal_robots/docs/index.html">Universal Robots [omni.isaac.universal_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.quadruped/docs/index.html">Quadruped Robots [omni.isaac.quadruped]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.manipulators/docs/index.html">Manipulators [omni.isaac.manipulators]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros_bridge/docs/index.html">ROS Bridge [omni.isaac.ros_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros2_bridge/docs/index.html">ROS2 Bridge [omni.isaac.ros2_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.debug_draw/docs/index.html">Debug Drawing [omni.isaac.debug_draw]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.motion_generation/docs/index.html">Motion Generation Extension [omni.isaac.motion_generation]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.lula/docs/index.html">Lula [omni.isaac.lula]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.surface_gripper/docs/index.html">Surface_gripper [omni.isaac.surface_gripper]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.synthetic_utils/docs/index.html">Tools for Generating Synthetic Data [omni.isaac.synthetic_utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.occupancy_map/docs/index.html">Occupancy Extension [omni.isaac.occupancy_map]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.replicator.isaac/docs/index.html">Replicator Isaac Extension [omni.replicator.isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.conveyor/docs/index.html">Conveyor [omni.isaac.conveyor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.examples_nodes/docs/index.html">Isaac Sim Examples Nodes [omni.isaac.examples_nodes]</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">isaac_sim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Core Omnigraph Nodes [omni.isaac.core_nodes]</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="core-omnigraph-nodes-omni-isaac-core-nodes">
+<h1>Core Omnigraph Nodes [omni.isaac.core_nodes]<a class="headerlink" href="#core-omnigraph-nodes-omni-isaac-core-nodes" title="Permalink to this headline"></a></h1>
+<section id="isaacgenerate32fc1">
+<h2>IsaacGenerate32FC1<a class="headerlink" href="#isaacgenerate32fc1" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Isaac Sim Node that generates a constant 32FC1 buffer</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>value</strong> (<em>float</em>): Value for output image.</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Width for output image. Default to 100.</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Height for output image. Default to 100.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>data</strong> (<em>uchar[]</em>): Buffer 32FC1 array data.</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Width for output image.</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Height for output image.</p></li>
+<li><p><strong>encoding</strong> (<em>token</em>): Encoding as a token.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacconvertdepthtopointcloud">
+<h2>IsaacConvertDepthToPointCloud<a class="headerlink" href="#isaacconvertdepthtopointcloud" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Converts a 32FC1 image buffer into Point Cloud data</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution port.</p></li>
+<li><p><strong>data</strong> (<em>uchar[]</em>): Buffer 32FC1 image array data. Default to [].</p></li>
+<li><p><strong>format</strong> (<em>uint64</em>): Format. Default to 33.</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Buffer array width, same as input.</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Buffer array height, same as input.</p></li>
+<li><p><strong>focalLength</strong> (<em>float</em>)</p></li>
+<li><p><strong>horizontalAperture</strong> (<em>float</em>)</p></li>
+<li><p><strong>verticalAperture</strong> (<em>float</em>)</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): Output execution triggers when lidar sensor has completed a full scan.</p></li>
+<li><p><strong>pointCloudData</strong> (<em>pointf[3][]</em>): Buffer of 3d points containing point cloud data.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacreadsimulationtime">
+<h2>IsaacReadSimulationTime<a class="headerlink" href="#isaacreadsimulationtime" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Holds values related to simulation timestamps</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>resetOnStop</strong> (<em>bool</em>): If True the simulation time will reset when stop is pressed, False means time increases monotonically. Default to False.</p></li>
+<li><p><strong>swhFrameNumber</strong> (<em>int64</em>): Optional fabric frame number, leave as zero to get the latest simulation frame time. Default to 0.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>simulationTime</strong> (<em>double</em>): Current Simulation Time in Seconds.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacconvertrgbatorgb">
+<h2>IsaacConvertRGBAToRGB<a class="headerlink" href="#isaacconvertrgbatorgb" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Converts a RGBA image buffer into RGB</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution port.</p></li>
+<li><p><strong>data</strong> (<em>uchar[]</em>): Buffer rgba array data. Default to [].</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Buffer array width.</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Buffer array height.</p></li>
+<li><p><strong>encoding</strong> (<em>token</em>): Encoding as a token. Default to rgba8.</p></li>
+<li><p><strong>bufferSize</strong> (<em>uint</em>): Size (in bytes) of the buffer (0 if the input is a texture).</p></li>
+<li><p><strong>swhFrameNumber</strong> (<em>uint64</em>): Frame number.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): Output execution triggers when conversion complete.</p></li>
+<li><p><strong>data</strong> (<em>uchar[]</em>): Buffer rgb array data.</p></li>
+<li><p><strong>encoding</strong> (<em>token</em>): Encoding as a token.</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Buffer array width, same as input.</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Buffer array height, same as input.</p></li>
+<li><p><strong>bufferSize</strong> (<em>uint</em>): Size (in bytes) of the buffer (0 if the input is a texture).</p></li>
+<li><p><strong>swhFrameNumber</strong> (<em>uint64</em>): Frame number.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacreadsystemtime">
+<h2>IsaacReadSystemTime<a class="headerlink" href="#isaacreadsystemtime" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Holds values related to system timestamps</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>swhFrameNumber</strong> (<em>int64</em>): Optional fabric frame number, leave as zero to get the latest system frame time. Default to 0.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>systemTime</strong> (<em>double</em>): Current System Time in Seconds.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaaccomputeodometry">
+<h2>IsaacComputeOdometry<a class="headerlink" href="#isaaccomputeodometry" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Holds values related to odometry, this node is not a replcement for the IMU sensor and the associated Read IMU node</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution port.</p></li>
+<li><p><strong>chassisPrim</strong> (<em>bundle</em>): Usd prim reference to the articulation root or rigid body prim.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): The output execution port.</p></li>
+<li><p><strong>position</strong> (<em>vectord[3]</em>): Position vector in meters.</p></li>
+<li><p><strong>orientation</strong> (<em>quatd[4]</em>): Rotation as a quaternion (IJKR).</p></li>
+<li><p><strong>linearVelocity</strong> (<em>vectord[3]</em>): Linear velocity vector in m/s.</p></li>
+<li><p><strong>angularVelocity</strong> (<em>vectord[3]</em>): Angular velocity vector in rad/s.</p></li>
+<li><p><strong>linearAcceleration</strong> (<em>vectord[3]</em>): Linear acceleration vector in m/s^2.</p></li>
+<li><p><strong>angularAcceleration</strong> (<em>vectord[3]</em>): Angular acceleration vector in rad/s^2.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacreadcamerainfo">
+<h2>IsaacReadCameraInfo<a class="headerlink" href="#isaacreadcamerainfo" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Isaac Sim node that reads camera info for a viewport</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>viewport</strong> (<em>token</em>): Name of the viewport, or empty for the default viewport.</p></li>
+<li><p><strong>renderProductPath</strong> (<em>token</em>): Path of the render product.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>width</strong> (<em>uint</em>): Width for output image.</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Height for output image.</p></li>
+<li><p><strong>focalLength</strong> (<em>float</em>)</p></li>
+<li><p><strong>horizontalAperture</strong> (<em>float</em>)</p></li>
+<li><p><strong>verticalAperture</strong> (<em>float</em>)</p></li>
+<li><p><strong>horizontalOffset</strong> (<em>float</em>)</p></li>
+<li><p><strong>verticalOffset</strong> (<em>float</em>)</p></li>
+<li><p><strong>projectionType</strong> (<em>token</em>)</p></li>
+<li><p><strong>cameraFisheyeParams</strong> (<em>float[]</em>): Camera fisheye projection parameters.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaactestnode">
+<h2>IsaacTestNode<a class="headerlink" href="#isaactestnode" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Isaac Sim Test Node</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution.</p></li>
+<li><p><strong>input</strong> (<em>string</em>): string passed here is returned on the output of this node.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>output</strong> (<em>string</em>): return the value of input.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaaccreaterenderproduct">
+<h2>IsaacCreateRenderProduct<a class="headerlink" href="#isaaccreaterenderproduct" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Isaac Sim node that creates a render product for use with offscreen rendering</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): Input execution trigger.</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Width of the render product, in pixels. Default to 1280.</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Height of the render product, in pixels. Default to 720.</p></li>
+<li><p><strong>cameraPrim</strong> (<em>bundle</em>): Usd prim reference to the camera associated with this render product.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>renderProductPath</strong> (<em>token</em>): Render product path for the created hydra texture.</p></li>
+<li><p><strong>execOut</strong> (<em>execution</em>): Output execution trigger.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacgetviewportrenderproduct">
+<h2>IsaacGetViewportRenderProduct<a class="headerlink" href="#isaacgetviewportrenderproduct" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Isaac Sim node that returns the render product for a given viewport</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): Input execution trigger.</p></li>
+<li><p><strong>viewport</strong> (<em>token</em>): Name of the viewport to get renderproduct for.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>renderProductPath</strong> (<em>token</em>): Render product path for the created hydra texture.</p></li>
+<li><p><strong>execOut</strong> (<em>execution</em>): Output execution trigger.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacgeneratergba">
+<h2>IsaacGenerateRGBA<a class="headerlink" href="#isaacgeneratergba" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Isaac Sim Node that generates a constant rgba buffer</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>color</strong> (<em>colorf[4]</em>): Color for output image.</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Width for output image. Default to 100.</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Height for output image. Default to 100.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>data</strong> (<em>uchar[]</em>): Buffer rgba array data.</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Width for output image.</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Height for output image.</p></li>
+<li><p><strong>encoding</strong> (<em>token</em>): Encoding as a token.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ognisaacscaletofromstageunit">
+<h2>OgnIsaacScaleToFromStageUnit<a class="headerlink" href="#ognisaacscaletofromstageunit" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>[‘This node converts meters to/from stage units’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>conversion</strong> (<em>token</em>): Convert meters to/from stage units. Default to Convert to stage units.</p></li>
+<li><p><strong>value</strong> (<em>[‘numerics’]</em>): The input value.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>result</strong> (<em>[‘numerics’]</em>): The output value.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaaccreateviewport">
+<h2>IsaacCreateViewport<a class="headerlink" href="#isaaccreateviewport" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Isaac Sim node that creates a unique viewport</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): Input execution trigger.</p></li>
+<li><p><strong>name</strong> (<em>token</em>): Name of the viewport window.</p></li>
+<li><p><strong>viewportId</strong> (<em>uint</em>): If name is empty, ID is used as the name, ID == 0 is the default viewport.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>viewport</strong> (<em>token</em>): Name of the created viewport.</p></li>
+<li><p><strong>execOut</strong> (<em>execution</em>): Input execution trigger.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacreadfilepath">
+<h2>IsaacReadFilePath<a class="headerlink" href="#isaacreadfilepath" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Loads contents of file when given path, if file exists</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>path</strong> (<em>path</em>): Input path to file.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>fileContents</strong> (<em>string</em>): Output contents of file at path, returns empty string if file is not found.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacsetviewportresolution">
+<h2>IsaacSetViewportResolution<a class="headerlink" href="#isaacsetviewportresolution" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Isaac Sim node that sets the resolution on a viewport</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): Input execution trigger.</p></li>
+<li><p><strong>viewport</strong> (<em>token</em>): Name of viewport to set resolution of.</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Width of the viewport, in pixels. Default to 1280.</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Height of the viewport, in pixels. Default to 720.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): Input execution trigger.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacarticulationcontroller">
+<h2>IsaacArticulationController<a class="headerlink" href="#isaacarticulationcontroller" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Controller for articulated robots</p>
+<p>The controller takes either joint names or joint indices, and move them by the given position/velocity/effort commands</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution.</p></li>
+<li><p><strong>targetPrim</strong> (<em>bundle</em>): The target robot prim.</p></li>
+<li><p><strong>usePath</strong> (<em>bool</em>): use robot and com path instead of selecting them from stage tree. Default to True.</p></li>
+<li><p><strong>robotPath</strong> (<em>string</em>): path to the robot articulation root.</p></li>
+<li><p><strong>jointNames</strong> (<em>token[]</em>): commanded joint names. Use either Joint Names or Joint Indices, if neither is given, default to all joints.</p></li>
+<li><p><strong>jointIndices</strong> (<em>int[]</em>): commanded joint indices. Use either Joint Names or Joint Indices, if neither is given, default to all joints.</p></li>
+<li><p><strong>positionCommand</strong> (<em>double[]</em>): position commands.</p></li>
+<li><p><strong>velocityCommand</strong> (<em>double[]</em>): velocity commands.</p></li>
+<li><p><strong>effortCommand</strong> (<em>double[]</em>): effort commands.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacsetcameraonrenderproduct">
+<h2>IsaacSetCameraOnRenderProduct<a class="headerlink" href="#isaacsetcameraonrenderproduct" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Isaac Sim node that sets the camera prim of an existing render product</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): Input execution trigger.</p></li>
+<li><p><strong>renderProductPath</strong> (<em>token</em>): Path of the render product.</p></li>
+<li><p><strong>cameraPrim</strong> (<em>bundle</em>): Usd prim reference to the camera associated with this render product.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): Output execution trigger.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacsimulationgate">
+<h2>IsaacSimulationGate<a class="headerlink" href="#isaacsimulationgate" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Gate node that only passes through execution if simulation is playing</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution.</p></li>
+<li><p><strong>step</strong> (<em>uint</em>): Number of ticks per execution output, default is 1, set to zero to disable execution of connected nodes. Default to 1.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): The output execution.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacreadenvvar">
+<h2>IsaacReadEnvVar<a class="headerlink" href="#isaacreadenvvar" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><p>Loads in environment variable if present</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>envVar</strong> (<em>string</em>): Input OS environment variable name as string.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>value</strong> (<em>string</em>): Output OS environment variable value, returns empty string if variable is not found.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018-2023, NVIDIA.
+      <span class="lastupdated">Last updated on Mar 16, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

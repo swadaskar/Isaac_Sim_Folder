@@ -1,0 +1,67 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnIsaacConvertRGBAToRGB.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_core_nodes_IsaacConvertRGBAToRGB" (
+        docs="""Converts a RGBA image buffer into RGB"""
+    )
+    {
+        token node:type = "omni.isaac.core_nodes.IsaacConvertRGBAToRGB"
+        int node:typeVersion = 1
+
+        # 7 attributes
+        custom uint inputs:bufferSize = 0 (
+            docs="""Size (in bytes) of the buffer (0 if the input is a texture)"""
+        )
+        custom uchar[] inputs:data = [] (
+            docs="""Buffer rgba array data"""
+        )
+        custom token inputs:encoding = "rgba8" (
+            docs="""Encoding as a token"""
+        )
+        custom uint inputs:execIn (
+            docs="""The input execution port"""
+        )
+        custom uint inputs:height = 0 (
+            docs="""Buffer array height"""
+        )
+        custom uint64 inputs:swhFrameNumber = 0 (
+            docs="""Frame number"""
+        )
+        custom uint inputs:width = 0 (
+            docs="""Buffer array width"""
+        )
+
+        # 7 attributes
+        custom uint outputs:bufferSize (
+            docs="""Size (in bytes) of the buffer (0 if the input is a texture)"""
+        )
+        custom uchar[] outputs:data = [] (
+            docs="""Buffer rgb array data"""
+        )
+        custom token outputs:encoding (
+            docs="""Encoding as a token"""
+        )
+        custom uint outputs:execOut (
+            docs="""Output execution triggers when conversion complete"""
+        )
+        custom uint outputs:height (
+            docs="""Buffer array height, same as input"""
+        )
+        custom uint64 outputs:swhFrameNumber (
+            docs="""Frame number"""
+        )
+        custom uint outputs:width (
+            docs="""Buffer array width, same as input"""
+        )
+    }
+}

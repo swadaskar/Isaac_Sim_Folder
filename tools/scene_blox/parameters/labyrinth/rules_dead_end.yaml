@@ -1,0 +1,37 @@
+adjacencies:
+- id: dead_end
+  neighbors:
+  - neighbor_id: dead_end
+    neighbor_rotation: 0
+    self_rotation: 1
+  - neighbor_id: dead_end
+    neighbor_rotation: 2
+    self_rotation: 0
+  - neighbor_id: dead_end
+    neighbor_rotation: 3
+    self_rotation: 1
+  - neighbor_id: dead_end
+    neighbor_rotation: 0
+    self_rotation: 2
+  - neighbor_id: dead_end
+    neighbor_rotation: 3
+    self_rotation: 0
+  - neighbor_id: dead_end
+    neighbor_rotation: 2
+    self_rotation: 1
+  - neighbor_id: dead_end
+    neighbor_rotation: 0
+    self_rotation: 0
+  - neighbor_id: dead_end
+    neighbor_rotation: 2
+    self_rotation: 2
+  - neighbor_id: dead_end
+    neighbor_rotation: 3
+    self_rotation: 2
+tiles:
+- id: dead_end
+  weights:
+  - 1
+  - 1
+  - 1
+  - 1

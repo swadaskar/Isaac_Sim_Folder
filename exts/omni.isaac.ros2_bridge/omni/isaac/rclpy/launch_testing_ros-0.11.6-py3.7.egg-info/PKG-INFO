@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: launch-testing-ros
+Version: 0.11.6
+Summary: Test the output of a ROS node.
+Home-page: https://github.com/ros2/launch_ros
+Download-URL: https://github.com/ros2/launch_ros/releases
+Author: Pete Baughman
+Author-email: pete.baughman@apex.ai
+Maintainer: Pete Baughman
+Maintainer-email: pete.baughman@apex.ai
+License: Apache License, Version 2.0
+Keywords: ROS
+Platform: UNKNOWN
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development
+
+A package providing utilities for writing ROS2 enabled launch tests.
+

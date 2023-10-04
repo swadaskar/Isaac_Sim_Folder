@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Range Based Sensor Simulation [omni.isaac.range_sensor] &mdash; isaac_sim 2022.2.1-rc.14 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/omni-style.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/api-styles.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/mermaid-init.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+        <script src="https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js"></script>
+        <script>initMermaid();</script>
+        <script src="../../../../_static/version.js"></script>
+        <script src="../../../../_static/social-media.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="URDF Import Extension [omni.isaac.urdf]" href="../../omni.isaac.urdf/docs/index.html" />
+    <link rel="prev" title="Isaac Sensor Extension [omni.isaac.sensor]" href="../../omni.isaac.sensor/docs/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html">
+            <img src="../../../../_static/main_ov_logo_square.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Main Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core/docs/index.html">Core [omni.isaac.core]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core_nodes/docs/index.html">Core Omnigraph Nodes [omni.isaac.core_nodes]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html">Dynamic Control [omni.isaac.dynamic_control]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.kit/docs/index.html">Simulation Application [omni.isaac.kit]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.utils/docs/index.html">Utilities [omni.isaac.utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ui/docs/index.html">UI Utilities [omni.isaac.ui]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.kit.loop-isaac/docs/index.html">Time Stepping Control [omni.kit.loop-isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.cloner/docs/index.html">Isaac Cloner [omni.isaac.cloner]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.gym/docs/index.html">RL [omni.isaac.gym]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sensor Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.sensor/docs/index.html">Isaac Sensor Extension [omni.isaac.sensor]</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Range Based Sensor Simulation [omni.isaac.range_sensor]</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lidar-sensor">Lidar Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ultrasonic-sensor">Ultrasonic Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generic-sensor">Generic Sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generated-usd-schema-api">Generated USD Schema API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#omnigraph-nodes">Omnigraph Nodes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#isaacreadlidarbeams">IsaacReadLidarBeams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#isaacreadlidarpointcloud">IsaacReadLidarPointCloud</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Asset Conversion Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.urdf/docs/index.html">URDF Import Extension [omni.isaac.urdf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.mjcf/docs/index.html">MJCF Import Extension [omni.isaac.mjcf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.shapenet/docs/index.html">ShapeNet [omni.isaac.shapenet]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dofbot/docs/index.html">Dofbot Robot [omni.isaac.dofbot]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.franka/docs/index.html">Franka Robot [omni.isaac.franka]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.wheeled_robots/docs/index.html">Wheeled Robots [omni.isaac.wheeled_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.universal_robots/docs/index.html">Universal Robots [omni.isaac.universal_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.quadruped/docs/index.html">Quadruped Robots [omni.isaac.quadruped]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.manipulators/docs/index.html">Manipulators [omni.isaac.manipulators]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros_bridge/docs/index.html">ROS Bridge [omni.isaac.ros_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros2_bridge/docs/index.html">ROS2 Bridge [omni.isaac.ros2_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.debug_draw/docs/index.html">Debug Drawing [omni.isaac.debug_draw]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.motion_generation/docs/index.html">Motion Generation Extension [omni.isaac.motion_generation]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.lula/docs/index.html">Lula [omni.isaac.lula]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.surface_gripper/docs/index.html">Surface_gripper [omni.isaac.surface_gripper]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.synthetic_utils/docs/index.html">Tools for Generating Synthetic Data [omni.isaac.synthetic_utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.occupancy_map/docs/index.html">Occupancy Extension [omni.isaac.occupancy_map]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.replicator.isaac/docs/index.html">Replicator Isaac Extension [omni.replicator.isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.conveyor/docs/index.html">Conveyor [omni.isaac.conveyor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.examples_nodes/docs/index.html">Isaac Sim Examples Nodes [omni.isaac.examples_nodes]</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">isaac_sim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Range Based Sensor Simulation [omni.isaac.range_sensor]</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="range-based-sensor-simulation-omni-isaac-range-sensor">
+<h1>Range Based Sensor Simulation [omni.isaac.range_sensor]<a class="headerlink" href="#range-based-sensor-simulation-omni-isaac-range-sensor" title="Permalink to this headline"></a></h1>
+<p>This extension provides a set simulated range based sensors like lidar, ultrasonic, generic and interfaces to access them in the simulator.</p>
+<section id="lidar-sensor">
+<h2>Lidar Sensor<a class="headerlink" href="#lidar-sensor" title="Permalink to this headline"></a></h2>
+<p>This submodule provides an interface to a simulated lidar sensor. A simplified command is provided to create a lidar sensor in the stage:</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor.scripts.commands.RangeSensorCreateLidar">
+<span class="sig-prename descclassname"><span class="pre">commands.</span></span><span class="sig-name descname"><span class="pre">RangeSensorCreateLidar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal_fov</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">360.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_fov</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal_resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high_lod</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaw_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_semantics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.range_sensor.scripts.commands.RangeSensorCreateLidar" title="Permalink to this definition"></a></dt>
+<dd><p>Commands class to create a lidar sensor.</p>
+<p>Typical usage example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="p">,</span> <span class="n">prim</span> <span class="o">=</span> <span class="n">omni</span><span class="o">.</span><span class="n">kit</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="s2">&quot;RangeSensorCreateLidar&quot;</span><span class="p">,</span>
+    <span class="n">path</span><span class="o">=</span><span class="s2">&quot;/Lidar&quot;</span><span class="p">,</span>
+    <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">min_range</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+    <span class="n">max_range</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span>
+    <span class="n">draw_points</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">draw_lines</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">horizontal_fov</span><span class="o">=</span><span class="mf">360.0</span><span class="p">,</span>
+    <span class="n">vertical_fov</span><span class="o">=</span><span class="mf">30.0</span><span class="p">,</span>
+    <span class="n">horizontal_resolution</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+    <span class="n">vertical_resolution</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span>
+    <span class="n">rotation_rate</span><span class="o">=</span><span class="mf">20.0</span><span class="p">,</span>
+    <span class="n">high_lod</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">yaw_offset</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">enable_semantics</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>Once a lidar sensor is in the stage you can use this interface to interact with the simulated lidar data.
+You must first call the acquire interface function.
+It is also recommended to use the <cite>is_lidar_sensor</cite> function to check if a lidar sensor exists at the given USD path</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">omni.isaac.range_sensor._range_sensor</span> <span class="kn">import</span> <span class="n">acquire_lidar_sensor_interface</span>
+<span class="n">lidar_sensor_interface</span> <span class="o">=</span> <span class="n">acquire_lidar_sensor_interface</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">lidar_sensor_interface</span><span class="o">.</span><span class="n">is_lidar_sensor</span><span class="p">(</span><span class="s2">&quot;/World/Lidar&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;lidar sensor is valid&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.acquire_lidar_sensor_interface">
+<span class="sig-prename descclassname"><span class="pre">_range_sensor.</span></span><span class="sig-name descname"><span class="pre">acquire_lidar_sensor_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plugin_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">library_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface" title="omni.isaac.range_sensor._range_sensor.LidarSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.LidarSensorInterface</span></a></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.acquire_lidar_sensor_interface" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.release_lidar_sensor_interface">
+<span class="sig-prename descclassname"><span class="pre">_range_sensor.</span></span><span class="sig-name descname"><span class="pre">release_lidar_sensor_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface" title="omni.isaac.range_sensor._range_sensor.LidarSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.LidarSensorInterface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.release_lidar_sensor_interface" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.LidarSensorInterface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LidarSensorInterface</span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_azimuth_data">
+<span class="sig-name descname"><span class="pre">get_azimuth_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface" title="omni.isaac.range_sensor._range_sensor.LidarSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.LidarSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_azimuth_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The azimuth angle in radians for each column</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_depth_data">
+<span class="sig-name descname"><span class="pre">get_depth_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface" title="omni.isaac.range_sensor._range_sensor.LidarSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.LidarSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_depth_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The distance from the sensor to the hit for each beam in uint16 and scaled by min and max distance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_intensity_data">
+<span class="sig-name descname"><span class="pre">get_intensity_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface" title="omni.isaac.range_sensor._range_sensor.LidarSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.LidarSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_intensity_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The observed specular intensity of each beam, 255 if hit, 0 if not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_linear_depth_data">
+<span class="sig-name descname"><span class="pre">get_linear_depth_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface" title="omni.isaac.range_sensor._range_sensor.LidarSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.LidarSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_linear_depth_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The distance from the sensor to the hit for each beam in meters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_num_cols">
+<span class="sig-name descname"><span class="pre">get_num_cols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface" title="omni.isaac.range_sensor._range_sensor.LidarSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.LidarSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_num_cols" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of vertical scans of the sensor, 0 if error occurred</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_num_cols_ticked">
+<span class="sig-name descname"><span class="pre">get_num_cols_ticked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface" title="omni.isaac.range_sensor._range_sensor.LidarSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.LidarSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_num_cols_ticked" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of vertical scans the sensor completed in the last simulation step, 0 if error occurred. Generally only useful for lidars with a non-zero rotation speed</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_num_rows">
+<span class="sig-name descname"><span class="pre">get_num_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface" title="omni.isaac.range_sensor._range_sensor.LidarSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.LidarSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_num_rows" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of horizontal scans of the sensor, 0 if error occurred</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_point_cloud_data">
+<span class="sig-name descname"><span class="pre">get_point_cloud_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface" title="omni.isaac.range_sensor._range_sensor.LidarSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.LidarSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_point_cloud_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The hit position in xyz relative to the sensor origin, not accounting for individual ray offsets</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_semantic_data">
+<span class="sig-name descname"><span class="pre">get_semantic_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface" title="omni.isaac.range_sensor._range_sensor.LidarSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.LidarSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_semantic_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The semantic id of the hit for each beam in uint16</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_zenith_data">
+<span class="sig-name descname"><span class="pre">get_zenith_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface" title="omni.isaac.range_sensor._range_sensor.LidarSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.LidarSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface.get_zenith_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The zenith angle in radians for each row</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.LidarSensorInterface.is_lidar_sensor">
+<span class="sig-name descname"><span class="pre">is_lidar_sensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface" title="omni.isaac.range_sensor._range_sensor.LidarSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.LidarSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.LidarSensorInterface.is_lidar_sensor" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if a sensor exists at the give path, False otherwise</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="ultrasonic-sensor">
+<h2>Ultrasonic Sensor<a class="headerlink" href="#ultrasonic-sensor" title="Permalink to this headline"></a></h2>
+<p>This submodule provides an interface to a simulated ultrasonic sensor.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor.scripts.commands.RangeSensorCreateUltrasonicArray">
+<span class="sig-prename descclassname"><span class="pre">commands.</span></span><span class="sig-name descname"><span class="pre">RangeSensorCreateUltrasonicArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal_fov</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">360.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_fov</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal_resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_bins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">224</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_brdf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_uss_materials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emitter_prims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">firing_group_prims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.range_sensor.scripts.commands.RangeSensorCreateUltrasonicArray" title="Permalink to this definition"></a></dt>
+<dd><p>Commands class to create an ultrasonic array.</p>
+<p>Typical usage example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="p">,</span> <span class="n">prim</span> <span class="o">=</span> <span class="n">omni</span><span class="o">.</span><span class="n">kit</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="s2">&quot;RangeSensorCreateUltrasonicArray&quot;</span><span class="p">,</span>
+    <span class="n">path</span><span class="o">=</span><span class="s2">&quot;/UltrasonicArray&quot;</span><span class="p">,</span>
+    <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">min_range</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+    <span class="n">max_range</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>
+    <span class="n">draw_points</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">draw_lines</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">horizontal_fov</span><span class="o">=</span><span class="mf">15.0</span><span class="p">,</span>
+    <span class="n">vertical_fov</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
+    <span class="n">horizontal_resolution</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">vertical_resolution</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">num_bins</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
+    <span class="n">use_brdf</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">use_uss_materials</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">emitter_prims</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">firing_group_prims</span><span class="o">=</span><span class="p">[],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor.scripts.commands.RangeSensorCreateUltrasonicEmitter">
+<span class="sig-prename descclassname"><span class="pre">commands.</span></span><span class="sig-name descname"><span class="pre">RangeSensorCreateUltrasonicEmitter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">per_ray_intensity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaw_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjacency_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.range_sensor.scripts.commands.RangeSensorCreateUltrasonicEmitter" title="Permalink to this definition"></a></dt>
+<dd><p>Commands class to create an ultrasonic emitter.</p>
+<p>Typical usage example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="p">,</span> <span class="n">prim</span> <span class="o">=</span> <span class="n">omni</span><span class="o">.</span><span class="n">kit</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="s2">&quot;RangeSensorCreateUltrasonicEmitter&quot;</span><span class="p">,</span>
+    <span class="n">path</span><span class="o">=</span><span class="s2">&quot;/UltrasonicEmitter&quot;</span><span class="p">,</span>
+    <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">per_ray_intensity</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">yaw_offset</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">adjacency_list</span><span class="o">=</span><span class="p">[],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor.scripts.commands.RangeSensorCreateUltrasonicFiringGroup">
+<span class="sig-prename descclassname"><span class="pre">commands.</span></span><span class="sig-name descname"><span class="pre">RangeSensorCreateUltrasonicFiringGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emitter_modes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">receiver_modes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.range_sensor.scripts.commands.RangeSensorCreateUltrasonicFiringGroup" title="Permalink to this definition"></a></dt>
+<dd><p>Commands class to create an ultrasonic firing group.</p>
+<p>Typical usage example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="p">,</span> <span class="n">prim</span> <span class="o">=</span> <span class="n">omni</span><span class="o">.</span><span class="n">kit</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="s2">&quot;RangeSensorCreateUltrasonicFiringGroup&quot;</span><span class="p">,</span>
+    <span class="n">path</span><span class="o">=</span><span class="s2">&quot;/UltrasonicFiringGroup&quot;</span><span class="p">,</span>
+    <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">emitter_modes</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">receiver_modes</span><span class="o">=</span><span class="p">[],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p><strong>Example</strong></p>
+<p>To use this interface, you must first call the acquire interface function.
+It is also recommended to use the <cite>is_ultrasonic_sensor</cite> function to check if a ultrasonic sensor exists at the given USD path</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">omni.isaac.range_sensor._range_sensor</span> <span class="kn">import</span> <span class="n">acquire_ultrasonic_sensor_interface</span>
+<span class="n">ultrasonic_sensor_interface</span> <span class="o">=</span> <span class="n">acquire_ultrasonic_sensor_interface</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">ultrasonic_sensor_interface</span><span class="o">.</span><span class="n">is_ultrasonic_sensor</span><span class="p">(</span><span class="s2">&quot;/World/UltrasonicArray&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ultrasonic sensor is valid&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.acquire_ultrasonic_sensor_interface">
+<span class="sig-prename descclassname"><span class="pre">_range_sensor.</span></span><span class="sig-name descname"><span class="pre">acquire_ultrasonic_sensor_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plugin_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">library_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.acquire_ultrasonic_sensor_interface" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.release_ultrasonic_sensor_interface">
+<span class="sig-prename descclassname"><span class="pre">_range_sensor.</span></span><span class="sig-name descname"><span class="pre">release_ultrasonic_sensor_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.release_ultrasonic_sensor_interface" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UltrasonicSensorInterface</span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_active_envelope_array">
+<span class="sig-name descname"><span class="pre">get_active_envelope_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_active_envelope_array" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_azimuth_data">
+<span class="sig-name descname"><span class="pre">get_azimuth_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_azimuth_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The azimuth angle in radians for each column</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_depth_data">
+<span class="sig-name descname"><span class="pre">get_depth_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_depth_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The distance from the sensor to the hit for each beam in uint16 and scaled by min and max distance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_emitter_firing_info">
+<span class="sig-name descname"><span class="pre">get_emitter_firing_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">carb._carb.Int2</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_emitter_firing_info" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>emitter firing info for the current group fired</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_envelope">
+<span class="sig-name descname"><span class="pre">get_envelope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_envelope" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p></li>
+<li><p><strong>arg1</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – array index of the emitter that we are querying</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The binned timestamps of returns from sensor emission</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_envelope_array">
+<span class="sig-name descname"><span class="pre">get_envelope_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_envelope_array" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The array of envelopes from the ultrasonic sensor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_intensity_data">
+<span class="sig-name descname"><span class="pre">get_intensity_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_intensity_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The observed specular intensity of each beam, 255 if hit, 0 if not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_linear_depth_data">
+<span class="sig-name descname"><span class="pre">get_linear_depth_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_linear_depth_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The distance from the sensor to the hit for each beam in meters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_num_cols">
+<span class="sig-name descname"><span class="pre">get_num_cols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_num_cols" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of horizontal scans of the sensor, 0 if error occurred</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_num_emitters">
+<span class="sig-name descname"><span class="pre">get_num_emitters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_num_emitters" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of emitters on the sensor array, 0 if error occurred</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_num_rows">
+<span class="sig-name descname"><span class="pre">get_num_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_num_rows" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of horizontal scans of the sensor, 0 if error occurred</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_receiver_firing_info">
+<span class="sig-name descname"><span class="pre">get_receiver_firing_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">carb._carb.Int2</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_receiver_firing_info" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>receiver info for the current group fired</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_zenith_data">
+<span class="sig-name descname"><span class="pre">get_zenith_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.get_zenith_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The zenith angle in radians for each row</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.is_ultrasonic_sensor">
+<span class="sig-name descname"><span class="pre">is_ultrasonic_sensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface" title="omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.UltrasonicSensorInterface.is_ultrasonic_sensor" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if a sensor exists at the give path, False otherwise</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="generic-sensor">
+<h2>Generic Sensor<a class="headerlink" href="#generic-sensor" title="Permalink to this headline"></a></h2>
+<p>This submodule provides an interface to a simulated generic sensor.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor.scripts.commands.RangeSensorCreateGeneric">
+<span class="sig-prename descclassname"><span class="pre">commands.</span></span><span class="sig-name descname"><span class="pre">RangeSensorCreateGeneric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.range_sensor.scripts.commands.RangeSensorCreateGeneric" title="Permalink to this definition"></a></dt>
+<dd><p>Commands class to create a generic range sensor.</p>
+<p>Typical usage example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="p">,</span> <span class="n">prim</span> <span class="o">=</span> <span class="n">omni</span><span class="o">.</span><span class="n">kit</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="s2">&quot;RangeSensorCreateGeneric&quot;</span><span class="p">,</span>
+    <span class="n">path</span><span class="o">=</span><span class="s2">&quot;/GenericSensor&quot;</span><span class="p">,</span>
+    <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">min_range</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+    <span class="n">max_range</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span>
+    <span class="n">draw_points</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">draw_lines</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">sampling_rate</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p><strong>Example</strong></p>
+<p>To use this interface, you must first call the acquire interface function.
+It is also recommended to use the <cite>is_generic_sensor</cite> function to check if a generic sensor exists at the given USD path</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">omni.isaac.range_sensor._range_sensor</span> <span class="kn">import</span> <span class="n">acquire_generic_sensor_interface</span>
+<span class="n">generic_sensor_interface</span> <span class="o">=</span> <span class="n">acquire_generic_sensor_interface</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">generic_sensor_interface</span><span class="o">.</span><span class="n">is_generic_sensor</span><span class="p">(</span><span class="s2">&quot;/World/GenericSensor&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;generic sensor is valid&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.acquire_generic_sensor_interface">
+<span class="sig-prename descclassname"><span class="pre">_range_sensor.</span></span><span class="sig-name descname"><span class="pre">acquire_generic_sensor_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plugin_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">library_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface" title="omni.isaac.range_sensor._range_sensor.GenericSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.GenericSensorInterface</span></a></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.acquire_generic_sensor_interface" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.release_generic_sensor_interface">
+<span class="sig-prename descclassname"><span class="pre">_range_sensor.</span></span><span class="sig-name descname"><span class="pre">release_generic_sensor_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface" title="omni.isaac.range_sensor._range_sensor.GenericSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.GenericSensorInterface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.release_generic_sensor_interface" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.GenericSensorInterface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GenericSensorInterface</span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.GenericSensorInterface.get_azimuth_data">
+<span class="sig-name descname"><span class="pre">get_azimuth_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface" title="omni.isaac.range_sensor._range_sensor.GenericSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.GenericSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface.get_azimuth_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The azimuth angle in radians for each column</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.GenericSensorInterface.get_depth_data">
+<span class="sig-name descname"><span class="pre">get_depth_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface" title="omni.isaac.range_sensor._range_sensor.GenericSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.GenericSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface.get_depth_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The distance from the sensor to the hit for each beam in uint16 and scaled by min and max distance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.GenericSensorInterface.get_intensity_data">
+<span class="sig-name descname"><span class="pre">get_intensity_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface" title="omni.isaac.range_sensor._range_sensor.GenericSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.GenericSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface.get_intensity_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The observed specular intensity of each beam, 255 if hit, 0 if not</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.GenericSensorInterface.get_linear_depth_data">
+<span class="sig-name descname"><span class="pre">get_linear_depth_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface" title="omni.isaac.range_sensor._range_sensor.GenericSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.GenericSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface.get_linear_depth_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The distance from the sensor to the hit for each beam in meters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.GenericSensorInterface.get_num_samples_ticked">
+<span class="sig-name descname"><span class="pre">get_num_samples_ticked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface" title="omni.isaac.range_sensor._range_sensor.GenericSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.GenericSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface.get_num_samples_ticked" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of sample points the sensor completed in the last simulation step, 0 if error occurred.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.GenericSensorInterface.get_point_cloud_data">
+<span class="sig-name descname"><span class="pre">get_point_cloud_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface" title="omni.isaac.range_sensor._range_sensor.GenericSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.GenericSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface.get_point_cloud_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The hit position in xyz relative to the sensor origin, not accounting for individual ray offsets</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.GenericSensorInterface.get_zenith_data">
+<span class="sig-name descname"><span class="pre">get_zenith_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface" title="omni.isaac.range_sensor._range_sensor.GenericSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.GenericSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface.get_zenith_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The zenith angle in radians for each row</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.GenericSensorInterface.is_generic_sensor">
+<span class="sig-name descname"><span class="pre">is_generic_sensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface" title="omni.isaac.range_sensor._range_sensor.GenericSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.GenericSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface.is_generic_sensor" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if a sensor exists at the give path, False otherwise</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.GenericSensorInterface.send_next_batch">
+<span class="sig-name descname"><span class="pre">send_next_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface" title="omni.isaac.range_sensor._range_sensor.GenericSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.GenericSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface.send_next_batch" title="Permalink to this definition"></a></dt>
+<dd><p>ready for next batch</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.GenericSensorInterface.set_next_batch_offsets">
+<span class="sig-name descname"><span class="pre">set_next_batch_offsets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface" title="omni.isaac.range_sensor._range_sensor.GenericSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.GenericSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">float32</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface.set_next_batch_offsets" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p></li>
+<li><p><strong>arg1</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndaray</span></code>) – The offset xyz, a 2D array for individual rays, or 1D array for a constant offset</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.range_sensor._range_sensor.GenericSensorInterface.set_next_batch_rays">
+<span class="sig-name descname"><span class="pre">set_next_batch_rays</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface" title="omni.isaac.range_sensor._range_sensor.GenericSensorInterface"><span class="pre">omni.isaac.range_sensor._range_sensor.GenericSensorInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">float32</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.isaac.range_sensor._range_sensor.GenericSensorInterface.set_next_batch_rays" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg0</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – USD path to sensor as a string</p></li>
+<li><p><strong>arg1</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndaray</span></code>) – The azimuth and zenith angles in radians for each column</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="generated-usd-schema-api">
+<h2>Generated USD Schema API<a class="headerlink" href="#generated-usd-schema-api" title="Permalink to this headline"></a></h2>
+<p>The following USD Schema API was automatically generated, it is provided here as a reference</p>
+<span class="target" id="module-omni.isaac.RangeSensorSchema"></span><dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Generic">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Generic</span></span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Generic" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#omni.isaac.RangeSensorSchema.RangeSensor" title="omni.isaac.RangeSensorSchema.RangeSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">omni.isaac.RangeSensorSchema.RangeSensor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Generic.CreateSamplingRateAttr">
+<span class="sig-name descname"><span class="pre">CreateSamplingRateAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Generic.CreateSamplingRateAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Generic.CreateStreamingAttr">
+<span class="sig-name descname"><span class="pre">CreateStreamingAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Generic.CreateStreamingAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Generic.Define">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Define</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Generic.Define" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Generic.Get">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Generic.Get" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Generic.GetSamplingRateAttr">
+<span class="sig-name descname"><span class="pre">GetSamplingRateAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Generic.GetSamplingRateAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Generic.GetSchemaAttributeNames">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetSchemaAttributeNames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Generic.GetSchemaAttributeNames" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Generic.GetStreamingAttr">
+<span class="sig-name descname"><span class="pre">GetStreamingAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Generic.GetStreamingAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Lidar</span></span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#omni.isaac.RangeSensorSchema.RangeSensor" title="omni.isaac.RangeSensorSchema.RangeSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">omni.isaac.RangeSensorSchema.RangeSensor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.CreateEnableSemanticsAttr">
+<span class="sig-name descname"><span class="pre">CreateEnableSemanticsAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.CreateEnableSemanticsAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.CreateHighLodAttr">
+<span class="sig-name descname"><span class="pre">CreateHighLodAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.CreateHighLodAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.CreateHorizontalFovAttr">
+<span class="sig-name descname"><span class="pre">CreateHorizontalFovAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.CreateHorizontalFovAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.CreateHorizontalResolutionAttr">
+<span class="sig-name descname"><span class="pre">CreateHorizontalResolutionAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.CreateHorizontalResolutionAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.CreateRotationRateAttr">
+<span class="sig-name descname"><span class="pre">CreateRotationRateAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.CreateRotationRateAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.CreateVerticalFovAttr">
+<span class="sig-name descname"><span class="pre">CreateVerticalFovAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.CreateVerticalFovAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.CreateVerticalResolutionAttr">
+<span class="sig-name descname"><span class="pre">CreateVerticalResolutionAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.CreateVerticalResolutionAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.CreateYawOffsetAttr">
+<span class="sig-name descname"><span class="pre">CreateYawOffsetAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.CreateYawOffsetAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.Define">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Define</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.Define" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.Get">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.Get" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.GetEnableSemanticsAttr">
+<span class="sig-name descname"><span class="pre">GetEnableSemanticsAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.GetEnableSemanticsAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.GetHighLodAttr">
+<span class="sig-name descname"><span class="pre">GetHighLodAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.GetHighLodAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.GetHorizontalFovAttr">
+<span class="sig-name descname"><span class="pre">GetHorizontalFovAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.GetHorizontalFovAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.GetHorizontalResolutionAttr">
+<span class="sig-name descname"><span class="pre">GetHorizontalResolutionAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.GetHorizontalResolutionAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.GetRotationRateAttr">
+<span class="sig-name descname"><span class="pre">GetRotationRateAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.GetRotationRateAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.GetSchemaAttributeNames">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetSchemaAttributeNames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.GetSchemaAttributeNames" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.GetVerticalFovAttr">
+<span class="sig-name descname"><span class="pre">GetVerticalFovAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.GetVerticalFovAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.GetVerticalResolutionAttr">
+<span class="sig-name descname"><span class="pre">GetVerticalResolutionAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.GetVerticalResolutionAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.Lidar.GetYawOffsetAttr">
+<span class="sig-name descname"><span class="pre">GetYawOffsetAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.Lidar.GetYawOffsetAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.RangeSensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RangeSensor</span></span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.RangeSensor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pxr.UsdGeom.Xformable</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.RangeSensor.CreateDrawLinesAttr">
+<span class="sig-name descname"><span class="pre">CreateDrawLinesAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.RangeSensor.CreateDrawLinesAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.RangeSensor.CreateDrawPointsAttr">
+<span class="sig-name descname"><span class="pre">CreateDrawPointsAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.RangeSensor.CreateDrawPointsAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.RangeSensor.CreateEnabledAttr">
+<span class="sig-name descname"><span class="pre">CreateEnabledAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.RangeSensor.CreateEnabledAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.RangeSensor.CreateMaxRangeAttr">
+<span class="sig-name descname"><span class="pre">CreateMaxRangeAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.RangeSensor.CreateMaxRangeAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.RangeSensor.CreateMinRangeAttr">
+<span class="sig-name descname"><span class="pre">CreateMinRangeAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.RangeSensor.CreateMinRangeAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.RangeSensor.Get">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.RangeSensor.Get" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.RangeSensor.GetDrawLinesAttr">
+<span class="sig-name descname"><span class="pre">GetDrawLinesAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.RangeSensor.GetDrawLinesAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.RangeSensor.GetDrawPointsAttr">
+<span class="sig-name descname"><span class="pre">GetDrawPointsAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.RangeSensor.GetDrawPointsAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.RangeSensor.GetEnabledAttr">
+<span class="sig-name descname"><span class="pre">GetEnabledAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.RangeSensor.GetEnabledAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.RangeSensor.GetMaxRangeAttr">
+<span class="sig-name descname"><span class="pre">GetMaxRangeAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.RangeSensor.GetMaxRangeAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.RangeSensor.GetMinRangeAttr">
+<span class="sig-name descname"><span class="pre">GetMinRangeAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.RangeSensor.GetMinRangeAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.RangeSensor.GetSchemaAttributeNames">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetSchemaAttributeNames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.RangeSensor.GetSchemaAttributeNames" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UltrasonicArray</span></span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#omni.isaac.RangeSensorSchema.RangeSensor" title="omni.isaac.RangeSensorSchema.RangeSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">omni.isaac.RangeSensorSchema.RangeSensor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.CreateAttenuationAlphaAttr">
+<span class="sig-name descname"><span class="pre">CreateAttenuationAlphaAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.CreateAttenuationAlphaAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.CreateEmitterPrimsRel">
+<span class="sig-name descname"><span class="pre">CreateEmitterPrimsRel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.CreateEmitterPrimsRel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.CreateFiringGroupsRel">
+<span class="sig-name descname"><span class="pre">CreateFiringGroupsRel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.CreateFiringGroupsRel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.CreateHorizontalFovAttr">
+<span class="sig-name descname"><span class="pre">CreateHorizontalFovAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.CreateHorizontalFovAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.CreateHorizontalResolutionAttr">
+<span class="sig-name descname"><span class="pre">CreateHorizontalResolutionAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.CreateHorizontalResolutionAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.CreateNumBinsAttr">
+<span class="sig-name descname"><span class="pre">CreateNumBinsAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.CreateNumBinsAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.CreateUseBRDFAttr">
+<span class="sig-name descname"><span class="pre">CreateUseBRDFAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.CreateUseBRDFAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.CreateUseDistAttenuationAttr">
+<span class="sig-name descname"><span class="pre">CreateUseDistAttenuationAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.CreateUseDistAttenuationAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.CreateUseUSSMaterialsForBRDFAttr">
+<span class="sig-name descname"><span class="pre">CreateUseUSSMaterialsForBRDFAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.CreateUseUSSMaterialsForBRDFAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.CreateVerticalFovAttr">
+<span class="sig-name descname"><span class="pre">CreateVerticalFovAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.CreateVerticalFovAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.CreateVerticalResolutionAttr">
+<span class="sig-name descname"><span class="pre">CreateVerticalResolutionAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.CreateVerticalResolutionAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.Define">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Define</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.Define" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.Get">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.Get" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.GetAttenuationAlphaAttr">
+<span class="sig-name descname"><span class="pre">GetAttenuationAlphaAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.GetAttenuationAlphaAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.GetEmitterPrimsRel">
+<span class="sig-name descname"><span class="pre">GetEmitterPrimsRel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.GetEmitterPrimsRel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.GetFiringGroupsRel">
+<span class="sig-name descname"><span class="pre">GetFiringGroupsRel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.GetFiringGroupsRel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.GetHorizontalFovAttr">
+<span class="sig-name descname"><span class="pre">GetHorizontalFovAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.GetHorizontalFovAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.GetHorizontalResolutionAttr">
+<span class="sig-name descname"><span class="pre">GetHorizontalResolutionAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.GetHorizontalResolutionAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.GetNumBinsAttr">
+<span class="sig-name descname"><span class="pre">GetNumBinsAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.GetNumBinsAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.GetSchemaAttributeNames">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetSchemaAttributeNames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.GetSchemaAttributeNames" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.GetUseBRDFAttr">
+<span class="sig-name descname"><span class="pre">GetUseBRDFAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.GetUseBRDFAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.GetUseDistAttenuationAttr">
+<span class="sig-name descname"><span class="pre">GetUseDistAttenuationAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.GetUseDistAttenuationAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.GetUseUSSMaterialsForBRDFAttr">
+<span class="sig-name descname"><span class="pre">GetUseUSSMaterialsForBRDFAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.GetUseUSSMaterialsForBRDFAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.GetVerticalFovAttr">
+<span class="sig-name descname"><span class="pre">GetVerticalFovAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.GetVerticalFovAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicArray.GetVerticalResolutionAttr">
+<span class="sig-name descname"><span class="pre">GetVerticalResolutionAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicArray.GetVerticalResolutionAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicEmitter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UltrasonicEmitter</span></span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicEmitter" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pxr.UsdGeom.Xformable</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicEmitter.CreateAdjacencyListAttr">
+<span class="sig-name descname"><span class="pre">CreateAdjacencyListAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicEmitter.CreateAdjacencyListAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicEmitter.CreatePerRayIntensityAttr">
+<span class="sig-name descname"><span class="pre">CreatePerRayIntensityAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicEmitter.CreatePerRayIntensityAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicEmitter.CreateYawOffsetAttr">
+<span class="sig-name descname"><span class="pre">CreateYawOffsetAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicEmitter.CreateYawOffsetAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicEmitter.Define">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Define</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicEmitter.Define" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicEmitter.Get">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicEmitter.Get" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicEmitter.GetAdjacencyListAttr">
+<span class="sig-name descname"><span class="pre">GetAdjacencyListAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicEmitter.GetAdjacencyListAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicEmitter.GetPerRayIntensityAttr">
+<span class="sig-name descname"><span class="pre">GetPerRayIntensityAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicEmitter.GetPerRayIntensityAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicEmitter.GetSchemaAttributeNames">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetSchemaAttributeNames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicEmitter.GetSchemaAttributeNames" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicEmitter.GetYawOffsetAttr">
+<span class="sig-name descname"><span class="pre">GetYawOffsetAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicEmitter.GetYawOffsetAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicFiringGroup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UltrasonicFiringGroup</span></span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicFiringGroup" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pxr.Usd.Typed</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicFiringGroup.CreateEmitterModesAttr">
+<span class="sig-name descname"><span class="pre">CreateEmitterModesAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicFiringGroup.CreateEmitterModesAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicFiringGroup.CreateReceiverModesAttr">
+<span class="sig-name descname"><span class="pre">CreateReceiverModesAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicFiringGroup.CreateReceiverModesAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicFiringGroup.Define">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Define</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicFiringGroup.Define" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicFiringGroup.Get">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicFiringGroup.Get" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicFiringGroup.GetEmitterModesAttr">
+<span class="sig-name descname"><span class="pre">GetEmitterModesAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicFiringGroup.GetEmitterModesAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicFiringGroup.GetReceiverModesAttr">
+<span class="sig-name descname"><span class="pre">GetReceiverModesAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicFiringGroup.GetReceiverModesAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicFiringGroup.GetSchemaAttributeNames">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetSchemaAttributeNames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicFiringGroup.GetSchemaAttributeNames" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UltrasonicMaterialAPI</span></span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pxr.Usd.APISchemaBase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.Apply">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Apply</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.Apply" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.CreateBase_colorAttr">
+<span class="sig-name descname"><span class="pre">CreateBase_colorAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.CreateBase_colorAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.CreateMetallicAttr">
+<span class="sig-name descname"><span class="pre">CreateMetallicAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.CreateMetallicAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.CreatePerceptualRoughnessAttr">
+<span class="sig-name descname"><span class="pre">CreatePerceptualRoughnessAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.CreatePerceptualRoughnessAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.CreateReflectanceAttr">
+<span class="sig-name descname"><span class="pre">CreateReflectanceAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.CreateReflectanceAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.Get">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.Get" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.GetBase_colorAttr">
+<span class="sig-name descname"><span class="pre">GetBase_colorAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.GetBase_colorAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.GetMetallicAttr">
+<span class="sig-name descname"><span class="pre">GetMetallicAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.GetMetallicAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.GetPerceptualRoughnessAttr">
+<span class="sig-name descname"><span class="pre">GetPerceptualRoughnessAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.GetPerceptualRoughnessAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.GetReflectanceAttr">
+<span class="sig-name descname"><span class="pre">GetReflectanceAttr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.GetReflectanceAttr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.GetSchemaAttributeNames">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetSchemaAttributeNames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.RangeSensorSchema.UltrasonicMaterialAPI.GetSchemaAttributeNames" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="omnigraph-nodes">
+<h2>Omnigraph Nodes<a class="headerlink" href="#omnigraph-nodes" title="Permalink to this headline"></a></h2>
+<section id="isaacreadlidarbeams">
+<h3>IsaacReadLidarBeams<a class="headerlink" href="#isaacreadlidarbeams" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p>[‘This node reads from the lidar sensor and holds data buffers for a full scan’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution port.</p></li>
+<li><p><strong>lidarPrim</strong> (<em>bundle</em>): Usd prim reference to the lidar prim.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): Output execution triggers when lidar sensor has completed a full scan.</p></li>
+<li><p><strong>horizontalFov</strong> (<em>float</em>): Horizontal Field of View in degrees.</p></li>
+<li><p><strong>verticalFov</strong> (<em>float</em>): Vertical Field of View in degrees.</p></li>
+<li><p><strong>horizontalResolution</strong> (<em>float</em>): Degrees in between rays for horizontal axis.</p></li>
+<li><p><strong>verticalResolution</strong> (<em>float</em>): Degrees in between rays for vertical axis.</p></li>
+<li><p><strong>depthRange</strong> (<em>float[2]</em>): The min and max range for sensor to detect a hit [min, max].</p></li>
+<li><p><strong>rotationRate</strong> (<em>float</em>): Rotation rate of sensor in Hz.</p></li>
+<li><p><strong>linearDepthData</strong> (<em>float[]</em>): Buffer array containing linear depth data.</p></li>
+<li><p><strong>intensitiesData</strong> (<em>uchar[]</em>): Buffer array containing intensities data.</p></li>
+<li><p><strong>numRows</strong> (<em>int</em>): Number of rows in buffers.</p></li>
+<li><p><strong>numCols</strong> (<em>int</em>): Number of columns in buffers.</p></li>
+<li><p><strong>azimuthRange</strong> (<em>float[2]</em>): The azimuth range [min, max].</p></li>
+<li><p><strong>zenithRange</strong> (<em>float[2]</em>): The zenith range [min, max].</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="isaacreadlidarpointcloud">
+<h3>IsaacReadLidarPointCloud<a class="headerlink" href="#isaacreadlidarpointcloud" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p>[‘This node reads from the lidar sensor and holds point cloud data buffers for a full scan’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution port.</p></li>
+<li><p><strong>lidarPrim</strong> (<em>bundle</em>): Usd prim reference to the lidar prim.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): Output execution triggers when lidar sensor has completed a full scan.</p></li>
+<li><p><strong>pointCloudData</strong> (<em>pointf[3][]</em>): Buffer of 3d points containing point cloud data.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018-2023, NVIDIA.
+      <span class="lastupdated">Last updated on Mar 16, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+    "end_effector_frame_name": "flange",
+    "maximum_substep_size" : 0.00334,
+    "ignore_robot_state_updates" : false,
+    "relative_asset_paths": {
+        "robot_description_path" : "flexiv_rizon4_robot_description.yaml",
+        "urdf_path": "../flexiv_rizon4.urdf",
+        "rmpflow_config_path" : "rizon4_rmpflow_config.yaml"
+    }
+}

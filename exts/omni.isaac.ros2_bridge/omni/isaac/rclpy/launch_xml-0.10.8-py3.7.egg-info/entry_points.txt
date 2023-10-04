@@ -1,0 +1,2 @@
+[launch.frontend.parser]
+xml = launch_xml:Parser

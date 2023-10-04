@@ -1,0 +1,10 @@
+{
+    "end_effector_frame_name": "flange",
+    "maximum_substep_size" : 0.00334,
+    "ignore_robot_state_updates" : false,
+    "relative_asset_paths": {
+        "robot_description_path" : "festo_cobot_robot_description.yaml",
+        "urdf_path": "../festo_cobot.urdf",
+        "rmpflow_config_path" : "festo_cobot_rmpflow_config.yaml"
+    }
+}

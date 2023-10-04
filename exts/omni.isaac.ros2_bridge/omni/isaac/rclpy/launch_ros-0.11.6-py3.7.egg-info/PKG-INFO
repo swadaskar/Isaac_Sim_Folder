@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: launch-ros
+Version: 0.11.6
+Summary: ROS specific extensions to `launch`.
+Home-page: https://github.com/ros2/launch
+Download-URL: https://github.com/ros2/launch/releases
+Author: William Woodall
+Author-email: william@osrfoundation.org
+Maintainer: William Woodall
+Maintainer-email: william@osrfoundation.org
+License: Apache License, Version 2.0
+Keywords: ROS
+Platform: UNKNOWN
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development
+
+This package provides ROS specific extensions to the launch package.
+

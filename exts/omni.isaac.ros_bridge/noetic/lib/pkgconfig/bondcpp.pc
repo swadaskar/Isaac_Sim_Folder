@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: bondcpp
+Description: Description of bondcpp
+Version: 1.8.6
+Cflags: -I${prefix}/include -I/workspace/boost_1_68_0/_install/include -I/usr/include
+Libs: -L${prefix}/lib -lbondcpp /workspace/boost_1_68_0/_install/lib/libboost_date_time.so /workspace/boost_1_68_0/_install/lib/libboost_thread.so -lpthread /workspace/boost_1_68_0/_install/lib/libboost_chrono.so /workspace/boost_1_68_0/_install/lib/libboost_system.so /workspace/boost_1_68_0/_install/lib/libboost_atomic.so /usr/lib/x86_64-linux-gnu/libuuid.so
+Requires: bond roscpp smclib

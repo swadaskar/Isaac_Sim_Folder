@@ -1,0 +1,10 @@
+{
+    "nodes": {
+        "omni.isaac.conveyor.IsaacConveyor": {
+            "description": "Conveyor Belt",
+            "version": 1,
+            "extension": "omni.isaac.conveyor",
+            "language": "C++"
+        }
+    }
+}

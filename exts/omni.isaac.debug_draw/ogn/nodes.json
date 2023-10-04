@@ -1,0 +1,10 @@
+{
+    "nodes": {
+        "omni.isaac.debug_draw.DebugDrawPointCloud": {
+            "description": "Take a point cloud as input and display it in the scene.",
+            "version": 1,
+            "extension": "omni.isaac.debug_draw",
+            "language": "C++"
+        }
+    }
+}

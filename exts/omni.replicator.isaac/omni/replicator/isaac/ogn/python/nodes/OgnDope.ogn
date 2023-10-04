@@ -1,0 +1,144 @@
+{
+    "Dope": {
+        "version": 1,
+        "scheduling": "compute-on-request",
+        "description": "Gets poses of assets as required by ground truth file for DOPE training",
+        "language": "Python",
+        "metadata": {
+            "uiName": "Dope"
+        },
+        "inputs": {
+            "exec": {
+                "type": "execution",
+                "description": "Trigger"
+            },
+            "cameraModel": {
+                "type": "token",
+                "description": "Camera model (pinhole or fisheye models)"
+            },
+            "cameraViewTransform": {
+                "type": "matrixd[4]",
+                "description": "Camera view matrix"
+            },
+            "cameraProjection" : {
+                "type": "matrixd[4]",
+                "description": "Camera projection matrix"
+            },
+            "cameraFisheyeNominalWidth": {
+                "type": "int",
+                "description": "Camera fisheye nominal width"
+            },
+            "cameraFisheyeNominalHeight": {
+                "type": "int",
+                "description": "Camera fisheye nominal height"
+            },
+            "cameraFisheyeOpticalCentre": {
+                "type": "float[2]",
+                "description": "Camera fisheye optical centre"
+            },
+            "cameraFisheyeMaxFOV": {
+                "type": "float",
+                "description": "Camera fisheye maximum field of view"
+            },
+            "cameraFisheyePolynomial": {
+                "type": "float[]",
+                "description": "Camera fisheye polynomial"
+            },
+            "cameraNearFar": {
+                "type": "float[2]",
+                "description": "Camera near/far clipping range"
+            },
+            "horizontalAperture": {
+                "type": "float",
+                "description": "Horizontal aperture of camera"
+            },
+            "focalLength": {
+                "type": "float",
+                "description": "Camera fisheye maximum field of view"
+            },
+            "cameraRotation": {
+                "type": "float[3]",
+                "description": "Camera rotation in euler angles"
+            },
+            "width": {
+                "type": "uint",
+                "description": "Width of the viewport"
+            },
+            "height": {
+                "type": "uint",
+                "description": "Height of the viewport"
+            },
+            "boundingBox3d" : {
+                "type": "uchar[]",
+                "description": "3d bounding box data."
+            },
+            "occlusion" : {
+                "type": "uchar[]",
+                "description": "Occlusion data"
+            },
+            "swhFrameNumber": {
+                "type": "uint64",
+                "description": "Frame number"
+            },
+            "sdIMNumSemantics": {
+                "type": "uint",
+                "description" : "Number of semantic entities in the semantic arrays"
+            },
+            "sdIMNumSemanticTokens": {
+                "type": "uint",
+                "description" : "Number of semantics token including the semantic entity path, the semantic entity types and if the number of semantic types is greater than one"
+            },
+            "sdIMInstanceSemanticMap": {
+                "type": "uchar[]",
+                "description" : "Raw array of uint16_t of size sdIMNumInstances*sdIMMaxSemanticHierarchyDepth containing the mapping from the instances index to their inherited semantic entities"
+            },
+            "sdIMSemanticTokenMap": {
+                "type": "token[]",
+                "description" : "Semantic array of token of size numSemantics * numSemanticTypes containing the mapping from the semantic entities to the semantic entity path and semantic types"
+            },
+            "sdIMMinSemanticIndex": {
+                "type": "uint",
+                "description" : "Semantic id of the first instance in the instance arrays"
+            },
+            "sdIMMaxSemanticHierarchyDepth": {
+                "type": "uint",
+                "description" : "Maximal number of semantic entities inherited by an instance"
+            },
+            "semanticTypes": {
+                "type": "token[]",
+                "description": "Semantic Types to consider",
+                "default": ["class"]
+            }
+        },
+        "outputs": {
+            "exec": {
+                "type": "execution",
+                "description": "Trigger"
+            },
+            "data": {
+                "description": "Semantic array of 4x4 float matrices containing the transform from local to view space for every semantic entity. Additionally, an optional semantic array of float[2] vectors containing the center coordinates of every semantic entity projected in the image space",
+                "type": "uchar[]"
+            },
+            "idToLabels": {
+                "description": "Mapping from id to semantic labels.",
+                "type": "string"
+            },
+            "swhFrameNumber": {
+                "type": "uint64",
+                "description": "Frame number"
+            },
+            "bufferSize": {
+                "type": "uint",
+                "description": "Size (in bytes) of the buffer (0 if the input is a texture)"
+            },
+            "height": {
+                "type": "uint",
+                "description": "Shape of the data"
+            },
+            "width": {
+                "type": "uint",
+                "description": "Shape of the data"
+            }
+        }
+    }
+}

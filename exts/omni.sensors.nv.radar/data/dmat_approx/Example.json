@@ -1,0 +1,31 @@
+{
+  "NearScanMaxRangeM": "70.0",
+  "NearScanMaxVelMpsSequence":[32.66, 29.25, 30.52],
+  "NearScanMaxAzAngRad": "1.309",
+  "NearScanMaxElevAngRad": "0.175",
+
+  "NearScanRangeSepM": "0.78",
+  "NearScanVelSepMps": "0.2388",
+  "NearScanBoreAzSepRad": "0.1117",
+  "NearScanBoreElevSepRad": "0.35",
+
+  "NearScanElevMode": "0",
+  
+
+  "FarScanMaxRangeM": "200.0",
+  "FarScanMaxVelMpsSequence":[51.84, 57.09, 55.02],
+  "FarScanMaxAzAngRad": "0.157",
+  "FarScanMaxElevAngRad": "0.1222",
+
+  "FarScanRangeSepM": "3.58",
+  "FarScanVelSepMps": "0.2055",
+  "FarScanBoreAzSepRad": "0.0558",
+  "FarScanBoreElevSepRad": "0.2444",
+
+  "FarScanElevMode": "1",
+  
+
+  "NumRaysPerDeg": "10.0",
+  "NumExtraThreads": "5",
+  "FrameDurationNs": "50000000"
+}

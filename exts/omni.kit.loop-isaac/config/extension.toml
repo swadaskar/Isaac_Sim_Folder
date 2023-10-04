@@ -1,0 +1,20 @@
+[package]
+# Semantic Versionning is used: https://semver.org/
+version = "1.0.0"
+category = "Internal"
+authors = ["NVIDIA"]
+title = "Isaac Loop Runner"
+description = "Custom Loop Runner for Isaac Sim"
+repository = ""
+keywords = ["isaac", "loop"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[[python.module]]
+name = "omni.kit.loop"
+
+[[native.plugin]]
+path = "bin/*.plugin"
+recursive = false

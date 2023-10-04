@@ -1,0 +1,50 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnIsaacPickPlaceController.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_examples_nodes_IsaacPickPlaceController" (
+        docs="""Pick-and-Place Controller for Articulated Robots"""
+    )
+    {
+        token node:type = "omni.isaac.examples_nodes.IsaacPickPlaceController"
+        int node:typeVersion = 1
+
+        # 9 attributes
+        custom double3 inputs:endEffectorOffset = (0.0, 0.0, 0.0) (
+            docs="""XYZ offset of end-effector from flange"""
+        )
+        custom double[] inputs:eventsDT = [0.01, 0.01, 1.0, 0.01, 0.01, 0.01, 0.01, 0.05, 0.01, 0.08] (
+            docs="""timing between pick and place events"""
+        )
+        custom uint inputs:execIn (
+            docs="""The input execution"""
+        )
+        custom double3 inputs:pickingPosition = (0.25, 0.25, 0.0) (
+            docs="""XYZ location to pick from"""
+        )
+        custom double3 inputs:placingPosition = (0.25, -0.25, 0.0) (
+            docs="""XYZ location to place at"""
+        )
+        custom string inputs:robotModel = "" (
+            docs="""type of robot. Options are: UR, Franka, or Dofbot"""
+        )
+        custom string inputs:robotPrimPath = "" (
+            docs="""path to the robot articulation root"""
+        )
+        custom rel inputs:targetPrim (
+            docs="""The target robot prim"""
+        )
+        custom bool inputs:usePath = false (
+            docs="""use robot and com path instead of selecting them from stage tree"""
+        )
+    }
+}

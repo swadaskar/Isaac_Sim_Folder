@@ -1,0 +1,8 @@
+prefix=../_install
+
+Name: isaac_ros_messages
+Description: Description of isaac_ros_messages
+Version: 0.1.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: geometry_msgs roscpp rospy std_msgs message_runtime

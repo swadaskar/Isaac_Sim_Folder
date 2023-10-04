@@ -1,0 +1,16 @@
+LICENSE
+README.md
+package.xml
+setup.py
+../../build/rpyutils/rpyutils.egg-info/PKG-INFO
+../../build/rpyutils/rpyutils.egg-info/SOURCES.txt
+../../build/rpyutils/rpyutils.egg-info/dependency_links.txt
+../../build/rpyutils/rpyutils.egg-info/top_level.txt
+resource/rpyutils
+rpyutils/__init__.py
+rpyutils/add_dll_directories.py
+rpyutils/import_c_library.py
+test/test_copyright.py
+test/test_flake8.py
+test/test_pep257.py
+test/test_xmllint.py

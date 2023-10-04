@@ -1,0 +1,27 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "4.5.6"
+category = "Simulation"
+title = "Isaac Sim Motion Generation"
+description = "Extension that provides support for generating motion with Lula-based motion policies and an interface for writing arbitrary motion policies"
+repository = ""
+authors = ["NVIDIA"]
+keywords = ["isaac", "motion generation", "lula", "motion policy"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+
+[dependencies]
+"omni.isaac.dynamic_control" = {}
+"omni.isaac.motion_planning" = {} # Fixes issue where ROS was sourced first
+"omni.isaac.lula" = {}
+"omni.isaac.core" = {}
+
+[[python.module]]
+name = "omni.isaac.motion_generation"
+
+[[python.module]]
+name = "omni.isaac.motion_generation.tests"

@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: ros2interface
+Version: 0.9.11
+Summary: The interface command for ROS 2 command line tools.
+Home-page: https://github.com/ros2/ros2cli/tree/master/ros2interface
+Download-URL: https://github.com/ros2/ros2cli/releases
+Author: Siddharth Kucheria
+Author-email: kucheria@osrfoundation.org
+Maintainer: Jacob Perron
+Maintainer-email: jacob@osrfoundation.org
+License: Apache License, Version 2.0
+Platform: UNKNOWN
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+
+The package provides the interface command for the ROS 2 command line tools.
+

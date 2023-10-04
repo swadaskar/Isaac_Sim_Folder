@@ -1,0 +1,22 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "1.0.0"
+category = "Simulation"
+title = "Isaac Sim Proximity Sensor Example"
+description = "Extension that provides a proximity sensor example"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "lula", "rmp"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+
+
+[dependencies]
+"omni.physx" = {}
+
+[[python.module]]
+name = "omni.isaac.proximity_sensor"

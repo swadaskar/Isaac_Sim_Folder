@@ -1,0 +1,31 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "1.2.1"
+category = "Simulation"
+title = "Isaac Sim Lula"
+description = "Extension that provides lula python interface"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "lula", "rmp"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+writeTarget.platform = true # pip prebundle makes this extension os specific
+
+[dependencies]
+"omni.kit.test" = {}
+"omni.kit.pip_archive" = {}
+
+[[python.module]]
+name = "lula"
+path = "pip_prebundle"
+
+[[python.module]]
+name = "omni.isaac.lula"
+
+[[python.module]]
+name = "omni.isaac.lula.tests"

@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: pcl_conversions
+Description: Description of pcl_conversions
+Version: 1.7.4
+Cflags: -I${prefix}/include -I/usr/local/include/eigen3 -I/usr/local/include/pcl-1.9 -I/workspace/boost_1_68_0/_install/include
+Libs: -L${prefix}/lib /usr/local/lib/libpcl_common.so /usr/local/lib/libpcl_octree.so /usr/local/lib/libpcl_io.so /workspace/boost_1_68_0/_install/lib/libboost_system.so /workspace/boost_1_68_0/_install/lib/libboost_filesystem.so /workspace/boost_1_68_0/_install/lib/libboost_thread.so -lpthread /workspace/boost_1_68_0/_install/lib/libboost_date_time.so /workspace/boost_1_68_0/_install/lib/libboost_iostreams.so /workspace/boost_1_68_0/_install/lib/libboost_chrono.so /workspace/boost_1_68_0/_install/lib/libboost_atomic.so /workspace/boost_1_68_0/_install/lib/libboost_regex.so
+Requires: pcl_msgs roscpp sensor_msgs std_msgs

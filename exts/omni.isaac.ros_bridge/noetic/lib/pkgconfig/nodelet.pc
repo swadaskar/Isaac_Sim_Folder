@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: nodelet
+Description: Description of nodelet
+Version: 1.10.2
+Cflags: -I${prefix}/include -I/workspace/boost_1_68_0/_install/include
+Libs: -L${prefix}/lib -lnodeletlib
+Requires: bondcpp message_runtime pluginlib rosconsole roscpp std_msgs

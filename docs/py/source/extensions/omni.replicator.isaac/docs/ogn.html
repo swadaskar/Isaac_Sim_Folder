@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OgnCountIndices &mdash; isaac_sim 2022.2.1-rc.14 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/omni-style.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/api-styles.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/mermaid-init.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+        <script src="https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js"></script>
+        <script>initMermaid();</script>
+        <script src="../../../../_static/version.js"></script>
+        <script src="../../../../_static/social-media.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html">
+            <img src="../../../../_static/main_ov_logo_square.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Main Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core/docs/index.html">Core [omni.isaac.core]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core_nodes/docs/index.html">Core Omnigraph Nodes [omni.isaac.core_nodes]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html">Dynamic Control [omni.isaac.dynamic_control]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.kit/docs/index.html">Simulation Application [omni.isaac.kit]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.utils/docs/index.html">Utilities [omni.isaac.utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ui/docs/index.html">UI Utilities [omni.isaac.ui]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.kit.loop-isaac/docs/index.html">Time Stepping Control [omni.kit.loop-isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.cloner/docs/index.html">Isaac Cloner [omni.isaac.cloner]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.gym/docs/index.html">RL [omni.isaac.gym]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sensor Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.sensor/docs/index.html">Isaac Sensor Extension [omni.isaac.sensor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.range_sensor/docs/index.html">Range Based Sensor Simulation [omni.isaac.range_sensor]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Asset Conversion Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.urdf/docs/index.html">URDF Import Extension [omni.isaac.urdf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.mjcf/docs/index.html">MJCF Import Extension [omni.isaac.mjcf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.shapenet/docs/index.html">ShapeNet [omni.isaac.shapenet]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dofbot/docs/index.html">Dofbot Robot [omni.isaac.dofbot]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.franka/docs/index.html">Franka Robot [omni.isaac.franka]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.wheeled_robots/docs/index.html">Wheeled Robots [omni.isaac.wheeled_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.universal_robots/docs/index.html">Universal Robots [omni.isaac.universal_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.quadruped/docs/index.html">Quadruped Robots [omni.isaac.quadruped]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.manipulators/docs/index.html">Manipulators [omni.isaac.manipulators]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros_bridge/docs/index.html">ROS Bridge [omni.isaac.ros_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros2_bridge/docs/index.html">ROS2 Bridge [omni.isaac.ros2_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.debug_draw/docs/index.html">Debug Drawing [omni.isaac.debug_draw]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.motion_generation/docs/index.html">Motion Generation Extension [omni.isaac.motion_generation]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.lula/docs/index.html">Lula [omni.isaac.lula]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.surface_gripper/docs/index.html">Surface_gripper [omni.isaac.surface_gripper]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.synthetic_utils/docs/index.html">Tools for Generating Synthetic Data [omni.isaac.synthetic_utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.occupancy_map/docs/index.html">Occupancy Extension [omni.isaac.occupancy_map]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Replicator Isaac Extension [omni.replicator.isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.conveyor/docs/index.html">Conveyor [omni.isaac.conveyor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.examples_nodes/docs/index.html">Isaac Sim Examples Nodes [omni.isaac.examples_nodes]</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">isaac_sim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>OgnCountIndices</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ogncountindices">
+<h1>OgnCountIndices<a class="headerlink" href="#ogncountindices" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>[‘Get length of array’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>indices</strong> (<em>int[]</em>): indices to count.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>count</strong> (<em>uint</em>): Count.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="pose">
+<h1>Pose<a class="headerlink" href="#pose" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>This node outputs the poses of assets with semantic labels</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>exec</strong> (<em>execution</em>): Trigger.</p></li>
+<li><p><strong>includeOccludedPrims</strong> (<em>bool</em>): Set to True if poses (and if enabled, centers) of fully occluded/out-of-frame semantic entities should be output.</p></li>
+<li><p><strong>getCenters</strong> (<em>bool</em>): Set to True if producing center coordinates of every semantic entity projected in the image space.</p></li>
+<li><p><strong>cameraRotation</strong> (<em>float[]</em>): Rotation of the desired camera frame from the default camera frame, as XYZ Euler angles.</p></li>
+<li><p><strong>imageWidth</strong> (<em>uint</em>): Width of the viewport.</p></li>
+<li><p><strong>imageHeight</strong> (<em>uint</em>): Height of the viewport.</p></li>
+<li><p><strong>cameraViewTransform</strong> (<em>matrixd[4]</em>): Camera view matrix.</p></li>
+<li><p><strong>cameraProjection</strong> (<em>matrixd[4]</em>): Camera projection matrix.</p></li>
+<li><p><strong>sdIMNumSemantics</strong> (<em>uint</em>): Number of semantic entities in the semantic arrays.</p></li>
+<li><p><strong>sdIMNumSemanticTokens</strong> (<em>uint</em>): Number of semantics token including the semantic entity path, the semantic entity types and if the number of semantic types is greater than one.</p></li>
+<li><p><strong>sdIMInstanceSemanticMap</strong> (<em>uchar[]</em>): Raw array of uint16_t of size sdIMNumInstances*sdIMMaxSemanticHierarchyDepth containing the mapping from the instances index to their inherited semantic entities.</p></li>
+<li><p><strong>sdIMSemanticTokenMap</strong> (<em>token[]</em>): Semantic array of token of size numSemantics * numSemanticTypes containing the mapping from the semantic entities to the semantic entity path and semantic types.</p></li>
+<li><p><strong>sdIMMinSemanticIndex</strong> (<em>uint</em>): Semantic id of the first instance in the instance arrays.</p></li>
+<li><p><strong>sdIMMaxSemanticHierarchyDepth</strong> (<em>uint</em>): Maximal number of semantic entities inherited by an instance.</p></li>
+<li><p><strong>sdIMSemanticWorldTransform</strong> (<em>float[]</em>): Semantic array of 4x4 float matrices containing the transform from local to world space for every semantic entity.</p></li>
+<li><p><strong>data</strong> (<em>uchar[]</em>): Buffer array data. Default to [].</p></li>
+<li><p><strong>bufferSize</strong> (<em>uint</em>): Size (in bytes) of the buffer (0 if the input is a texture).</p></li>
+<li><p><strong>swhFrameNumber</strong> (<em>uint64</em>): Frame number.</p></li>
+<li><p><strong>semanticTypes</strong> (<em>token[]</em>): Semantic Types to consider. Default to [‘class’].</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>exec</strong> (<em>execution</em>): Trigger.</p></li>
+<li><p><strong>data</strong> (<em>uchar[]</em>): Semantic array of 4x4 float matrices containing the transform from local to view space for every semantic entity. Additionally, an optional semantic array of float[2] vectors containing the center coordinates of every semantic entity projected in the image space.</p></li>
+<li><p><strong>idToLabels</strong> (<em>string</em>): Mapping from id to semantic labels.</p></li>
+<li><p><strong>primPaths</strong> (<em>token[]</em>): Prim paths corresponding to each pose.</p></li>
+<li><p><strong>swhFrameNumber</strong> (<em>uint64</em>): Frame number.</p></li>
+<li><p><strong>bufferSize</strong> (<em>uint</em>): Size (in bytes) of the buffer (0 if the input is a texture).</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Shape of the data.</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Shape of the data.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="dope">
+<h1>Dope<a class="headerlink" href="#dope" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>Gets poses of assets as required by ground truth file for DOPE training</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>exec</strong> (<em>execution</em>): Trigger.</p></li>
+<li><p><strong>cameraModel</strong> (<em>token</em>): Camera model (pinhole or fisheye models).</p></li>
+<li><p><strong>cameraViewTransform</strong> (<em>matrixd[4]</em>): Camera view matrix.</p></li>
+<li><p><strong>cameraProjection</strong> (<em>matrixd[4]</em>): Camera projection matrix.</p></li>
+<li><p><strong>cameraFisheyeNominalWidth</strong> (<em>int</em>): Camera fisheye nominal width.</p></li>
+<li><p><strong>cameraFisheyeNominalHeight</strong> (<em>int</em>): Camera fisheye nominal height.</p></li>
+<li><p><strong>cameraFisheyeOpticalCentre</strong> (<em>float[2]</em>): Camera fisheye optical centre.</p></li>
+<li><p><strong>cameraFisheyeMaxFOV</strong> (<em>float</em>): Camera fisheye maximum field of view.</p></li>
+<li><p><strong>cameraFisheyePolynomial</strong> (<em>float[]</em>): Camera fisheye polynomial.</p></li>
+<li><p><strong>cameraNearFar</strong> (<em>float[2]</em>): Camera near/far clipping range.</p></li>
+<li><p><strong>horizontalAperture</strong> (<em>float</em>): Horizontal aperture of camera.</p></li>
+<li><p><strong>focalLength</strong> (<em>float</em>): Camera fisheye maximum field of view.</p></li>
+<li><p><strong>cameraRotation</strong> (<em>float[3]</em>): Camera rotation in euler angles.</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Width of the viewport.</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Height of the viewport.</p></li>
+<li><p><strong>boundingBox3d</strong> (<em>uchar[]</em>): 3d bounding box data.</p></li>
+<li><p><strong>occlusion</strong> (<em>uchar[]</em>): Occlusion data.</p></li>
+<li><p><strong>swhFrameNumber</strong> (<em>uint64</em>): Frame number.</p></li>
+<li><p><strong>sdIMNumSemantics</strong> (<em>uint</em>): Number of semantic entities in the semantic arrays.</p></li>
+<li><p><strong>sdIMNumSemanticTokens</strong> (<em>uint</em>): Number of semantics token including the semantic entity path, the semantic entity types and if the number of semantic types is greater than one.</p></li>
+<li><p><strong>sdIMInstanceSemanticMap</strong> (<em>uchar[]</em>): Raw array of uint16_t of size sdIMNumInstances*sdIMMaxSemanticHierarchyDepth containing the mapping from the instances index to their inherited semantic entities.</p></li>
+<li><p><strong>sdIMSemanticTokenMap</strong> (<em>token[]</em>): Semantic array of token of size numSemantics * numSemanticTypes containing the mapping from the semantic entities to the semantic entity path and semantic types.</p></li>
+<li><p><strong>sdIMMinSemanticIndex</strong> (<em>uint</em>): Semantic id of the first instance in the instance arrays.</p></li>
+<li><p><strong>sdIMMaxSemanticHierarchyDepth</strong> (<em>uint</em>): Maximal number of semantic entities inherited by an instance.</p></li>
+<li><p><strong>semanticTypes</strong> (<em>token[]</em>): Semantic Types to consider. Default to [‘class’].</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>exec</strong> (<em>execution</em>): Trigger.</p></li>
+<li><p><strong>data</strong> (<em>uchar[]</em>): Semantic array of 4x4 float matrices containing the transform from local to view space for every semantic entity. Additionally, an optional semantic array of float[2] vectors containing the center coordinates of every semantic entity projected in the image space.</p></li>
+<li><p><strong>idToLabels</strong> (<em>string</em>): Mapping from id to semantic labels.</p></li>
+<li><p><strong>swhFrameNumber</strong> (<em>uint64</em>): Frame number.</p></li>
+<li><p><strong>bufferSize</strong> (<em>uint</em>): Size (in bytes) of the buffer (0 if the input is a texture).</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Shape of the data.</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Shape of the data.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ognwritephysicssimulationcontext">
+<h1>OgnWritePhysicsSimulationContext<a class="headerlink" href="#ognwritephysicssimulationcontext" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>This node writes physics attributes to TensorAPI views</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>prims</strong> (<em>string</em>): Name of registered view to randomize.</p></li>
+<li><p><strong>attribute</strong> (<em>string</em>): Name of attribute that is to be written.</p></li>
+<li><p><strong>operation</strong> (<em>string</em>): Type of randomization operation to be applied.</p></li>
+<li><p><strong>distribution</strong> (<em>string</em>): Type of distribution used to sample values.</p></li>
+<li><p><strong>dist_param_1</strong> (<em>float[]</em>): Distribution parameter 1.</p></li>
+<li><p><strong>dist_param_2</strong> (<em>float[]</em>): Distribution parameter 2.</p></li>
+<li><p><strong>num_buckets</strong> (<em>int</em>): Number of buckets to randomize from.</p></li>
+<li><p><strong>values</strong> (<em>float[]</em>): Values to be assigned to the physics attribute.</p></li>
+<li><p><strong>indices</strong> (<em>int[]</em>): Indices of the environments to assign the physics attribute.</p></li>
+<li><p><strong>on_reset</strong> (<em>bool</em>): indicates whether an on_reset context triggered the execution.</p></li>
+<li><p><strong>execIn</strong> (<em>execution</em>): exec.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): exec.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ognwritephysicsrigidprimview">
+<h1>OgnWritePhysicsRigidPrimView<a class="headerlink" href="#ognwritephysicsrigidprimview" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>This node writes physics attributes to TensorAPI views</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>prims</strong> (<em>string</em>): Name of registered view to randomize.</p></li>
+<li><p><strong>attribute</strong> (<em>string</em>): Name of attribute that is to be written.</p></li>
+<li><p><strong>operation</strong> (<em>string</em>): Type of randomization operation to be applied.</p></li>
+<li><p><strong>distribution</strong> (<em>string</em>): Type of distribution used to sample values.</p></li>
+<li><p><strong>dist_param_1</strong> (<em>float[]</em>): Distribution parameter 1.</p></li>
+<li><p><strong>dist_param_2</strong> (<em>float[]</em>): Distribution parameter 2.</p></li>
+<li><p><strong>num_buckets</strong> (<em>int</em>): Number of buckets to randomize from.</p></li>
+<li><p><strong>values</strong> (<em>float[]</em>): Values to be assigned to the physics attribute.</p></li>
+<li><p><strong>indices</strong> (<em>int[]</em>): Indices of the environments to assign the physics attribute.</p></li>
+<li><p><strong>on_reset</strong> (<em>bool</em>): indicates whether an on_reset context triggered the execution.</p></li>
+<li><p><strong>execIn</strong> (<em>execution</em>): exec.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): exec.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="random3f">
+<h1>Random3f<a class="headerlink" href="#random3f" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>This node outputs the poses of assets with semantic labels</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>minimum</strong> (<em>float[3]</em>): minimum range for randomization.</p></li>
+<li><p><strong>maximum</strong> (<em>float[3]</em>): minimum range for randomization.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>output</strong> (<em>float[3]</em>): Random float 3.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ognonrlframe">
+<h1>OgnOnRLFrame<a class="headerlink" href="#ognonrlframe" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>[‘Triggered every frame in an Rl setting’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>run</strong> (<em>bool</em>): Run.</p></li>
+<li><p><strong>num_envs</strong> (<em>int</em>): number of RL environments.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): Output Execution.</p></li>
+<li><p><strong>resetInds</strong> (<em>int[]</em>): indices of environments to be reset.</p></li>
+<li><p><strong>frameNum</strong> (<em>int[]</em>): frame number for every environment.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ognintervalfiltering">
+<h1>OgnIntervalFiltering<a class="headerlink" href="#ognintervalfiltering" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>Outputs indices if their frame count is a multiple of the interval</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>interval</strong> (<em>int</em>): randomization will take place once every <cite>interval</cite> frames.</p></li>
+<li><p><strong>frameCounts</strong> (<em>int[]</em>): the current frame number for every environment.</p></li>
+<li><p><strong>indices</strong> (<em>int[]</em>): a list of indices to use in case of ignoring interval.</p></li>
+<li><p><strong>ignoreInterval</strong> (<em>bool</em>): if true, will just pass indices to downstream node. Default to False.</p></li>
+<li><p><strong>execIn</strong> (<em>execution</em>): exec.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): exec.</p></li>
+<li><p><strong>indices</strong> (<em>int[]</em>): the indices that are at the interval and need to be randomized.</p></li>
+<li><p><strong>on_reset</strong> (<em>bool</em>): indicates whether an on_reset context triggered the execution.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ognwritephysicsarticulationview">
+<h1>OgnWritePhysicsArticulationView<a class="headerlink" href="#ognwritephysicsarticulationview" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>This node writes physics attributes to TensorAPI views</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>prims</strong> (<em>string</em>): Name of registered view to randomize.</p></li>
+<li><p><strong>attribute</strong> (<em>string</em>): Name of attribute that is to be written.</p></li>
+<li><p><strong>operation</strong> (<em>string</em>): Type of randomization operation to be applied.</p></li>
+<li><p><strong>distribution</strong> (<em>string</em>): Type of distribution used to sample values.</p></li>
+<li><p><strong>dist_param_1</strong> (<em>float[]</em>): Distribution parameter 1.</p></li>
+<li><p><strong>dist_param_2</strong> (<em>float[]</em>): Distribution parameter 2.</p></li>
+<li><p><strong>num_buckets</strong> (<em>int</em>): Number of buckets to randomize from.</p></li>
+<li><p><strong>values</strong> (<em>float[]</em>): Values to be assigned to the physics attribute.</p></li>
+<li><p><strong>indices</strong> (<em>int[]</em>): Indices of the environments to assign the physics attribute.</p></li>
+<li><p><strong>on_reset</strong> (<em>bool</em>): indicates whether an on_reset context triggered the execution.</p></li>
+<li><p><strong>execIn</strong> (<em>execution</em>): exec.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): exec.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018-2023, NVIDIA.
+      <span class="lastupdated">Last updated on Mar 16, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

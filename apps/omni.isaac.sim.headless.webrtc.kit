@@ -1,0 +1,40 @@
+[package]
+title = "Isaac Sim (Headless WebRTC)"
+description = "Headless Isaac Sim with Livestream using WebRTC"
+version = "2022.2.1"
+execFile = "isaac-sim.headless.webrtc"
+
+# That makes it browsable in UI with "experience" filter
+keywords = ["experience", "app", "usd"]
+
+[dependencies]
+"omni.isaac.sim.base" = {}
+"omni.services.streamclient.webrtc" = {}
+
+[settings]
+app.name = "Isaac-Sim"
+app.version = "2022.2.1"
+app.fastShutdown = true
+
+[settings.app.exts]
+folders.'++' = ["${app}/../exts", "${app}/../extscache"]
+
+# [settings.app.livestream]
+# proto = "tcp"
+
+[settings.app.window]
+title = "Isaac Sim Headless WebRTC"
+hideUi = false
+
+width = 1700
+height = 900
+drawMouse = true
+
+[settings.ngx]
+enabled = false
+
+[settings.exts."omni.kit.registry.nucleus"]
+registries = [
+    { name = "kit/public", url = "https://d1aiacozzchaiq.cloudfront.net/exts/kit/public/104.0/"},
+    { name = "kit/community", url = "https://dw290v42wisod.cloudfront.net/exts/kit/community" }
+]

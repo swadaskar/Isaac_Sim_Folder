@@ -1,0 +1,33 @@
+{
+    "IsaacReadEnvVar": {
+        "version": 1,
+        "icon": "icons/isaac-sim.svg",        
+        "description": "Loads in environment variable if present",
+        "language": "Python",
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacCore",
+        "metadata": {
+            "uiName": "Isaac Read Env Var"
+        },
+        "inputs": {
+            "envVar": {
+                "type": "string",
+                "description": "Input OS environment variable name as string",
+                "metadata": {
+                    "uiName": "Input String"
+                },
+                "default": ""
+            }
+        },
+        "outputs": {
+            "value": {
+                "type": "string",
+                "description": "Output OS environment variable value, returns empty string if variable is not found",
+                "metadata": {
+                    "uiName": "Output Value"
+                },
+                "default": ""
+            }
+        }
+    }
+}

@@ -1,0 +1,28 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.1.3"
+category = "Simulation"
+title = "Isaac Sim UI Example"
+description = "Example with all the Core UI Elements in Isaac Sim"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "example", "ui",]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+
+[dependencies]
+"omni.kit.uiapp" = {}
+"omni.isaac.ui" = {}
+
+[[python.module]]
+name = "omni.isaac.ui_template"
+
+[[python.module]]
+name = "omni.isaac.ui_template.tests"
+
+[[test]]
+args = ["--/exts/omni.kit.renderer.core/compatibilityMode=true"]

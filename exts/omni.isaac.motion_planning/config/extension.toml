@@ -1,0 +1,71 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.2.2"
+category = "Simulation"
+title = "Isaac Sim Motion Planning"
+description = "Extension that provides support for RMPs"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "motion planning", "rmp"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.kit.test" = {}
+"omni.isaac.dynamic_control" = {}
+"omni.isaac.core" = {}
+
+[[python.module]]
+name = "omni.isaac.motion_planning"
+
+[[python.module]]
+name = "omni.isaac.motion_planning.tests"
+
+[[native.library]]
+path = "bin/${lib_prefix}console_bridge${lib_ext}"
+
+# On Windows, TinyXML2 is statically linked into urdfdom_model.
+[[native.library]]
+"filter:platform"."linux-x86_64".path = "bin/${lib_prefix}tinyxml${lib_ext}"
+
+[[native.library]]
+path = "bin/${lib_prefix}urdfdom_model${lib_ext}"
+
+[[native.library]]
+path = "bin/${lib_prefix}yaml-cpp${lib_ext}"
+
+[[native.library]]
+path = "bin/${lib_prefix}lula_util${lib_ext}"
+
+[[native.library]]
+path = "bin/${lib_prefix}lula_math${lib_ext}"
+
+[[native.library]]
+path = "bin/${lib_prefix}lula_world${lib_ext}"
+
+[[native.library]]
+path = "bin/${lib_prefix}lula_kinematics${lib_ext}"
+
+[[native.library]]
+path = "bin/${lib_prefix}lula_fabrics${lib_ext}"
+
+[[native.library]]
+path = "bin/${lib_prefix}lula_motion_planning${lib_ext}"
+
+[[native.library]]
+path = "bin/${lib_prefix}lula_rmpflow${lib_ext}"
+
+[[native.library]]
+path = "bin/${lib_prefix}lula_visualization${lib_ext}"
+
+[[native.library]]
+path = "bin/${lib_prefix}lula_scenario${lib_ext}"
+
+[[native.plugin]]
+path = "bin/omni.isaac.motion_planning.plugin"
+recursive = false

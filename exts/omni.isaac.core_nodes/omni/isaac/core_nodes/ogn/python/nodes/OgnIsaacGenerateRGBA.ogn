@@ -1,0 +1,49 @@
+{
+    "IsaacGenerateRGBA": {
+        "version": 1,
+        "icon": "icons/isaac-sim.svg",
+        "description": "Isaac Sim Node that generates a constant rgba buffer",
+        "language": "Python",
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacCore",
+        "metadata": {
+            "uiName": "Isaac Generate RGBA"
+        },
+        "inputs": {
+            "color": {
+                "type": "colorf[4]",
+                "description": "Color for output image"
+            },
+            "width": {
+                "type": "uint",
+                "description": "Width for output image",
+                "default": 100
+            },
+            "height": {
+                "type": "uint",
+                "description": "Height for output image",
+                "default": 100
+            }
+        },
+        "outputs": {
+            "data": {
+                "type": "uchar[]",
+                "memoryType": "cpu",
+                "description": "Buffer rgba array data",
+                "default": []
+            },
+            "width": {
+                "type": "uint",
+                "description": "Width for output image"
+            },
+            "height": {
+                "type": "uint",
+                "description": "Height for output image"
+            },
+            "encoding": {
+                "type": "token",
+                "description": "Encoding as a token"
+            }
+        }
+    }
+}

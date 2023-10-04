@@ -1,0 +1,9 @@
+{
+    "categoryDefinitions": {
+        "$description": "These categories are applied to nodes in the ROS1 Bridge",
+        "isaacRos": "Nodes implementing functionality for ROS1 Interoperability",
+        "isaacRos:publisher": "Nodes that publish a ROS1 message",
+        "isaacRos:subscriber": "Nodes that subscribe to a ROS1 message",
+        "isaacRos:service": "Nodes that provide rosservice in ROS1"
+    }
+}

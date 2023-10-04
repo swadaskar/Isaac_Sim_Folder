@@ -1,0 +1,53 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnROS1PublishImage.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_ros_bridge_ROS1PublishImage" (
+        docs="""This node publishes ROS1 Image messages"""
+    )
+    {
+        token node:type = "omni.isaac.ros_bridge.ROS1PublishImage"
+        int node:typeVersion = 1
+
+        # 10 attributes
+        custom uchar[] inputs:data = [] (
+            docs="""Buffer array data"""
+        )
+        custom token inputs:encoding = "rgb8" (
+            docs="""ROS encoding format for the input data, taken from the list of strings in include/sensor_msgs/image_encodings.h. Input data is expected to already be in this format, no conversions are performed"""
+        )
+        custom uint inputs:execIn (
+            docs="""The input execution port."""
+        )
+        custom string inputs:frameId = "sim_camera" (
+            docs="""FrameId for ROS1 message"""
+        )
+        custom uint inputs:height = 0 (
+            docs="""Buffer array height"""
+        )
+        custom string inputs:nodeNamespace = "" (
+            docs="""Namespace of ROS1 Node, prepends any published/subscribed topic by the node namespace"""
+        )
+        custom uint64 inputs:queueSize = 10 (
+            docs="""The number of messages to queue up before throwing some away, in case messages are collected faster than they can be sent"""
+        )
+        custom double inputs:timeStamp = 0.0 (
+            docs="""Time in seconds to use when publishing the message"""
+        )
+        custom string inputs:topicName = "rgb" (
+            docs="""Name of ROS1 Topic"""
+        )
+        custom uint inputs:width = 0 (
+            docs="""Buffer array width"""
+        )
+    }
+}

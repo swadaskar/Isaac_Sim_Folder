@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Replicator Isaac Extension [omni.replicator.isaac] &mdash; isaac_sim 2022.2.1-rc.14 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/omni-style.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/api-styles.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/mermaid-init.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+        <script src="https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js"></script>
+        <script>initMermaid();</script>
+        <script src="../../../../_static/version.js"></script>
+        <script src="../../../../_static/social-media.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Conveyor [omni.isaac.conveyor]" href="../../omni.isaac.conveyor/docs/index.html" />
+    <link rel="prev" title="Occupancy Extension [omni.isaac.occupancy_map]" href="../../omni.isaac.occupancy_map/docs/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html">
+            <img src="../../../../_static/main_ov_logo_square.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Main Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core/docs/index.html">Core [omni.isaac.core]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core_nodes/docs/index.html">Core Omnigraph Nodes [omni.isaac.core_nodes]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html">Dynamic Control [omni.isaac.dynamic_control]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.kit/docs/index.html">Simulation Application [omni.isaac.kit]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.utils/docs/index.html">Utilities [omni.isaac.utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ui/docs/index.html">UI Utilities [omni.isaac.ui]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.kit.loop-isaac/docs/index.html">Time Stepping Control [omni.kit.loop-isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.cloner/docs/index.html">Isaac Cloner [omni.isaac.cloner]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.gym/docs/index.html">RL [omni.isaac.gym]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sensor Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.sensor/docs/index.html">Isaac Sensor Extension [omni.isaac.sensor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.range_sensor/docs/index.html">Range Based Sensor Simulation [omni.isaac.range_sensor]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Asset Conversion Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.urdf/docs/index.html">URDF Import Extension [omni.isaac.urdf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.mjcf/docs/index.html">MJCF Import Extension [omni.isaac.mjcf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.shapenet/docs/index.html">ShapeNet [omni.isaac.shapenet]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dofbot/docs/index.html">Dofbot Robot [omni.isaac.dofbot]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.franka/docs/index.html">Franka Robot [omni.isaac.franka]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.wheeled_robots/docs/index.html">Wheeled Robots [omni.isaac.wheeled_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.universal_robots/docs/index.html">Universal Robots [omni.isaac.universal_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.quadruped/docs/index.html">Quadruped Robots [omni.isaac.quadruped]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.manipulators/docs/index.html">Manipulators [omni.isaac.manipulators]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros_bridge/docs/index.html">ROS Bridge [omni.isaac.ros_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros2_bridge/docs/index.html">ROS2 Bridge [omni.isaac.ros2_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.debug_draw/docs/index.html">Debug Drawing [omni.isaac.debug_draw]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.motion_generation/docs/index.html">Motion Generation Extension [omni.isaac.motion_generation]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.lula/docs/index.html">Lula [omni.isaac.lula]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.surface_gripper/docs/index.html">Surface_gripper [omni.isaac.surface_gripper]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.synthetic_utils/docs/index.html">Tools for Generating Synthetic Data [omni.isaac.synthetic_utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.occupancy_map/docs/index.html">Occupancy Extension [omni.isaac.occupancy_map]</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Replicator Isaac Extension [omni.replicator.isaac]</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reinforcement-learning-domain-randomization">Reinforcement Learning Domain Randomization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pytorch-online-writer-and-listener">Pytorch Online Writer and Listener</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#omnigraph-nodes">Omnigraph Nodes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ogncountindices">OgnCountIndices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pose">Pose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dope">Dope</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ognwritephysicssimulationcontext">OgnWritePhysicsSimulationContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ognwritephysicsrigidprimview">OgnWritePhysicsRigidPrimView</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#random3f">Random3f</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ognonrlframe">OgnOnRLFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ognintervalfiltering">OgnIntervalFiltering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ognwritephysicsarticulationview">OgnWritePhysicsArticulationView</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.conveyor/docs/index.html">Conveyor [omni.isaac.conveyor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.examples_nodes/docs/index.html">Isaac Sim Examples Nodes [omni.isaac.examples_nodes]</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">isaac_sim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Replicator Isaac Extension [omni.replicator.isaac]</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="replicator-isaac-extension-omni-replicator-isaac">
+<h1>Replicator Isaac Extension [omni.replicator.isaac]<a class="headerlink" href="#replicator-isaac-extension-omni-replicator-isaac" title="Permalink to this headline"></a></h1>
+<p>This extension builds upon omni.replicator to provide additional functionalities
+relevant to robotics.</p>
+<section id="reinforcement-learning-domain-randomization">
+<h2>Reinforcement Learning Domain Randomization<a class="headerlink" href="#reinforcement-learning-domain-randomization" title="Permalink to this headline"></a></h2>
+<p>The following methods provide randomization functionalities of various parameters
+pertaining to omni.isaac.core.prims.RigidPrimView, omni.isaac.core.articulations.ArticulationView,
+and omni.isaac.core.SimulationContext. These methods are designed to perform randomizations in
+simulations where <em>update to USD</em> is disabled for faster simulation speed. These methods directly
+set randomized values to Physx as opposed to existing methods in omni.replicator.core,
+such as omni.replicator.core.modify.pose or omni.replicator.core.physics.physics_material, which
+utilizes USD APIs to set values and hence cannot be used when <em>update to USD</em> is disabled.
+Therefore, the following methods provided in omni.replicator.isaac are particularly useful
+for domain randomization in reinforcement learning (RL) as RL usecases benefit immensely from
+disabling <em>update to USD</em> to achieve faster simulation speed.</p>
+<p>The following is a simple demo that showcases the workflow and the various features of
+<code class="docutils literal notranslate"><span class="pre">omni.replicator.isaac</span></code> for domain randomization. This demo script can be launched as
+a standalone example, which can be found by going to Isaac Sim’s root directory and
+go to <code class="docutils literal notranslate"><span class="pre">standalone_examples/api/omni.replicator.isaac/randomization_demo.py</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">omni.replicator.isaac</span></code> extension for domain randomization functions by constructing
+an OmniGraph action graph, which consists of nodes that generate random values, regulate
+frequency intervals of various randomizaiton properties, and write the random values to Physx.
+This action graph gets executed according to the way in which the triggers are set up. Note
+that it is necessesary to register the views to be randomized before constructing this action graph.</p>
+<p>The first step is to create an entry point of the action graph using <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">dr.trigger.on_rl_frame(num_envs=num_envs):</span></code>.
+It is worth noting that all views to be used with this extension must have the same number of
+encapsulated prims, equaling <code class="docutils literal notranslate"><span class="pre">num_envs</span></code> that is passed as an argument to the <code class="docutils literal notranslate"><span class="pre">on_rl_frame</span></code> trigger.</p>
+<p>After creating this entry point, there are two types of gates that determine when the nodes can write
+to Physx: <code class="docutils literal notranslate"><span class="pre">on_interval(interval)</span></code> and <code class="docutils literal notranslate"><span class="pre">on_env_reset()</span></code>; these gates work in conjunction with
+<code class="docutils literal notranslate"><span class="pre">omni.replicator.isaac.physics_view.step_randomization(reset_inds)</span></code>. There exists an internal
+step counter for every environment in the views. Everytime the <code class="docutils literal notranslate"><span class="pre">step_randomization</span></code> method is called,
+it resets the counter to zero for every environment listed in the <code class="docutils literal notranslate"><span class="pre">reset_inds</span></code> argument while
+incrementing the counter for every other environment. The <code class="docutils literal notranslate"><span class="pre">on_interval(interval)</span></code> gate then ensures
+the nodes to write to Physx whenever the counter for an environment is a multiple of the <code class="docutils literal notranslate"><span class="pre">interval</span></code>
+argument. The <code class="docutils literal notranslate"><span class="pre">on_env_reset()</span></code> gate writes to Physx whenever an environment’s counter gets reset by
+the <code class="docutils literal notranslate"><span class="pre">reset_inds</span></code> argument passed in the <code class="docutils literal notranslate"><span class="pre">step_randomization</span></code> method.</p>
+<p>Within each gate, the following methods can be used to randomize view properties: <code class="docutils literal notranslate"><span class="pre">randomize_simulation_context</span></code>,
+<code class="docutils literal notranslate"><span class="pre">randomize_rigid_prim_view</span></code> and <code class="docutils literal notranslate"><span class="pre">randomize_articulation_view</span></code>. For each of these methods, there
+exists an <code class="docutils literal notranslate"><span class="pre">operation</span></code> argument, which can be set to <code class="docutils literal notranslate"><span class="pre">direct</span></code>, <code class="docutils literal notranslate"><span class="pre">additive</span></code>, or <code class="docutils literal notranslate"><span class="pre">scaling</span></code>. <code class="docutils literal notranslate"><span class="pre">direct</span></code>
+sets the random values directly to Physx, while the behaviour of <code class="docutils literal notranslate"><span class="pre">additive</span></code> and <code class="docutils literal notranslate"><span class="pre">scaling</span></code> depends on
+the gate it is controlled by. Under <code class="docutils literal notranslate"><span class="pre">on_env_reset()</span></code>, <code class="docutils literal notranslate"><span class="pre">additive</span></code> adds the random values to the default
+values of a given attribute of the view, and <code class="docutils literal notranslate"><span class="pre">scaling</span></code> multiplies the random values to the default values.
+Under <code class="docutils literal notranslate"><span class="pre">on_interval(interval)</span></code>, <code class="docutils literal notranslate"><span class="pre">additive</span></code> and <code class="docutils literal notranslate"><span class="pre">scaling</span></code> adds or multiplies the random values to the
+last values set during <code class="docutils literal notranslate"><span class="pre">on_env_reset()</span></code>. In essence, <code class="docutils literal notranslate"><span class="pre">on_env_reset()</span></code> randomization should be treated
+as <em>correlated noise</em> that lasts until the next reset, while <code class="docutils literal notranslate"><span class="pre">on_interval(interval)</span></code> randomization should
+be treated as <em>uncorrelated noise</em>.</p>
+<p>After setting up this action graph, it is necessesary to run <code class="docutils literal notranslate"><span class="pre">omni.replicator.core.orchestrator.run()</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">omni.isaac.kit</span> <span class="kn">import</span> <span class="n">SimulationApp</span>
+<span class="n">simulation_app</span> <span class="o">=</span> <span class="n">SimulationApp</span><span class="p">({</span><span class="s2">&quot;headless&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">omni.isaac.core</span> <span class="kn">import</span> <span class="n">World</span>
+<span class="kn">from</span> <span class="nn">omni.isaac.core.prims</span> <span class="kn">import</span> <span class="n">RigidPrimView</span>
+<span class="kn">from</span> <span class="nn">omni.isaac.core.articulations</span> <span class="kn">import</span> <span class="n">ArticulationView</span>
+<span class="kn">from</span> <span class="nn">omni.isaac.core.utils.prims</span> <span class="kn">import</span> <span class="n">get_prim_at_path</span><span class="p">,</span> <span class="n">define_prim</span>
+<span class="kn">from</span> <span class="nn">omni.isaac.core.utils.stage</span> <span class="kn">import</span> <span class="n">get_current_stage</span><span class="p">,</span> <span class="n">add_reference_to_stage</span>
+<span class="kn">from</span> <span class="nn">omni.isaac.core.utils.nucleus</span> <span class="kn">import</span> <span class="n">get_assets_root_path</span>
+<span class="kn">from</span> <span class="nn">omni.isaac.core.objects</span> <span class="kn">import</span> <span class="n">DynamicSphere</span>
+<span class="kn">from</span> <span class="nn">omni.isaac.cloner</span> <span class="kn">import</span> <span class="n">GridCloner</span>
+
+<span class="c1"># create the world</span>
+<span class="n">world</span> <span class="o">=</span> <span class="n">World</span><span class="p">(</span><span class="n">stage_units_in_meters</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">physics_prim_path</span><span class="o">=</span><span class="s2">&quot;/physicsScene&quot;</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;numpy&quot;</span><span class="p">)</span>
+<span class="n">world</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">add_default_ground_plane</span><span class="p">()</span>
+
+<span class="c1"># set up grid cloner</span>
+<span class="n">cloner</span> <span class="o">=</span> <span class="n">GridCloner</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">cloner</span><span class="o">.</span><span class="n">define_base_env</span><span class="p">(</span><span class="s2">&quot;/World/envs&quot;</span><span class="p">)</span>
+<span class="n">define_prim</span><span class="p">(</span><span class="s2">&quot;/World/envs/env_0&quot;</span><span class="p">)</span>
+
+<span class="c1"># set up the first environment</span>
+<span class="n">DynamicSphere</span><span class="p">(</span><span class="n">prim_path</span><span class="o">=</span><span class="s2">&quot;/World/envs/env_0/object&quot;</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]))</span>
+<span class="n">add_reference_to_stage</span><span class="p">(</span>
+    <span class="n">usd_path</span><span class="o">=</span><span class="n">get_assets_root_path</span><span class="p">()</span><span class="o">+</span> <span class="s2">&quot;/Isaac/Robots/Franka/franka.usd&quot;</span><span class="p">,</span>
+    <span class="n">prim_path</span><span class="o">=</span><span class="s2">&quot;/World/envs/env_0/franka&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># clone environments</span>
+<span class="n">num_envs</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">prim_paths</span> <span class="o">=</span> <span class="n">cloner</span><span class="o">.</span><span class="n">generate_paths</span><span class="p">(</span><span class="s2">&quot;/World/envs/env&quot;</span><span class="p">,</span> <span class="n">num_envs</span><span class="p">)</span>
+<span class="n">env_pos</span> <span class="o">=</span> <span class="n">cloner</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">source_prim_path</span><span class="o">=</span><span class="s2">&quot;/World/envs/env_0&quot;</span><span class="p">,</span> <span class="n">prim_paths</span><span class="o">=</span><span class="n">prim_paths</span><span class="p">)</span>
+
+<span class="c1"># creates the views and set up world</span>
+<span class="n">object_view</span> <span class="o">=</span> <span class="n">RigidPrimView</span><span class="p">(</span><span class="n">prim_paths_expr</span><span class="o">=</span><span class="s2">&quot;/World/envs/*/object&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;object_view&quot;</span><span class="p">)</span>
+<span class="n">franka_view</span> <span class="o">=</span> <span class="n">ArticulationView</span><span class="p">(</span><span class="n">prim_paths_expr</span><span class="o">=</span><span class="s2">&quot;/World/envs/*/franka&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;franka_view&quot;</span><span class="p">)</span>
+<span class="n">world</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">object_view</span><span class="p">)</span>
+<span class="n">world</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">franka_view</span><span class="p">)</span>
+<span class="n">world</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+<span class="n">num_dof</span> <span class="o">=</span> <span class="n">franka_view</span><span class="o">.</span><span class="n">num_dof</span>
+
+<span class="c1"># set up randomization with omni.replicator.isaac, imported as dr</span>
+<span class="kn">import</span> <span class="nn">omni.replicator.isaac</span> <span class="k">as</span> <span class="nn">dr</span>
+<span class="kn">import</span> <span class="nn">omni.replicator.core</span> <span class="k">as</span> <span class="nn">rep</span>
+
+<span class="n">dr</span><span class="o">.</span><span class="n">physics_view</span><span class="o">.</span><span class="n">register_simulation_context</span><span class="p">(</span><span class="n">world</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">physics_view</span><span class="o">.</span><span class="n">register_rigid_prim_view</span><span class="p">(</span><span class="n">object_view</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">physics_view</span><span class="o">.</span><span class="n">register_articulation_view</span><span class="p">(</span><span class="n">franka_view</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">dr</span><span class="o">.</span><span class="n">trigger</span><span class="o">.</span><span class="n">on_rl_frame</span><span class="p">(</span><span class="n">num_envs</span><span class="o">=</span><span class="n">num_envs</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">dr</span><span class="o">.</span><span class="n">gate</span><span class="o">.</span><span class="n">on_interval</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="n">dr</span><span class="o">.</span><span class="n">physics_view</span><span class="o">.</span><span class="n">randomize_simulation_context</span><span class="p">(</span>
+            <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;scaling&quot;</span><span class="p">,</span>
+            <span class="n">gravity</span><span class="o">=</span><span class="n">rep</span><span class="o">.</span><span class="n">distribution</span><span class="o">.</span><span class="n">uniform</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)),</span>
+        <span class="p">)</span>
+    <span class="k">with</span> <span class="n">dr</span><span class="o">.</span><span class="n">gate</span><span class="o">.</span><span class="n">on_interval</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+        <span class="n">dr</span><span class="o">.</span><span class="n">physics_view</span><span class="o">.</span><span class="n">randomize_rigid_prim_view</span><span class="p">(</span>
+            <span class="n">view_name</span><span class="o">=</span><span class="n">object_view</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;direct&quot;</span><span class="p">,</span>
+            <span class="n">force</span><span class="o">=</span><span class="n">rep</span><span class="o">.</span><span class="n">distribution</span><span class="o">.</span><span class="n">uniform</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">)),</span>
+        <span class="p">)</span>
+    <span class="k">with</span> <span class="n">dr</span><span class="o">.</span><span class="n">gate</span><span class="o">.</span><span class="n">on_interval</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">dr</span><span class="o">.</span><span class="n">physics_view</span><span class="o">.</span><span class="n">randomize_articulation_view</span><span class="p">(</span>
+            <span class="n">view_name</span><span class="o">=</span><span class="n">franka_view</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;direct&quot;</span><span class="p">,</span>
+            <span class="n">joint_velocities</span><span class="o">=</span><span class="n">rep</span><span class="o">.</span><span class="n">distribution</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="nb">tuple</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">num_dof</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">([</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">num_dof</span><span class="p">)),</span>
+        <span class="p">)</span>
+    <span class="k">with</span> <span class="n">dr</span><span class="o">.</span><span class="n">gate</span><span class="o">.</span><span class="n">on_env_reset</span><span class="p">():</span>
+        <span class="n">dr</span><span class="o">.</span><span class="n">physics_view</span><span class="o">.</span><span class="n">randomize_rigid_prim_view</span><span class="p">(</span>
+            <span class="n">view_name</span><span class="o">=</span><span class="n">object_view</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;additive&quot;</span><span class="p">,</span>
+            <span class="n">position</span><span class="o">=</span><span class="n">rep</span><span class="o">.</span><span class="n">distribution</span><span class="o">.</span><span class="n">normal</span><span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)),</span>
+            <span class="n">velocity</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="n">dr</span><span class="o">.</span><span class="n">physics_view</span><span class="o">.</span><span class="n">randomize_articulation_view</span><span class="p">(</span>
+            <span class="n">view_name</span><span class="o">=</span><span class="n">franka_view</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;additive&quot;</span><span class="p">,</span>
+            <span class="n">joint_positions</span><span class="o">=</span><span class="n">rep</span><span class="o">.</span><span class="n">distribution</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="nb">tuple</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">]</span><span class="o">*</span><span class="n">num_dof</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">([</span><span class="mf">0.5</span><span class="p">]</span><span class="o">*</span><span class="n">num_dof</span><span class="p">)),</span>
+            <span class="n">position</span><span class="o">=</span><span class="n">rep</span><span class="o">.</span><span class="n">distribution</span><span class="o">.</span><span class="n">normal</span><span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)),</span>
+        <span class="p">)</span>
+<span class="n">rep</span><span class="o">.</span><span class="n">orchestrator</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+
+<span class="n">frame_idx</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">simulation_app</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">world</span><span class="o">.</span><span class="n">is_playing</span><span class="p">():</span>
+        <span class="n">reset_inds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">frame_idx</span> <span class="o">%</span> <span class="mi">200</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># triggers reset every 200 steps</span>
+            <span class="n">reset_inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_envs</span><span class="p">)</span>
+        <span class="n">dr</span><span class="o">.</span><span class="n">physics_view</span><span class="o">.</span><span class="n">step_randomization</span><span class="p">(</span><span class="n">reset_inds</span><span class="p">)</span>
+        <span class="n">world</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">render</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">frame_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.trigger.on_rl_frame">
+<span class="sig-prename descclassname"><span class="pre">trigger.</span></span><span class="sig-name descname"><span class="pre">on_rl_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.replicator.isaac.trigger.on_rl_frame" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>num_envs</strong> (<em>int</em>) – The number of environments corresponding to the number of prims
+encapsulated in the RigidPrimViews and ArticulationViews.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.gate.on_env_reset">
+<span class="sig-prename descclassname"><span class="pre">gate.</span></span><span class="sig-name descname"><span class="pre">on_env_reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.replicator.isaac.gate.on_env_reset" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.gate.on_interval">
+<span class="sig-prename descclassname"><span class="pre">gate.</span></span><span class="sig-name descname"><span class="pre">on_interval</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.replicator.isaac.gate.on_interval" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interval</strong> (<em>int</em>) – The frequency interval for randomization. The interval is incremented
+by omni.replicator.isaac.physics_view.step_randomization() call.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.physics_view.register_simulation_context">
+<span class="sig-prename descclassname"><span class="pre">physics_view.</span></span><span class="sig-name descname"><span class="pre">register_simulation_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.replicator.isaac.physics_view.register_simulation_context" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>simulation_context</strong> (<em>Union</em><em>[</em><em>omni.isaac.core.SimulationContext</em><em>, </em><em>omni.isaac.core.World</em><em>]</em>) – Registering the SimulationContext.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.physics_view.register_rigid_prim_view">
+<span class="sig-prename descclassname"><span class="pre">physics_view.</span></span><span class="sig-name descname"><span class="pre">register_rigid_prim_view</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.replicator.isaac.physics_view.register_rigid_prim_view" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rigid_prim_view</strong> (<a class="reference internal" href="../../omni.isaac.core/docs/index.html#omni.isaac.core.prims.RigidPrimView" title="omni.isaac.core.prims.RigidPrimView"><em>omni.isaac.core.prims.RigidPrimView</em></a>) – Registering the RigidPrimView to be randomized.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.physics_view.register_articulation_view">
+<span class="sig-prename descclassname"><span class="pre">physics_view.</span></span><span class="sig-name descname"><span class="pre">register_articulation_view</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.replicator.isaac.physics_view.register_articulation_view" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>articulation_view</strong> (<a class="reference internal" href="../../omni.isaac.core/docs/index.html#omni.isaac.core.articulations.ArticulationView" title="omni.isaac.core.articulations.ArticulationView"><em>omni.isaac.core.articulations.ArticulationView</em></a>) – Registering the ArticulationView to be randomized.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.physics_view.randomize_simulation_context">
+<span class="sig-prename descclassname"><span class="pre">physics_view.</span></span><span class="sig-name descname"><span class="pre">randomize_simulation_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gravity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.replicator.isaac.physics_view.randomize_simulation_context" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>operation</strong> (<em>str</em>) – Can be “direct”, “additive”, or “scaling”.
+“direct” means random values are directly written into the view.
+“additive” means random values are added to the default values.
+“scaling” means random values are multiplied to the default values.</p></li>
+<li><p><strong>gravity</strong> (<em>ReplicatorItem</em>) – Randomizes the gravity vector of the simulation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.physics_view.randomize_rigid_prim_view">
+<span class="sig-prename descclassname"><span class="pre">physics_view.</span></span><span class="sig-name descname"><span class="pre">randomize_rigid_prim_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'direct'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_buckets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linear_velocity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angular_velocity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mass</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inertia</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contact_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rest_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.replicator.isaac.physics_view.randomize_rigid_prim_view" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>view_name</strong> (<em>str</em>) – The name of a registered RigidPrimView.</p></li>
+<li><p><strong>operation</strong> (<em>str</em>) – Can be “direct”, “additive”, or “scaling”.
+“direct” means random values are directly written into the view.
+“additive” means random values are added to the default values.
+“scaling” means random values are multiplied to the default values.</p></li>
+<li><p><strong>num_buckets</strong> (<em>int</em>) – Number of buckets to sample values from for material_properties randomization.</p></li>
+<li><p><strong>position</strong> (<em>ReplicatorItem</em>) – Randomizes the position of the prims.</p></li>
+<li><p><strong>orientation</strong> (<em>ReplicatorItem</em>) – Randomizes the orientation of the prims using euler angles (rad).</p></li>
+<li><p><strong>linear_velocity</strong> (<em>ReplicatorItem</em>) – Randomizes the linear velocity of the prims.</p></li>
+<li><p><strong>angular_velocity</strong> (<em>ReplicatorItem</em>) – Randomizes the angular velocity of the prims.</p></li>
+<li><p><strong>velocity</strong> (<em>ReplicatorItem</em>) – Randomizes the linear and angular velocity of the prims.</p></li>
+<li><p><strong>force</strong> (<em>ReplicatorItem</em>) – Applies a random force to the prims.</p></li>
+<li><p><strong>mass</strong> (<em>ReplicatorItem</em>) – Randomizes the mass of the prims. CPU pipeline only.</p></li>
+<li><p><strong>inertia</strong> (<em>ReplicatorItem</em>) – Randomizes the inertia of the prims. Takes in three values for the
+replicator distribution, corresponding to the diagonal elements of
+the inertia matrix. CPU pipeline only.</p></li>
+<li><p><strong>material_properties</strong> (<em>ReplicatorItem</em>) – Takes in three values for the replicator distriution,
+corresponding to static friction, dynamic friction,
+and restitution.</p></li>
+<li><p><strong>contact_offset</strong> (<em>ReplicatorItem</em>) – Randomizes the contact offset of the prims.</p></li>
+<li><p><strong>rest_offset</strong> (<em>ReplicatorItem</em>) – Randomizes the rest offset of the prims.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.physics_view.randomize_articulation_view">
+<span class="sig-prename descclassname"><span class="pre">physics_view.</span></span><span class="sig-name descname"><span class="pre">randomize_articulation_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'direct'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_buckets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stiffness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_friction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linear_velocity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angular_velocity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_positions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_velocities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_dof_limits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_dof_limits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_efforts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_armatures</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_max_velocities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_efforts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body_masses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body_inertias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tendon_stiffnesses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tendon_dampings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tendon_limit_stiffnesses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tendon_lower_limits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tendon_upper_limits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tendon_rest_lengths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tendon_offsets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">omni.replicator.core.scripts.utils.ReplicatorItem</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.replicator.isaac.physics_view.randomize_articulation_view" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>view_name</strong> (<em>str</em>) – The name of a registered ArticulationView.</p></li>
+<li><p><strong>operation</strong> (<em>str</em>) – Can be “direct”, “additive”, or “scaling”.
+“direct” means random values are directly written into the view.
+“additive” means random values are added to the default values.
+“scaling” means random values are multiplied to the default values.</p></li>
+<li><p><strong>num_buckets</strong> (<em>int</em>) – Number of buckets to sample values from for material_properties randomization.</p></li>
+<li><p><strong>stiffness</strong> (<em>ReplicatorItem</em>) – Randomizes the stiffness of the joints in the articulation prims.</p></li>
+<li><p><strong>damping</strong> (<em>ReplicatorItem</em>) – Randomizes the damping of the joints in the articulation prims.</p></li>
+<li><p><strong>joint_friction</strong> (<em>ReplicatorItem</em>) – Randomizes the friction of the joints in the articulation prims.</p></li>
+<li><p><strong>position</strong> (<em>ReplicatorItem</em>) – Randomizes the root position of the prims.</p></li>
+<li><p><strong>orientation</strong> (<em>ReplicatorItem</em>) – Randomizes the root orientation of the prims using euler angles (rad).</p></li>
+<li><p><strong>linear_velocity</strong> (<em>ReplicatorItem</em>) – Randomizes the root linear velocity of the prims.</p></li>
+<li><p><strong>angular_velocity</strong> (<em>ReplicatorItem</em>) – Randomizes the root angular velocity of the prims.</p></li>
+<li><p><strong>velocity</strong> (<em>ReplicatorItem</em>) – Randomizes the root linear and angular velocity of the prims.</p></li>
+<li><p><strong>joint_positions</strong> (<em>ReplicatorItem</em>) – Randomizes the joint positions of the articulation prims.</p></li>
+<li><p><strong>joint_velocities</strong> (<em>ReplicatorItem</em>) – Randomizes the joint velocities of the articulation prims.</p></li>
+<li><p><strong>lower_dof_limits</strong> (<em>ReplicatorItem</em>) – Randomizes the lower joint limits of the articulation prims.</p></li>
+<li><p><strong>upper_dof_limits</strong> (<em>ReplicatorItem</em>) – Randomizes the upper joint limits of the articulation prims.</p></li>
+<li><p><strong>max_efforts</strong> (<em>ReplicatorItem</em>) – Randomizes the maximum joint efforts of the articulation prims.</p></li>
+<li><p><strong>joint_armatures</strong> (<em>ReplicatorItem</em>) – Randomizes the joint armatures of the articulation prims.</p></li>
+<li><p><strong>joint_max_velocities</strong> (<em>ReplicatorItem</em>) – Randomizes the maximum joint velocities of the articulation prims.</p></li>
+<li><p><strong>joint_efforts</strong> (<em>ReplicatorItem</em>) – Randomizes the joint efforts of the articulation prims.</p></li>
+<li><p><strong>body_masses</strong> (<em>ReplicatorItem</em>) – Randomizes the mass of each body in the articulation prims. The
+replicator distribution takes in K values, where K is the number of
+bodies in the articulation.</p></li>
+<li><p><strong>body_inertias</strong> (<em>ReplicatorItem</em>) – Randomizes the inertia of each body in the articulation prims. The
+replicator distribution takes in K * 3 values, where K is the number of
+bodies in the articulation.</p></li>
+<li><p><strong>material_properties</strong> (<em>ReplicatorItem</em>) – Randomizes the material properties of the bodies in the articulation.</p></li>
+<li><p><strong>tendon_stiffnesses</strong> (<em>ReplicatorItem</em>) – Randomizes the stiffnesses of the fixed tendons in the articulation.
+The replicator distribution takes in T values, where T is the number
+of tendons in the articulation.</p></li>
+<li><p><strong>tendon_dampings</strong> (<em>ReplicatorItem</em>) – Randomizes the dampings of the fixed tendons in the articulation.
+The replicator distribution takes in T values, where T is the number
+of tendons in the articulation.</p></li>
+<li><p><strong>tendon_limit_stiffnesses</strong> (<em>ReplicatorItem</em>) – Randomizes the limit stiffnesses of the fixed tendons in
+the articulation. The replicator distribution takes in T values,
+where T is the number of tendons in the articulation.</p></li>
+<li><p><strong>tendon_lower_limits</strong> (<em>ReplicatorItem</em>) – Randomizes the lower limits of the fixed tendons in
+the articulation. The replicator distribution takes in T values,
+where T is the number of tendons in the articulation.</p></li>
+<li><p><strong>tendon_upper_limits</strong> (<em>ReplicatorItem</em>) – Randomizes the upper limits of the fixed tendons in
+the articulation. The replicator distribution takes in T values,
+where T is the number of tendons in the articulation.</p></li>
+<li><p><strong>tendon_rest_lengths</strong> (<em>ReplicatorItem</em>) – Randomizes the rest lengths of the fixed tendons in
+the articulation. The replicator distribution takes in T values,
+where T is the number of tendons in the articulation.</p></li>
+<li><p><strong>tendon_offsets</strong> (<em>ReplicatorItem</em>) – Randomizes the offsets of the fixed tendons in
+the articulation. The replicator distribution takes in T values,
+where T is the number of tendons in the articulation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.physics_view.step_randomization">
+<span class="sig-prename descclassname"><span class="pre">physics_view.</span></span><span class="sig-name descname"><span class="pre">step_randomization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.replicator.isaac.physics_view.step_randomization" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>reset_inds</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>list</em><em>, </em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em><em>]</em>) – The indices corresonding to the prims to be reset in the views.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.utils.set_distribution_params">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">set_distribution_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.replicator.isaac.utils.set_distribution_params" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distribution</strong> (<em>ReplicatorItem</em>) – The replicator distribution object to be modified.</p></li>
+<li><p><strong>parameters</strong> (<em>Dict</em>) – A dictionary where the keys are the names of the replicator
+distribution parameters and the values are the parameter values
+to be set.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.utils.get_distribution_params">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">get_distribution_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span></span></span><a class="headerlink" href="#omni.replicator.isaac.utils.get_distribution_params" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distribution</strong> (<em>ReplicatorItem</em>) – A replicator distribution object.</p></li>
+<li><p><strong>parameters</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A list of the names of the replicator distribution parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of the distribution parameters of the given replicator distribution object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="pytorch-online-writer-and-listener">
+<h2>Pytorch Online Writer and Listener<a class="headerlink" href="#pytorch-online-writer-and-listener" title="Permalink to this headline"></a></h2>
+<p>The PytorchWriter and PytorchListener are APIs for using omni.replicator’s writer API to retrieve
+various data such as RGB from the specified cameras (supports multiple cameras) and provides them to
+the user in both default format (eg. PNG for RGB data) and batched pytorch tensors. The PytorchListener
+provides an API to directly retrieve data sent to the PytorchWriter without the need to access the stored
+by omni.replicator’s BackendDispatch.</p>
+<span class="target" id="module-omni.replicator.isaac.scripts.writers.pytorch_writer"></span><dl class="py class">
+<dt class="sig sig-object py" id="omni.replicator.isaac.scripts.writers.pytorch_writer.PytorchWriter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PytorchWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.replicator.isaac.scripts.writers.pytorch_writer.PytorchWriter" title="Permalink to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>A custom writer that uses omni.replicator API to retrieve RGB data via render products</dt><dd><p>and formats them as tensor batches. The writer takes a PytorchListener which is able
+to retrieve pytorch tensors for the user directly after each writer call.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>listener</strong> (<a class="reference internal" href="#omni.replicator.isaac.scripts.writers.pytorch_listener.PytorchListener" title="omni.replicator.isaac.scripts.writers.pytorch_listener.PytorchListener"><em>PytorchListener</em></a>) – A PytorchListener that is sent pytorch batch tensors at each write() call.</p></li>
+<li><p><strong>output_dir</strong> (<em>str</em>) – directory in which rgb data will be saved in PNG format by the backend dispatch.
+If not specified, the writer will not write rgb data as png and only ping the
+listener with batched tensors.</p></li>
+<li><p><strong>device</strong> (<em>str</em>) – device in which the pytorch tensor data will reside. Can be “cpu”, “cuda”, or any
+other format that pytorch supports for devices.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.scripts.writers.pytorch_writer.PytorchWriter.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.replicator.isaac.scripts.writers.pytorch_writer.PytorchWriter.write" title="Permalink to this definition"></a></dt>
+<dd><p>Sends data captured by the attached render products to the PytorchListener and will write data to
+the output directory if specified during initialization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – Data to be pinged to the listener and written to the output directory if specified.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-omni.replicator.isaac.scripts.writers.pytorch_listener"></span><dl class="py class">
+<dt class="sig sig-object py" id="omni.replicator.isaac.scripts.writers.pytorch_listener.PytorchListener">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PytorchListener</span></span><a class="headerlink" href="#omni.replicator.isaac.scripts.writers.pytorch_listener.PytorchListener" title="Permalink to this definition"></a></dt>
+<dd><p>A Observer/Listener that keeps track of updated data sent by the writer. Is passed in the
+initialization of a PytorchWriter at which point it is pinged by the writer after any data is
+passed to the writer.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.scripts.writers.pytorch_listener.PytorchListener.get_rgb_data">
+<span class="sig-name descname"><span class="pre">get_rgb_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#omni.replicator.isaac.scripts.writers.pytorch_listener.PytorchListener.get_rgb_data" title="Permalink to this definition"></a></dt>
+<dd><p>Returns RGB data as a batched tensor from the current data stored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>images in batched pytorch tensor form</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>images (Optional[torch.Tensor])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.replicator.isaac.scripts.writers.pytorch_listener.PytorchListener.write_data">
+<span class="sig-name descname"><span class="pre">write_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#omni.replicator.isaac.scripts.writers.pytorch_listener.PytorchListener.write_data" title="Permalink to this definition"></a></dt>
+<dd><p>Updates the existing data in the listener with the new data provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – new data retrieved from writer.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="omnigraph-nodes">
+<h2>Omnigraph Nodes<a class="headerlink" href="#omnigraph-nodes" title="Permalink to this headline"></a></h2>
+<section id="ogncountindices">
+<h3>OgnCountIndices<a class="headerlink" href="#ogncountindices" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p>[‘Get length of array’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>indices</strong> (<em>int[]</em>): indices to count.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>count</strong> (<em>uint</em>): Count.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="pose">
+<h3>Pose<a class="headerlink" href="#pose" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p>This node outputs the poses of assets with semantic labels</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>exec</strong> (<em>execution</em>): Trigger.</p></li>
+<li><p><strong>includeOccludedPrims</strong> (<em>bool</em>): Set to True if poses (and if enabled, centers) of fully occluded/out-of-frame semantic entities should be output.</p></li>
+<li><p><strong>getCenters</strong> (<em>bool</em>): Set to True if producing center coordinates of every semantic entity projected in the image space.</p></li>
+<li><p><strong>cameraRotation</strong> (<em>float[]</em>): Rotation of the desired camera frame from the default camera frame, as XYZ Euler angles.</p></li>
+<li><p><strong>imageWidth</strong> (<em>uint</em>): Width of the viewport.</p></li>
+<li><p><strong>imageHeight</strong> (<em>uint</em>): Height of the viewport.</p></li>
+<li><p><strong>cameraViewTransform</strong> (<em>matrixd[4]</em>): Camera view matrix.</p></li>
+<li><p><strong>cameraProjection</strong> (<em>matrixd[4]</em>): Camera projection matrix.</p></li>
+<li><p><strong>sdIMNumSemantics</strong> (<em>uint</em>): Number of semantic entities in the semantic arrays.</p></li>
+<li><p><strong>sdIMNumSemanticTokens</strong> (<em>uint</em>): Number of semantics token including the semantic entity path, the semantic entity types and if the number of semantic types is greater than one.</p></li>
+<li><p><strong>sdIMInstanceSemanticMap</strong> (<em>uchar[]</em>): Raw array of uint16_t of size sdIMNumInstances*sdIMMaxSemanticHierarchyDepth containing the mapping from the instances index to their inherited semantic entities.</p></li>
+<li><p><strong>sdIMSemanticTokenMap</strong> (<em>token[]</em>): Semantic array of token of size numSemantics * numSemanticTypes containing the mapping from the semantic entities to the semantic entity path and semantic types.</p></li>
+<li><p><strong>sdIMMinSemanticIndex</strong> (<em>uint</em>): Semantic id of the first instance in the instance arrays.</p></li>
+<li><p><strong>sdIMMaxSemanticHierarchyDepth</strong> (<em>uint</em>): Maximal number of semantic entities inherited by an instance.</p></li>
+<li><p><strong>sdIMSemanticWorldTransform</strong> (<em>float[]</em>): Semantic array of 4x4 float matrices containing the transform from local to world space for every semantic entity.</p></li>
+<li><p><strong>data</strong> (<em>uchar[]</em>): Buffer array data. Default to [].</p></li>
+<li><p><strong>bufferSize</strong> (<em>uint</em>): Size (in bytes) of the buffer (0 if the input is a texture).</p></li>
+<li><p><strong>swhFrameNumber</strong> (<em>uint64</em>): Frame number.</p></li>
+<li><p><strong>semanticTypes</strong> (<em>token[]</em>): Semantic Types to consider. Default to [‘class’].</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>exec</strong> (<em>execution</em>): Trigger.</p></li>
+<li><p><strong>data</strong> (<em>uchar[]</em>): Semantic array of 4x4 float matrices containing the transform from local to view space for every semantic entity. Additionally, an optional semantic array of float[2] vectors containing the center coordinates of every semantic entity projected in the image space.</p></li>
+<li><p><strong>idToLabels</strong> (<em>string</em>): Mapping from id to semantic labels.</p></li>
+<li><p><strong>primPaths</strong> (<em>token[]</em>): Prim paths corresponding to each pose.</p></li>
+<li><p><strong>swhFrameNumber</strong> (<em>uint64</em>): Frame number.</p></li>
+<li><p><strong>bufferSize</strong> (<em>uint</em>): Size (in bytes) of the buffer (0 if the input is a texture).</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Shape of the data.</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Shape of the data.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="dope">
+<h3>Dope<a class="headerlink" href="#dope" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p>Gets poses of assets as required by ground truth file for DOPE training</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>exec</strong> (<em>execution</em>): Trigger.</p></li>
+<li><p><strong>cameraModel</strong> (<em>token</em>): Camera model (pinhole or fisheye models).</p></li>
+<li><p><strong>cameraViewTransform</strong> (<em>matrixd[4]</em>): Camera view matrix.</p></li>
+<li><p><strong>cameraProjection</strong> (<em>matrixd[4]</em>): Camera projection matrix.</p></li>
+<li><p><strong>cameraFisheyeNominalWidth</strong> (<em>int</em>): Camera fisheye nominal width.</p></li>
+<li><p><strong>cameraFisheyeNominalHeight</strong> (<em>int</em>): Camera fisheye nominal height.</p></li>
+<li><p><strong>cameraFisheyeOpticalCentre</strong> (<em>float[2]</em>): Camera fisheye optical centre.</p></li>
+<li><p><strong>cameraFisheyeMaxFOV</strong> (<em>float</em>): Camera fisheye maximum field of view.</p></li>
+<li><p><strong>cameraFisheyePolynomial</strong> (<em>float[]</em>): Camera fisheye polynomial.</p></li>
+<li><p><strong>cameraNearFar</strong> (<em>float[2]</em>): Camera near/far clipping range.</p></li>
+<li><p><strong>horizontalAperture</strong> (<em>float</em>): Horizontal aperture of camera.</p></li>
+<li><p><strong>focalLength</strong> (<em>float</em>): Camera fisheye maximum field of view.</p></li>
+<li><p><strong>cameraRotation</strong> (<em>float[3]</em>): Camera rotation in euler angles.</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Width of the viewport.</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Height of the viewport.</p></li>
+<li><p><strong>boundingBox3d</strong> (<em>uchar[]</em>): 3d bounding box data.</p></li>
+<li><p><strong>occlusion</strong> (<em>uchar[]</em>): Occlusion data.</p></li>
+<li><p><strong>swhFrameNumber</strong> (<em>uint64</em>): Frame number.</p></li>
+<li><p><strong>sdIMNumSemantics</strong> (<em>uint</em>): Number of semantic entities in the semantic arrays.</p></li>
+<li><p><strong>sdIMNumSemanticTokens</strong> (<em>uint</em>): Number of semantics token including the semantic entity path, the semantic entity types and if the number of semantic types is greater than one.</p></li>
+<li><p><strong>sdIMInstanceSemanticMap</strong> (<em>uchar[]</em>): Raw array of uint16_t of size sdIMNumInstances*sdIMMaxSemanticHierarchyDepth containing the mapping from the instances index to their inherited semantic entities.</p></li>
+<li><p><strong>sdIMSemanticTokenMap</strong> (<em>token[]</em>): Semantic array of token of size numSemantics * numSemanticTypes containing the mapping from the semantic entities to the semantic entity path and semantic types.</p></li>
+<li><p><strong>sdIMMinSemanticIndex</strong> (<em>uint</em>): Semantic id of the first instance in the instance arrays.</p></li>
+<li><p><strong>sdIMMaxSemanticHierarchyDepth</strong> (<em>uint</em>): Maximal number of semantic entities inherited by an instance.</p></li>
+<li><p><strong>semanticTypes</strong> (<em>token[]</em>): Semantic Types to consider. Default to [‘class’].</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>exec</strong> (<em>execution</em>): Trigger.</p></li>
+<li><p><strong>data</strong> (<em>uchar[]</em>): Semantic array of 4x4 float matrices containing the transform from local to view space for every semantic entity. Additionally, an optional semantic array of float[2] vectors containing the center coordinates of every semantic entity projected in the image space.</p></li>
+<li><p><strong>idToLabels</strong> (<em>string</em>): Mapping from id to semantic labels.</p></li>
+<li><p><strong>swhFrameNumber</strong> (<em>uint64</em>): Frame number.</p></li>
+<li><p><strong>bufferSize</strong> (<em>uint</em>): Size (in bytes) of the buffer (0 if the input is a texture).</p></li>
+<li><p><strong>height</strong> (<em>uint</em>): Shape of the data.</p></li>
+<li><p><strong>width</strong> (<em>uint</em>): Shape of the data.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ognwritephysicssimulationcontext">
+<h3>OgnWritePhysicsSimulationContext<a class="headerlink" href="#ognwritephysicssimulationcontext" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p>This node writes physics attributes to TensorAPI views</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>prims</strong> (<em>string</em>): Name of registered view to randomize.</p></li>
+<li><p><strong>attribute</strong> (<em>string</em>): Name of attribute that is to be written.</p></li>
+<li><p><strong>operation</strong> (<em>string</em>): Type of randomization operation to be applied.</p></li>
+<li><p><strong>distribution</strong> (<em>string</em>): Type of distribution used to sample values.</p></li>
+<li><p><strong>dist_param_1</strong> (<em>float[]</em>): Distribution parameter 1.</p></li>
+<li><p><strong>dist_param_2</strong> (<em>float[]</em>): Distribution parameter 2.</p></li>
+<li><p><strong>num_buckets</strong> (<em>int</em>): Number of buckets to randomize from.</p></li>
+<li><p><strong>values</strong> (<em>float[]</em>): Values to be assigned to the physics attribute.</p></li>
+<li><p><strong>indices</strong> (<em>int[]</em>): Indices of the environments to assign the physics attribute.</p></li>
+<li><p><strong>on_reset</strong> (<em>bool</em>): indicates whether an on_reset context triggered the execution.</p></li>
+<li><p><strong>execIn</strong> (<em>execution</em>): exec.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): exec.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ognwritephysicsrigidprimview">
+<h3>OgnWritePhysicsRigidPrimView<a class="headerlink" href="#ognwritephysicsrigidprimview" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p>This node writes physics attributes to TensorAPI views</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>prims</strong> (<em>string</em>): Name of registered view to randomize.</p></li>
+<li><p><strong>attribute</strong> (<em>string</em>): Name of attribute that is to be written.</p></li>
+<li><p><strong>operation</strong> (<em>string</em>): Type of randomization operation to be applied.</p></li>
+<li><p><strong>distribution</strong> (<em>string</em>): Type of distribution used to sample values.</p></li>
+<li><p><strong>dist_param_1</strong> (<em>float[]</em>): Distribution parameter 1.</p></li>
+<li><p><strong>dist_param_2</strong> (<em>float[]</em>): Distribution parameter 2.</p></li>
+<li><p><strong>num_buckets</strong> (<em>int</em>): Number of buckets to randomize from.</p></li>
+<li><p><strong>values</strong> (<em>float[]</em>): Values to be assigned to the physics attribute.</p></li>
+<li><p><strong>indices</strong> (<em>int[]</em>): Indices of the environments to assign the physics attribute.</p></li>
+<li><p><strong>on_reset</strong> (<em>bool</em>): indicates whether an on_reset context triggered the execution.</p></li>
+<li><p><strong>execIn</strong> (<em>execution</em>): exec.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): exec.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="random3f">
+<h3>Random3f<a class="headerlink" href="#random3f" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p>This node outputs the poses of assets with semantic labels</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>minimum</strong> (<em>float[3]</em>): minimum range for randomization.</p></li>
+<li><p><strong>maximum</strong> (<em>float[3]</em>): minimum range for randomization.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>output</strong> (<em>float[3]</em>): Random float 3.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ognonrlframe">
+<h3>OgnOnRLFrame<a class="headerlink" href="#ognonrlframe" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p>[‘Triggered every frame in an Rl setting’]</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>run</strong> (<em>bool</em>): Run.</p></li>
+<li><p><strong>num_envs</strong> (<em>int</em>): number of RL environments.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): Output Execution.</p></li>
+<li><p><strong>resetInds</strong> (<em>int[]</em>): indices of environments to be reset.</p></li>
+<li><p><strong>frameNum</strong> (<em>int[]</em>): frame number for every environment.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ognintervalfiltering">
+<h3>OgnIntervalFiltering<a class="headerlink" href="#ognintervalfiltering" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p>Outputs indices if their frame count is a multiple of the interval</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>interval</strong> (<em>int</em>): randomization will take place once every <cite>interval</cite> frames.</p></li>
+<li><p><strong>frameCounts</strong> (<em>int[]</em>): the current frame number for every environment.</p></li>
+<li><p><strong>indices</strong> (<em>int[]</em>): a list of indices to use in case of ignoring interval.</p></li>
+<li><p><strong>ignoreInterval</strong> (<em>bool</em>): if true, will just pass indices to downstream node. Default to False.</p></li>
+<li><p><strong>execIn</strong> (<em>execution</em>): exec.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): exec.</p></li>
+<li><p><strong>indices</strong> (<em>int[]</em>): the indices that are at the interval and need to be randomized.</p></li>
+<li><p><strong>on_reset</strong> (<em>bool</em>): indicates whether an on_reset context triggered the execution.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ognwritephysicsarticulationview">
+<h3>OgnWritePhysicsArticulationView<a class="headerlink" href="#ognwritephysicsarticulationview" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><p>This node writes physics attributes to TensorAPI views</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>prims</strong> (<em>string</em>): Name of registered view to randomize.</p></li>
+<li><p><strong>attribute</strong> (<em>string</em>): Name of attribute that is to be written.</p></li>
+<li><p><strong>operation</strong> (<em>string</em>): Type of randomization operation to be applied.</p></li>
+<li><p><strong>distribution</strong> (<em>string</em>): Type of distribution used to sample values.</p></li>
+<li><p><strong>dist_param_1</strong> (<em>float[]</em>): Distribution parameter 1.</p></li>
+<li><p><strong>dist_param_2</strong> (<em>float[]</em>): Distribution parameter 2.</p></li>
+<li><p><strong>num_buckets</strong> (<em>int</em>): Number of buckets to randomize from.</p></li>
+<li><p><strong>values</strong> (<em>float[]</em>): Values to be assigned to the physics attribute.</p></li>
+<li><p><strong>indices</strong> (<em>int[]</em>): Indices of the environments to assign the physics attribute.</p></li>
+<li><p><strong>on_reset</strong> (<em>bool</em>): indicates whether an on_reset context triggered the execution.</p></li>
+<li><p><strong>execIn</strong> (<em>execution</em>): exec.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): exec.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018-2023, NVIDIA.
+      <span class="lastupdated">Last updated on Mar 16, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "1.7.4"
+category = "SyntheticData"
+title = "Replicator Isaac"
+description="Omni Replicator Isaac Sim Extension"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["Synthetic", "Data", "Randomization", "Generator", "Domain Randomization", "DR"]
+changelog="docs/CHANGELOG.md"
+readme  = "docs/README.md"
+icon = "data/icon.png"
+
+# Build separate extensions for Windows and Linux so appropriate libraries are bundled
+writeTarget.platform = true
+
+
+[dependencies]
+"omni.graph" = {}
+"omni.graph.core" = {}
+"omni.replicator.core" = {}
+"omni.isaac.core" = {}
+"omni.physics.tensors" = {}
+"omni.isaac.ml_archive" = {} # torch
+"omni.graph.bundle.action" = {}
+
+[[python.module]]
+name = "omni.replicator.isaac"
+
+# Watch the .ogn files for hot reloading (only works for Python files)
+[fswatcher.patterns]
+include = ["*.ogn", "*.py"]
+exclude = ["Ogn*Database.py"]
+
+[[test]]
+
+dependencies = [
+    "omni.hydra.rtx",                       # "omni.hydra.pxr", Can we run and pass with Storm ?
+    "omni.kit.viewport.utility",
+    "omni.kit.viewport.window",
+]

@@ -1,0 +1,35 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.3.1"
+category = "Simulation"
+title = "Isaac Sim MJCF Importer"
+description = "MJCF Importer for Isaac Sim"
+repository = ""
+keywords = ["isaac", "mjcf", "mujoco", "import"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.kit.uiapp" = {}
+"omni.isaac.ui" = {}
+"omni.kit.window.filepicker" = {}
+"omni.kit.window.content_browser" = {}
+"omni.kit.pip_archive" = {} # pulls in pillow
+"omni.physx" = {} 
+
+
+[[python.module]]
+name = "omni.isaac.mjcf"
+
+[[python.module]]
+name = "omni.isaac.mjcf.tests"
+
+[[native.plugin]]
+path = "bin/*.plugin"
+recursive = false
+

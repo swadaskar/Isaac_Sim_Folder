@@ -1,0 +1,19 @@
+[package]
+title = "Isaac Sim Splash"
+description = "Display a Splash screen while Isaac Sim is loading"
+version = "1.1.0"
+
+[dependencies]
+"omni.kit.uiapp" = {}
+
+[[python.module]]
+name = "omni.isaac.splash"
+
+[settings.exts."omni.isaac.splash"]
+max_slides_count = 1
+slides_file_pattern = "data/isaac_splash_screen@1x*.png"
+slide_hold_time = 3.0
+
+
+[[test]]
+args = ["--/exts/omni.kit.renderer.core/compatibilityMode=true"]

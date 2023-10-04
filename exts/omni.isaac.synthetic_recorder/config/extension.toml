@@ -1,0 +1,25 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "1.5.0"
+title = "Isaac Sim Synthetic Data Recorder"
+description = "Tool to record synthetic data"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "synthetic", "recorder"]
+changelog = "docs/CHANGELOG.md"
+category = "Simulation"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.replicator.core" = {}
+"omni.timeline" = {}
+"omni.kit.viewport.utility" = {}
+"omni.kit.window.extensions" = {}
+
+[[python.module]]
+name = "omni.isaac.synthetic_recorder"

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="bettina">
+
+    <link name="base">
+        <inertial><mass value="0"/><inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/></inertial>
+        <visual><geometry><mesh filename="assets/seg0.obj" scale="0.001 0.001 0.001"/></geometry><material name="housing"/></visual>
+        <collision group="2" mask="-3"><origin xyz="0.0000 0.0000 0.1000"/><geometry><sphere radius="0.1600"/></geometry></collision>
+    </link>
+
+    <link name="link_1">
+        <inertial><mass value="0"/><inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/></inertial>
+        <visual><geometry><mesh filename="assets/seg1.obj" scale="0.001 0.001 0.001"/></geometry><material name="housing"/></visual>
+        <collision group="6" mask="-7"><origin xyz="0.0000 0.0646 0.3261"/><geometry><sphere radius="0.0900"/></geometry></collision>
+    </link>
+
+    <link name="link_2">
+        <inertial><mass value="0"/><inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/></inertial>
+        <visual><geometry><mesh filename="assets/seg2.obj" scale="0.001 0.001 0.001"/></geometry><material name="housing"/></visual>
+        <collision group="6" mask="-7"><origin xyz="0.0000 0.0171 0.0168"/><geometry><sphere radius="0.0900"/></geometry></collision>
+        <collision group="6" mask="-7"><origin xyz="0.0000 0.0113 0.1107"/><geometry><sphere radius="0.0800"/></geometry></collision>
+        <collision group="4" mask="-5"><origin xyz="0.0000 0.1210 0.1344"/><geometry><sphere radius="0.0700"/></geometry></collision>
+        <collision group="4" mask="-5"><origin xyz="0.0000 0.2337 0.1299"/><geometry><sphere radius="0.0700"/></geometry></collision>
+        <collision group="4" mask="-5"><origin xyz="0.0000 0.3209 0.1150"/><geometry><sphere radius="0.0700"/></geometry></collision>
+        <collision group="12" mask="-13"><origin xyz="0.0000 0.3190 0.0615"/><geometry><sphere radius="0.0800"/></geometry></collision>
+    </link>
+
+    <link name="link_3">
+        <inertial><mass value="0"/><inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/></inertial>
+        <visual><geometry><mesh filename="assets/seg3.obj" scale="0.001 0.001 0.001"/></geometry><material name="housing"/></visual>
+        <collision group="12" mask="-13"><origin xyz="0.0000 0.0000 0.0596"/><geometry><sphere radius="0.0600"/></geometry></collision>
+    </link>
+
+    <link name="link_4">
+        <inertial><mass value="0"/><inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/></inertial>
+        <visual><geometry><mesh filename="assets/seg4.obj" scale="0.001 0.001 0.001"/></geometry><material name="housing"/></visual>
+        <collision group="12" mask="-13"><origin xyz="0.0000 0.0122 0.1428"/><geometry><sphere radius="0.0600"/></geometry></collision>
+        <collision group="24" mask="-25"><origin xyz="0.0000 0.1371 0.1710"/><geometry><sphere radius="0.0600"/></geometry></collision>
+        <collision group="24" mask="-25"><origin xyz="0.0000 0.1392 0.3229"/><geometry><sphere radius="0.0600"/></geometry></collision>
+        <collision group="24" mask="-25"><origin xyz="0.0000 0.1440 0.2500"/><geometry><sphere radius="0.0600"/></geometry></collision>
+    </link>
+
+    <link name="link_5">
+        <inertial><mass value="0"/><inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/></inertial>
+        <visual><geometry><mesh filename="assets/seg5.obj" scale="0.001 0.001 0.001"/></geometry><material name="housing"/></visual>
+        <collision group="24" mask="-25"><origin xyz="0.0000 0.0881 -0.0063"/><geometry><sphere radius="0.0700"/></geometry></collision>
+        <collision group="16" mask="-17"><origin xyz="0.0000 -0.0478 0.0000"/><geometry><sphere radius="0.0700"/></geometry></collision>
+    </link>
+
+    <link name="link_6">
+        <inertial><mass value="0"/><inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/></inertial>
+        <visual><geometry><mesh filename="assets/seg6.obj" scale="0.001 0.001 0.001"/></geometry><material name="housing"/></visual>
+    </link>
+
+    <link name="flange">
+        <inertial><mass value="0"/><inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/></inertial>
+    </link>
+
+    <joint name="a1" type="revolute">
+        <parent link="base"/>
+        <child link="link_1"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-2.3562" upper="2.3562" velocity="1.57079633" effort="40"/>
+    </joint>
+
+    <joint name="a2" type="revolute">
+        <origin xyz="0.0000 0.0000 0.3366" rpy="1.57079633 0.00000000 0.00000000"/>
+        <parent link="link_1"/>
+        <child link="link_2"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-2.3562" upper="2.3562" velocity="1.57079633" effort="40"/>
+    </joint>
+
+    <joint name="a3" type="revolute">
+        <origin xyz="0.000 0.335 0.000" rpy="-3.14159265 0.00000000 1.57079633"/>
+        <parent link="link_2"/>
+        <child link="link_3"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-3.5779" upper="1.1345" velocity="1.57079633" effort="40"/>
+    </joint>
+
+    <joint name="a4" type="revolute">
+        <origin xyz="0.000 0.000 0.06545" rpy="-1.57079633 0.00000000 0.00000000"/>
+        <parent link="link_3"/>
+        <child link="link_4"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-2.3562" upper="2.3562" velocity="1.57079633" effort="40"/>
+    </joint>
+
+    <joint name="a5" type="revolute">
+        <origin xyz="0.000 0.000 0.335" rpy="1.57079633 0.00000000 0.00000000"/>
+        <parent link="link_4"/>
+        <child link="link_5"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-2.3562" upper="2.3562" velocity="1.57079633" effort="40"/>
+    </joint>
+
+    <joint name="a6" type="revolute">
+        <origin xyz="0.000 0.000 0.000" rpy="-1.57079633 0.00000000 0.00000000"/>
+        <parent link="link_5"/>
+        <child link="link_6"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-2.3562" upper="2.3562" velocity="1.57079633" effort="40"/>
+    </joint>
+
+    <joint name="flange-a6" type="fixed">
+        <origin xyz="0.000 0.000 0.14705" rpy="0.00000000 0.00000000 0.00000000"/>
+        <parent link="link_6"/>
+        <child link="flange"/>
+    </joint>
+</robot>

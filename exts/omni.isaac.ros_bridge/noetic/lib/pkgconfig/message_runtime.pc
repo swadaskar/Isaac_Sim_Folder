@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: message_runtime
+Description: Description of message_runtime
+Version: 0.4.13
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: cpp_common roscpp_serialization roscpp_traits rostime

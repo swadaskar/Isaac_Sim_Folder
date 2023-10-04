@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StanleyControlPID &mdash; isaac_sim 2022.2.1-rc.14 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/omni-style.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/api-styles.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/mermaid-init.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+        <script src="https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js"></script>
+        <script>initMermaid();</script>
+        <script src="../../../../_static/version.js"></script>
+        <script src="../../../../_static/social-media.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html">
+            <img src="../../../../_static/main_ov_logo_square.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Main Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core/docs/index.html">Core [omni.isaac.core]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core_nodes/docs/index.html">Core Omnigraph Nodes [omni.isaac.core_nodes]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html">Dynamic Control [omni.isaac.dynamic_control]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.kit/docs/index.html">Simulation Application [omni.isaac.kit]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.utils/docs/index.html">Utilities [omni.isaac.utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ui/docs/index.html">UI Utilities [omni.isaac.ui]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.kit.loop-isaac/docs/index.html">Time Stepping Control [omni.kit.loop-isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.cloner/docs/index.html">Isaac Cloner [omni.isaac.cloner]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.gym/docs/index.html">RL [omni.isaac.gym]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sensor Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.sensor/docs/index.html">Isaac Sensor Extension [omni.isaac.sensor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.range_sensor/docs/index.html">Range Based Sensor Simulation [omni.isaac.range_sensor]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Asset Conversion Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.urdf/docs/index.html">URDF Import Extension [omni.isaac.urdf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.mjcf/docs/index.html">MJCF Import Extension [omni.isaac.mjcf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.shapenet/docs/index.html">ShapeNet [omni.isaac.shapenet]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dofbot/docs/index.html">Dofbot Robot [omni.isaac.dofbot]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.franka/docs/index.html">Franka Robot [omni.isaac.franka]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Wheeled Robots [omni.isaac.wheeled_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.universal_robots/docs/index.html">Universal Robots [omni.isaac.universal_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.quadruped/docs/index.html">Quadruped Robots [omni.isaac.quadruped]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.manipulators/docs/index.html">Manipulators [omni.isaac.manipulators]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros_bridge/docs/index.html">ROS Bridge [omni.isaac.ros_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros2_bridge/docs/index.html">ROS2 Bridge [omni.isaac.ros2_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.debug_draw/docs/index.html">Debug Drawing [omni.isaac.debug_draw]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.motion_generation/docs/index.html">Motion Generation Extension [omni.isaac.motion_generation]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.lula/docs/index.html">Lula [omni.isaac.lula]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.surface_gripper/docs/index.html">Surface_gripper [omni.isaac.surface_gripper]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.synthetic_utils/docs/index.html">Tools for Generating Synthetic Data [omni.isaac.synthetic_utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.occupancy_map/docs/index.html">Occupancy Extension [omni.isaac.occupancy_map]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.replicator.isaac/docs/index.html">Replicator Isaac Extension [omni.replicator.isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.conveyor/docs/index.html">Conveyor [omni.isaac.conveyor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.examples_nodes/docs/index.html">Isaac Sim Examples Nodes [omni.isaac.examples_nodes]</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">isaac_sim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>StanleyControlPID</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="stanleycontrolpid">
+<h1>StanleyControlPID<a class="headerlink" href="#stanleycontrolpid" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>Drive to Target Steering</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution.</p></li>
+<li><p><strong>currentPosition</strong> (<em>vectord[3]</em>): Current position of the robot (recommended to use Get Prim Local to World Transform node).</p></li>
+<li><p><strong>currentOrientation</strong> (<em>quatd[4]</em>): Current rotation of the robot as a quaternion (recommended to use Get Prim Local to World Transform node).</p></li>
+<li><p><strong>currentSpeed</strong> (<em>vectord[3]</em>): Current linear velocity of the robot.</p></li>
+<li><p><strong>maxVelocity</strong> (<em>double</em>): Maximum linear velocity of the robot. Default to 1.5.</p></li>
+<li><p><strong>reachedGoal</strong> (<em>bool[]</em>): Position and orientation thresholds at target. Default to [False, False].</p></li>
+<li><p><strong>pathArrays</strong> (<em>double[]</em>): The path v, x, y, and yaw arrays.</p></li>
+<li><p><strong>target</strong> (<em>double[3]</em>): Target position and orientation. Default to [0, 0, 0].</p></li>
+<li><p><strong>targetChanged</strong> (<em>bool</em>): Target position/orientation has changed. Default to False.</p></li>
+<li><p><strong>wheelBase</strong> (<em>double</em>): Distance between the centers of the front and rear wheels. Default to 0.4132.</p></li>
+<li><p><strong>thresholds</strong> (<em>double[2]</em>): Position and orientation thresholds at target. Default to [0.1, 0.1].</p></li>
+<li><p><strong>drawPath</strong> (<em>bool</em>): Draw the provided path curve onto the stage. Default to False.</p></li>
+<li><p><strong>step</strong> (<em>double</em>): Step. Default to 0.16666666667.</p></li>
+<li><p><strong>gains</strong> (<em>double[3]</em>): control, velocity and steering gains. Default to [0.5, 0.1, 0.0872665].</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): The output execution.</p></li>
+<li><p><strong>linearVelocity</strong> (<em>double</em>): Current forward speed for robot drive.</p></li>
+<li><p><strong>angularVelocity</strong> (<em>double</em>): Current angular speed for robot drive.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="holonomicrobotusdsetup">
+<h1>HolonomicRobotUsdSetup<a class="headerlink" href="#holonomicrobotusdsetup" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>setup any robot to be ready to be used by the holonomic controller by extract attributes from USD</p>
+<p>Use this node to extract all the holonomic drive information from USD if the listed information are stored in the USD file already. If they are not in USD, you can manually set those values in the HolonomicController node</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>robotPrim</strong> (<em>bundle</em>): prim for the robot’s articulation root.</p></li>
+<li><p><strong>comPrim</strong> (<em>bundle</em>): prim for the center of mass xform.</p></li>
+<li><p><strong>usePath</strong> (<em>bool</em>): use prim path instead of prim bundles. Default to False.</p></li>
+<li><p><strong>robotPrimPath</strong> (<em>token</em>): prim path to the robot’s articulation root link when usdPath is true.</p></li>
+<li><p><strong>comPrimPath</strong> (<em>token</em>): prim path to the robot’s center of mass xform.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>wheelRadius</strong> (<em>double[]</em>): an array of wheel radius.</p></li>
+<li><p><strong>wheelPositions</strong> (<em>double[3][]</em>): position of the wheel with respect to chassis’ center of mass.</p></li>
+<li><p><strong>wheelOrientations</strong> (<em>double[4][]</em>): orientation of the wheel with respect to chassis’ center of mass frame.</p></li>
+<li><p><strong>mecanumAngles</strong> (<em>double[]</em>): angles of the mechanum wheels with respect to wheel’s rotation axis.</p></li>
+<li><p><strong>wheelAxis</strong> (<em>double[3]</em>): the rotation axis of the wheels, assuming all wheels have the same.</p></li>
+<li><p><strong>upAxis</strong> (<em>double[3]</em>): the rotation axis of the vehicle.</p></li>
+<li><p><strong>wheelDofNames</strong> (<em>token[]</em>): name of the left wheel joint.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="differentialcontroller">
+<h1>DifferentialController<a class="headerlink" href="#differentialcontroller" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>Differential Controller</p>
+<p>Use the wheel radius and the distance between the wheels to calculate the desired wheels speed when given a desired vehicle speed.</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution.</p></li>
+<li><p><strong>wheelRadius</strong> (<em>double</em>): radius of the wheels.</p></li>
+<li><p><strong>wheelDistance</strong> (<em>double</em>): distance between the two wheels.</p></li>
+<li><p><strong>maxLinearSpeed</strong> (<em>double</em>): max linear speed allowed for vehicle.</p></li>
+<li><p><strong>maxAngularSpeed</strong> (<em>double</em>): max angular speed allowed for vehicle.</p></li>
+<li><p><strong>maxWheelSpeed</strong> (<em>double</em>): max wheel speed allowed.</p></li>
+<li><p><strong>linearVelocity</strong> (<em>double</em>): desired linear velocity.</p></li>
+<li><p><strong>angularVelocity</strong> (<em>double</em>): desired rotation velocity.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>positionCommand</strong> (<em>double[]</em>): position commands.</p></li>
+<li><p><strong>velocityCommand</strong> (<em>double[]</em>): velocity commands.</p></li>
+<li><p><strong>effortCommand</strong> (<em>double[]</em>): effort commands.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="quinticpathplanner">
+<h1>QuinticPathPlanner<a class="headerlink" href="#quinticpathplanner" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>Quintic Path Planner For Wheeled robots</p>
+<p>Use odometry from a robot and a target position/prim to calculate a route from the robot’s starting position to the target position.</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution.</p></li>
+<li><p><strong>currentPosition</strong> (<em>vectord[3]</em>): Current position of the robot (recommended to use Get Prim Local to World Transform node).</p></li>
+<li><p><strong>currentOrientation</strong> (<em>quatd[4]</em>): Current rotation of the robot as a quaternion (recommended to use Get Prim Local to World Transform node).</p></li>
+<li><p><strong>targetPrim</strong> (<em>bundle, optional</em>): USD prim reference to the target position/orientation prim.</p></li>
+<li><p><strong>targetPosition</strong> (<em>vectord[3]</em>): Target position (used if no targetPrim provided).</p></li>
+<li><p><strong>targetOrientation</strong> (<em>quatd[4]</em>): Target orientation (used if no targetPrim provided).</p></li>
+<li><p><strong>initialVelocity</strong> (<em>double</em>): Initial velocity. Default to 0.5.</p></li>
+<li><p><strong>initialAccel</strong> (<em>double</em>): Initial acceleration. Default to 0.02.</p></li>
+<li><p><strong>goalVelocity</strong> (<em>double</em>): Goal velocity. Default to 0.5.</p></li>
+<li><p><strong>goalAccel</strong> (<em>double</em>): Goal acceleration. Default to 0.02.</p></li>
+<li><p><strong>maxAccel</strong> (<em>double</em>): Max acceleration. Default to 1.5.</p></li>
+<li><p><strong>maxJerk</strong> (<em>double</em>): Max jerk. Default to 0.3.</p></li>
+<li><p><strong>step</strong> (<em>double</em>): Step. Default to 0.16666666667.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): The output execution.</p></li>
+<li><p><strong>pathArrays</strong> (<em>double[]</em>): The path v, x, y, and yaw arrays.</p></li>
+<li><p><strong>target</strong> (<em>double[3]</em>): Target position and orientation.</p></li>
+<li><p><strong>targetChanged</strong> (<em>bool</em>): Target position/orientation has changed.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="holonomiccontroller">
+<h1>HolonomicController<a class="headerlink" href="#holonomiccontroller" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>Holonomic Controller</p>
+<p>Calculating the desired wheel speeds when given a desired vehicle speed.</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution.</p></li>
+<li><p><strong>wheelRadius</strong> (<em>double[]</em>): an array of wheel radius.</p></li>
+<li><p><strong>wheelPositions</strong> (<em>double[3][]</em>): position of the wheel with respect to chassis’ center of mass.</p></li>
+<li><p><strong>wheelOrientations</strong> (<em>double[4][]</em>): orientation of the wheel with respect to chassis’ center of mass frame.</p></li>
+<li><p><strong>mecanumAngles</strong> (<em>double[]</em>): angles of the mecanum wheels with respect to wheel’s rotation axis.</p></li>
+<li><p><strong>wheelAxis</strong> (<em>double[3]</em>): the rotation axis of the wheels.</p></li>
+<li><p><strong>upAxis</strong> (<em>double[3]</em>): the rotation axis of the vehicle.</p></li>
+<li><p><strong>velocityCommands</strong> (<em>[‘float[3]’, ‘double[3]’]</em>): velocity in x and y and rotation.</p></li>
+<li><p><strong>maxLinearSpeed</strong> (<em>double, optional</em>): maximum speed allowed for the vehicle.</p></li>
+<li><p><strong>maxAngularSpeed</strong> (<em>double, optional</em>): maximum angular rotation speed allowed for the vehicle.</p></li>
+<li><p><strong>maxWheelSpeed</strong> (<em>double, optional</em>): maximum rotation speed allowed for the wheel joints.</p></li>
+<li><p><strong>linearGain</strong> (<em>double</em>): linear gain. Default to 1.</p></li>
+<li><p><strong>angularGain</strong> (<em>double</em>): angular gain. Default to 1.</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>jointPositionCommand</strong> (<em>double[]</em>): position commands for the wheel joints.</p></li>
+<li><p><strong>jointVelocityCommand</strong> (<em>double[]</em>): velocity commands for the wheels joints.</p></li>
+<li><p><strong>jointEffortCommand</strong> (<em>double[]</em>): effort commands for the wheels joints.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="checkgoal2d">
+<h1>CheckGoal2D<a class="headerlink" href="#checkgoal2d" title="Permalink to this headline"></a></h1>
+<blockquote>
+<div><p>Check if wheeled robot has reached goal</p>
+</div></blockquote>
+<dl class="simple">
+<dt><strong>Inputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execIn</strong> (<em>execution</em>): The input execution.</p></li>
+<li><p><strong>currentPosition</strong> (<em>vectord[3]</em>): Current position of the robot (recommended to use Get Prim Local to World Transform node).</p></li>
+<li><p><strong>currentOrientation</strong> (<em>quatd[4]</em>): Current rotation of the robot as a quaternion (recommended to use Get Prim Local to World Transform node).</p></li>
+<li><p><strong>target</strong> (<em>double[3]</em>): Target position and orientation. Default to [0, 0, 0].</p></li>
+<li><p><strong>targetChanged</strong> (<em>bool</em>): Target position/orientation has changed. Default to False.</p></li>
+<li><p><strong>thresholds</strong> (<em>double[2]</em>): Position and orientation thresholds at target. Default to [0.1, 0.1].</p></li>
+</ul>
+</dd>
+<dt><strong>Outputs</strong></dt><dd><ul class="simple">
+<li><p><strong>execOut</strong> (<em>execution</em>): The output execution.</p></li>
+<li><p><strong>reachedGoal</strong> (<em>bool[]</em>): Reached position and orientation goals.</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018-2023, NVIDIA.
+      <span class="lastupdated">Last updated on Mar 16, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

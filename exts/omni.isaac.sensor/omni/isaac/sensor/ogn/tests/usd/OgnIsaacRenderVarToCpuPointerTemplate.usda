@@ -1,0 +1,43 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnIsaacRenderVarToCpuPointer.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_sensor_IsaacRenderVarToCpuPointer" (
+        docs="""This node gets a pointer to a render var that is stored on the CPU"""
+    )
+    {
+        token node:type = "omni.isaac.sensor.IsaacRenderVarToCpuPointer"
+        int node:typeVersion = 1
+
+        # 3 attributes
+        custom uint inputs:exec (
+            docs="""Trigger"""
+        )
+        custom uint64 inputs:renderResults = 0 (
+            docs="""Render results pointer"""
+        )
+        custom token inputs:renderVar = "" (
+            docs="""Name of the renderVar"""
+        )
+
+        # 3 attributes
+        custom uint64 outputs:bufferSize (
+            docs="""Size (in bytes) of the buffer"""
+        )
+        custom uint64 outputs:cpuPointer (
+            docs="""Pointer to render var on CPU"""
+        )
+        custom uint outputs:exec (
+            docs="""Executes when the event is received"""
+        )
+    }
+}

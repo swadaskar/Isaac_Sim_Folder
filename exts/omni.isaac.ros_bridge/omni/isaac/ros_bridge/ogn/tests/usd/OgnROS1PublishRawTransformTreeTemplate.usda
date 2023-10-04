@@ -1,0 +1,50 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnROS1PublishRawTransformTree.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_ros_bridge_ROS1PublishRawTransformTree" (
+        docs="""This node publishes a user-defined transformation between any two coordinate frames as a ROS1 Transform Tree"""
+    )
+    {
+        token node:type = "omni.isaac.ros_bridge.ROS1PublishRawTransformTree"
+        int node:typeVersion = 1
+
+        # 9 attributes
+        custom string inputs:childFrameId = "base_link" (
+            docs="""Child frameId for ROS1 TF message"""
+        )
+        custom uint inputs:execIn (
+            docs="""The input execution port"""
+        )
+        custom string inputs:nodeNamespace = "" (
+            docs="""Namespace of ROS1 Node, prepends any published/subscribed topic by the node namespace"""
+        )
+        custom string inputs:parentFrameId = "odom" (
+            docs="""Parent frameId for ROS1 TF message"""
+        )
+        custom uint64 inputs:queueSize = 10 (
+            docs="""The number of messages to queue up before throwing some away, in case messages are collected faster than they can be sent"""
+        )
+        custom quatd inputs:rotation = (1.0, 0.0, 0.0, 0.0) (
+            docs="""Rotation as a quaternion (IJKR)"""
+        )
+        custom double inputs:timeStamp = 0.0 (
+            docs="""ROS1 Timestamp in seconds"""
+        )
+        custom string inputs:topicName = "/tf" (
+            docs="""Name of ROS1 Topic"""
+        )
+        custom vector3d inputs:translation = (0.0, 0.0, 0.0) (
+            docs="""Translation vector in meters"""
+        )
+    }
+}

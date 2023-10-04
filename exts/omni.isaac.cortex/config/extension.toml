@@ -1,0 +1,30 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.3.2"
+category = "Robotics"
+title = "Omni Isaac Cortex"
+description = "Decision framework and organizational structures for using Omni Isaac Sim as the mind of a physical robot."
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "robotics", "collaborative robotics", "digital twins"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.isaac.core" = {}
+"omni.isaac.franka" = {}
+"omni.isaac.motion_generation" = {}
+
+
+[[python.module]]
+name = "omni.isaac.cortex"
+
+[[test]]
+stdoutFailPatterns.exclude = [
+    "*WARNING: cannot load logging configuration file*", # exclude warning as failure
+]

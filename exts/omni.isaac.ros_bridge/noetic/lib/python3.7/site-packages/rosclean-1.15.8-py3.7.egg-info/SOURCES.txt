@@ -1,0 +1,4 @@
+setup.py
+scripts/rosclean
+src/rosclean/__init__.py
+test/test_rosclean.py

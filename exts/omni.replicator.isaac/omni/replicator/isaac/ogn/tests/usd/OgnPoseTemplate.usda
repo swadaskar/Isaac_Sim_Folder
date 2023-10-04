@@ -1,0 +1,106 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnPose.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_replicator_isaac_Pose" (
+        docs="""This node outputs the poses of assets with semantic labels"""
+    )
+    {
+        token node:type = "omni.replicator.isaac.Pose"
+        int node:typeVersion = 1
+
+        # 19 attributes
+        custom uint inputs:bufferSize = 0 (
+            docs="""Size (in bytes) of the buffer (0 if the input is a texture)"""
+        )
+        custom matrix4d inputs:cameraProjection = ((1.0, 0.0, 0.0, 0.0), (0.0, 1.0, 0.0, 0.0), (0.0, 0.0, 1.0, 0.0), (0.0, 0.0, 0.0, 1.0)) (
+            docs="""Camera projection matrix"""
+        )
+        custom float[] inputs:cameraRotation = [] (
+            docs="""Rotation of the desired camera frame from the default camera frame, as XYZ Euler angles"""
+        )
+        custom matrix4d inputs:cameraViewTransform = ((1.0, 0.0, 0.0, 0.0), (0.0, 1.0, 0.0, 0.0), (0.0, 0.0, 1.0, 0.0), (0.0, 0.0, 0.0, 1.0)) (
+            docs="""Camera view matrix"""
+        )
+        custom uchar[] inputs:data = [] (
+            docs="""Buffer array data"""
+        )
+        custom uint inputs:exec (
+            docs="""Trigger"""
+        )
+        custom bool inputs:getCenters = false (
+            docs="""Set to True if producing center coordinates of every semantic entity projected in the image space"""
+        )
+        custom uint inputs:imageHeight = 0 (
+            docs="""Height of the viewport"""
+        )
+        custom uint inputs:imageWidth = 0 (
+            docs="""Width of the viewport"""
+        )
+        custom bool inputs:includeOccludedPrims = false (
+            docs="""Set to True if poses (and if enabled, centers) of fully occluded/out-of-frame semantic entities should be output"""
+        )
+        custom uchar[] inputs:sdIMInstanceSemanticMap = [] (
+            docs="""Raw array of uint16_t of size sdIMNumInstances*sdIMMaxSemanticHierarchyDepth containing the mapping from the instances index to their inherited semantic entities"""
+        )
+        custom uint inputs:sdIMMaxSemanticHierarchyDepth = 0 (
+            docs="""Maximal number of semantic entities inherited by an instance"""
+        )
+        custom uint inputs:sdIMMinSemanticIndex = 0 (
+            docs="""Semantic id of the first instance in the instance arrays"""
+        )
+        custom uint inputs:sdIMNumSemanticTokens = 0 (
+            docs="""Number of semantics token including the semantic entity path, the semantic entity types and if the number of semantic types is greater than one"""
+        )
+        custom uint inputs:sdIMNumSemantics = 0 (
+            docs="""Number of semantic entities in the semantic arrays"""
+        )
+        custom token[] inputs:sdIMSemanticTokenMap = [] (
+            docs="""Semantic array of token of size numSemantics * numSemanticTypes containing the mapping from the semantic entities to the semantic entity path and semantic types"""
+        )
+        custom float[] inputs:sdIMSemanticWorldTransform = [] (
+            docs="""Semantic array of 4x4 float matrices containing the transform from local to world space for every semantic entity"""
+        )
+        custom token[] inputs:semanticTypes = ['class'] (
+            docs="""Semantic Types to consider"""
+        )
+        custom uint64 inputs:swhFrameNumber = 0 (
+            docs="""Frame number"""
+        )
+
+        # 8 attributes
+        custom uint outputs:bufferSize (
+            docs="""Size (in bytes) of the buffer (0 if the input is a texture)"""
+        )
+        custom uchar[] outputs:data (
+            docs="""Semantic array of 4x4 float matrices containing the transform from local to view space for every semantic entity. Additionally, an optional semantic array of float[2] vectors containing the center coordinates of every semantic entity projected in the image space"""
+        )
+        custom uint outputs:exec (
+            docs="""Trigger"""
+        )
+        custom uint outputs:height (
+            docs="""Shape of the data"""
+        )
+        custom string outputs:idToLabels (
+            docs="""Mapping from id to semantic labels."""
+        )
+        custom token[] outputs:primPaths (
+            docs="""Prim paths corresponding to each pose."""
+        )
+        custom uint64 outputs:swhFrameNumber (
+            docs="""Frame number"""
+        )
+        custom uint outputs:width (
+            docs="""Shape of the data"""
+        )
+    }
+}

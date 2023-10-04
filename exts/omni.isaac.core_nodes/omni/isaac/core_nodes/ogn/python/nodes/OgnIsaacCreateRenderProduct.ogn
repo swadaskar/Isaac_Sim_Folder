@@ -1,0 +1,57 @@
+{
+    "IsaacCreateRenderProduct": {
+        "version": 2,
+        "icon": "icons/isaac-sim.svg",
+        "description": "Isaac Sim node that creates a render product for use with offscreen rendering",
+        "language": "Python",
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacCore",
+        "metadata": {
+            "uiName": "Isaac Create Render Product"
+        },
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "Input execution trigger"
+            },
+            "width": {
+                "type": "uint",
+                "description": "Width of the render product, in pixels",
+                "default": 1280
+            },
+            "height": {
+                "type": "uint",
+                "description": "Height of the render product, in pixels",
+                "default": 720
+            },
+            "cameraPrim":{
+                "type": "bundle",
+                "description": "Usd prim reference to the camera associated with this render product"
+            }
+
+        },
+        "outputs": {
+            "renderProductPath": {
+                "type": "token",
+                "description": "Render product path for the created hydra texture"
+            },
+            "execOut": {
+                "type": "execution",
+                "description": "Output execution trigger"
+            }
+        },
+        "tests": [
+            {
+            "description": "Test Render Product Creation",
+            "setup": {
+                "create_nodes": [["TestNode", "omni.isaac.core_nodes.IsaacCreateRenderProduct"]],
+                "expose_prims": [["bundle", "/OmniverseKit_Persp", "PrimBundle"]],
+                "connect": [["PrimBundle.inputs:prim", "TestNode.inputs:cameraPrim"]]
+            },
+            "outputs": {
+                "renderProductPath": "/Render/RenderProduct_Isaac"
+            }
+        }
+        ]
+    }
+}

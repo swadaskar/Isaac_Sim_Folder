@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: ros2launch
+Version: 0.11.6
+Summary: The launch command for ROS 2 command line tools.
+Home-page: https://github.com/ros2/launch/tree/master/ros2launch
+Download-URL: https://github.com/ros2/launch/releases
+Author: William Woodall
+Author-email: william@osrfoundation.org
+Maintainer: William Woodall
+Maintainer-email: william@osrfoundation.org
+License: Apache License, Version 2.0
+Platform: UNKNOWN
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+
+The package provides the launch command for the ROS 2 command line tools.
+

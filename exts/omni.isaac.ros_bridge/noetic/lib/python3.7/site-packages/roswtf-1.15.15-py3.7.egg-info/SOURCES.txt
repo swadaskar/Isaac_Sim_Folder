@@ -1,0 +1,16 @@
+setup.py
+scripts/roswtf
+src/roswtf/__init__.py
+src/roswtf/context.py
+src/roswtf/environment.py
+src/roswtf/graph.py
+src/roswtf/model.py
+src/roswtf/network.py
+src/roswtf/packages.py
+src/roswtf/plugins.py
+src/roswtf/py_pip_deb_checks.py
+src/roswtf/rosdep_db.py
+src/roswtf/roslaunchwtf.py
+src/roswtf/rules.py
+src/roswtf/stacks.py
+test/test_roswtf_command_line_offline.py

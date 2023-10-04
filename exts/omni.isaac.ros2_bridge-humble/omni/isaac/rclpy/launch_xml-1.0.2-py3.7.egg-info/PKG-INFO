@@ -1,0 +1,18 @@
+Metadata-Version: 2.1
+Name: launch-xml
+Version: 1.0.2
+Summary: XML frontend for the `launch` package.
+Home-page: https://github.com/ros2/launch
+Download-URL: https://github.com/ros2/launch/releases
+Author: Ivan Paunovic
+Author-email: ivanpauno@ekumenlabs.com
+Maintainer: Aditya Pande, Michel Hidalgo
+Maintainer-email: aditya.pande@openrobotics.org, michel@ekumenlabs.com
+License: Apache License, Version 2.0
+Keywords: ROS
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development
+
+This package provides XML parsing ability to `launch-frontend` package.

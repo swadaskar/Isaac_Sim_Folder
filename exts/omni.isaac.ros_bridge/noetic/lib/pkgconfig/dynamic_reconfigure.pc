@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: dynamic_reconfigure
+Description: Description of dynamic_reconfigure
+Version: 1.7.3
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -ldynamic_reconfigure_config_init_mutex
+Requires: message_runtime std_msgs

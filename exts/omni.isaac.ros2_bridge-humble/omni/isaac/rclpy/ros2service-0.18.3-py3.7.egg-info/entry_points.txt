@@ -1,0 +1,11 @@
+[ros2cli.command]
+service = ros2service.command.service:ServiceCommand
+
+[ros2cli.extension_point]
+ros2service.verb = ros2service.verb:VerbExtension
+
+[ros2service.verb]
+call = ros2service.verb.call:CallVerb
+find = ros2service.verb.find:FindVerb
+list = ros2service.verb.list:ListVerb
+type = ros2service.verb.type:TypeVerb

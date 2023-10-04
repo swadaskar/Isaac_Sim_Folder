@@ -1,0 +1,25 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.3.2"
+category = "Simulation"
+title = "Isaac Universal Robots"
+description = "Isaac Universal Robots Helper Class"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+
+
+[dependencies]
+"omni.isaac.core" = {}
+"omni.isaac.motion_generation" = {}
+"omni.isaac.manipulators" = {}
+
+[[python.module]]
+name = "omni.isaac.universal_robots"
+

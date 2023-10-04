@@ -1,0 +1,29 @@
+root_prim: obstacles
+generated:
+  - name: cone
+    path: cone
+    semantic: obstacle
+    spawn_proba: 0.33
+    spawn_count: 3
+    usd_config:
+      root: /Isaac/Environments/Simple_Warehouse/Props/
+      search_depth: 0
+      filter: S_TrafficCone.*
+    position:
+      base: [0, 0, 0]
+      noise:
+        type: normal
+        params:
+          mean: [0, 0, 0]
+          stddev: [1.0, 0.25, 0]
+    orientation:
+      base: [0, 0, 0]
+      noise:
+        type: uniform
+        params:
+          low: [0, 0, -180]
+          high: [0, 0, 180]
+    scale: [0.01, 0.01, 0.01]
+    physics:
+      collision: convexHull
+      rigid_body: true

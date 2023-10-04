@@ -1,0 +1,6 @@
+<svg id="carousel_right_dark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+  <g id="carousel_left_dark" transform="translate(-2835 2436) rotate(-180)">
+    <path id="BaseIcon" d="M0,0H14V14H0Z" transform="translate(-2849 2422)" fill="none"/>
+    <path id="Caret_Right" d="M11.8.244l.1.1.076.121L12,.611V.877l-.024.148-.076.1-.1.123L6.524,6.366l-.129.1-.1.073-.152.025H5.86l-.126-.025-.152-.073-.129-.1L.228,1.244l-.1-.123-.079-.1L0,.877V.611L.05.463.129.342l.1-.1.1-.1L.46.073.612.025.738,0H11.262l.152.025.152.048.1.073Z" transform="translate(-2838.593 2423.049) rotate(90)" fill="#a8a8a8" fill-rule="evenodd"/>
+  </g>
+</svg>

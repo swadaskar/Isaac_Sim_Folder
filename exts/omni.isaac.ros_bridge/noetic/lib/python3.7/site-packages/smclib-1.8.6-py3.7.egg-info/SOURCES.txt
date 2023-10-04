@@ -1,0 +1,3 @@
+setup.py
+python/smclib/__init__.py
+python/smclib/statemap.py

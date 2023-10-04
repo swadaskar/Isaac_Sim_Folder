@@ -1,0 +1,41 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.2.7"
+category = "Simulation"
+title = "Isaac Sim Occupancy Map"
+description = "2D Occupancy Map Generation"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "occupancy map"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.kit.uiapp" = {}
+"omni.physx" = {} 
+"omni.isaac.debug_draw" = {}
+"omni.kit.viewport.window" = {}
+"omni.kit.pip_archive" = {} # pulls in pillow
+"omni.isaac.ui" = {}
+"omni.isaac.core" = {}
+
+[[python.module]]
+name = "omni.isaac.occupancy_map"
+
+[[python.module]]
+name = "omni.isaac.occupancy_map.tests"
+
+[[python.module]]
+name = "omni.isaac.occupancy_map.scripts.block_world"
+
+[[native.plugin]]
+path = "bin/*.plugin"
+recursive = false
+
+[[test]]
+timeout = 960

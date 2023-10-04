@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: tf2-ros-py
+Version: 0.25.0
+Summary: This package contains the ROS Python bindings for the tf2 library.
+Author: Eitan Marder-Eppstein
+Author-email: 
+Maintainer: Alejandro Hernandez Cordero, Chris Lalancette
+Maintainer-email: alejandro@openrobotics.org, clalancette@openrobotics.org
+License: BSD
+Keywords: ROS
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development

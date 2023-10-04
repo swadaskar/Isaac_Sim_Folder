@@ -1,0 +1,34 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnRandom3f.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_replicator_isaac_Random3f" (
+        docs="""This node outputs the poses of assets with semantic labels"""
+    )
+    {
+        token node:type = "omni.replicator.isaac.Random3f"
+        int node:typeVersion = 1
+
+        # 2 attributes
+        custom float3 inputs:maximum = (0.0, 0.0, 0.0) (
+            docs="""minimum range for randomization"""
+        )
+        custom float3 inputs:minimum = (0.0, 0.0, 0.0) (
+            docs="""minimum range for randomization"""
+        )
+
+        # 1 attribute
+        custom float3 outputs:output (
+            docs="""Random float 3"""
+        )
+    }
+}

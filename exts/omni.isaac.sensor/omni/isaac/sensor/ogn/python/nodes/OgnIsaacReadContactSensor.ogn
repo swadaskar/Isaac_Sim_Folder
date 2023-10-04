@@ -1,0 +1,48 @@
+{
+    "IsaacReadContactSensor": {
+        "version": 1,
+        "icon": "icons/isaac-sim.svg",        
+        "description": "Node that reads out contact sensor data",
+        "language": "Python",
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacSensor",
+        "metadata": {
+            "uiName": "Isaac Read Contact Sensor"
+        },
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "The input execution port"
+            },            
+            "csPrim": {
+                "type": "bundle",
+                "description": "USD prim reference to contact sensor prim",
+                "metadata": {
+                    "uiName": "Contact Sensor Prim"
+                }
+            }         
+        },
+        "outputs": {
+            "execOut": {
+                "type": "execution",
+                "description": "Output execution triggers when sensor has data"
+            },
+            "inContact": {
+                "type": "bool",
+                "description": "Bool that registers current sensor contact",
+                "metadata": {
+                    "uiName": "In Contact"
+                },
+                "default": false
+            },
+            "value": {
+                "type": "float",
+                "description": "Contact force value reading (N)",
+                "metadata": {
+                    "uiName": "Force Value"
+                },
+                "default": 0.0
+            }
+        }
+    }
+}

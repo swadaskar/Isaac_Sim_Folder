@@ -1,0 +1,33 @@
+{
+    "IsaacSetCameraOnRenderProduct": {
+        "version": 1,
+        "icon": "icons/isaac-sim.svg",
+        "description": "Isaac Sim node that sets the camera prim of an existing render product",
+        "language": "Python",
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacCore",
+        "metadata": {
+            "uiName": "Isaac Set Camera"
+        },
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "Input execution trigger"
+            },
+            "renderProductPath": {
+                "type": "token",
+                "description": "Path of the render product"
+            },
+            "cameraPrim":{
+                "type": "bundle",
+                "description": "Usd prim reference to the camera associated with this render product"
+            }
+        },
+        "outputs": {
+            "execOut": {
+                "type": "execution",
+                "description": "Output execution trigger"
+            }
+        }
+    }
+}

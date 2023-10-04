@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: message_filters
+Description: Description of message_filters
+Version: 1.15.15
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lmessage_filters
+Requires: roscpp rosconsole

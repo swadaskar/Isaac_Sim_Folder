@@ -1,0 +1,16 @@
+{
+    "nodes": {
+        "omni.isaac.range_sensor.IsaacReadLidarBeams": {
+            "description": "This node reads from the lidar sensor and holds data buffers for a full scan",
+            "version": 1,
+            "extension": "omni.isaac.range_sensor",
+            "language": "C++"
+        },
+        "omni.isaac.range_sensor.IsaacReadLidarPointCloud": {
+            "description": "This node reads from the lidar sensor and holds point cloud data buffers for a full scan",
+            "version": 1,
+            "extension": "omni.isaac.range_sensor",
+            "language": "C++"
+        }
+    }
+}

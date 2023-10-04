@@ -1,0 +1,37 @@
+{
+    "IsaacCreateViewport": {
+        "version": 2,
+        "icon": "icons/isaac-sim.svg",
+        "description": "Isaac Sim node that creates a unique viewport",
+        "language": "Python",
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacCore",
+        "metadata": {
+            "uiName": "Isaac Create Viewport"
+        },
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "Input execution trigger"
+            },
+            "name": {
+                "type": "token",
+                "description": "Name of the viewport window"
+            },
+            "viewportId": {
+                "type": "uint",
+                "description": "If name is empty, ID is used as the name, ID == 0 is the default viewport"
+            }
+        },
+        "outputs": {
+            "viewport": {
+                "type": "token",
+                "description": "Name of the created viewport"
+            },
+            "execOut": {
+                "type": "execution",
+                "description": "Input execution trigger"
+            }
+        }
+    }
+}

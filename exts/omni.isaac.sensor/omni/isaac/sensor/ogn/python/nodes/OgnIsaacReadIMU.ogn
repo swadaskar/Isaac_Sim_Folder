@@ -1,0 +1,69 @@
+{
+    "IsaacReadIMU": {
+        "version": 1,
+        "icon": "icons/isaac-sim.svg",        
+        "description": "Node that reads out IMU linear acceleration, angular velocity and orientation data",
+        "language": "Python",
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": "isaacSensor",
+        "metadata": {
+            "uiName": "Isaac Read IMU Node"
+        },
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "The input execution port"
+            },            
+            "imuPrim": {
+                "type": "bundle",
+                "description": "Usd prim reference to the IMU prim",
+                "metadata": {
+                    "uiName": "IMU Prim"
+                }
+            }         
+        },
+        "outputs": {
+            "execOut": {
+                "type": "execution",
+                "description": "Output execution triggers when sensor has data"
+            },
+            "linAcc": {
+                "type": "vectord[3]",
+                "description": "Linear acceleration IMU reading",
+                "metadata": {
+                    "uiName": "Linear Acceleration Vector"
+                },
+                "default": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            },
+            "angVel": {
+                "type": "vectord[3]",
+                "description": "Angular velocity IMU reading",
+                "metadata": {
+                    "uiName": "Angular Velocity Vector"
+                },
+                "default": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            }, 
+            "orientation": {
+                "type": "quatd[4]",
+                "description": "Relative orientation as quaternion",
+                "metadata": {
+                    "uiName": "Relative Orientation Quaternion"
+                },
+                "default": [
+                    0.0, 
+                    0.0, 
+                    0.0, 
+                    1.0
+                ]
+            }
+        }
+    }
+}

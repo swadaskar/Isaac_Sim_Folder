@@ -1,0 +1,14 @@
+[package]
+title = "Isaac Sim App Selector"
+description = "Mini Launch Pad app for Isaac Sim Sub Apps"
+version = "2.2.0"
+toggleable = false
+
+[dependencies]
+"omni.kit.pip_archive" = {} # pulls in pyperclip
+"omni.kit.window.title" = {}
+"omni.kit.uiapp" = {}
+"omni.isaac.version" = {}
+
+[[python.module]]
+name = "omni.isaac.app.selector"

@@ -1,0 +1,59 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnROS1PublishImu.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_ros_bridge_ROS1PublishImu" (
+        docs="""This node publishes IMU data as a ROS1 IMU message"""
+    )
+    {
+        token node:type = "omni.isaac.ros_bridge.ROS1PublishImu"
+        int node:typeVersion = 1
+
+        # 12 attributes
+        custom vector3d inputs:angularVelocity = (0.0, 0.0, 0.0) (
+            docs="""Angular velocity vector in rad/s"""
+        )
+        custom uint inputs:execIn (
+            docs="""The input execution port"""
+        )
+        custom string inputs:frameId = "sim_imu" (
+            docs="""FrameId for ROS1 message"""
+        )
+        custom vector3d inputs:linearAcceleration = (0.0, 0.0, 0.0) (
+            docs="""Linear acceleration vector in m/s^2"""
+        )
+        custom string inputs:nodeNamespace = "" (
+            docs="""Namespace of ROS1 Node, prepends any published/subscribed topic by the node namespace"""
+        )
+        custom quatd inputs:orientation = (1.0, 0.0, 0.0, 0.0) (
+            docs="""Orientation as a quaternion (IJKR)"""
+        )
+        custom bool inputs:publishAngularVelocity = true (
+            docs="""Include Angular velocity in msg"""
+        )
+        custom bool inputs:publishLinearAcceleration = true (
+            docs="""Include Linear acceleration in msg"""
+        )
+        custom bool inputs:publishOrientation = true (
+            docs="""Include orientation in msg"""
+        )
+        custom uint64 inputs:queueSize = 10 (
+            docs="""The number of messages to queue up before throwing some away, in case messages are collected faster than they can be sent"""
+        )
+        custom double inputs:timeStamp = 0.0 (
+            docs="""ROS1 Timestamp in seconds"""
+        )
+        custom string inputs:topicName = "imu" (
+            docs="""Name of ROS1 Topic"""
+        )
+    }
+}

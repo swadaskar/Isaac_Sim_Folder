@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: jsk_footstep_msgs
+Description: Description of jsk_footstep_msgs
+Version: 4.3.2
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: geometry_msgs actionlib_msgs message_runtime

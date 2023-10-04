@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tools for Generating Synthetic Data [omni.isaac.synthetic_utils] &mdash; isaac_sim 2022.2.1-rc.14 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/omni-style.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/api-styles.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/mermaid-init.js"></script>
+        <script src="../../../../_static/design-tabs.js"></script>
+        <script src="https://unpkg.com/mermaid@9.1.5/dist/mermaid.min.js"></script>
+        <script>initMermaid();</script>
+        <script src="../../../../_static/version.js"></script>
+        <script src="../../../../_static/social-media.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Occupancy Extension [omni.isaac.occupancy_map]" href="../../omni.isaac.occupancy_map/docs/index.html" />
+    <link rel="prev" title="Surface_gripper [omni.isaac.surface_gripper]" href="../../omni.isaac.surface_gripper/docs/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html">
+            <img src="../../../../_static/main_ov_logo_square.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Main Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core/docs/index.html">Core [omni.isaac.core]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.core_nodes/docs/index.html">Core Omnigraph Nodes [omni.isaac.core_nodes]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dynamic_control/docs/index.html">Dynamic Control [omni.isaac.dynamic_control]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.kit/docs/index.html">Simulation Application [omni.isaac.kit]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.utils/docs/index.html">Utilities [omni.isaac.utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ui/docs/index.html">UI Utilities [omni.isaac.ui]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.kit.loop-isaac/docs/index.html">Time Stepping Control [omni.kit.loop-isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.cloner/docs/index.html">Isaac Cloner [omni.isaac.cloner]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.gym/docs/index.html">RL [omni.isaac.gym]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Sensor Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.sensor/docs/index.html">Isaac Sensor Extension [omni.isaac.sensor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.range_sensor/docs/index.html">Range Based Sensor Simulation [omni.isaac.range_sensor]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Asset Conversion Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.urdf/docs/index.html">URDF Import Extension [omni.isaac.urdf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.mjcf/docs/index.html">MJCF Import Extension [omni.isaac.mjcf]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.shapenet/docs/index.html">ShapeNet [omni.isaac.shapenet]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Robot Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.dofbot/docs/index.html">Dofbot Robot [omni.isaac.dofbot]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.franka/docs/index.html">Franka Robot [omni.isaac.franka]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.wheeled_robots/docs/index.html">Wheeled Robots [omni.isaac.wheeled_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.universal_robots/docs/index.html">Universal Robots [omni.isaac.universal_robots]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.quadruped/docs/index.html">Quadruped Robots [omni.isaac.quadruped]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.manipulators/docs/index.html">Manipulators [omni.isaac.manipulators]</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros_bridge/docs/index.html">ROS Bridge [omni.isaac.ros_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.ros2_bridge/docs/index.html">ROS2 Bridge [omni.isaac.ros2_bridge]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.debug_draw/docs/index.html">Debug Drawing [omni.isaac.debug_draw]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.motion_generation/docs/index.html">Motion Generation Extension [omni.isaac.motion_generation]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.lula/docs/index.html">Lula [omni.isaac.lula]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.surface_gripper/docs/index.html">Surface_gripper [omni.isaac.surface_gripper]</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tools for Generating Synthetic Data [omni.isaac.synthetic_utils]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.occupancy_map/docs/index.html">Occupancy Extension [omni.isaac.occupancy_map]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.replicator.isaac/docs/index.html">Replicator Isaac Extension [omni.replicator.isaac]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.conveyor/docs/index.html">Conveyor [omni.isaac.conveyor]</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../omni.isaac.examples_nodes/docs/index.html">Isaac Sim Examples Nodes [omni.isaac.examples_nodes]</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">isaac_sim</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Tools for Generating Synthetic Data [omni.isaac.synthetic_utils]</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tools-for-generating-synthetic-data-omni-isaac-synthetic-utils">
+<h1>Tools for Generating Synthetic Data [omni.isaac.synthetic_utils]<a class="headerlink" href="#tools-for-generating-synthetic-data-omni-isaac-synthetic-utils" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.SyntheticDataHelper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SyntheticDataHelper</span></span><a class="headerlink" href="#omni.isaac.synthetic_utils.SyntheticDataHelper" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.SyntheticDataHelper.get_camera_params">
+<span class="sig-name descname"><span class="pre">get_camera_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">viewport</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.SyntheticDataHelper.get_camera_params" title="Permalink to this definition"></a></dt>
+<dd><p>Get active camera intrinsic and extrinsic parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><p>A dict of the active camera’s parameters.</p>
+<p>pose (numpy.ndarray): camera position in world coordinates,
+fov (float): horizontal field of view in radians
+focal_length (float)
+horizontal_aperture (float)
+view_projection_matrix (numpy.ndarray(dtype=float64, shape=(4, 4)))
+resolution (dict): resolution as a dict with ‘width’ and ‘height’.
+clipping_range (tuple(float, float)): Near and Far clipping values.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.SyntheticDataHelper.get_groundtruth">
+<span class="sig-name descname"><span class="pre">get_groundtruth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viewport_api</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify_sensor_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_for_sensor_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.SyntheticDataHelper.get_groundtruth" title="Permalink to this definition"></a></dt>
+<dd><p>Get groundtruth from specified gt_sensors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sensor_names</strong> (<em>list</em>) – List of strings of sensor names. Valid sensors names: rgb, depth,
+instanceSegmentation, semanticSegmentation, boundingBox2DTight,
+boundingBox2DLoose, boundingBox3D, camera</p></li>
+<li><p><strong>viewport_api</strong> (<em>Any</em>) – Viewport from which to retrieve/create sensor.</p></li>
+<li><p><strong>verify_sensor_init</strong> (<em>bool</em>) – Additional check to verify creation and initialization of sensors.</p></li>
+<li><p><strong>wait_for_sensor_data</strong> (<em>float</em>) – Additional time to sleep before returning ground truth so  are correctly filled. Default is 0.1 seconds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dict of sensor outputs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.SyntheticDataHelper.get_mapped_semantic_data">
+<span class="sig-name descname"><span class="pre">get_mapped_semantic_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">semantic_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[[]]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_semantic_label_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remap_using_base_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#omni.isaac.synthetic_utils.SyntheticDataHelper.get_mapped_semantic_data" title="Permalink to this definition"></a></dt>
+<dd><p>Map semantic segmentation data to IDs specified by user</p>
+<p>Usage:</p>
+<p>gt = get_groundtruth()
+user_semantic_label_map ={“cone”:4, “cylinder”:5, “cube”:6}
+mapped_data = get_mapped_semantic_data(gt[“semanticSegmentation”], user_semantic_label_map)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>semantic_data</strong> (<em>list</em><em>, </em><em>optional</em>) – Raw semantic image. Defaults to [[]].</p></li>
+<li><p><strong>user_semantic_label_map</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of label to id pairs. Defaults to {}.</p></li>
+<li><p><strong>remap_using_base_class</strong> (<em>bool</em><em>, </em><em>optional</em>) – If multiple class labels are found, use the topmost one. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>[description]</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.SyntheticDataHelper.get_pose">
+<span class="sig-name descname"><span class="pre">get_pose</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.SyntheticDataHelper.get_pose" title="Permalink to this definition"></a></dt>
+<dd><p>Get pose of all objects with a semantic label.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.SyntheticDataHelper.get_semantic_id_map">
+<span class="sig-name descname"><span class="pre">get_semantic_id_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">semantic_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#omni.isaac.synthetic_utils.SyntheticDataHelper.get_semantic_id_map" title="Permalink to this definition"></a></dt>
+<dd><p>Get map of semantic ID from label</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.SyntheticDataHelper.get_semantic_ids">
+<span class="sig-name descname"><span class="pre">get_semantic_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">semantic_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[[]]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#omni.isaac.synthetic_utils.SyntheticDataHelper.get_semantic_ids" title="Permalink to this definition"></a></dt>
+<dd><p>Returns unique id’s for a semantic image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>semantic_data</strong> (<em>list</em><em>, </em><em>optional</em>) – Semantic Image. Defaults to [[]].</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of unique semantic IDs in image</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><em>List</em>[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.SyntheticDataHelper.get_semantic_label_map">
+<span class="sig-name descname"><span class="pre">get_semantic_label_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">semantic_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#omni.isaac.synthetic_utils.SyntheticDataHelper.get_semantic_label_map" title="Permalink to this definition"></a></dt>
+<dd><p>Get map of semantic label from ID</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.SyntheticDataHelper.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viewport_api</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.SyntheticDataHelper.initialize" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize sensors in the list provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>viewport_api</strong> (<em>Any</em>) – Viewport from which to retrieve/create sensor.</p></li>
+<li><p><strong>sensor_types</strong> (<em>list of omni.syntheticdata._syntheticdata.SensorType</em>) – List of sensor types to initialize.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.SyntheticDataHelper.initialize_async">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">initialize_async</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viewport_api</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.SyntheticDataHelper.initialize_async" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize sensors in the list provided. Async version</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>viewport_api</strong> (<em>Any</em>) – Viewport from which to retrieve/create sensor.</p></li>
+<li><p><strong>sensor_types</strong> (<em>list of omni.syntheticdata._syntheticdata.SensorType</em>) – List of sensor types to initialize.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.writers.NumpyWriter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NumpyWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_worker_threads</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_queue_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.writers.NumpyWriter" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.writers.NumpyWriter.create_output_folders">
+<span class="sig-name descname"><span class="pre">create_output_folders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor_settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.writers.NumpyWriter.create_output_folders" title="Permalink to this definition"></a></dt>
+<dd><p>Checks if the sensor output folder corresponding to each viewport is created. If not, it creates them.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.writers.NumpyWriter.worker">
+<span class="sig-name descname"><span class="pre">worker</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.writers.NumpyWriter.worker" title="Permalink to this definition"></a></dt>
+<dd><p>Processes task from queue. Each tasks contains groundtruth data and metadata which is used to transform the output and write it to disk.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.writers.KittiWriter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">KittiWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'kitti_data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_worker_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_queue_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbox_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'BBOX2DLOOSE'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.writers.KittiWriter" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.writers.KittiWriter.create_output_folders">
+<span class="sig-name descname"><span class="pre">create_output_folders</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.writers.KittiWriter.create_output_folders" title="Permalink to this definition"></a></dt>
+<dd><p>Checks if the output folders are created. If not, it creates them.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.writers.KittiWriter.worker">
+<span class="sig-name descname"><span class="pre">worker</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.writers.KittiWriter.worker" title="Permalink to this definition"></a></dt>
+<dd><p>Processes task from queue. Each tasks contains groundtruth data and metadata which is used to transform the output and write it to disk.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-omni.isaac.synthetic_utils.visualization"></span><dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.visualization.colorize_bboxes">
+<span class="sig-name descname"><span class="pre">colorize_bboxes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bboxes_2d_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bboxes_2d_rgb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.visualization.colorize_bboxes" title="Permalink to this definition"></a></dt>
+<dd><p>Colorizes 2D bounding box data for visualization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bboxes_2d_data</strong> (<em>numpy.ndarray</em>) – 2D bounding box data from the sensor.</p></li>
+<li><p><strong>bboxes_2d_rgb</strong> (<em>numpy.ndarray</em>) – RGB data from the sensor to embed bounding box.</p></li>
+<li><p><strong>num_channels</strong> (<em>int</em>) – Specify number of channels i.e. 3 or 4.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.visualization.colorize_depth">
+<span class="sig-name descname"><span class="pre">colorize_depth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.visualization.colorize_depth" title="Permalink to this definition"></a></dt>
+<dd><p>Colorizes depth data for visualization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>depth_image</strong> (<em>numpy.ndarray</em>) – Depth data from the sensor.</p></li>
+<li><p><strong>width</strong> (<em>int</em>) – Width of the viewport.</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – Height of the viewport.</p></li>
+<li><p><strong>num_channels</strong> (<em>int</em>) – Specify number of channels i.e. 3 or 4.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.visualization.colorize_segmentation">
+<span class="sig-name descname"><span class="pre">colorize_segmentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segmentation_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.visualization.colorize_segmentation" title="Permalink to this definition"></a></dt>
+<dd><p>Colorizes segmentation data for visualization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>segmentation_image</strong> (<em>numpy.ndarray</em>) – Segmentation data from the sensor.</p></li>
+<li><p><strong>width</strong> (<em>int</em>) – Width of the viewport.</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – Height of the viewport.</p></li>
+<li><p><strong>num_channels</strong> (<em>int</em>) – Specify number of channels i.e. 3 or 4.</p></li>
+<li><p><strong>num_colors</strong> (<em>int</em>) – Specify number of colors for consistency across frames.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="omni.isaac.synthetic_utils.visualization.random_colours">
+<span class="sig-name descname"><span class="pre">random_colours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_random</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#omni.isaac.synthetic_utils.visualization.random_colours" title="Permalink to this definition"></a></dt>
+<dd><p>Generate random colors.
+Generate visually distinct colours by linearly spacing the hue
+channel in HSV space and then convert to RGB space.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018-2023, NVIDIA.
+      <span class="lastupdated">Last updated on Mar 16, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

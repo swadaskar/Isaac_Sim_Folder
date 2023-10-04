@@ -1,0 +1,76 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "5.6.3"
+category = "Simulation"
+title = "Isaac Sim Isaac Sensor Simulation"
+description = "Support physics based sensors, such as contact sensors and imu sensors"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "physics", "robotics"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+preview_image = "data/preview.png"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.kit.uiapp" = {}
+"omni.physx" = {}
+"omni.timeline" = {} # Needed for simulation to occur
+"omni.kit.numpy.common" = {}
+"omni.kit.pip_archive" = {} # pulls in numpy
+"omni.isaac.ui" = {}
+"omni.isaac.core" = {}
+"omni.isaac.range_sensor" = {}
+"omni.isaac.core_nodes" = {}
+"omni.usd.schema.isaac" = {}
+"omni.isaac.debug_draw" = {}
+"omni.graph" = {}
+"omni.graph.action" = {}
+"omni.syntheticdata" = {}
+"omni.replicator.core" = {}
+"omni.usd" = {} # needed for call to add aov
+"usdrt.scenegraph" = {}
+
+[[python.module]]
+name = "omni.isaac.sensor"
+
+[[python.module]]
+name = "omni.isaac.sensor.tests"
+public = false
+
+[[python.module]]
+name = "omni.isaac.sensor.scripts.samples.contact_sensor"
+
+[[python.module]]
+name = "omni.isaac.sensor.scripts.samples.imu_sensor"
+
+[[native.plugin]]
+path = "bin/*.plugin"
+recursive = false
+
+[settings]
+app.sensors.nv.lidar.profileBaseFolder=[
+    "${app}/../exts/omni.isaac.sensor/data/lidar_configs/ouster/",
+    "${app}/../exts/omni.isaac.sensor/data/lidar_configs/hesai/",
+    "${app}/../exts/omni.isaac.sensor/data/lidar_configs/slamtec/",
+    "${app}/../exts/omni.isaac.sensor/data/lidar_configs/"]
+app.sensors.nv.radar.runWithoutMBVH = true
+#renderer.raytracingMotion.enabled=true
+
+[[test]]
+dependencies = [
+    "omni.hydra.rtx",                       # "omni.hydra.pxr", Can we run and pass with Storm ?
+    "omni.kit.viewport.utility",
+    "omni.kit.viewport.window",
+    "omni.kit.primitive.mesh",
+    "omni.kit.material.library",
+]
+
+stdoutFailPatterns.exclude = [
+    # This is excluded in at least 3 kit tests.
+    "*Missing call to destroyResourceBindingSignature()*",
+]

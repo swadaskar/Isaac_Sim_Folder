@@ -1,0 +1,26 @@
+[manipulators]
+reloadable = true
+order = 0
+
+[package]
+version = "1.1.0"
+category = "Simulation"
+title = "Isaac Sim Manipulators"
+description = "Manipulators"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "manipulators"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.isaac.core" = {}
+"omni.isaac.surface_gripper" = {}
+
+[[python.module]]
+name = "omni.isaac.manipulators"
+
+[[python.module]]
+name = "omni.isaac.manipulators.tests"

@@ -1,0 +1,449 @@
+#usda 1.0
+(
+    "WARNING: THIS FILE IS GENERATED.  DO NOT EDIT."
+    customLayerData = {
+        string[] appliedAPISchemas = ["UltrasonicMaterialAPI"]
+        dictionary multipleApplyAPISchemas = {
+        }
+    }
+)
+
+class "RangeSensor"
+{
+    bool drawLines = 0 (
+        doc = "Set to true to draw debug lines representing sensor ray casts"
+    )
+    bool drawPoints = 0 (
+        doc = "Set to true to draw debug points on sensor hit locations"
+    )
+    bool enabled = 1 (
+        doc = "Flag used to enable or disable this sensor"
+    )
+    float maxRange = 100 (
+        doc = "Maximum range for sensor to detect a hit"
+    )
+    float minRange = 0.4 (
+        doc = "Minimum range for sensor to detect a hit"
+    )
+    rel proxyPrim (
+        doc = '''The proxyPrim relationship allows us to link a
+        prim whose purpose is "render" to its (single target)
+        purpose="proxy" prim.  This is entirely optional, but can be
+        useful in several scenarios:
+        
+        - In a pipeline that does pruning (for complexity management)
+        by deactivating prims composed from asset references, when we
+        deactivate a purpose="render" prim, we will be able to discover
+        and additionally deactivate its associated purpose="proxy" prim,
+        so that preview renders reflect the pruning accurately.
+        
+        - DCC importers may be able to make more aggressive optimizations
+        for interactive processing and display if they can discover the proxy
+        for a given render prim.
+        
+        - With a little more work, a Hydra-based application will be able
+        to map a picked proxy prim back to its render geometry for selection.
+
+        \\note It is only valid to author the proxyPrim relationship on
+        prims whose purpose is "render".'''
+    )
+    uniform token purpose = "default" (
+        allowedTokens = ["default", "render", "proxy", "guide"]
+        doc = """Purpose is a classification of geometry into categories that 
+        can each be independently included or excluded from traversals of prims 
+        on a stage, such as rendering or bounding-box computation traversals.
+
+        See for more detail about how 
+        purpose is computed and used."""
+    )
+    token visibility = "inherited" (
+        allowedTokens = ["inherited", "invisible"]
+        doc = '''Visibility is meant to be the simplest form of "pruning" 
+        visibility that is supported by most DCC apps.  Visibility is 
+        animatable, allowing a sub-tree of geometry to be present for some 
+        segment of a shot, and absent from others; unlike the action of 
+        deactivating geometry prims, invisible geometry is still 
+        available for inspection, for positioning, for defining volumes, etc.'''
+    )
+    uniform token[] xformOpOrder (
+        doc = """Encodes the sequence of transformation operations in the
+        order in which they should be pushed onto a transform stack while
+        visiting a UsdStage's prims in a graph traversal that will effect
+        the desired positioning for this prim and its descendant prims.
+        
+        You should rarely, if ever, need to manipulate this attribute directly.
+        It is managed by the AddXformOp(), SetResetXformStack(), and
+        SetXformOpOrder(), and consulted by GetOrderedXformOps() and
+        GetLocalTransformation()."""
+    )
+}
+
+class Lidar "Lidar"
+{
+    bool drawLines = 0 (
+        doc = "Set to true to draw debug lines representing sensor ray casts"
+    )
+    bool drawPoints = 0 (
+        doc = "Set to true to draw debug points on sensor hit locations"
+    )
+    bool enabled = 1 (
+        doc = "Flag used to enable or disable this sensor"
+    )
+    bool enableSemantics = 0 (
+        doc = "Set to true to get semantic information of sensor hit locations"
+    )
+    bool highLod = 1 (
+        doc = "Enable High Lod for 3D Lidar sensor"
+    )
+    float horizontalFov = 360 (
+        doc = "Horizontal Field of View in degrees"
+    )
+    float horizontalResolution = 0.4 (
+        doc = "Degrees in between rays for horizontal axis"
+    )
+    float maxRange = 100 (
+        doc = "Maximum range for sensor to detect a hit"
+    )
+    float minRange = 0.4 (
+        doc = "Minimum range for sensor to detect a hit"
+    )
+    rel proxyPrim (
+        doc = '''The proxyPrim relationship allows us to link a
+        prim whose purpose is "render" to its (single target)
+        purpose="proxy" prim.  This is entirely optional, but can be
+        useful in several scenarios:
+        
+        - In a pipeline that does pruning (for complexity management)
+        by deactivating prims composed from asset references, when we
+        deactivate a purpose="render" prim, we will be able to discover
+        and additionally deactivate its associated purpose="proxy" prim,
+        so that preview renders reflect the pruning accurately.
+        
+        - DCC importers may be able to make more aggressive optimizations
+        for interactive processing and display if they can discover the proxy
+        for a given render prim.
+        
+        - With a little more work, a Hydra-based application will be able
+        to map a picked proxy prim back to its render geometry for selection.
+
+        \\note It is only valid to author the proxyPrim relationship on
+        prims whose purpose is "render".'''
+    )
+    uniform token purpose = "default" (
+        allowedTokens = ["default", "render", "proxy", "guide"]
+        doc = """Purpose is a classification of geometry into categories that 
+        can each be independently included or excluded from traversals of prims 
+        on a stage, such as rendering or bounding-box computation traversals.
+
+        See for more detail about how 
+        purpose is computed and used."""
+    )
+    float rotationRate = 20 (
+        doc = "Rotation rate of sensor in Hz, set to zero to make sensor fire all rays at once"
+    )
+    float verticalFov = 30 (
+        doc = "Vertical Field of View in degrees"
+    )
+    float verticalResolution = 4 (
+        doc = "Degrees in between rays for vertical axis"
+    )
+    token visibility = "inherited" (
+        allowedTokens = ["inherited", "invisible"]
+        doc = '''Visibility is meant to be the simplest form of "pruning" 
+        visibility that is supported by most DCC apps.  Visibility is 
+        animatable, allowing a sub-tree of geometry to be present for some 
+        segment of a shot, and absent from others; unlike the action of 
+        deactivating geometry prims, invisible geometry is still 
+        available for inspection, for positioning, for defining volumes, etc.'''
+    )
+    uniform token[] xformOpOrder (
+        doc = """Encodes the sequence of transformation operations in the
+        order in which they should be pushed onto a transform stack while
+        visiting a UsdStage's prims in a graph traversal that will effect
+        the desired positioning for this prim and its descendant prims.
+        
+        You should rarely, if ever, need to manipulate this attribute directly.
+        It is managed by the AddXformOp(), SetResetXformStack(), and
+        SetXformOpOrder(), and consulted by GetOrderedXformOps() and
+        GetLocalTransformation()."""
+    )
+    float yawOffset = 0 (
+        doc = "Offset along yaw axis to account for sensor having a different forward direction"
+    )
+}
+
+class UltrasonicArray "UltrasonicArray"
+{
+    float attenuationAlpha = 0.6 (
+        doc = "Single attenuation parameter for simplified Beer-Lambert model"
+    )
+    bool drawLines = 0 (
+        doc = "Set to true to draw debug lines representing sensor ray casts"
+    )
+    bool drawPoints = 0 (
+        doc = "Set to true to draw debug points on sensor hit locations"
+    )
+    rel emitterPrims (
+        doc = "List of emitter/receiver prims that are part of the array, zero indexed"
+    )
+    bool enabled = 1 (
+        doc = "Flag used to enable or disable this sensor"
+    )
+    rel firingGroups (
+        doc = "List of UltrasonicFiringGroups, used to define the firing pattern for the array,"
+    )
+    float horizontalFov = 60 (
+        doc = "Horizontal Field of View in degrees"
+    )
+    float horizontalResolution = 0.4 (
+        doc = "Degrees in between rays for horizontal axis"
+    )
+    float maxRange = 100 (
+        doc = "Maximum range for sensor to detect a hit"
+    )
+    float minRange = 0.4 (
+        doc = "Minimum range for sensor to detect a hit"
+    )
+    int numBins = 224 (
+        doc = "Number of bins that emitters in this array outputs"
+    )
+    rel proxyPrim (
+        doc = '''The proxyPrim relationship allows us to link a
+        prim whose purpose is "render" to its (single target)
+        purpose="proxy" prim.  This is entirely optional, but can be
+        useful in several scenarios:
+        
+        - In a pipeline that does pruning (for complexity management)
+        by deactivating prims composed from asset references, when we
+        deactivate a purpose="render" prim, we will be able to discover
+        and additionally deactivate its associated purpose="proxy" prim,
+        so that preview renders reflect the pruning accurately.
+        
+        - DCC importers may be able to make more aggressive optimizations
+        for interactive processing and display if they can discover the proxy
+        for a given render prim.
+        
+        - With a little more work, a Hydra-based application will be able
+        to map a picked proxy prim back to its render geometry for selection.
+
+        \\note It is only valid to author the proxyPrim relationship on
+        prims whose purpose is "render".'''
+    )
+    uniform token purpose = "default" (
+        allowedTokens = ["default", "render", "proxy", "guide"]
+        doc = """Purpose is a classification of geometry into categories that 
+        can each be independently included or excluded from traversals of prims 
+        on a stage, such as rendering or bounding-box computation traversals.
+
+        See for more detail about how 
+        purpose is computed and used."""
+    )
+    bool useBRDF = 0 (
+        doc = "Use angle of emitter/receiver relative to normal to compute intensity response"
+    )
+    bool useDistAttenuation = 0 (
+        doc = "Use simplified Beer-Lambert model, negative exponential attenuation"
+    )
+    bool useUSSMaterialsForBRDF = 0 (
+        doc = "Use Ultrasonic materials for BRDF calculation"
+    )
+    float verticalFov = 30 (
+        doc = "Vertical Field of View in degrees"
+    )
+    float verticalResolution = 4 (
+        doc = "Degrees in between rays for vertical axis"
+    )
+    token visibility = "inherited" (
+        allowedTokens = ["inherited", "invisible"]
+        doc = '''Visibility is meant to be the simplest form of "pruning" 
+        visibility that is supported by most DCC apps.  Visibility is 
+        animatable, allowing a sub-tree of geometry to be present for some 
+        segment of a shot, and absent from others; unlike the action of 
+        deactivating geometry prims, invisible geometry is still 
+        available for inspection, for positioning, for defining volumes, etc.'''
+    )
+    uniform token[] xformOpOrder (
+        doc = """Encodes the sequence of transformation operations in the
+        order in which they should be pushed onto a transform stack while
+        visiting a UsdStage's prims in a graph traversal that will effect
+        the desired positioning for this prim and its descendant prims.
+        
+        You should rarely, if ever, need to manipulate this attribute directly.
+        It is managed by the AddXformOp(), SetResetXformStack(), and
+        SetXformOpOrder(), and consulted by GetOrderedXformOps() and
+        GetLocalTransformation()."""
+    )
+}
+
+class UltrasonicEmitter "UltrasonicEmitter"
+{
+    int[] adjacencyList (
+        doc = "List of emitter ids for adjacent emitters, used to compute indirects when receiving. Zero indexed and must match the order in the array"
+    )
+    float perRayIntensity = 1 (
+        doc = "The base value that is attenuated based on distance from sensor and angle of reflection"
+    )
+    rel proxyPrim (
+        doc = '''The proxyPrim relationship allows us to link a
+        prim whose purpose is "render" to its (single target)
+        purpose="proxy" prim.  This is entirely optional, but can be
+        useful in several scenarios:
+        
+        - In a pipeline that does pruning (for complexity management)
+        by deactivating prims composed from asset references, when we
+        deactivate a purpose="render" prim, we will be able to discover
+        and additionally deactivate its associated purpose="proxy" prim,
+        so that preview renders reflect the pruning accurately.
+        
+        - DCC importers may be able to make more aggressive optimizations
+        for interactive processing and display if they can discover the proxy
+        for a given render prim.
+        
+        - With a little more work, a Hydra-based application will be able
+        to map a picked proxy prim back to its render geometry for selection.
+
+        \\note It is only valid to author the proxyPrim relationship on
+        prims whose purpose is "render".'''
+    )
+    uniform token purpose = "default" (
+        allowedTokens = ["default", "render", "proxy", "guide"]
+        doc = """Purpose is a classification of geometry into categories that 
+        can each be independently included or excluded from traversals of prims 
+        on a stage, such as rendering or bounding-box computation traversals.
+
+        See for more detail about how 
+        purpose is computed and used."""
+    )
+    token visibility = "inherited" (
+        allowedTokens = ["inherited", "invisible"]
+        doc = '''Visibility is meant to be the simplest form of "pruning" 
+        visibility that is supported by most DCC apps.  Visibility is 
+        animatable, allowing a sub-tree of geometry to be present for some 
+        segment of a shot, and absent from others; unlike the action of 
+        deactivating geometry prims, invisible geometry is still 
+        available for inspection, for positioning, for defining volumes, etc.'''
+    )
+    uniform token[] xformOpOrder (
+        doc = """Encodes the sequence of transformation operations in the
+        order in which they should be pushed onto a transform stack while
+        visiting a UsdStage's prims in a graph traversal that will effect
+        the desired positioning for this prim and its descendant prims.
+        
+        You should rarely, if ever, need to manipulate this attribute directly.
+        It is managed by the AddXformOp(), SetResetXformStack(), and
+        SetXformOpOrder(), and consulted by GetOrderedXformOps() and
+        GetLocalTransformation()."""
+    )
+    float yawOffset = 0 (
+        doc = "Offset along yaw axis to account for sensor having a different forward direction"
+    )
+}
+
+class UltrasonicFiringGroup "UltrasonicFiringGroup"
+{
+    int2[] emitterModes (
+        doc = "List of (emitter id, firing mode) pairs for each sensor in this group to emit from. emitter id is zero indexed and must match the order in the array"
+    )
+    int2[] receiverModes (
+        doc = "List of (receiver id, firing mode) pairs to record envelopes for. Receiver id is zero indexed and must match the order in the array"
+    )
+}
+
+class Generic "Generic"
+{
+    bool drawLines = 0 (
+        doc = "Set to true to draw debug lines representing sensor ray casts"
+    )
+    bool drawPoints = 0 (
+        doc = "Set to true to draw debug points on sensor hit locations"
+    )
+    bool enabled = 1 (
+        doc = "Flag used to enable or disable this sensor"
+    )
+    float maxRange = 100 (
+        doc = "Maximum range for sensor to detect a hit"
+    )
+    float minRange = 0.4 (
+        doc = "Minimum range for sensor to detect a hit"
+    )
+    rel proxyPrim (
+        doc = '''The proxyPrim relationship allows us to link a
+        prim whose purpose is "render" to its (single target)
+        purpose="proxy" prim.  This is entirely optional, but can be
+        useful in several scenarios:
+        
+        - In a pipeline that does pruning (for complexity management)
+        by deactivating prims composed from asset references, when we
+        deactivate a purpose="render" prim, we will be able to discover
+        and additionally deactivate its associated purpose="proxy" prim,
+        so that preview renders reflect the pruning accurately.
+        
+        - DCC importers may be able to make more aggressive optimizations
+        for interactive processing and display if they can discover the proxy
+        for a given render prim.
+        
+        - With a little more work, a Hydra-based application will be able
+        to map a picked proxy prim back to its render geometry for selection.
+
+        \\note It is only valid to author the proxyPrim relationship on
+        prims whose purpose is "render".'''
+    )
+    uniform token purpose = "default" (
+        allowedTokens = ["default", "render", "proxy", "guide"]
+        doc = """Purpose is a classification of geometry into categories that 
+        can each be independently included or excluded from traversals of prims 
+        on a stage, such as rendering or bounding-box computation traversals.
+
+        See for more detail about how 
+        purpose is computed and used."""
+    )
+    int samplingRate = 60 (
+        doc = "sampling rate of the custom sensor data in Hz"
+    )
+    bool streaming = 1 (
+        doc = "Streaming lidar point data. Default to true"
+    )
+    token visibility = "inherited" (
+        allowedTokens = ["inherited", "invisible"]
+        doc = '''Visibility is meant to be the simplest form of "pruning" 
+        visibility that is supported by most DCC apps.  Visibility is 
+        animatable, allowing a sub-tree of geometry to be present for some 
+        segment of a shot, and absent from others; unlike the action of 
+        deactivating geometry prims, invisible geometry is still 
+        available for inspection, for positioning, for defining volumes, etc.'''
+    )
+    uniform token[] xformOpOrder (
+        doc = """Encodes the sequence of transformation operations in the
+        order in which they should be pushed onto a transform stack while
+        visiting a UsdStage's prims in a graph traversal that will effect
+        the desired positioning for this prim and its descendant prims.
+        
+        You should rarely, if ever, need to manipulate this attribute directly.
+        It is managed by the AddXformOp(), SetResetXformStack(), and
+        SetXformOpOrder(), and consulted by GetOrderedXformOps() and
+        GetLocalTransformation()."""
+    )
+}
+
+class "UltrasonicMaterialAPI" (
+    doc = " Defines Ultrasonic (USS) material properties."
+)
+{
+    float uss:base_color = 1 (
+        displayName = "Base Color"
+        doc = "Base Color. Unitless."
+    )
+    float uss:metallic = 0 (
+        displayName = "Metallic"
+        doc = "Metallic. Unitless."
+    )
+    float uss:perceptualRoughness = 0 (
+        displayName = "Perceptual Roughness"
+        doc = "Perceptual Roughness. Unitless."
+    )
+    float uss:reflectance = 0 (
+        displayName = "Reflectance"
+        doc = "Reflectance. Unitless."
+    )
+}
+

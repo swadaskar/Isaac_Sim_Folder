@@ -1,0 +1,53 @@
+#usda 1.0
+(
+    doc ="""Generated from node description file OgnIsaacConveyor.ogn
+Contains templates for node types found in that file."""
+)
+
+def OmniGraph "TestGraph"
+{
+    token evaluator:type = "push"
+    int2 fileFormatVersion = (1, 3)
+    token flatCacheBacking = "Shared"
+    token pipelineStage = "pipelineStageSimulation"
+
+    def OmniGraphNode "Template_omni_isaac_conveyor_IsaacConveyor" (
+        docs="""Conveyor Belt"""
+    )
+    {
+        token node:type = "omni.isaac.conveyor.IsaacConveyor"
+        int node:typeVersion = 1
+
+        # 10 attributes
+        custom float2 inputs:animateDirection = (1.0, 0.0) (
+            docs="""relative direction to apply to UV texture"""
+        )
+        custom float inputs:animateScale = 1.0 (
+            docs="""how fast to scale animate texture"""
+        )
+        custom bool inputs:animateTexture = false (
+            docs="""If configured, Animates the texture based on the conveyor velocity. may affect performance specially if multiple instances are added to a scene."""
+        )
+        custom rel inputs:conveyorPrim (
+            docs="""the prim reference to the conveyor"""
+        )
+        custom bool inputs:curved = false (
+            docs="""If the conveyor belt is curved, check this box to apply angular velocities. The rotation origin will be the rigid body origin."""
+        )
+        custom float inputs:delta = 0.0 (
+            docs="""time since last step in seconds"""
+        )
+        custom float3 inputs:direction = (1.0, 0.0, 0.0) (
+            docs="""relative direction to apply velocity"""
+        )
+        custom bool inputs:enabled = true (
+            docs="""node does not execute if disabled"""
+        )
+        custom uint inputs:onStep (
+            docs="""step to animate textures"""
+        )
+        custom float inputs:velocity = 0.0 (
+            docs="""the velocity of the conveyor unit"""
+        )
+    }
+}

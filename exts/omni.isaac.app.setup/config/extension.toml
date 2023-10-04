@@ -1,0 +1,34 @@
+[package]
+version = "0.8.1"
+category = "Setup"
+title = "Isaac Sim Setup"
+description = "This Extension does the setup of the Isaac Sim App"
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac"]
+changelog = "docs/CHANGELOG.md"
+toggleable = false
+
+[dependencies]
+"omni.usd" = {}
+"omni.ui" = {}
+"omni.kit.stage_templates" = {}
+"omni.kit.window.title" = {}
+"omni.isaac.version" = {}
+"omni.kit.quicklayout" = {}
+"omni.kit.viewport.utility" = {}
+"omni.kit.window.property" = {}
+
+[[python.module]]
+name = "omni.isaac.app.setup"
+
+
+[[test]]
+dependencies = [
+   "omni.rtx.settings.core", "omni.replicator.core"
+]
+
+[settings."filter:platform"."windows-x86_64"]
+isaac.startup.ros_bridge_extension = ""
+[settings."filter:platform"."linux-x86_64"]
+isaac.startup.ros_bridge_extension = "omni.isaac.ros_bridge"

@@ -1,0 +1,78 @@
+[package]
+title = "Isaac Sim App Selector"
+description = "Start Any Isaac Sim App"
+version = "2022.2.1"
+
+# That makes it browsable in UI with "experience" filter
+keywords = ["app", "isaac-sim"]
+
+[dependencies]
+"omni.isaac.app.selector" = {}
+
+[settings]
+# OS Window default settings:
+app.window.title = "Isaac Sim App Selector"
+app.name = "Isaac-Sim_App_Selector"
+app.version = "2022.2.1"
+
+# this is a Kit Mini App
+app.extensions.enabledCore = []
+app.settings.persistent = true
+app.settings.standalone_mode = true
+# app.content.emptyStageOnStart = false
+
+ext.'omni.isaac.selector'.apps = [
+    "omni.isaac.sim",
+    "omni.isaac.sim.headless.native",
+    "omni.isaac.sim.headless.webrtc",
+    "omni.isaac.sim.headless.websocket",
+]
+
+ext.'omni.isaac.selector'.experimental_apps = []
+
+# Some default for the App Selector 
+ext.'omni.isaac.selector'.default_app = "omni.isaac.sim"
+ext.'omni.isaac.selector'.auto_start = false
+ext.'omni.isaac.selector'.persistent_selector = false
+ext.'omni.isaac.selector'.show_console = true
+
+
+# then the app is launched from Isaac Sim it doesn't have $app token 
+# app.folder = ""
+
+# controled update rate
+app.runLoops.main.rateLimitEnabled = true
+app.runLoops.main.rateLimitFrequency = 60
+app.runLoops.main.rateLimitUseBusyLoop = false
+
+# setup size
+app.window.width = 500
+app.window.height = 530
+app.window.noResize = true
+# center position
+app.window.x = -1
+app.window.y = -1
+
+# icon
+app.window._iconSize = 256
+app.window.iconPath = "${app}/../exts/omni.isaac.app.selector/icons/omni.isaac.sim.ico"
+
+# window properties
+app.window.fullscreen = false
+app.window.noDecorations = false
+app.window.alwaysOnTop = false
+app.window.scaleToMonitor = true
+
+# faster load time as not need for RTX
+# exts."omni.kit.renderer.core".compatibilityMode = true
+
+# Exit faster
+app.fastShutdown = true
+
+[settings."filter:platform"."windows-x86_64"]
+ext.'omni.isaac.selector'.ros_bridge_extension = 0 # default is none
+[settings."filter:platform"."linux-x86_64"]
+ext.'omni.isaac.selector'.ros_bridge_extension = 0 # default is omni.isaac.ros_bridge
+
+[settings.app.exts]
+folders.'++' = ["${app}/../exts", "${app}/../extscache"]

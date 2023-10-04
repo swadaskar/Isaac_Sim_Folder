@@ -1,0 +1,98 @@
+adjacencies:
+- id: corridor
+  neighbors:
+  - neighbor_id: corner
+    neighbor_rotation: 3
+    self_rotation: 2
+  - neighbor_id: corridor
+    neighbor_rotation: 3
+    self_rotation: 3
+  - neighbor_id: corner
+    neighbor_rotation: 1
+    self_rotation: 1
+  - neighbor_id: corridor
+    neighbor_rotation: 0
+    self_rotation: 0
+  - neighbor_id: corridor
+    neighbor_rotation: 1
+    self_rotation: 1
+  - neighbor_id: corner
+    neighbor_rotation: 2
+    self_rotation: 2
+  - neighbor_id: corridor
+    neighbor_rotation: 2
+    self_rotation: 2
+  - neighbor_id: dead_end
+    neighbor_rotation: 3
+    self_rotation: 0
+  - neighbor_id: corner
+    neighbor_rotation: 3
+    self_rotation: 0
+  - neighbor_id: corner
+    neighbor_rotation: 0
+    self_rotation: 3
+  - neighbor_id: dead_end
+    neighbor_rotation: 3
+    self_rotation: 2
+  - neighbor_id: corner
+    neighbor_rotation: 2
+    self_rotation: 0
+  - neighbor_id: corner
+    neighbor_rotation: 0
+    self_rotation: 1
+  - neighbor_id: corner
+    neighbor_rotation: 1
+    self_rotation: 3
+- id: corner
+  neighbors:
+  - neighbor_id: corridor
+    neighbor_rotation: 3
+    self_rotation: 3
+  - neighbor_id: corridor
+    neighbor_rotation: 0
+    self_rotation: 0
+  - neighbor_id: corridor
+    neighbor_rotation: 0
+    self_rotation: 1
+  - neighbor_id: corridor
+    neighbor_rotation: 1
+    self_rotation: 3
+  - neighbor_id: corridor
+    neighbor_rotation: 3
+    self_rotation: 2
+  - neighbor_id: corridor
+    neighbor_rotation: 2
+    self_rotation: 0
+  - neighbor_id: corridor
+    neighbor_rotation: 2
+    self_rotation: 1
+  - neighbor_id: corridor
+    neighbor_rotation: 1
+    self_rotation: 2
+- id: dead_end
+  neighbors:
+  - neighbor_id: corridor
+    neighbor_rotation: 2
+    self_rotation: 1
+  - neighbor_id: corridor
+    neighbor_rotation: 0
+    self_rotation: 1
+tiles:
+- id: corridor
+  weights:
+  - 1
+  - 1
+  - 1
+  - 1
+- id: corner
+  weights:
+  - 1
+  - 1
+  - 1
+  - 1
+- id: dead_end
+  weights:
+  - 1
+  - 1
+  - 1
+  - 1

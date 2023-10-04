@@ -1,0 +1,25 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.1.1"
+category = "Simulation"
+title = "Gain Tuner"
+description = "This extension helps you tune the gains of an articulation."
+authors = ["NVIDIA"]
+repository = ""
+keywords = ["isaac", "physics", "analyze", "tune"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+icon = "data/icon.png"
+writeTarget.kit = true
+
+[dependencies]
+"omni.physx" = {}
+"omni.isaac.core" = {}
+"omni.isaac.dynamic_control" = {}
+"omni.isaac.ui" = {}
+
+[[python.module]]
+name = "omni.isaac.gain_tuner"

@@ -1,0 +1,8 @@
+prefix=/workspace/noetic_ws/install
+
+Name: roslib
+Description: Description of roslib
+Version: 1.15.8
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lroslib
+Requires: rospack
