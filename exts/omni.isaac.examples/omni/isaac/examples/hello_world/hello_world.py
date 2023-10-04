@@ -24,7 +24,7 @@ from omni.isaac.universal_robots import KinematicsSolver
 import carb
 from collections import deque, defaultdict
 
-from omni.isaac.examples.hello_world.engine_task import RobotsPlaying
+from omni.isaac.examples.hello_world.engine_task import EngineTask
 
 import time
 
@@ -77,7 +77,7 @@ class HelloWorld(BaseSample):
         l.AddTranslateOp()
         XFormPrim("/World/Lights").set_local_pose(translation=np.array([0,0,100]))
 
-        world.add_task(RobotsPlaying(name="engine_task"))
+        world.add_task(EngineTask(name="engine_task"))
         self.isDone = [False]*120
         self.bool_done = [False]*120
         self.motion_task_counter=0

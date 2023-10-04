@@ -25,7 +25,7 @@ import carb
 from collections import deque, defaultdict
 import time
 
-class EngineTask(BaseTask):
+class SuspensionTask(BaseTask):
     def __init__(self, name):
         super().__init__(name=name, offset=None)
         # self.mp_goal_position = [np.array([-5.40137, 5.54515, 0.03551]), np.array([-5.40137, -4.88, 0.03551]), np.array([-5.40137, -17.69, 0.03551]), np.array([-20.45, -17.69, 0.03551]), np.array([-36.03, -17.69, 0.03551]), np.array([-36.03, -4.71, 0.03551]), np.array([-20.84, -4.71, 0.03551]), np.array([-20.84, 7.36, 0.03551]), np.array([-36.06, 7.36, 0.03551]), np.array([-36.06, 19.64, 0.03551]), np.array([-5.40137, 19.64, 0.03551])]
@@ -55,6 +55,7 @@ class EngineTask(BaseTask):
 
         self._bool_event = 0
         self.count=0
+        self.delay=0
         return
 
     def set_up_scene(self, scene):
@@ -69,11 +70,11 @@ class EngineTask(BaseTask):
         # adding UR10 for pick and place
         add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10")
         # gripper_usd = assets_root_path + "/Isaac/Robots/UR10/Props/short_gripper.usd"
-        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/version3_j_hook/version3_j_hook.usd"
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/RG2_v2/RG2_v2.usd"
         add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10/ee_link")
         gripper = SurfaceGripper(end_effector_prim_path="/World/UR10/ee_link", translate=0.1611, direction="x")
         self.ur10 = scene.add(
-            SingleManipulator(prim_path="/World/UR10", name="my_ur10", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-4.98573, 6.97238, 0.24168]), orientation=np.array([0.70711, 0, 0, 0.70711]), scale=np.array([1,1,1]))
+            SingleManipulator(prim_path="/World/UR10", name="my_ur10", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-6.10078, -5.19303, 0.24168]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
         )
         self.ur10.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
 
@@ -83,35 +84,15 @@ class EngineTask(BaseTask):
         add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10/ee_link")
         screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10/ee_link", translate=0, direction="x")
         self.screw_ur10 = scene.add(
-            SingleManipulator(prim_path="/World/Screw_driving_UR10", name="my_screw_ur10", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-4.73889, 4.66511, 0.24168]), orientation=np.array([0.70711, 0, 0, 0.70711]), scale=np.array([1,1,1]))
+            SingleManipulator(prim_path="/World/Screw_driving_UR10", name="my_screw_ur10", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-3.78767, -5.00871, 0.24168]), orientation=np.array([0, 0, 0, 1]), scale=np.array([1,1,1]))
         )
         self.screw_ur10.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
-
-        # Floorplan = 0, -4.26389, 0
-        # Station_ = 1.50338, -4.95641, 0
-        
-
-        # large_robot_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform/mobile_platform1.usd"
-        
-        # small_robot_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform/mobile_platform1.usd"
 
         large_robot_asset_path = small_robot_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform/mobile_platform.usd"
         # add floor
         add_reference_to_stage(usd_path=asset_path, prim_path="/World/Environment")
 
         # add moving platform
-        # self.moving_platform = scene.add(
-        #     WheeledRobot(
-        #         prim_path="/mock_robot",
-        #         name="moving_platform",
-        #         wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
-        #         create_robot=True,
-        #         usd_path=large_robot_asset_path,
-        #         position=np.array([2.5, 6.1, 0.03551]),
-        #         orientation=np.array([0,0,0.70711, 0.70711]),
-        #     )
-        # )
-
         self.moving_platform = scene.add(
             WheeledRobot(
                 prim_path="/mock_robot",
@@ -119,8 +100,8 @@ class EngineTask(BaseTask):
                 wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
                 create_robot=True,
                 usd_path=large_robot_asset_path,
-                position=np.array([-3.28741, 10.79225, 0.03551]),
-                orientation=np.array([0.5, 0.5,-0.5, -0.5]),
+                position=np.array([-5.26025, 1.25718, 0.03551]),
+                orientation=np.array([0.5, 0.5, -0.5, -0.5]),
             )
         )
 
@@ -131,7 +112,7 @@ class EngineTask(BaseTask):
                 wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
                 create_robot=True,
                 usd_path=small_robot_asset_path,
-                position=np.array([-6.919, 7.764, 0.03551]),
+                position=np.array([-7.60277, -5.70312, 0.035]),
                 orientation=np.array([0,0,0.70711, 0.70711]),
             )
         )
@@ -187,79 +168,38 @@ class EngineTask(BaseTask):
 
     def pre_step(self, control_index, simulation_time):
         current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
+        current_eb_position, current_eb_orientation = self.engine_bringer.get_world_pose()
         ee_pose = self.give_location("/World/UR10/ee_link")
         screw_ee_pose = self.give_location("/World/Screw_driving_UR10/ee_link")
-
-        # motion_tasks
-        if self.motion_event == 0:
-            if ee_pose.p[1]<=6.09 and self.motion_done[self.motion_event]:
-                self.motion_event += 1
-            self.task_done[self.motion_event] = True
-        elif self.motion_event == 0:
-            if self.motion_done[self.motion_event]:
-                self.motion_event += 1
-            self.task_done[self.motion_event] = True
-
-        
 
 
         # iteration 1
         if self._task_event == 0:
             if self.task_done[self._task_event]:
-                self._task_event = 21
-            self.task_done[self._task_event] = True
-
-
-        # second view tasks
-        elif self._task_event == 21:
-            if self.task_done[self._task_event] and current_mp_position[1]<6.05:
-                self._task_event = 22
-            self.task_done[self._task_event] = True
-        elif self._task_event == 22:
-            print(np.mean(np.abs(current_mp_orientation-np.array([0,0,0.70711,0.70711]))))
-            if self.task_done[self._task_event] and np.mean(np.abs(current_mp_orientation-np.array([0,0,0.70711, 0.70711]))) < 0.609:
-                self._task_event =1
-            self.task_done[self._task_event] = True
-        
-        elif self._task_event == 1:
-            if self.task_done[self._task_event] and current_mp_position[0]<-4.98951:
-                self._task_event = 71
-                self._bool_event+=1
-            self.task_done[self._task_event] = True
-        elif self._task_event == 71:
-            if np.mean(np.abs(ee_pose.p - np.array([-4.86552, 5.86784+0.06, 0.37552])))<0.02:
-                self._task_event = 2
-                self._bool_event+=1
-        
-        elif self._task_event == 2:
-            if np.mean(np.abs(screw_ee_pose.p - np.array([-4.04212, 4.63272, 0.38666])))<0.058:
-                self._task_event=72
-                self._bool_event+=1
-        
-        elif self._task_event == 72:
-            if np.mean(np.abs(ee_pose.p - np.array([-4.18372, 7.03628, 0.44567])))<0.058:
-                self._task_event=3
-
-        # iteration 2
-        elif self._task_event == 3:
-            print(np.mean(np.abs(current_mp_orientation-np.array([-0.70711, -0.70711, 0, 0]))))
-            if self.task_done[self._task_event] and np.mean(np.abs(current_mp_orientation-np.array([-0.70711, -0.70711, 0, 0]))) < 0.251:
                 self._task_event += 1
             self.task_done[self._task_event] = True
-        elif self._task_event == 4:
-            pass
-            # if np.mean(np.abs(screw_ee_pose.p - np.array([-4.20, 4.63272, 0.38666])))<0.058:
-            #     self._task_event=6
-            
-        elif self._task_event == 6:
-            if self.count >100:
-                if self.task_done[self._task_event]:
-                    self._task_event -= 1
-                self.count=0
-            else:
-                self.count+=1
-            self.task_done[self._task_event] = True     
-        elif self._task_event == 5:
+        elif self._task_event == 1:
+            if self.task_done[self._task_event] and current_mp_position[1]<-5.3:
+                self._task_event = 51
+                self._bool_event+=1
+            self.task_done[self._task_event] = True
+        elif self._task_event == 51:
+            if np.mean(np.abs(ee_pose.p - np.array([-5.00127, -4.80822, 0.53949])))<0.02:
+                self._task_event = 71
+                self._bool_event+=1
+        
+        elif self._task_event == 71:
+            if np.mean(np.abs(screw_ee_pose.p - np.array([-3.70349, -4.41856, 0.56125])))<0.058:
+                self._task_event=2
+        elif self._task_event == 2:
+            if self.task_done[self._task_event]:
+                if self.delay == 100:
+                    self._task_event +=1
+                    self.delay=0
+                else:
+                    self.delay+=1
+            self.task_done[self._task_event] = True
+        elif self._task_event == 3:
             pass
         return
 
