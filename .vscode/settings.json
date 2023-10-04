@@ -592,7 +592,8 @@
         "kit/extscore/usdrt.scenegraph",
         "kit/kernel/py",
         "kit/plugins/bindings-python",
-],
+        "./exts/omni.isaac.ros_bridge/noetic/lib/python3.7/site-packages"
+    ],
 
     "python.languageServer": "Pylance",
     "python.defaultInterpreterPath": "${workspaceFolder}/kit/python/bin/python3",

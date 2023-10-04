@@ -27,6 +27,26 @@ from collections import deque, defaultdict
 from omni.isaac.examples.hello_world.engine_task import EngineTask
 
 import time
+import asyncio
+import rospy
+
+def func():
+    try:
+        rospy.init_node("hello", anonymous=True, disable_signals=True, log_level=rospy.ERROR)
+    except rospy.exceptions.ROSException as e:
+        print("Node has already been initialized, do nothing")
+
+    async def my_task():
+        from std_msgs.msg import String
+        pub = rospy.Publisher("/hello_topic", String, queue_size=10)
+
+        for frame in range(1000):
+            pub.publish("hello world " + str(frame))
+            await asyncio.sleep(1.0)
+        pub.unregister()
+        pub = None
+
+    asyncio.ensure_future(my_task())
 
 class CustomDifferentialController(BaseController):
     def __init__(self):
@@ -83,6 +103,7 @@ class HelloWorld(BaseSample):
         self.motion_task_counter=0
         self.delay=0
         print("inside setup_scene", self.motion_task_counter)
+        func()
         return
 
     async def setup_post_load(self):
