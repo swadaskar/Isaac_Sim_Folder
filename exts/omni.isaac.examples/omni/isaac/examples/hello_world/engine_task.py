@@ -23,7 +23,6 @@ from omni.isaac.dynamic_control import _dynamic_control
 from omni.isaac.universal_robots import KinematicsSolver
 import carb
 from collections import deque, defaultdict
-
 import time
 
 class RobotsPlaying(BaseTask):
