@@ -25,6 +25,8 @@ import carb
 from collections import deque, defaultdict
 
 from omni.isaac.examples.hello_world.engine_task import EngineTask
+from omni.isaac.examples.hello_world.suspension_task import SuspensionTask
+from omni.isaac.examples.hello_world.fuel_task import FuelTask
 
 import time
 import asyncio
@@ -40,7 +42,7 @@ def func():
         from std_msgs.msg import String
         pub = rospy.Publisher("/hello_topic", String, queue_size=10)
 
-        for frame in range(1000):
+        for frame in range(20):
             pub.publish("hello world " + str(frame))
             await asyncio.sleep(1.0)
         pub.unregister()
@@ -98,6 +100,7 @@ class HelloWorld(BaseSample):
         XFormPrim("/World/Lights").set_local_pose(translation=np.array([0,0,100]))
 
         world.add_task(EngineTask(name="engine_task"))
+        world.add_task(SuspensionTask(name="suspension_task"))
         self.isDone = [False]*120
         self.bool_done = [False]*120
         self.motion_task_counter=0
@@ -108,17 +111,19 @@ class HelloWorld(BaseSample):
 
     async def setup_post_load(self):
         self._world = self.get_world()
-        task_params = self._world.get_task("engine_task").get_params()
+
+        # Engine cell set up ----------------------------------------------------------------------------
+        engine_task_params = self._world.get_task("engine_task").get_params()
         # bring in moving platforms 
-        self.moving_platform = self._world.scene.get_object(task_params["mp_name"]["value"])
-        self.engine_bringer = self._world.scene.get_object(task_params["eb_name"]["value"])
+        self.moving_platform = self._world.scene.get_object(engine_task_params["mp_name"]["value"])
+        self.engine_bringer = self._world.scene.get_object(engine_task_params["eb_name"]["value"])
         self._world.add_physics_callback("sending_actions", callback_fn=self.send_robot_actions)
         # Initialize our controller after load and the first reset
         self._my_custom_controller = CustomDifferentialController()
         self._my_controller = WheelBasePoseController(name="cool_controller", open_loop_wheel_controller=DifferentialController(name="simple_control", wheel_radius=0.125, wheel_base=0.46), is_holonomic=False)
 
-        self.ur10 = self._world.scene.get_object(task_params["arm_name"]["value"])
-        self.screw_ur10 = self._world.scene.get_object(task_params["screw_arm"]["value"])
+        self.ur10 = self._world.scene.get_object(engine_task_params["arm_name"]["value"])
+        self.screw_ur10 = self._world.scene.get_object(engine_task_params["screw_arm"]["value"])
 
         self.my_controller = KinematicsSolver(self.ur10, attach_gripper=True)
         self.screw_my_controller = KinematicsSolver(self.screw_ur10, attach_gripper=True)
@@ -128,8 +133,38 @@ class HelloWorld(BaseSample):
 
         self.add_part("FFrame", "frame", np.array([0.001, 0.001, 0.001]), np.array([0.45216, -0.32084, 0.28512]), np.array([0, 0, 0.70711, 0.70711]))
         self.add_part_custom("World/Environment","engine_no_rigid", "engine_small", np.array([0.001, 0.001, 0.001]), np.array([-4.86938, 8.14712, 0.59038]), np.array([0.99457, 0, -0.10411, 0]))
-        # self.engine = self.add_part_custom("engine_bringer/platform","engine_no_rigid", "engine_small", np.array([0.001,0.001,0.001]), np.array([-0.00072, -0.00652, 0.46753]), np.array([0,0,0,1]))
+
+        # Suspension cell set up ------------------------------------------------------------------------
+        suspension_task_params = self._world.get_task("suspension_task").get_params()
+        # bring in moving platforms 
+        # self.moving_platform = self._world.scene.get_object(suspension_task_params["mp_name"]["value"])
+        self.suspension_bringer = self._world.scene.get_object(suspension_task_params["eb_name"]["value"])
+
+        # static suspensions on the table
+        self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack", np.array([0.001,0.001,0.001]), np.array([-6.66288, -4.83704, 0.41322]), np.array([0.5, 0.5, -0.5, 0.5]))
+        self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack_01", np.array([0.001,0.001,0.001]), np.array([-6.66288, -4.69733, 0.41322]), np.array([0.5, 0.5, -0.5, 0.5]))
+        self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack_02", np.array([0.001,0.001,0.001]), np.array([-6.66288, -4.54469, 0.41322]), np.array([0.5, 0.5, -0.5, 0.5]))
+        self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack_03", np.array([0.001,0.001,0.001]), np.array([-6.66288, -4.3843, 0.41322]), np.array([0.5, 0.5, -0.5, 0.5]))
+        self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack_04", np.array([0.001,0.001,0.001]), np.array([-6.66288, -4.22546, 0.41322]), np.array([0.5, 0.5, -0.5, 0.5]))
+
+        self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack_05", np.array([0.001,0.001,0.001]), np.array([-6.10203, -4.74457, 0.41322]), np.array([0.70711, 0, -0.70711, 0]))
+        self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack_06", np.array([0.001,0.001,0.001]), np.array([-5.96018, -4.74457, 0.41322]), np.array([0.70711, 0, -0.70711, 0]))
+        self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack_07", np.array([0.001,0.001,0.001]), np.array([-5.7941, -4.74457, 0.41322]), np.array([0.70711, 0, -0.70711, 0]))
+        self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack_08", np.array([0.001,0.001,0.001]), np.array([-5.63427, -4.74457, 0.41322]), np.array([0.70711, 0, -0.70711, 0]))
+        self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack_09", np.array([0.001,0.001,0.001]), np.array([-5.47625, -4.74457, 0.41322]), np.array([0.70711, 0, -0.70711, 0]))
+
         # self.add_part_custom("mock_robot/platform","engine_no_rigid", "engine", np.array([0.001,0.001,0.001]), np.array([-0.16041, -0.00551, 0.46581]), np.array([0.98404, -0.00148, -0.17792, -0.00274]))
+        # self.add_part("FFrame", "frame", np.array([0.001, 0.001, 0.001]), np.array([0.45216, -0.32084, 0.28512]), np.array([0, 0, 0.70711, 0.70711]))
+
+        # self._world.add_physics_callback("sending_actions", callback_fn=self.send_robot_actions)
+        self.ur10_suspension = self._world.scene.get_object(suspension_task_params["arm_name"]["value"])
+        self.screw_ur10_suspension = self._world.scene.get_object(suspension_task_params["screw_arm"]["value"])
+
+        self.my_controller_suspension = KinematicsSolver(self.ur10_suspension, attach_gripper=True)
+        self.screw_my_controller_suspension = KinematicsSolver(self.screw_ur10_suspension, attach_gripper=True)
+
+        self.articulation_controller_suspension = self.ur10_suspension.get_articulation_controller()
+        self.screw_articulation_controller_suspension = self.screw_ur10_suspension.get_articulation_controller()
         return
 
     async def setup_post_reset(self):
@@ -143,7 +178,7 @@ class HelloWorld(BaseSample):
         object_pose=dc.get_rigid_body_pose(object)
         return object_pose # position: object_pose.p, rotation: object_pose.r
     
-    def move_ur10(self, locations):
+    def move_ur10(self, locations, task_name=""):
         
         target_location = locations[self.motion_task_counter]
         print("Doing "+str(target_location["index"])+"th motion plan")
@@ -158,7 +193,8 @@ class HelloWorld(BaseSample):
         print(actions)
         if success:
             print("still homing on this location")
-            self.articulation_controller.apply_action(actions)
+            controller_name = getattr(self,"articulation_controller"+task_name)
+            controller_name.apply_action(actions)
         else:
             carb.log_warn("IK did not converge to a solution.  No action is being taken.")
 
@@ -173,7 +209,8 @@ class HelloWorld(BaseSample):
             # time.sleep(0.3)
             print("Completed one motion plan: ", self.motion_task_counter)
     
-    def do_screw_driving(self, locations):
+    def do_screw_driving(self, locations, task_name=""):
+        print(self.motion_task_counter)
         target_location = locations[self.motion_task_counter]
         print("Doing "+str(target_location["index"])+"th motion plan")
         
@@ -183,7 +220,8 @@ class HelloWorld(BaseSample):
         )
         if success:
             print("still homing on this location")
-            self.screw_articulation_controller.apply_action(actions)
+            controller_name = getattr(self,"screw_articulation_controller"+task_name)
+            controller_name.apply_action(actions)
         else:
             carb.log_warn("IK did not converge to a solution.  No action is being taken.")
         # check if reached location
@@ -211,8 +249,7 @@ class HelloWorld(BaseSample):
     
     def send_robot_actions(self, step_size):
         current_observations = self._world.get_observations()
-        task_params = self._world.get_task("engine_task").get_params()
-
+        # # engine task --------------------------------------------------------------------------
         ## Task event numbering:
         # 1 - 30 normal events: forward, stop and add piece, turn
         # 51 - 61 smaller moving platforms events: forward, stop, disappear piece
@@ -223,19 +260,20 @@ class HelloWorld(BaseSample):
         # mp - moving platform
 
         # second view tasks
-        if current_observations["task_event"] == 21:
-            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
-        elif current_observations["task_event"] == 22:
-            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
-            self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[-0.5, 0.5, -0.5, 0.5],0]))
+        # if current_observations["task_event"] == 21:
+        #     self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
+        # elif current_observations["task_event"] == 22:
+        #     self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
+        #     self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[-0.5, 0.5, -0.5, 0.5],0]))
 
         # iteration 1 
         # go forward
-        elif current_observations["task_event"] == 1:
+        if current_observations["task_event"] == 1:
             self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
         
          # arm_robot picks and places part
         elif current_observations["task_event"] == 71:
+            print("bool counter: task 71:", current_observations["bool_counter"])
             self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
             if not self.isDone[current_observations["task_event"]]:
                 
@@ -266,12 +304,13 @@ class HelloWorld(BaseSample):
 
                 if self.motion_task_counter==14:
                     self.isDone[current_observations["task_event"]]=True
+                    self.motion_task_counter=0
                     print("Done motion plan")
                    
 
         # remove engine and add engine
         elif current_observations["task_event"] == 2:
-
+            print("bool counter: task 2:", current_observations["bool_counter"])
             if not self.bool_done[current_observations["bool_counter"]]:
                 self.bool_done[current_observations["bool_counter"]] = True
                 self.remove_part("World/UR10/ee_link", "qengine_small")
@@ -296,7 +335,7 @@ class HelloWorld(BaseSample):
                                {"index":8, "position": self.transform_for_screw_ur10(np.array([0.82391-0.2, -0.02307, 0.15366])), "orientation": np.array([0.34479, 0.93825, -0.02095, 0.019]), "goal_position":np.array([-4.70797, 5.48974-0.2, 0.40163]), "goal_orientation":np.array([0.20664, 0.69092, 0.65241, 0.233])},
                                {"index":9, "position": self.transform_for_screw_ur10(np.array([0.96984-0.2, -0.03195, 0.16514])), "orientation": np.array([0.34479, 0.93825, -0.02095, 0.019]), "goal_position":np.array([-4.70384, 5.63505-0.2, 0.40916]), "goal_orientation":np.array([0.20664, 0.69092, 0.65241, 0.233])},
                                
-                               {"index":10, "position": np.array([-0.03152, -0.69498, 0.14425]), "orientation": np.array([0.69771, -0.07322, 0.09792, -0.70587]), "goal_position":np.array([-4.04212, 4.63272, 0.38666]), "goal_orientation":np.array([0.99219, -0.12149, 0.01374, 0.02475])}]
+                               {"index":10, "position": np.array([-0.03152, -0.69498, 0.14425]), "orientation": np.array([0.69771, -0.07322, 0.09792, -0.70587]), "goal_position":np.array([-4.20, 4.63272, 0.38666]), "goal_orientation":np.array([0.99219, -0.12149, 0.01374, 0.02475])}]
 
                 self.do_screw_driving(motion_plan)
                 if self.motion_task_counter==11:
@@ -347,7 +386,97 @@ class HelloWorld(BaseSample):
                     print("done", self.motion_task_counter)
         elif current_observations["task_event"] == 6:
             print("task delay")
+            self.motion_task_counter=0
         elif current_observations["task_event"] == 5:
+            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
+        
+        # #  Suspension task ----------------------------------------------------------
+
+        # iteration 1 
+        # go forward
+        elif current_observations["task_event"] == 7 and current_observations["suspension_task_event"] == 101:
+            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
+            if not self.isDone[current_observations["suspension_task_event"]]:
+                self.isDone[current_observations["suspension_task_event"]]=True
+        # small mp brings in part
+        elif current_observations["task_event"] == 7 and current_observations["suspension_task_event"] == 151:
+            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
+            if not self.isDone[current_observations["suspension_task_event"]]:
+                motion_plan = [{"index":0, "position": np.array([0.72034, -0.05477, 0.33852-0.16+0.2]), "orientation": np.array([0.5,-0.5,0.5,0.5]), "goal_position":np.array([-6.822, -5.13962, 0.58122+0.2]), "goal_orientation":np.array([0.5,0.5,0.5,-0.5])},
+                               {"index":1, "position": np.array([0.72034, -0.05477, 0.33852-0.16]), "orientation": np.array([0.5,-0.5,0.5,0.5]), "goal_position":np.array([-6.822, -5.13962, 0.58122]), "goal_orientation":np.array([0.5,0.5,0.5,-0.5])},
+                               {"index":2, "position": np.array([0.72034, -0.05477, 0.33852-0.16+0.2]), "orientation": np.array([0.5,-0.5,0.5,0.5]), "goal_position":np.array([-6.822, -5.13962, 0.58122+0.2]), "goal_orientation":np.array([0.5,0.5,0.5,-0.5])},
+                               
+                               {"index":3, "position": np.array([-0.96615-0.16, -0.56853+0.12, 0.31143]), "orientation": np.array([-0.00257, 0.00265, -0.82633, -0.56318]), "goal_position":np.array([-5.13459, -4.62413-0.12, 0.55254]), "goal_orientation":np.array([0.56316, 0.82633, -0.00001, -0.00438])},
+                               {"index":4, "position": np.array([-1.10845-0.16, -0.56853+0.12, 0.31143]), "orientation": np.array([-0.00257, 0.00265, -0.82633, -0.56318]), "goal_position":np.array([-4.99229, -4.62413-0.12, 0.55254]), "goal_orientation":np.array([0.56316, 0.82633, -0.00001, -0.00438])},
+                               {"index":5, "position": np.array([-1.10842-0.16, -0.39583, 0.29724]), "orientation": np.array([-0.00055, 0.0008, -0.82242, -0.56888]), "goal_position":np.array([-5.00127, -4.80822, 0.53949]), "goal_orientation":np.array([0.56437, 0.82479, 0.02914, 0.01902])}]
+                
+                #                {"index":0, "position": np.array([1.11096, -0.01839, 0.31929-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-7.2154, -5.17695, 0.56252]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                #                {"index":1, "position": np.array([1.11096, -0.01839, 0.19845-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-7.2154, -5.17695, 0.44167]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                #                {"index":2, "position": np.array([1.11096, -0.01839, 0.31929]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-7.2154, -5.17695, 0.56252]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                self.move_ur10(motion_plan, "_suspension")
+
+                if self.motion_task_counter==2 and not self.bool_done[current_observations["bool_counter"]]:
+                    self.bool_done[current_observations["bool_counter"]] = True
+                    self.remove_part("World/Environment", "FSuspensionBack_01")
+                    self.add_part_custom("World/UR10/ee_link","FSuspensionBack", "qFSuspensionBack", np.array([0.001,0.001,0.001]), np.array([0.16839, 0.158, -0.44332]), np.array([0,0,0,1]))
+                
+                if self.motion_task_counter==6:
+                    print("Done motion plan")
+                    self.isDone[current_observations["suspension_task_event"]]=True
+        
+         # arm_robot picks and places part
+        elif current_observations["task_event"] == 7 and current_observations["suspension_task_event"] == 171:
+            
+            if not self.isDone[current_observations["suspension_task_event"]]:
+                if not self.bool_done[current_observations["bool_counter"]]:
+                    self.bool_done[current_observations["bool_counter"]] = True
+                    print("Part removal done")
+                    self.remove_part("World/UR10/ee_link", "qFSuspensionBack")
+                    self.motion_task_counter=0
+                    self.add_part_custom("mock_robot/platform","FSuspensionBack", "xFSuspensionBack", np.array([0.001,0.001,0.001]), np.array([-0.87892, 0.0239, 0.82432]), np.array([0.40364, -0.58922, 0.57252, -0.40262]))
+            
+
+                motion_plan = [{"index":0, "position": self.transform_for_screw_ur10(np.array([-0.56003, 0.05522, -0.16+0.43437+0.25])), "orientation": np.array([0, -0.70711,0,0.70711]), "goal_position":np.array([-3.2273, -5.06269, 0.67593+0.25]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                               {"index":1, "position": self.transform_for_screw_ur10(np.array([-0.56003, 0.05522, -0.16+0.43437])), "orientation": np.array([0, -0.70711,0,0.70711]), "goal_position":np.array([-3.2273, -5.06269, 0.67593]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                               {"index":2, "position": self.transform_for_screw_ur10(np.array([-0.56003, 0.05522, -0.16+0.43437+0.25])), "orientation": np.array([0, -0.70711,0,0.70711]), "goal_position":np.array([-3.2273, -5.06269, 0.67593+0.25]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                               
+                               {"index":3, "position": self.transform_for_screw_ur10(np.array([0.83141+0.16-0.2, -0.16343, 0.34189])), "orientation": np.array([1,0,0,0]), "goal_position":np.array([-4.61995+0.2, -4.84629, 0.58477]), "goal_orientation":np.array([0,0,0,1])},
+                               {"index":4, "position": self.transform_for_screw_ur10(np.array([0.87215+0.16, -0.16343, 0.34189])), "orientation": np.array([1,0,0,0]), "goal_position":np.array([-4.66069, -4.84629,0.58477]), "goal_orientation":np.array([0,0,0,1])},
+                               {"index":5, "position": self.transform_for_screw_ur10(np.array([0.83141+0.16-0.2, -0.16343, 0.34189])), "orientation": np.array([1,0,0,0]), "goal_position":np.array([-4.61995+0.2, -4.84629, 0.58477]), "goal_orientation":np.array([0,0,0,1])},
+                               
+                               {"index":6, "position": self.transform_for_screw_ur10(np.array([-0.55625, -0.1223, -0.16+0.43437+0.2])), "orientation": np.array([0, -0.70711,0,0.70711]), "goal_position":np.array([-3.23108, -4.88517, 0.67593+0.25]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                               {"index":7, "position": self.transform_for_screw_ur10(np.array([-0.55625, -0.1223, -0.16+0.43437])), "orientation": np.array([0, -0.70711,0,0.70711]), "goal_position":np.array([-3.23108, -4.88517, 0.67593]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                               {"index":8, "position": self.transform_for_screw_ur10(np.array([-0.55625, -0.1223, -0.16+0.43437+0.2])), "orientation": np.array([0, -0.70711,0,0.70711]), "goal_position":np.array([-3.23108, -4.88517, 0.67593+0.25]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+
+                               {"index":9, "position": self.transform_for_screw_ur10(np.array([0.81036+0.16-0.1, -0.26815, 0.24723])), "orientation": np.array([0,-1, 0, 0]), "goal_position":np.array([-4.59801+0.1, -4.7396, 0.49012]), "goal_orientation":np.array([0,0,1,0])},
+                               {"index":10, "position": self.transform_for_screw_ur10(np.array([0.91167+0.16, -0.26815, 0.24723])), "orientation": np.array([0,-1, 0, 0]), "goal_position":np.array([-4.69933, -4.7396, 0.49012]), "goal_orientation":np.array([0,0,1,0])},
+                               {"index":11, "position": self.transform_for_screw_ur10(np.array([0.81036+0.16-0.1, -0.26815, 0.24723])), "orientation": np.array([0,-1, 0, 0]), "goal_position":np.array([-4.59801+0.1, -4.7396, 0.49012]), "goal_orientation":np.array([0,0,1,0])},
+                               
+                               {"index":12, "position": self.transform_for_screw_ur10(np.array([-0.08295-0.16, -0.58914, 0.32041-0.15])), "orientation": np.array([0,0.70711, 0, -0.70711]), "goal_position":np.array([-3.70349, -4.41856, 0.56125]), "goal_orientation":np.array([0.70711,0,0.70711,0])}]
+                print(self.motion_task_counter)
+                self.do_screw_driving(motion_plan, "_suspension")
+                if self.motion_task_counter==13:
+                    self.isDone[current_observations["suspension_task_event"]]=True
+                    self.done = True
+                    self.motion_task_counter=0
+                    motion_plan = [{"index":0, "position": np.array([-0.95325-0.16, -0.38757, 0.31143]), "orientation": np.array([-0.00257, 0.00265, -0.82633, -0.56318]), "goal_position":np.array([-5.14749, -4.80509, 0.55254]), "goal_orientation":np.array([0.56316, 0.82633, -0.00001, -0.00438])},
+                                   {"index":1, "position": np.array([0.07, -0.81, 0.21]), "orientation": np.array([-0.69, 0, 0, 0.72]), "goal_position":np.array([-4.18372, 7.03628, 0.44567]), "goal_orientation":np.array([0.9999, 0, 0, 0])}]
+                    self.move_ur10(motion_plan, "_suspension")
+                    # self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
+                    print("done", self.motion_task_counter)
+
+        # remove engine and add engine
+        elif current_observations["task_event"] == 7 and current_observations["suspension_task_event"] == 102:
+            if not self.isDone[current_observations["suspension_task_event"]]:
+                self.isDone[current_observations["suspension_task_event"]]=True
+                self.done = True
+                self.motion_task_counter=0
+                motion_plan = [{"index":0, "position": np.array([-0.95325-0.16, -0.38757, 0.31143]), "orientation": np.array([-0.00257, 0.00265, -0.82633, -0.56318]), "goal_position":np.array([-5.14749, -4.80509, 0.55254]), "goal_orientation":np.array([0.56316, 0.82633, -0.00001, -0.00438])},
+                                {"index":1, "position": np.array([0.07, -0.81, 0.21]), "orientation": np.array([-0.69, 0, 0, 0.72]), "goal_position":np.array([-4.18372, 7.03628, 0.44567]), "goal_orientation":np.array([0.9999, 0, 0, 0])}]
+                self.move_ur10(motion_plan,  "_suspension")
+            print("task 2 delay")
+        elif current_observations["task_event"] == 7 and current_observations["suspension_task_event"] == 103:
+            print("task 3")
             self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
         return
     

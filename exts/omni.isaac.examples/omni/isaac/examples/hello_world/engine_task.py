@@ -100,18 +100,6 @@ class EngineTask(BaseTask):
         add_reference_to_stage(usd_path=asset_path, prim_path="/World/Environment")
 
         # add moving platform
-        # self.moving_platform = scene.add(
-        #     WheeledRobot(
-        #         prim_path="/mock_robot",
-        #         name="moving_platform",
-        #         wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
-        #         create_robot=True,
-        #         usd_path=large_robot_asset_path,
-        #         position=np.array([2.5, 6.1, 0.03551]),
-        #         orientation=np.array([0,0,0.70711, 0.70711]),
-        #     )
-        # )
-
         self.moving_platform = scene.add(
             WheeledRobot(
                 prim_path="/mock_robot",
@@ -119,10 +107,23 @@ class EngineTask(BaseTask):
                 wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
                 create_robot=True,
                 usd_path=large_robot_asset_path,
-                position=np.array([-3.28741, 10.79225, 0.03551]),
-                orientation=np.array([0.5, 0.5,-0.5, -0.5]),
+                position=np.array([2.5, 6.1, 0.03551]),
+                orientation=np.array([0,0,-0.70711, -0.70711]),
             )
         )
+
+        # # Second view from contingency 
+        # self.moving_platform = scene.add(
+        #     WheeledRobot(
+        #         prim_path="/mock_robot",
+        #         name="moving_platform",
+        #         wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
+        #         create_robot=True,
+        #         usd_path=large_robot_asset_path,
+        #         position=np.array([-3.28741, 10.79225, 0.03551]),
+        #         orientation=np.array([0.5, 0.5,-0.5, -0.5]),
+        #     )
+        # )
 
         self.engine_bringer = scene.add(
             WheeledRobot(
@@ -206,20 +207,20 @@ class EngineTask(BaseTask):
         # iteration 1
         if self._task_event == 0:
             if self.task_done[self._task_event]:
-                self._task_event = 21
+                self._task_event = 1
             self.task_done[self._task_event] = True
 
 
         # second view tasks
-        elif self._task_event == 21:
-            if self.task_done[self._task_event] and current_mp_position[1]<6.05:
-                self._task_event = 22
-            self.task_done[self._task_event] = True
-        elif self._task_event == 22:
-            print(np.mean(np.abs(current_mp_orientation-np.array([0,0,0.70711,0.70711]))))
-            if self.task_done[self._task_event] and np.mean(np.abs(current_mp_orientation-np.array([0,0,0.70711, 0.70711]))) < 0.609:
-                self._task_event =1
-            self.task_done[self._task_event] = True
+        # elif self._task_event == 21:
+        #     if self.task_done[self._task_event] and current_mp_position[1]<6.05:
+        #         self._task_event = 22
+        #     self.task_done[self._task_event] = True
+        # elif self._task_event == 22:
+        #     print(np.mean(np.abs(current_mp_orientation-np.array([0,0,0.70711,0.70711]))))
+        #     if self.task_done[self._task_event] and np.mean(np.abs(current_mp_orientation-np.array([0,0,0.70711, 0.70711]))) < 0.609:
+        #         self._task_event =1
+        #     self.task_done[self._task_event] = True
         
         elif self._task_event == 1:
             if self.task_done[self._task_event] and current_mp_position[0]<-4.98951:
@@ -227,12 +228,13 @@ class EngineTask(BaseTask):
                 self._bool_event+=1
             self.task_done[self._task_event] = True
         elif self._task_event == 71:
-            if np.mean(np.abs(ee_pose.p - np.array([-4.86552, 5.86784+0.06, 0.37552])))<0.02:
-                self._task_event = 2
+            if np.mean(np.abs(ee_pose.p - np.array([-4.86552, 5.86784+0.06, 0.37552])))<0.01:
                 self._bool_event+=1
+                self._task_event = 2
+                
         
         elif self._task_event == 2:
-            if np.mean(np.abs(screw_ee_pose.p - np.array([-4.04212, 4.63272, 0.38666])))<0.058:
+            if np.mean(np.abs(screw_ee_pose.p - np.array([-4.20, 4.63272, 0.38666])))<0.01:
                 self._task_event=72
                 self._bool_event+=1
         
@@ -260,6 +262,9 @@ class EngineTask(BaseTask):
                 self.count+=1
             self.task_done[self._task_event] = True     
         elif self._task_event == 5:
+            self._task_event = 7
+            pass
+        elif self._task_event == 7:
             pass
         return
 
