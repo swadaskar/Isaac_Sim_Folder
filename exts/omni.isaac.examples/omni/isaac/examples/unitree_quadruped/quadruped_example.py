@@ -366,6 +366,30 @@ class QuadrupedExample(BaseSample):
         if np.mean(np.abs(curr_location.p - target_location["goal_position"]))<0.02:
             self.motion_task_counter+=1
             print("Completed one motion plan: ", self.motion_task_counter)
+
+    # def do_screw_driving(self, locations, task_name=""):
+    #     print(self.motion_task_counter)
+    #     target_location = locations[self.motion_task_counter]
+    #     print("Doing "+str(target_location["index"])+"th motion plan")
+        
+    #     actions, success = self.screw_my_controller.compute_inverse_kinematics(
+    #         target_position=target_location["position"],
+    #         target_orientation=target_location["orientation"],
+    #     )
+    #     if success:
+    #         print("still homing on this location")
+    #         controller_name = getattr(self,"screw_articulation_controller"+task_name)
+    #         controller_name.apply_action(actions)
+    #     else:
+    #         carb.log_warn("IK did not converge to a solution.  No action is being taken.")
+    #     # check if reached location
+    #     curr_location = self.give_location(f"/World/Screw_driving_UR10{task_name}/ee_link")
+    #     print("Curr:",curr_location.p)
+    #     print("Goal:", target_location["goal_position"])
+    #     print(np.mean(np.abs(curr_location.p - target_location["goal_position"])))
+    #     if np.mean(np.abs(curr_location.p - target_location["goal_position"]))<0.02:
+    #         self.motion_task_counter+=1
+    #         print("Completed one motion plan: ", self.motion_task_counter)
             
             
     def transform_for_screw_ur10(self, position):
