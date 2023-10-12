@@ -17,7 +17,7 @@ import numpy as np
 from omni.isaac.core.objects import VisualCuboid, DynamicCuboid
 from omni.isaac.core.utils import prims
 from pxr import UsdLux, Sdf, UsdGeom
-import omni.usd
+# import omni.usd
 from omni.isaac.dynamic_control import _dynamic_control
 
 from omni.isaac.universal_robots import KinematicsSolver
