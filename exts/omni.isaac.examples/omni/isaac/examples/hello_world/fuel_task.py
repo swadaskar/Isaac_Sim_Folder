@@ -44,7 +44,7 @@ class FuelTask(BaseTask):
 
         self.eb_goal_position = np.array([-4.39666, 7.64828, 0.035])
 
-        self.ur10_goal_position = np.array([])
+        self.ur10_fuel_goal_position = np.array([])
 
         # self.mp_goal_orientation = np.array([1, 0, 0, 0])
         self._task_event = 0
@@ -64,28 +64,28 @@ class FuelTask(BaseTask):
     
         asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/photos/real_microfactory_1_2.usd"
 
-        robot_arm_path = assets_root_path + "/Isaac/Robots/UR10/ur10.usd"
+        robot_arm_path = assets_root_path + "/Isaac/Robots/UR10_fuel/ur10_fuel.usd"
 
-        # adding UR10 for pick and place
-        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10")
-        # gripper_usd = assets_root_path + "/Isaac/Robots/UR10/Props/short_gripper.usd"
+        # adding UR10_fuel for pick and place
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10_fuel")
+        # gripper_usd = assets_root_path + "/Isaac/Robots/UR10_fuel/Props/short_gripper.usd"
         gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/RG2_v2/RG2_v2.usd"
-        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10/ee_link")
-        gripper = SurfaceGripper(end_effector_prim_path="/World/UR10/ee_link", translate=0.1611, direction="x")
-        self.ur10 = scene.add(
-            SingleManipulator(prim_path="/World/UR10", name="my_ur10", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-6.09744, -16.5124, 0.24168]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_fuel/ee_link")
+        gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_fuel/ee_link", translate=0.1611, direction="x")
+        self.ur10_fuel = scene.add(
+            SingleManipulator(prim_path="/World/UR10_fuel", name="my_ur10_fuel", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-6.09744, -16.5124, 0.24168]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
         )
-        self.ur10.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+        self.ur10_fuel.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
 
-        # adding UR10 for screwing in part
-        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/Screw_driving_UR10")
+        # adding UR10_fuel for screwing in part
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/Screw_driving_UR10_fuel")
         gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/screw_driver_link/screw_driver_link.usd"
-        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10/ee_link")
-        screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10/ee_link", translate=0, direction="x")
-        self.screw_ur10 = scene.add(
-            SingleManipulator(prim_path="/World/Screw_driving_UR10", name="my_screw_ur10", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-4.02094, -16.52902, 0.24168]), orientation=np.array([0, 0, 0, 1]), scale=np.array([1,1,1]))
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10_fuel/ee_link")
+        screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10_fuel/ee_link", translate=0, direction="x")
+        self.screw_ur10_fuel = scene.add(
+            SingleManipulator(prim_path="/World/Screw_driving_UR10_fuel", name="my_screw_ur10_fuel", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-4.02094, -16.52902, 0.24168]), orientation=np.array([0, 0, 0, 1]), scale=np.array([1,1,1]))
         )
-        self.screw_ur10.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+        self.screw_ur10_fuel.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
 
         large_robot_asset_path = small_robot_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform/mobile_platform.usd"
         # add floor
@@ -121,7 +121,7 @@ class FuelTask(BaseTask):
     def get_observations(self):
         current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
         current_eb_position, current_eb_orientation = self.engine_bringer.get_world_pose()
-        current_joint_positions_ur10 = self.ur10.get_joint_positions()
+        current_joint_positions_ur10_fuel = self.ur10_fuel.get_joint_positions()
         observations= {
             "task_event": self._task_event,
             "task_event": self._task_event,
@@ -135,11 +135,11 @@ class FuelTask(BaseTask):
                 "orientation": current_eb_orientation,
                 "goal_position": self.eb_goal_position
             },
-            self.ur10.name: {
-                "joint_positions": current_joint_positions_ur10,
+            self.ur10_fuel.name: {
+                "joint_positions": current_joint_positions_ur10_fuel,
             },
-            self.screw_ur10.name: {
-                "joint_positions": current_joint_positions_ur10,
+            self.screw_ur10_fuel.name: {
+                "joint_positions": current_joint_positions_ur10_fuel,
             },
             "bool_counter": self._bool_event
         }
@@ -147,10 +147,10 @@ class FuelTask(BaseTask):
 
     def get_params(self):
         params_representation = {}
-        params_representation["arm_name"] = {"value": self.ur10.name, "modifiable": False}
-        params_representation["screw_arm"] = {"value": self.screw_ur10.name, "modifiable": False}
+        params_representation["arm_name_fuel"] = {"value": self.ur10_fuel.name, "modifiable": False}
+        params_representation["screw_arm_fuel"] = {"value": self.screw_ur10_fuel.name, "modifiable": False}
         params_representation["mp_name"] = {"value": self.moving_platform.name, "modifiable": False}
-        params_representation["eb_name"] = {"value": self.engine_bringer.name, "modifiable": False}
+        params_representation["eb_name_fuel"] = {"value": self.engine_bringer.name, "modifiable": False}
         return params_representation
     
     def check_prim_exists(self, prim):
@@ -167,8 +167,8 @@ class FuelTask(BaseTask):
 
     def pre_step(self, control_index, simulation_time):
         current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
-        ee_pose = self.give_location("/World/UR10/ee_link")
-        screw_ee_pose = self.give_location("/World/Screw_driving_UR10/ee_link")
+        ee_pose = self.give_location("/World/UR10_fuel/ee_link")
+        screw_ee_pose = self.give_location("/World/Screw_driving_UR10_fuel/ee_link")
 
 
         # iteration 1

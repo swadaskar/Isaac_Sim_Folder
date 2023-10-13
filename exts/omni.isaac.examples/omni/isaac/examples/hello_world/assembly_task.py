@@ -170,6 +170,40 @@ class AssemblyTask(BaseTask):
                 orientation=np.array([0,0,0.70711, 0.70711]),
             )
         )
+
+        # Fuel task assembly --------------------------------------------------
+        # adding UR10_fuel for pick and place
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10_fuel")
+        # gripper_usd = assets_root_path + "/Isaac/Robots/UR10_fuel/Props/short_gripper.usd"
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/RG2_v2/RG2_v2.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_fuel/ee_link")
+        gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_fuel/ee_link", translate=0.1611, direction="x")
+        self.ur10_fuel = scene.add(
+            SingleManipulator(prim_path="/World/UR10_fuel", name="my_ur10_fuel", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-6.09744, -16.5124, 0.24168]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
+        )
+        self.ur10_fuel.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+
+        # adding UR10_fuel for screwing in part
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/Screw_driving_UR10_fuel")
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/screw_driver_link/screw_driver_link.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10_fuel/ee_link")
+        screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10_fuel/ee_link", translate=0, direction="x")
+        self.screw_ur10_fuel = scene.add(
+            SingleManipulator(prim_path="/World/Screw_driving_UR10_fuel", name="my_screw_ur10_fuel", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-4.02094, -16.52902, 0.24168]), orientation=np.array([0, 0, 0, 1]), scale=np.array([1,1,1]))
+        )
+        self.screw_ur10_fuel.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+
+        self.fuel_bringer = scene.add(
+            WheeledRobot(
+                prim_path="/fuel_bringer",
+                name="fuel_bringer",
+                wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
+                create_robot=True,
+                usd_path=small_robot_asset_path,
+                position=np.array([-7.47898, -16.15971, 0.035]),
+                orientation=np.array([0,0,0.70711, 0.70711]),
+            )
+        )
         return
 
     def get_observations(self):
@@ -179,6 +213,9 @@ class AssemblyTask(BaseTask):
 
         current_eb_position_suspension, current_eb_orientation_suspension = self.suspension_bringer.get_world_pose()
         current_joint_positions_ur10_suspension = self.ur10_suspension.get_joint_positions()
+
+        current_eb_position_fuel, current_eb_orientation_fuel = self.fuel_bringer.get_world_pose()
+        current_joint_positions_ur10_fuel = self.ur10_fuel.get_joint_positions()
         observations= {
             "task_event": self._task_event,
             self.moving_platform.name: {
@@ -208,6 +245,12 @@ class AssemblyTask(BaseTask):
             },
             self.screw_ur10_suspension.name: {
                 "joint_positions": current_joint_positions_ur10_suspension,
+            },
+            self.ur10_fuel.name: {
+                "joint_positions": current_joint_positions_ur10_fuel,
+            },
+            self.screw_ur10_fuel.name: {
+                "joint_positions": current_joint_positions_ur10_fuel,
             }
         }
         return observations
@@ -222,8 +265,12 @@ class AssemblyTask(BaseTask):
         # suspension task
         params_representation["arm_name_suspension"] = {"value": self.ur10_suspension.name, "modifiable": False}
         params_representation["screw_arm_suspension"] = {"value": self.screw_ur10_suspension.name, "modifiable": False}
-        # params_representation["mp_name"] = {"value": self.moving_platform.name, "modifiable": False}
         params_representation["eb_name_suspension"] = {"value": self.suspension_bringer.name, "modifiable": False}
+
+        # fuel task
+        params_representation["arm_name_fuel"] = {"value": self.ur10_fuel.name, "modifiable": False}
+        params_representation["screw_arm_fuel"] = {"value": self.screw_ur10_fuel.name, "modifiable": False}
+        params_representation["eb_name_fuel"] = {"value": self.fuel_bringer.name, "modifiable": False}
         return params_representation
     
     def check_prim_exists(self, prim):
