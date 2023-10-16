@@ -100,9 +100,21 @@ class HelloWorld(BaseSample):
         self.isDone = [False]*1000
         self.bool_done = [False]*1000
         self.motion_task_counter=0
+        self.path_plan_counter=0
         self.delay=0
         print("inside setup_scene", self.motion_task_counter)
-        self.schedule = deque(["1","71","2","72","3","4"])
+        self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181"])
+        # "6":"wait",
+        #     "5":"move_to_suspension_cell",
+        #     "151":"arm_place_suspension",
+        #     "171":"screw_suspension",
+        #     "181":"arm_remove_suspension",
+        #     "102":"wait",
+        #     "201":"move_to_fuel_cell",
+        #     "251":"arm_place_fuel",
+        #     "271":"screw_fuel", 
+        #     "281":"arm_remove_fuel",
+        #     "202":"wait"
         # func()
         return
 
@@ -377,14 +389,71 @@ class HelloWorld(BaseSample):
         return False
 
     def wait(self):
+        print("Waiting ...")
         if self.delay>100:
+            print("Done waiting")
             self.delay=0
             return True
         self.delay+=1
         return False
 
+    def move_mp(self, path_plan):
+        current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
+        curr_platform_pose = self.give_location("/mock_robot/platform")
+        move_type, goal = path_plan[self.path_plan_counter]
+        if move_type == "translate":
+            goal_pos, axis = goal
+            print(current_mp_position[axis],goal_pos, abs(current_mp_position[axis]-goal_pos))
+            # if current_mp_position[axis]>goal_pos:
+            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
+            if abs(current_mp_position[axis]-goal_pos)<0.01:
+                self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+            # else:
+            #     self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
+            #     if current_mp_position[axis]>goal_pos:
+            #         self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
+            #         self.path_plan_counter+=1
+        elif move_type == "rotate":
+            goal_ori, error_threshold, rotate_right = goal
+            if rotate_right:
+                # self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[-0.5, 0.5, -0.5, 0.5], 0]))
+                self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/2]))
+            else:
+                # self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0.5, -0.5, 0.5, -0.5], 0]))
+                self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/2]))
+            curr_error = np.mean(np.abs(current_mp_orientation-goal_ori))
+            print(current_mp_orientation, goal_ori, curr_error)
+            if curr_error< error_threshold:
+                self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+            
+
+
     def move_to_suspension_cell(self):
-        pass
+        # current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
+        print(self.path_plan_counter)
+        path_plan = [["translate", [-1, 0]],
+                     ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, True]],
+                    #  ["rotate", [np.array([0.5, 0.5, -0.5, -0.5]), 0.251, True]],
+                     ["translate", [2.29, 1]],
+                     ["rotate", [np.array([0, 0, 0, 1]), 0.503, True]],
+                     ["translate", [-4.22, 0]],
+                     ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, False]],
+                    #  ["rotate", [np.array([0.5, 0.5, -0.5, -0.5]), 0.251, False]],
+                     ["translate", [-5.3, 1]]]
+        self.move_mp(path_plan)
+        if len(path_plan) == self.path_plan_counter:
+            self.path_plan_counter=0
+            return True
+        return False
+        # self.move_mp("translate", [-2.93, 0])
+        # self.move_mp("rotate", [np.array([0.5, 0.5, -0.5,-0.5]), 0.251])
+        # self.move_mp("translate", [2.29, 1])
+        # self.move_mp("rotate", [np.array([0, 0, 0.70711, 0.70711]), 0.251])
+        # self.move_mp("translate", [-5.26025, 0])
+        # self.move_mp("rotate", [np.array([-0.5, 0.5, 0.5, 0.5]), 0.251])
+        # self.move_mp("translate", [-5.3, 1])
 
     def arm_place_suspension(self):
         motion_plan = [{"index":0, "position": np.array([0.72034, -0.05477, 0.33852-0.16+0.2]), "orientation": np.array([0.5,-0.5,0.5,0.5]), "goal_position":np.array([-6.822, -5.13962, 0.58122+0.2]), "goal_orientation":np.array([0.5,0.5,0.5,-0.5])},
@@ -426,7 +495,7 @@ class HelloWorld(BaseSample):
                         {"index":10, "position": self.transform_for_screw_ur10_suspension(np.array([0.91167+0.16, -0.26815, 0.24723])), "orientation": np.array([0,-1, 0, 0]), "goal_position":np.array([-4.69933, -4.7396, 0.49012]), "goal_orientation":np.array([0,0,1,0])},
                         {"index":11, "position": self.transform_for_screw_ur10_suspension(np.array([0.81036+0.16-0.1, -0.26815, 0.24723])), "orientation": np.array([0,-1, 0, 0]), "goal_position":np.array([-4.59801+0.1, -4.7396, 0.49012]), "goal_orientation":np.array([0,0,1,0])},
                         
-                        {"index":12, "position": self.transform_for_screw_ur10_suspension(np.array([-0.08295-0.16, -0.58914, 0.32041-0.15])), "orientation": np.array([0,0.70711, 0, -0.70711]), "goal_position":np.array([-3.70349, -4.41856, 0.56125]), "goal_orientation":np.array([0.70711,0,0.70711,0])}]
+                        {"index":12, "position": self.transform_for_screw_ur10_suspension(np.array([-0.08295-0.16, -0.58914, 0.32041-0.15])), "orientation": np.array([0,0.70711, 0, -0.70711]), "goal_position":np.array([-3.544, -4.41856, 0.56125]), "goal_orientation":np.array([0.70711,0,0.70711,0])}]
         self.do_screw_driving(motion_plan, "_suspension")
         if self.motion_task_counter==13:
             print("Done screwing suspension")

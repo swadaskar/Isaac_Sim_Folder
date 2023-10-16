@@ -95,7 +95,7 @@ class AssemblyTask(BaseTask):
         
         # small_robot_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform/mobile_platform1.usd"
 
-        large_robot_asset_path = small_robot_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform/mobile_platform.usd"
+        large_robot_asset_path = small_robot_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform_unfinished/mobile_platform_flattened.usd"
         # add floor
         add_reference_to_stage(usd_path=asset_path, prim_path="/World/Environment")
 
@@ -107,8 +107,8 @@ class AssemblyTask(BaseTask):
                 wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
                 create_robot=True,
                 usd_path=large_robot_asset_path,
-                position=np.array([2.5, 6.1, 0.03551]),
-                orientation=np.array([0,0,-0.70711, -0.70711]),
+                position=np.array([2.5, 5.65, 0.03551]),
+                orientation=np.array([0,0,0,1]),
             )
         )
 
@@ -133,7 +133,7 @@ class AssemblyTask(BaseTask):
                 create_robot=True,
                 usd_path=small_robot_asset_path,
                 position=np.array([-6.919, 7.764, 0.03551]),
-                orientation=np.array([0,0,0.70711, 0.70711]),
+                orientation=np.array([0.70711,0, 0,-0.70711]),
             )
         )
 
@@ -167,7 +167,7 @@ class AssemblyTask(BaseTask):
                 create_robot=True,
                 usd_path=small_robot_asset_path,
                 position=np.array([-7.60277, -5.70312, 0.035]),
-                orientation=np.array([0,0,0.70711, 0.70711]),
+                orientation=np.array([0.70711,0, 0,-0.70711]),
             )
         )
 
@@ -201,7 +201,7 @@ class AssemblyTask(BaseTask):
                 create_robot=True,
                 usd_path=small_robot_asset_path,
                 position=np.array([-7.47898, -16.15971, 0.035]),
-                orientation=np.array([0,0,0.70711, 0.70711]),
+                orientation=np.array([0.70711,0, 0,-0.70711]),
             )
         )
         return

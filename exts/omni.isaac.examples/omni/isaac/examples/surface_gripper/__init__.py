@@ -6,5 +6,7 @@
 # distribution of this software and related documentation without an express
 # license agreement from NVIDIA CORPORATION is strictly prohibited.
 #
+# NOTE: Import here your extension examples to be propagated to ISAAC SIM Extensions startup
 
-from omni.isaac.examples.surface_gripper.surface_gripper import *
+from omni.isaac.examples.surface_gripper.surface_gripper import BatteryTask
+from omni.isaac.examples.surface_gripper.surface_gripper_extension import BatteryTaskExtension
