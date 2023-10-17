@@ -1,171 +1,142 @@
-# Copyright (c) 2020-2021, NVIDIA CORPORATION.  All rights reserved.
-#
-# NVIDIA CORPORATION and its licensors retain all intellectual property
-# and proprietary rights in and to this software, related documentation
-# and any modifications thereto.  Any use, reproduction, disclosure or
-# distribution of this software and related documentation without an express
-# license agreement from NVIDIA CORPORATION is strictly prohibited.
-
 import os
 from omni.isaac.examples.base_sample import BaseSampleExtension
 from omni.isaac.examples.follow_target import FollowTarget
-import asyncio
+
+import omni.ext
 import omni.ui as ui
-from omni.isaac.ui.ui_utils import btn_builder, str_builder, state_btn_builder
-import carb
+from omni.isaac.ui.ui_utils import setup_ui_headers, get_style, btn_builder
+import asyncio
+
+import numpy as np
+import rospy
+from geometry_msgs.msg import PoseStamped
+from tf.transformations import euler_from_quaternion, quaternion_from_euler
+
+from math import pi
 
 
 class FollowTargetExtension(BaseSampleExtension):
+    # same as in mp_2dnav package base_local_planner_params.yaml
+    _xy_goal_tolerance = 0.25
+    _yaw_goal_tolerance = 0.05
     def on_startup(self, ext_id: str):
         super().on_startup(ext_id)
         super().start_extension(
-            menu_name="Manipulation",
+            menu_name="",
             submenu_name="",
-            name="Follow Target",
-            title="Follow Target Task",
-            doc_link="https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/overview.html",
-            overview="This Example shows how to follow a target using Franka robot in Isaac Sim.\n\nPress the 'Open in IDE' button to view the source code.",
-            sample=FollowTarget(),
+            name="Navigation",
+            title="My Awesome Example",
+            doc_link="https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/tutorial_core_hello_world.html",
+            overview="This Example introduces the user on how to do cool stuff with Isaac Sim through scripting in asynchronous mode.",
             file_path=os.path.abspath(__file__),
-            number_of_extra_frames=2,
+            sample=FollowTarget(),
         )
-        self.task_ui_elements = {}
-        frame = self.get_frame(index=0)
-        self.build_task_controls_ui(frame)
-        frame = self.get_frame(index=1)
-        self.build_data_logging_ui(frame)
         return
-
-    def _on_follow_target_button_event(self, val):
-        asyncio.ensure_future(self.sample._on_follow_target_event_async(val))
+    
+    def _build_ui(
+        self, name, title, doc_link, overview, file_path, number_of_extra_frames, window_width, keep_window_open
+    ):
+        self._window = omni.ui.Window(
+            name, width=window_width, height=0, visible=keep_window_open, dockPreference=ui.DockPreference.LEFT_BOTTOM
+        )
+        with self._window.frame:
+            with ui.VStack(spacing=5, height=0):
+                setup_ui_headers(self._ext_id, file_path, title, doc_link, overview)
+                self._controls_frame = ui.CollapsableFrame(
+                    title="World Controls",
+                    width=ui.Fraction(1),
+                    height=0,
+                    collapsed=False,
+                    style=get_style(),
+                    horizontal_scrollbar_policy=ui.ScrollBarPolicy.SCROLLBAR_AS_NEEDED,
+                    vertical_scrollbar_policy=ui.ScrollBarPolicy.SCROLLBAR_ALWAYS_ON,
+                )
+                with ui.VStack(style=get_style(), spacing=5, height=0):
+                    for i in range(number_of_extra_frames):
+                        self._extra_frames.append(
+                            ui.CollapsableFrame(
+                                title="",
+                                width=ui.Fraction(0.33),
+                                height=0,
+                                visible=False,
+                                collapsed=False,
+                                style=get_style(),
+                                horizontal_scrollbar_policy=ui.ScrollBarPolicy.SCROLLBAR_AS_NEEDED,
+                                vertical_scrollbar_policy=ui.ScrollBarPolicy.SCROLLBAR_ALWAYS_ON,
+                            )
+                        )
+                with self._controls_frame:
+                    with ui.VStack(style=get_style(), spacing=5, height=0):
+                        dict = {
+                            "label": "Load World",
+                            "type": "button",
+                            "text": "Load",
+                            "tooltip": "Load World and Task",
+                            "on_clicked_fn": self._on_load_world,
+                        }
+                        self._buttons["Load World"] = btn_builder(**dict)
+                        self._buttons["Load World"].enabled = True
+                        dict = {
+                            "label": "Reset",
+                            "type": "button",
+                            "text": "Reset",
+                            "tooltip": "Reset robot and environment",
+                            "on_clicked_fn": self._on_reset,
+                        }
+                        self._buttons["Reset"] = btn_builder(**dict)
+                        self._buttons["Reset"].enabled = False
+                        dict = {
+                            "label": "Send Goal",
+                            "type": "button",
+                            "text": "Goal",
+                            "tooltip": "",
+                            "on_clicked_fn": self._send_navigation_goal,
+                        }
+                        self._buttons["Send Goal"] = btn_builder(**dict)
+                        self._buttons["Send Goal"].enabled = False
         return
-
-    def _on_add_obstacle_button_event(self):
-        self.sample._on_add_obstacle_event()
-        self.task_ui_elements["Remove Obstacle"].enabled = True
-        return
-
-    def _on_remove_obstacle_button_event(self):
-        self.sample._on_remove_obstacle_event()
-        world = self.sample.get_world()
-        current_task = list(world.get_current_tasks().values())[0]
-        if not current_task.obstacles_exist():
-            self.task_ui_elements["Remove Obstacle"].enabled = False
-        return
-
-    def _on_logging_button_event(self, val):
-        self.sample._on_logging_event(val)
-        self.task_ui_elements["Save Data"].enabled = True
-        return
-
-    def _on_save_data_button_event(self):
-        self.sample._on_save_data_event(self.task_ui_elements["Output Directory"].get_value_as_string())
-        return
-
-    def post_reset_button_event(self):
-        self.task_ui_elements["Follow Target"].enabled = True
-        self.task_ui_elements["Remove Obstacle"].enabled = False
-        self.task_ui_elements["Add Obstacle"].enabled = True
-        self.task_ui_elements["Start Logging"].enabled = True
-        self.task_ui_elements["Save Data"].enabled = False
-        if self.task_ui_elements["Follow Target"].text == "STOP":
-            self.task_ui_elements["Follow Target"].text = "START"
-        return
-
+    
     def post_load_button_event(self):
-        self.task_ui_elements["Follow Target"].enabled = True
-        self.task_ui_elements["Add Obstacle"].enabled = True
-        self.task_ui_elements["Start Logging"].enabled = True
-        self.task_ui_elements["Save Data"].enabled = False
-        return
+        self._buttons["Send Goal"].enabled = True
 
-    def post_clear_button_event(self):
-        self.task_ui_elements["Follow Target"].enabled = False
-        self.task_ui_elements["Remove Obstacle"].enabled = False
-        self.task_ui_elements["Add Obstacle"].enabled = False
-        self.task_ui_elements["Start Logging"].enabled = False
-        self.task_ui_elements["Save Data"].enabled = False
-        if self.task_ui_elements["Follow Target"].text == "STOP":
-            self.task_ui_elements["Follow Target"].text = "START"
-        return
+    def _check_goal_reached(self, goal_pose):
+        # Cannot get result from ROS because /move_base/result also uses move_base_msgs module
+        mp_position, mp_orientation = self._sample._mp.get_world_pose()
+        _, _, mp_yaw = euler_from_quaternion(mp_orientation)
+        _, _, goal_yaw = euler_from_quaternion(goal_pose[3:])
+        
+        # FIXME: pi needed for yaw tolerance here because map rotated 180 degrees
+        if np.allclose(mp_position[:2], goal_pose[:2], atol=self._xy_goal_tolerance) \
+            and abs(mp_yaw-goal_yaw) <= pi + self._yaw_goal_tolerance:
+            print("Goal "+str(goal_pose)+" reached!")
+            # This seems to crash Isaac sim...
+            # self.get_world().remove_physics_callback("mp_nav_check")
+    
+    # Goal hardcoded for now
+    def _send_navigation_goal(self, x=None, y=None, a=None):
+        # x, y, a = -18, 14, 3.14
+        x,y,a = -1,7,3.14
+        orient_x, orient_y, orient_z, orient_w = quaternion_from_euler(0, 0, a)
+        pose = [x, y, 0, orient_x, orient_y, orient_z, orient_w]
 
-    def shutdown_cleanup(self):
-        return
+        goal_msg = PoseStamped()
+        goal_msg.header.frame_id = "map"
+        goal_msg.header.stamp = rospy.get_rostime()
+        print("goal pose: "+str(pose))
+        goal_msg.pose.position.x = pose[0]
+        goal_msg.pose.position.y = pose[1]
+        goal_msg.pose.position.z = pose[2]
+        goal_msg.pose.orientation.x = pose[3]
+        goal_msg.pose.orientation.y = pose[4]
+        goal_msg.pose.orientation.z = pose[5]
+        goal_msg.pose.orientation.w = pose[6]
 
-    def build_task_controls_ui(self, frame):
-        with frame:
-            with ui.VStack(spacing=5):
-                # Update the Frame Title
-                frame.title = "Task Controls"
-                frame.visible = True
+        self._sample._goal_pub.publish(goal_msg)
 
-                dict = {
-                    "label": "Follow Target",
-                    "type": "button",
-                    "a_text": "START",
-                    "b_text": "STOP",
-                    "tooltip": "Follow Target",
-                    "on_clicked_fn": self._on_follow_target_button_event,
-                }
-                self.task_ui_elements["Follow Target"] = state_btn_builder(**dict)
-                self.task_ui_elements["Follow Target"].enabled = False
-
-                dict = {
-                    "label": "Add Obstacle",
-                    "type": "button",
-                    "text": "ADD",
-                    "tooltip": "Add Obstacle",
-                    "on_clicked_fn": self._on_add_obstacle_button_event,
-                }
-
-                self.task_ui_elements["Add Obstacle"] = btn_builder(**dict)
-                self.task_ui_elements["Add Obstacle"].enabled = False
-                dict = {
-                    "label": "Remove Obstacle",
-                    "type": "button",
-                    "text": "REMOVE",
-                    "tooltip": "Remove Obstacle",
-                    "on_clicked_fn": self._on_remove_obstacle_button_event,
-                }
-
-                self.task_ui_elements["Remove Obstacle"] = btn_builder(**dict)
-                self.task_ui_elements["Remove Obstacle"].enabled = False
-
-    def build_data_logging_ui(self, frame):
-        with frame:
-            with ui.VStack(spacing=5):
-                frame.title = "Data Logging"
-                frame.visible = True
-                dict = {
-                    "label": "Output Directory",
-                    "type": "stringfield",
-                    "default_val": os.path.join(os.getcwd(), "output_data.json"),
-                    "tooltip": "Output Directory",
-                    "on_clicked_fn": None,
-                    "use_folder_picker": False,
-                    "read_only": False,
-                }
-                self.task_ui_elements["Output Directory"] = str_builder(**dict)
-
-                dict = {
-                    "label": "Start Logging",
-                    "type": "button",
-                    "a_text": "START",
-                    "b_text": "PAUSE",
-                    "tooltip": "Start Logging",
-                    "on_clicked_fn": self._on_logging_button_event,
-                }
-                self.task_ui_elements["Start Logging"] = state_btn_builder(**dict)
-                self.task_ui_elements["Start Logging"].enabled = False
-
-                dict = {
-                    "label": "Save Data",
-                    "type": "button",
-                    "text": "Save Data",
-                    "tooltip": "Save Data",
-                    "on_clicked_fn": self._on_save_data_button_event,
-                }
-
-                self.task_ui_elements["Save Data"] = btn_builder(**dict)
-                self.task_ui_elements["Save Data"].enabled = False
-        return
+        world = self.get_world()
+        if not world.physics_callback_exists("mp_nav_check"):
+            world.add_physics_callback("mp_nav_check", lambda step_size: self._check_goal_reached(pose))
+        # Overwrite check with new goal
+        else:
+            world.remove_physics_callback("mp_nav_check")
+            world.add_physics_callback("mp_nav_check", lambda step_size: self._check_goal_reached(pose))

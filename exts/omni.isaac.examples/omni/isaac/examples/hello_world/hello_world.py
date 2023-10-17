@@ -103,7 +103,8 @@ class HelloWorld(BaseSample):
         self.path_plan_counter=0
         self.delay=0
         print("inside setup_scene", self.motion_task_counter)
-        self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181"])
+        # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181"])
+        self.schedule = deque(["301","351"])
         # "6":"wait",
         #     "5":"move_to_suspension_cell",
         #     "151":"arm_place_suspension",
@@ -192,6 +193,26 @@ class HelloWorld(BaseSample):
 
         self.articulation_controller_fuel = self.ur10_fuel.get_articulation_controller()
         self.screw_articulation_controller_fuel = self.screw_ur10_fuel.get_articulation_controller()
+
+        # battery cell set up ---------------------------------------------------------------------------------
+        # bring in moving platforms 
+        self.battery_bringer = self._world.scene.get_object(task_params["eb_name_battery"]["value"])
+        
+        self.add_part_custom("World/Environment","battery", "battery_01", np.array([0.001,0.001,0.001]), np.array([-16.47861, -15.68368, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
+        self.add_part_custom("World/Environment","battery", "battery_02", np.array([0.001,0.001,0.001]), np.array([-16.0548, -15.67949, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
+        self.add_part_custom("World/Environment","battery", "battery_03", np.array([0.001,0.001,0.001]), np.array([-16.02688, -16.10727, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
+        self.add_part_custom("World/Environment","battery", "battery_04", np.array([0.001,0.001,0.001]), np.array([-16.01519, -16.40193, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
+
+        # Initialize our controller after load and the first reset
+
+        self.ur10_battery = self._world.scene.get_object(task_params["arm_name_battery"]["value"])
+        self.screw_ur10_battery = self._world.scene.get_object(task_params["screw_arm_battery"]["value"])
+
+        self.my_controller_battery = KinematicsSolver(self.ur10_battery, attach_gripper=True)
+        self.screw_my_controller_battery = KinematicsSolver(self.screw_ur10_battery, attach_gripper=True)
+
+        self.articulation_controller_battery = self.ur10_battery.get_articulation_controller()
+        self.screw_articulation_controller_battery = self.screw_ur10_battery.get_articulation_controller()
         return
 
     async def setup_post_reset(self):
@@ -228,7 +249,7 @@ class HelloWorld(BaseSample):
         print("Goal:", target_location["goal_position"])
         print(np.mean(np.abs(curr_location.p - target_location["goal_position"])))
         diff = np.mean(np.abs(curr_location.p - target_location["goal_position"]))
-        if diff<0.02 or (self.motion_task_counter>=3 and self.motion_task_counter<=12 and diff<0.09):
+        if diff<0.02:
             self.motion_task_counter+=1
             # time.sleep(0.3)
             print("Completed one motion plan: ", self.motion_task_counter)
@@ -399,28 +420,19 @@ class HelloWorld(BaseSample):
 
     def move_mp(self, path_plan):
         current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
-        curr_platform_pose = self.give_location("/mock_robot/platform")
         move_type, goal = path_plan[self.path_plan_counter]
         if move_type == "translate":
             goal_pos, axis = goal
             print(current_mp_position[axis],goal_pos, abs(current_mp_position[axis]-goal_pos))
-            # if current_mp_position[axis]>goal_pos:
             self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
             if abs(current_mp_position[axis]-goal_pos)<0.01:
                 self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
                 self.path_plan_counter+=1
-            # else:
-            #     self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
-            #     if current_mp_position[axis]>goal_pos:
-            #         self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
-            #         self.path_plan_counter+=1
         elif move_type == "rotate":
             goal_ori, error_threshold, rotate_right = goal
             if rotate_right:
-                # self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[-0.5, 0.5, -0.5, 0.5], 0]))
                 self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/2]))
             else:
-                # self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0.5, -0.5, 0.5, -0.5], 0]))
                 self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/2]))
             curr_error = np.mean(np.abs(current_mp_orientation-goal_ori))
             print(current_mp_orientation, goal_ori, curr_error)
@@ -431,29 +443,19 @@ class HelloWorld(BaseSample):
 
 
     def move_to_suspension_cell(self):
-        # current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
         print(self.path_plan_counter)
         path_plan = [["translate", [-1, 0]],
                      ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, True]],
-                    #  ["rotate", [np.array([0.5, 0.5, -0.5, -0.5]), 0.251, True]],
                      ["translate", [2.29, 1]],
                      ["rotate", [np.array([0, 0, 0, 1]), 0.503, True]],
                      ["translate", [-4.22, 0]],
                      ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, False]],
-                    #  ["rotate", [np.array([0.5, 0.5, -0.5, -0.5]), 0.251, False]],
                      ["translate", [-5.3, 1]]]
         self.move_mp(path_plan)
         if len(path_plan) == self.path_plan_counter:
             self.path_plan_counter=0
             return True
         return False
-        # self.move_mp("translate", [-2.93, 0])
-        # self.move_mp("rotate", [np.array([0.5, 0.5, -0.5,-0.5]), 0.251])
-        # self.move_mp("translate", [2.29, 1])
-        # self.move_mp("rotate", [np.array([0, 0, 0.70711, 0.70711]), 0.251])
-        # self.move_mp("translate", [-5.26025, 0])
-        # self.move_mp("rotate", [np.array([-0.5, 0.5, 0.5, 0.5]), 0.251])
-        # self.move_mp("translate", [-5.3, 1])
 
     def arm_place_suspension(self):
         motion_plan = [{"index":0, "position": np.array([0.72034, -0.05477, 0.33852-0.16+0.2]), "orientation": np.array([0.5,-0.5,0.5,0.5]), "goal_position":np.array([-6.822, -5.13962, 0.58122+0.2]), "goal_orientation":np.array([0.5,0.5,0.5,-0.5])},
@@ -505,7 +507,7 @@ class HelloWorld(BaseSample):
 
     def arm_remove_suspension(self):
         motion_plan = [{"index":0, "position": np.array([-0.95325-0.16, -0.38757, 0.31143]), "orientation": np.array([-0.00257, 0.00265, -0.82633, -0.56318]), "goal_position":np.array([-5.14749, -4.80509, 0.55254]), "goal_orientation":np.array([0.56316, 0.82633, -0.00001, -0.00438])},
-                       {"index":1, "position": np.array([0.07, -0.81, 0.21]), "orientation": np.array([-0.69, 0, 0, 0.72]), "goal_position":np.array([-4.18372, 7.03628, 0.44567]), "goal_orientation":np.array([0.9999, 0, 0, 0])}]
+                       {"index":1, "position": np.array([0.03492, 0.9236, 0.80354]), "orientation": np.array([0.70711, 0, 0, 0.70711]), "goal_position":np.array([-6.13579,-5.95519, 1.04451]), "goal_orientation":np.array([0.70711, 0, 0, -0.70711])}]
         self.move_ur10(motion_plan, "_suspension")
         if self.motion_task_counter==2:
             print("Done arm removal")
@@ -522,7 +524,7 @@ class HelloWorld(BaseSample):
                         {"index":2, "position": np.array([0.97165+0.16, 0.01077, 0.31194]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-7.0686, -16.5233, 0.55313]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])},
                         {"index":3, "position": np.array([-1.09292-0.16, 0.24836, 0.52594]), "orientation": np.array([0,0,0.70711,0.70711]), "goal_position":np.array([-5.005, -16.7606, 0.76714]), "goal_orientation":np.array([0.70711, 0.70711, 0,0])}]
         
-        self.move_ur10(motion_plan)
+        self.move_ur10(motion_plan, "_fuel")
 
         if self.motion_task_counter==2 and not self.bool_done[3]:
             self.bool_done[3] = True
@@ -562,10 +564,71 @@ class HelloWorld(BaseSample):
             self.motion_task_counter=0
             return True
         return False
+    
+    def move_to_battery_cell(self):
+        print(self.path_plan_counter)
+        path_plan = [["translate", [-12.5, 1]],
+                     ["rotate", [np.array([0, 0, 0, 1]), 0.0042, True]],
+                     ["translate", [-8.63, 0]],
+                     ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
+                     ["translate", [-16.85, 1]],
+                     ["rotate", [np.array([0, 0, 0, 1]), 0.0042, True]],
+                     ["translate", [-16.7, 0]]]
+        self.move_mp(path_plan)
+        if len(path_plan) == self.path_plan_counter:
+            self.path_plan_counter=0
+            return True
+        return False
+
+    def arm_place_battery(self):
+        motion_plan = [{"index":0, "position": np.array([-0.12728, -0.61362, 0.4+0.1-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.42647, -15.71631, 0.64303+0.1]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":1, "position": np.array([-0.12728, -0.61362, 0.4-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.42647, -15.71631, 0.64303]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":2, "position": np.array([-0.12728, -0.61362, 0.4+0.1-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.42647, -15.71631, 0.64303+0.1]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+
+                    #    {"index":3, "position": np.array([0.87593, -0.08943, 0.60328-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-17.42989, -16.24038, 0.8463]), "goal_orientation":np.array([0, -0.70711, 0, 0.70711])},
+
+                       {"index":3, "position": np.array([-0.15683+0.05, 0.85859, 0.57477+0.1-0.16]), "orientation": np.array([0.81202, 0, 0.58362, 0]), "goal_position":np.array([-16.39705, -17.18895, 0.81657+0.1]), "goal_orientation":np.array([0, -0.58362, 0, 0.81202])},
+                       {"index":4, "position": np.array([-0.15683+0.05, 0.85859, 0.57477-0.16]), "orientation": np.array([0.81202, 0, 0.58362, 0]), "goal_position":np.array([-16.39705, -17.18895, 0.81657]), "goal_orientation":np.array([0, -0.58362, 0, 0.81202])}]
+        self.move_ur10(motion_plan, "_battery")
+
+        if self.motion_task_counter==2 and not self.bool_done[3]:
+            self.bool_done[3] = True
+            self.remove_part("World/Environment", "battery_01")
+            self.add_part_custom("World/UR10_battery/ee_link","battery", "qbattery", np.array([0.001,0.001,0.001]), np.array([0.2361, 0.05277, 0.03064]), np.array([0.00253, -0.7071, 0.7071, 0.00253]))
         
+        if self.motion_task_counter==5:
+            print("Done placing battery")
+            self.motion_task_counter=0
+            self.remove_part("World/UR10_battery/ee_link", "qbattery")
+            self.add_part_custom("mock_robot/platform","battery", "xbattery", np.array([0.001,0.001,0.001]), np.array([-0.20126, 0.06146, 0.58443]), np.array([0.4099, 0.55722, -0.58171, -0.42791]))
+            return True
+        return False
 
+    def screw_battery(self):
+        def transform(points):
+            points[0]-=0.16
+            points[2]-=0.15
+            return points
+        motion_plan = [{"index":0, "position": self.transform_for_screw_ur10_battery(transform(np.array([0.74393, 0.15931, 0.61626]))), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-4.76508, -16.68786, 0.85892]), "goal_orientation":np.array([0,-0.70711,0,0.70711])},
+                        {"index":1, "position": self.transform_for_screw_ur10_battery(transform(np.array([0.74393, 0.15931, 0.5447]))), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-4.76508, -16.68786, 0.78736]), "goal_orientation":np.array([0,-0.70711,0,0.70711])},
+                        {"index":2, "position": self.transform_for_screw_ur10_battery(transform(np.array([0.74393, 0.15931, 0.61626]))), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-4.76508, -16.68786, 0.85892]), "goal_orientation":np.array([0,-0.70711,0,0.70711])},
+                        {"index":3, "position": self.transform_for_screw_ur10_battery(transform(np.array([0.74393, 0.4077, 0.61626]))), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-4.76508, -16.93625, 0.85892]), "goal_orientation":np.array([0,-0.70711,0,0.70711])},
+                        {"index":4, "position": self.transform_for_screw_ur10_battery(transform(np.array([0.74393, 0.4077, 0.5447]))), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-4.76508, -16.93625, 0.78736]), "goal_orientation":np.array([0,-0.70711,0,0.70711])},
+                        {"index":5, "position": self.transform_for_screw_ur10_battery(transform(np.array([0.74393, 0.4077, 0.61626]))), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-4.76508, -16.93625, 0.85892]), "goal_orientation":np.array([0,-0.70711,0,0.70711])},
+                        {"index":6, "position": self.transform_for_screw_ur10_battery(transform(np.array([-0.04511, 0.7374, 0.41493]))), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-3.97604, -17.26595,0.6576]), "goal_orientation":np.array([0,-0.70711,0,0.70711])}]
+        self.do_screw_driving(motion_plan,"_battery")
+        if self.motion_task_counter==7:
+            print("Done screwing battery")
+            self.motion_task_counter=0
 
-
+    def arm_remove_battery(self):
+        motion_plan = [{"index":0, "position": np.array([0.07, -0.81, 0.21]), "orientation": np.array([-0.69, 0, 0, 0.72]), "goal_position":np.array([-4.18372, 7.03628, 0.44567]), "goal_orientation":np.array([0.9999, 0, 0, 0])}]
+        self.move_ur10(motion_plan)
+        if self.motion_task_counter==1:
+            print("Done arm removal")
+            self.motion_task_counter=0
+            return True
+        return False
 
     def send_robot_actions(self, step_size):
         current_observations = self._world.get_observations()
@@ -588,6 +651,11 @@ class HelloWorld(BaseSample):
             "171":"screw_suspension",
             "181":"arm_remove_suspension",
             "102":"wait",
+            "301":"move_to_battery_cell",
+            "351":"arm_place_battery",
+            "371":"screw_battery", 
+            "381":"arm_remove_battery",
+            "302":"wait",
             "201":"move_to_fuel_cell",
             "251":"arm_place_fuel",
             "271":"screw_fuel", 
