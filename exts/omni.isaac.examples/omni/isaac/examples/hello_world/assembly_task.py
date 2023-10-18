@@ -107,8 +107,9 @@ class AssemblyTask(BaseTask):
                 wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
                 create_robot=True,
                 usd_path=large_robot_asset_path,
-                # position=np.array([2.5, 5.65, 0.03551]), # start position
-                position=np.array([-4.78521, -10.1757,0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial after suspension cell
+                # position=np.array([2.5, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
+                # position=np.array([-4.78521, -10.1757,0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial after suspension cell
+                position=np.array([-9.60803, -17.35671, 0.03551]), orientation=np.array([0, 0, 0, 1]),# initial after battery cell
                 # orientation=np.array([0,0,0,1]), # start orientation
             )
         )
@@ -180,7 +181,7 @@ class AssemblyTask(BaseTask):
         add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_fuel/ee_link")
         gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_fuel/ee_link", translate=0.1611, direction="x")
         self.ur10_fuel = scene.add(
-            SingleManipulator(prim_path="/World/UR10_fuel", name="my_ur10_fuel", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-6.09744, -16.5124, 0.24168]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
+            SingleManipulator(prim_path="/World/UR10_fuel", name="my_ur10_fuel", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-6.09744, -16.16324, 0.24168]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
         )
         self.ur10_fuel.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
 
@@ -190,7 +191,7 @@ class AssemblyTask(BaseTask):
         add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10_fuel/ee_link")
         screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10_fuel/ee_link", translate=0, direction="x")
         self.screw_ur10_fuel = scene.add(
-            SingleManipulator(prim_path="/World/Screw_driving_UR10_fuel", name="my_screw_ur10_fuel", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-4.02094, -16.52902, 0.24168]), orientation=np.array([0, 0, 0, 1]), scale=np.array([1,1,1]))
+            SingleManipulator(prim_path="/World/Screw_driving_UR10_fuel", name="my_screw_ur10_fuel", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-4.24592, -15.9399, 0.24168]), orientation=np.array([0, 0, 0, 1]), scale=np.array([1,1,1]))
         )
         self.screw_ur10_fuel.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
 
@@ -201,7 +202,7 @@ class AssemblyTask(BaseTask):
                 wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
                 create_robot=True,
                 usd_path=small_robot_asset_path,
-                position=np.array([-7.47898, -16.15971, 0.035]),
+                position=np.array([-2.4, -16.15971, 0.035]),
                 orientation=np.array([0.70711,0, 0,-0.70711]),
             )
         )
