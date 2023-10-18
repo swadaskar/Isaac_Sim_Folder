@@ -108,8 +108,9 @@ class AssemblyTask(BaseTask):
                 create_robot=True,
                 usd_path=large_robot_asset_path,
                 # position=np.array([2.5, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
-                # position=np.array([-4.78521, -10.1757,0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial after suspension cell
-                position=np.array([-9.60803, -17.35671, 0.03551]), orientation=np.array([0, 0, 0, 1]),# initial after battery cell
+                # position=np.array([-4.78521, -10.1757,0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before fuel cell
+                # position=np.array([-9.60803, -17.35671, 0.03551]), orientation=np.array([0, 0, 0, 1]),# initial before battery cell
+                position=np.array([-32.5, 3.516, 0.03551]), orientation=np.array([0.70711, 0, 0, 0.70711]),# initial before trunk cell
                 # orientation=np.array([0,0,0,1]), # start orientation
             )
         )
@@ -242,6 +243,40 @@ class AssemblyTask(BaseTask):
             )
         )
 
+        # trunk task assembly --------------------------------------------------
+        # adding UR10_trunk for pick and place
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10_trunk")
+        # gripper_usd = assets_root_path + "/Isaac/Robots/UR10_trunk/Props/short_gripper.usd"
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/RG2_v2/RG2_v2.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_trunk/ee_link")
+        gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_trunk/ee_link", translate=0.1611, direction="x")
+        self.ur10_trunk = scene.add(
+            SingleManipulator(prim_path="/World/UR10_trunk", name="my_ur10_trunk", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-27.1031, 4.48605, 0.24168]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
+        )
+        self.ur10_trunk.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+
+        # adding UR10_trunk for screwing in part
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/Screw_driving_UR10_trunk")
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/screw_driver_link/screw_driver_link.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10_trunk/ee_link")
+        screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10_trunk/ee_link", translate=0, direction="x")
+        self.screw_ur10_trunk = scene.add(
+            SingleManipulator(prim_path="/World/Screw_driving_UR10_trunk", name="my_screw_ur10_trunk", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-27.29981, 6.5455, 0.24168]), orientation=np.array([0, 0, 0, 1]), scale=np.array([1,1,1]))
+        )
+        self.screw_ur10_trunk.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+
+        self.trunk_bringer = scene.add(
+            WheeledRobot(
+                prim_path="/trunk_bringer",
+                name="trunk_bringer",
+                wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
+                create_robot=True,
+                usd_path=small_robot_asset_path,
+                position=np.array([-30.518, 3.516, 0.035]),
+                orientation=np.array([1,0,0,0]),
+            )
+        )
+
         return
 
     def get_observations(self):
@@ -257,6 +292,9 @@ class AssemblyTask(BaseTask):
 
         current_eb_position_battery, current_eb_orientation_battery = self.battery_bringer.get_world_pose()
         current_joint_positions_ur10_battery = self.ur10_battery.get_joint_positions()
+
+        current_eb_position_trunk, current_eb_orientation_trunk = self.trunk_bringer.get_world_pose()
+        current_joint_positions_ur10_trunk = self.ur10_trunk.get_joint_positions()
         observations= {
             "task_event": self._task_event,
             self.moving_platform.name: {
@@ -298,6 +336,12 @@ class AssemblyTask(BaseTask):
             },
             self.screw_ur10_battery.name: {
                 "joint_positions": current_joint_positions_ur10_battery,
+            },
+            self.ur10_trunk.name: {
+                "joint_positions": current_joint_positions_ur10_trunk,
+            },
+            self.screw_ur10_trunk.name: {
+                "joint_positions": current_joint_positions_ur10_trunk,
             }
         }
         return observations
@@ -323,6 +367,11 @@ class AssemblyTask(BaseTask):
         params_representation["arm_name_battery"] = {"value": self.ur10_battery.name, "modifiable": False}
         params_representation["screw_arm_battery"] = {"value": self.screw_ur10_battery.name, "modifiable": False}
         params_representation["eb_name_battery"] = {"value": self.battery_bringer.name, "modifiable": False}
+        
+        # trunk task
+        params_representation["arm_name_trunk"] = {"value": self.ur10_trunk.name, "modifiable": False}
+        params_representation["screw_arm_trunk"] = {"value": self.screw_ur10_trunk.name, "modifiable": False}
+        params_representation["eb_name_trunk"] = {"value": self.trunk_bringer.name, "modifiable": False}
         
         return params_representation
     
