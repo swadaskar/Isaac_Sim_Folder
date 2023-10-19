@@ -303,7 +303,42 @@ class HelloWorld(BaseSample):
         self.my_controller_main_cover = KinematicsSolver(self.ur10_main_cover, attach_gripper=True)
 
         self.articulation_controller_main_cover = self.ur10_main_cover.get_articulation_controller()
+        
+        # handle cell set up ---------------------------------------------------------------------------------
+        # bring in moving platforms 
+        self.handle_bringer = self._world.scene.get_object(task_params["eb_name_handle"]["value"])
+        
+        self.add_part_custom("World/Environment","handle", "handle_01", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","handle", "handle_02", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
 
+        # Initialize our controller after load and the first reset
+
+        self.ur10_handle = self._world.scene.get_object(task_params["arm_name_handle"]["value"])
+        self.screw_ur10_handle = self._world.scene.get_object(task_params["screw_arm_handle"]["value"])
+
+        self.my_controller_handle = KinematicsSolver(self.ur10_handle, attach_gripper=True)
+        self.screw_my_controller_handle = KinematicsSolver(self.screw_ur10_handle, attach_gripper=True)
+
+        self.articulation_controller_handle = self.ur10_handle.get_articulation_controller()
+        self.screw_articulation_controller_handle = self.screw_ur10_handle.get_articulation_controller()
+
+        # light cell set up ---------------------------------------------------------------------------------
+        # bring in moving platforms 
+        self.light_bringer = self._world.scene.get_object(task_params["eb_name_light"]["value"])
+        
+        self.add_part_custom("World/Environment","light", "light_01", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","light", "light_02", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+
+        # Initialize our controller after load and the first reset
+
+        self.ur10_light = self._world.scene.get_object(task_params["arm_name_light"]["value"])
+        self.screw_ur10_light = self._world.scene.get_object(task_params["screw_arm_light"]["value"])
+
+        self.my_controller_light = KinematicsSolver(self.ur10_light, attach_gripper=True)
+        self.screw_my_controller_light = KinematicsSolver(self.screw_ur10_light, attach_gripper=True)
+
+        self.articulation_controller_light = self.ur10_light.get_articulation_controller()
+        self.screw_articulation_controller_light = self.screw_ur10_light.get_articulation_controller()
         return
 
     async def setup_post_reset(self):
