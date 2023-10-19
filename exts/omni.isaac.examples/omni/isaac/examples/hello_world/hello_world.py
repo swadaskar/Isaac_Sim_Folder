@@ -104,7 +104,7 @@ class HelloWorld(BaseSample):
         self.delay=0
         print("inside setup_scene", self.motion_task_counter)
         # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201"])
-        self.schedule = deque(["401","451","471"])
+        self.schedule = deque(["501", "551"])
         # "6":"wait",
         #     "5":"move_to_suspension_cell",
         #     "151":"arm_place_suspension",
@@ -240,11 +240,10 @@ class HelloWorld(BaseSample):
         # bring in moving platforms 
         self.wheel_bringer = self._world.scene.get_object(task_params["eb_name_wheel"]["value"])
         
-        self.add_part_custom("World/Environment","wheel", "wheel_01", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
-        self.add_part_custom("World/Environment","wheel", "wheel_02", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
-        self.add_part_custom("World/Environment","wheel", "wheel_03", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
-        self.add_part_custom("World/Environment","wheel", "wheel_04", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
-
+        self.add_part_custom("World/Environment","FWheel", "wheel_01", np.array([0.001,0.001,0.001]), np.array([-15.17319, 4.72577, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+        self.add_part_custom("World/Environment","FWheel", "wheel_02", np.array([0.001,0.001,0.001]), np.array([-15.17319, 5.24566, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+        self.add_part_custom("World/Environment","FWheel", "wheel_03", np.array([0.001,0.001,0.001]), np.array([-18.97836, 4.72577, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+        self.add_part_custom("World/Environment","FWheel", "wheel_04", np.array([0.001,0.001,0.001]), np.array([-18.97836, 5.24566, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
 
         # Initialize our controller after load and the first reset
 
@@ -266,79 +265,79 @@ class HelloWorld(BaseSample):
         self.articulation_controller_wheel_01 = self.ur10_wheel_01.get_articulation_controller()
         self.screw_articulation_controller_wheel_01 = self.screw_ur10_wheel_01.get_articulation_controller()
 
-        # lower_cover cell set up ---------------------------------------------------------------------------------
-        # bring in moving platforms 
-        self.lower_cover_bringer = self._world.scene.get_object(task_params["eb_name_lower_cover"]["value"])
+        # # lower_cover cell set up ---------------------------------------------------------------------------------
+        # # bring in moving platforms 
+        # self.lower_cover_bringer = self._world.scene.get_object(task_params["eb_name_lower_cover"]["value"])
         
-        self.add_part_custom("World/Environment","lower_cover", "lower_cover_01", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
-        self.add_part_custom("World/Environment","lower_cover", "lower_cover_02", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        # self.add_part_custom("World/Environment","lower_cover", "lower_cover_01", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        # self.add_part_custom("World/Environment","lower_cover", "lower_cover_02", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
 
-        self.add_part_custom("World/Environment","lower_cover", "lower_cover_03", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
-        self.add_part_custom("World/Environment","lower_cover", "lower_cover_04", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        # self.add_part_custom("World/Environment","lower_cover", "lower_cover_03", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        # self.add_part_custom("World/Environment","lower_cover", "lower_cover_04", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
 
-        self.add_part_custom("World/Environment","main_cover", "main_cover", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        # self.add_part_custom("World/Environment","main_cover", "main_cover", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
 
-        # Initialize our controller after load and the first reset
+        # # Initialize our controller after load and the first reset
 
-        self.ur10_lower_cover = self._world.scene.get_object(task_params["arm_name_lower_cover"]["value"])
-        self.screw_ur10_lower_cover = self._world.scene.get_object(task_params["screw_arm_lower_cover"]["value"])
+        # self.ur10_lower_cover = self._world.scene.get_object(task_params["arm_name_lower_cover"]["value"])
+        # self.screw_ur10_lower_cover = self._world.scene.get_object(task_params["screw_arm_lower_cover"]["value"])
 
-        self.my_controller_lower_cover = KinematicsSolver(self.ur10_lower_cover, attach_gripper=True)
-        self.screw_my_controller_lower_cover = KinematicsSolver(self.screw_ur10_lower_cover, attach_gripper=True)
+        # self.my_controller_lower_cover = KinematicsSolver(self.ur10_lower_cover, attach_gripper=True)
+        # self.screw_my_controller_lower_cover = KinematicsSolver(self.screw_ur10_lower_cover, attach_gripper=True)
 
-        self.articulation_controller_lower_cover = self.ur10_lower_cover.get_articulation_controller()
-        self.screw_articulation_controller_lower_cover = self.screw_ur10_lower_cover.get_articulation_controller()
+        # self.articulation_controller_lower_cover = self.ur10_lower_cover.get_articulation_controller()
+        # self.screw_articulation_controller_lower_cover = self.screw_ur10_lower_cover.get_articulation_controller()
 
-        self.ur10_lower_cover_01 = self._world.scene.get_object(task_params["arm_name_lower_cover_01"]["value"])
-        self.screw_ur10_lower_cover_01 = self._world.scene.get_object(task_params["screw_arm_lower_cover_01"]["value"])
+        # self.ur10_lower_cover_01 = self._world.scene.get_object(task_params["arm_name_lower_cover_01"]["value"])
+        # self.screw_ur10_lower_cover_01 = self._world.scene.get_object(task_params["screw_arm_lower_cover_01"]["value"])
 
-        self.my_controller_lower_cover_01 = KinematicsSolver(self.ur10_lower_cover_01, attach_gripper=True)
-        self.screw_my_controller_lower_cover_01 = KinematicsSolver(self.screw_ur10_lower_cover_01, attach_gripper=True)
+        # self.my_controller_lower_cover_01 = KinematicsSolver(self.ur10_lower_cover_01, attach_gripper=True)
+        # self.screw_my_controller_lower_cover_01 = KinematicsSolver(self.screw_ur10_lower_cover_01, attach_gripper=True)
 
-        self.articulation_controller_lower_cover_01 = self.ur10_lower_cover_01.get_articulation_controller()
-        self.screw_articulation_controller_lower_cover_01 = self.screw_ur10_lower_cover_01.get_articulation_controller()
+        # self.articulation_controller_lower_cover_01 = self.ur10_lower_cover_01.get_articulation_controller()
+        # self.screw_articulation_controller_lower_cover_01 = self.screw_ur10_lower_cover_01.get_articulation_controller()
 
-        self.ur10_main_cover = self._world.scene.get_object(task_params["arm_name_main_cover"]["value"])
+        # self.ur10_main_cover = self._world.scene.get_object(task_params["arm_name_main_cover"]["value"])
 
-        self.my_controller_main_cover = KinematicsSolver(self.ur10_main_cover, attach_gripper=True)
+        # self.my_controller_main_cover = KinematicsSolver(self.ur10_main_cover, attach_gripper=True)
 
-        self.articulation_controller_main_cover = self.ur10_main_cover.get_articulation_controller()
+        # self.articulation_controller_main_cover = self.ur10_main_cover.get_articulation_controller()
         
-        # handle cell set up ---------------------------------------------------------------------------------
-        # bring in moving platforms 
-        self.handle_bringer = self._world.scene.get_object(task_params["eb_name_handle"]["value"])
+        # # handle cell set up ---------------------------------------------------------------------------------
+        # # bring in moving platforms 
+        # self.handle_bringer = self._world.scene.get_object(task_params["eb_name_handle"]["value"])
         
-        self.add_part_custom("World/Environment","handle", "handle_01", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
-        self.add_part_custom("World/Environment","handle", "handle_02", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        # self.add_part_custom("World/Environment","handle", "handle_01", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        # self.add_part_custom("World/Environment","handle", "handle_02", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
 
-        # Initialize our controller after load and the first reset
+        # # Initialize our controller after load and the first reset
 
-        self.ur10_handle = self._world.scene.get_object(task_params["arm_name_handle"]["value"])
-        self.screw_ur10_handle = self._world.scene.get_object(task_params["screw_arm_handle"]["value"])
+        # self.ur10_handle = self._world.scene.get_object(task_params["arm_name_handle"]["value"])
+        # self.screw_ur10_handle = self._world.scene.get_object(task_params["screw_arm_handle"]["value"])
 
-        self.my_controller_handle = KinematicsSolver(self.ur10_handle, attach_gripper=True)
-        self.screw_my_controller_handle = KinematicsSolver(self.screw_ur10_handle, attach_gripper=True)
+        # self.my_controller_handle = KinematicsSolver(self.ur10_handle, attach_gripper=True)
+        # self.screw_my_controller_handle = KinematicsSolver(self.screw_ur10_handle, attach_gripper=True)
 
-        self.articulation_controller_handle = self.ur10_handle.get_articulation_controller()
-        self.screw_articulation_controller_handle = self.screw_ur10_handle.get_articulation_controller()
+        # self.articulation_controller_handle = self.ur10_handle.get_articulation_controller()
+        # self.screw_articulation_controller_handle = self.screw_ur10_handle.get_articulation_controller()
 
-        # light cell set up ---------------------------------------------------------------------------------
-        # bring in moving platforms 
-        self.light_bringer = self._world.scene.get_object(task_params["eb_name_light"]["value"])
+        # # light cell set up ---------------------------------------------------------------------------------
+        # # bring in moving platforms 
+        # self.light_bringer = self._world.scene.get_object(task_params["eb_name_light"]["value"])
         
-        self.add_part_custom("World/Environment","light", "light_01", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
-        self.add_part_custom("World/Environment","light", "light_02", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        # self.add_part_custom("World/Environment","light", "light_01", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        # self.add_part_custom("World/Environment","light", "light_02", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
 
-        # Initialize our controller after load and the first reset
+        # # Initialize our controller after load and the first reset
 
-        self.ur10_light = self._world.scene.get_object(task_params["arm_name_light"]["value"])
-        self.screw_ur10_light = self._world.scene.get_object(task_params["screw_arm_light"]["value"])
+        # self.ur10_light = self._world.scene.get_object(task_params["arm_name_light"]["value"])
+        # self.screw_ur10_light = self._world.scene.get_object(task_params["screw_arm_light"]["value"])
 
-        self.my_controller_light = KinematicsSolver(self.ur10_light, attach_gripper=True)
-        self.screw_my_controller_light = KinematicsSolver(self.screw_ur10_light, attach_gripper=True)
+        # self.my_controller_light = KinematicsSolver(self.ur10_light, attach_gripper=True)
+        # self.screw_my_controller_light = KinematicsSolver(self.screw_ur10_light, attach_gripper=True)
 
-        self.articulation_controller_light = self.ur10_light.get_articulation_controller()
-        self.screw_articulation_controller_light = self.screw_ur10_light.get_articulation_controller()
+        # self.articulation_controller_light = self.ur10_light.get_articulation_controller()
+        # self.screw_articulation_controller_light = self.screw_ur10_light.get_articulation_controller()
         return
 
     async def setup_post_reset(self):
@@ -404,7 +403,7 @@ class HelloWorld(BaseSample):
         if np.mean(np.abs(curr_location.p - target_location["goal_position"]))<0.02:
             self.motion_task_counter+=1
             print("Completed one motion plan: ", self.motion_task_counter)
-            
+
     def transform_for_screw_ur10(self, position):
         position[0]+=0.16171
         position[1]+=0.00752
@@ -545,6 +544,8 @@ class HelloWorld(BaseSample):
         return False
 
     def move_mp(self, path_plan):
+        if not path_plan:
+            return
         current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
         move_type, goal = path_plan[self.path_plan_counter]
         if move_type == "translate":
@@ -863,15 +864,86 @@ class HelloWorld(BaseSample):
         return False
 
     def arm_remove_trunk(self):
-        motion_plan = [{"index":0, "position": np.array([0.55084, -1.08888, 0.75942]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-27.65404, 5.5746, 1.00113]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
-                       {"index":1, "position": np.array([0.03497, -0.67758, 0.82296]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-16.589,-15.6521,1.22562]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])}]
+        motion_plan = [{"index":0, "position": np.array([0.42543, -0.81339, -0.16+0.75942+0.1]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-27.52862, 5.26, 1.00113+0.1]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                       {"index":1, "position": np.array([0.9596, 0.21244, -0.16+0.4547+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-28.06, 4.27349, 0.69642+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])}]
         self.move_ur10(motion_plan, "_trunk")
         if self.motion_task_counter==2:
             print("Done arm removal")
             self.motion_task_counter=0
             return True
         return False
+    
+    def move_to_wheel_cell(self):
+        print(self.path_plan_counter)
+        path_plan = [
+                    # ["translate", [-21.3, 0, False]],
+                    #  ["rotate", [np.array([0.70711, 0, 0, 0.70711]), 0.0042, False]],
+                    #  ["translate", [9.3, 1, False]],
+                    #  ["rotate", [np.array([1, 0, 0, 0]), 0.0042, True]],
+                     ["translate", [-17.15, 0, False]],
+                     ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, True]],
+                    #  ["translate", [5.39, 1, False]]
+                    ["translate", [6, 1, False]]
+                     ]
+        self.move_mp(path_plan)
+        if len(path_plan) == self.path_plan_counter:
+            self.path_plan_counter=0
+            return True
+        return False
+
+
+    def arm_place_wheel(self):
+        motion_plan = [{"index":0, "position": np.array([0.86671, -0.02468, -0.16+0.4353+0.2]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-18.79517, 4.90661, 0.67666+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":1, "position": np.array([0.86671, -0.02468, -0.16+0.4353]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-18.79517, 4.90661, 0.67666+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":2, "position": np.array([0.86671, -0.02468, -0.16+0.4353+0.2]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-18.79517, 4.90661, 0.67666+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+
+                       {"index":3, "position": np.array([0.00762, 0.77686, -0.16+0.48217]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-17.935, 4.105, 0.723]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                    #    {"index":4, "position": np.array([-0.39779, 0.19418, -0.16+0.51592]), "orientation": np.array([0.62501, -0.3307, 0.62501, 0.3307]), "goal_position":np.array([-17.53, 4.68, 0.758]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                    #    {"index":5, "position": np.array([-0.35597, -0.15914, -0.16+0.48217]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-17.572, 5.04127, 0.723]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                    #    {"index":6, "position": np.array([-0.48413-0.16, -0.28768, 0.29642]), "orientation": np.array([0, 0, 0.70711, 0.70711]), "goal_position":np.array([-17.446, 5.16, 0.537]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                    #    {"index":7, "position": np.array([-0.27412-0.16, -0.61531, 0.25146]), "orientation": np.array([0, 0, 0.70711, 0.70711]), "goal_position":np.array([-17.656, 5.497, 0.492]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                    #    {"index":8, "position": np.array([-0.3-0.16, -0.75, 0.2]), "orientation": np.array([0, 0, 0.70711, 0.70711]), "goal_position":np.array([-17.62, 5.63, 0.44]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+
+
+                       {"index":4, "position": np.array([-0.33031-0.16, -0.78789, 0.15369]), "orientation": np.array([0, 0, 0.70711, 0.70711]), "goal_position":np.array([-17.596, 5.671, 0.394]), "goal_orientation":np.array([0.70711, 0.70711, 0, 0])},
+                       {"index":5, "position": np.array([-0.49798-0.16, -0.78789, 0.15369]), "orientation": np.array([0, 0, 0.70711, 0.70711]), "goal_position":np.array([-17.42945, 5.671, 0.394]), "goal_orientation":np.array([0.70711, 0.70711, 0, 0])},
+                       {"index":6, "position": np.array([-0.33031-0.16, -0.78789, 0.15369]), "orientation": np.array([0, 0, 0.70711, 0.70711]), "goal_position":np.array([-17.596, 5.671, 0.394]), "goal_orientation":np.array([0.70711, 0.70711, 0, 0])}]
+        self.move_ur10(motion_plan, "_wheel_01")
+
+        if self.motion_task_counter==2 and not self.bool_done[5]:
+            self.bool_done[5] = True
+            self.remove_part("World/Environment", "wheel_03")
+            self.add_part_custom("World/UR10_wheel_01/ee_link","FWheel", "qwheel_03", np.array([0.001,0.001,0.001]), np.array([0.25604, -0.18047, -0.18125]), np.array([0, 0, 0.70711, 0.70711]))
         
+        if self.motion_task_counter==5:
+            print("Done placing wheel")
+            self.remove_part("World/UR10_wheel_01/ee_link", "qwheel_03")
+            self.add_part_custom("mock_robot/platform","FWheel", "xwheel_03", np.array([0.001,0.001,0.001]), np.array([0.15255, -0.1948, 0.56377]), np.array([0.5, -0.5, 0.5, -0.5]))
+        
+        if self.motion_task_counter==7:
+            self.motion_task_counter=0
+            return True
+        return False
+
+    def screw_wheel(self):
+        def transform(points):
+            points[0]-=0
+            points[2]-=0
+            return points
+        motion_plan = [{"index":0, "position": transform(np.array([-0.15245, -0.65087-0.24329, -0.16+0.43677+0.2])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-27.14748, 7.43945, 0.67876+0.2]), "goal_orientation":np.array([0,-0.70711,0,0.70711])},
+                       {"index":1, "position": transform(np.array([-0.15245, -0.65087-0.24329, -0.16+0.43677])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-27.14748, 7.43945, 0.67876]), "goal_orientation":np.array([0,-0.70711,0,0.70711])},
+                       {"index":2, "position": transform(np.array([-0.15245, -0.65087-0.24329, -0.16+0.43677+0.2])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-27.14748, 7.43945, 0.67876+0.2]), "goal_orientation":np.array([0,-0.70711,0,0.70711])},
+                       
+                       {"index":3, "position": transform(np.array([-0.12592, 1.126+0.16-0.24329, 0.48602])), "orientation": np.array([0.5, 0.5, 0.5, 0.5]), "goal_position":np.array([-27.17401, 5.66311, 0.7279]), "goal_orientation":np.array([0.5, 0.5, -0.5, -0.5])},
+                       {"index":4, "position": transform(np.array([-0.12592, 1.33575+0.16-0.24329, 0.48602])), "orientation": np.array([0.5, 0.5, 0.5, 0.5]), "goal_position":np.array([-27.17401, 5.45335, 0.7279]), "goal_orientation":np.array([0.5, 0.5, -0.5, -0.5])},
+                       {"index":5, "position": transform(np.array([-0.12592, 1.126+0.16-0.24329, 0.48602])), "orientation": np.array([0.5, 0.5, 0.5, 0.5]), "goal_position":np.array([-27.17401, 5.66311, 0.7279]), "goal_orientation":np.array([0.5, 0.5, -0.5, -0.5])},
+                       {"index":6, "position": transform(np.array([-0.15245, -0.65087-0.24329, -0.16+0.43677+0.3])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-27.14748, 7.43945, 0.67876+0.3]), "goal_orientation":np.array([0,-0.70711,0,0.70711])}]
+        self.do_screw_driving(motion_plan,"_wheel")
+        if self.motion_task_counter==7:
+            print("Done screwing wheel")
+            self.motion_task_counter=0
+            return True
+        return False
 
     def send_robot_actions(self, step_size):
         current_observations = self._world.get_observations()
