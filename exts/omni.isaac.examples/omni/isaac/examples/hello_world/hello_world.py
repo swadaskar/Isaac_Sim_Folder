@@ -265,6 +265,45 @@ class HelloWorld(BaseSample):
 
         self.articulation_controller_wheel_01 = self.ur10_wheel_01.get_articulation_controller()
         self.screw_articulation_controller_wheel_01 = self.screw_ur10_wheel_01.get_articulation_controller()
+
+        # lower_cover cell set up ---------------------------------------------------------------------------------
+        # bring in moving platforms 
+        self.lower_cover_bringer = self._world.scene.get_object(task_params["eb_name_lower_cover"]["value"])
+        
+        self.add_part_custom("World/Environment","lower_cover", "lower_cover_01", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_cover_02", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+
+        self.add_part_custom("World/Environment","lower_cover", "lower_cover_03", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_cover_04", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+
+        self.add_part_custom("World/Environment","main_cover", "main_cover", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+
+        # Initialize our controller after load and the first reset
+
+        self.ur10_lower_cover = self._world.scene.get_object(task_params["arm_name_lower_cover"]["value"])
+        self.screw_ur10_lower_cover = self._world.scene.get_object(task_params["screw_arm_lower_cover"]["value"])
+
+        self.my_controller_lower_cover = KinematicsSolver(self.ur10_lower_cover, attach_gripper=True)
+        self.screw_my_controller_lower_cover = KinematicsSolver(self.screw_ur10_lower_cover, attach_gripper=True)
+
+        self.articulation_controller_lower_cover = self.ur10_lower_cover.get_articulation_controller()
+        self.screw_articulation_controller_lower_cover = self.screw_ur10_lower_cover.get_articulation_controller()
+
+        self.ur10_lower_cover_01 = self._world.scene.get_object(task_params["arm_name_lower_cover_01"]["value"])
+        self.screw_ur10_lower_cover_01 = self._world.scene.get_object(task_params["screw_arm_lower_cover_01"]["value"])
+
+        self.my_controller_lower_cover_01 = KinematicsSolver(self.ur10_lower_cover_01, attach_gripper=True)
+        self.screw_my_controller_lower_cover_01 = KinematicsSolver(self.screw_ur10_lower_cover_01, attach_gripper=True)
+
+        self.articulation_controller_lower_cover_01 = self.ur10_lower_cover_01.get_articulation_controller()
+        self.screw_articulation_controller_lower_cover_01 = self.screw_ur10_lower_cover_01.get_articulation_controller()
+
+        self.ur10_main_cover = self._world.scene.get_object(task_params["arm_name_main_cover"]["value"])
+
+        self.my_controller_main_cover = KinematicsSolver(self.ur10_main_cover, attach_gripper=True)
+
+        self.articulation_controller_main_cover = self.ur10_main_cover.get_articulation_controller()
+
         return
 
     async def setup_post_reset(self):
