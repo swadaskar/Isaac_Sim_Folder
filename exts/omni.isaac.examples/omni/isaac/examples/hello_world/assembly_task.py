@@ -277,6 +277,61 @@ class AssemblyTask(BaseTask):
             )
         )
 
+        # wheel task assembly --------------------------------------------------
+        # adding UR10_wheel for pick and place
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10_wheel")
+        # gripper_usd = assets_root_path + "/Isaac/Robots/UR10_wheel/Props/short_gripper.usd"
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/RG2_v2/RG2_v2.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_wheel/ee_link")
+        gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_wheel/ee_link", translate=0.1611, direction="x")
+        self.ur10_wheel = scene.add(
+            SingleManipulator(prim_path="/World/UR10_wheel", name="my_ur10_wheel", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-27.1031, 4.48605, 0.24168]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
+        )
+        self.ur10_wheel.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+
+        # adding UR10_wheel for screwing in part
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/Screw_driving_UR10_wheel")
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/screw_driver_link/screw_driver_link.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10_wheel/ee_link")
+        screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10_wheel/ee_link", translate=0, direction="x")
+        self.screw_ur10_wheel = scene.add(
+            SingleManipulator(prim_path="/World/Screw_driving_UR10_wheel", name="my_screw_ur10_wheel", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-27.29981, 6.5455, 0.24168]), orientation=np.array([0, 0, 0, 1]), scale=np.array([1,1,1]))
+        )
+        self.screw_ur10_wheel.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+
+        # adding UR10_wheel_01 for pick and place
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10_wheel_01")
+        # gripper_usd = assets_root_path + "/Isaac/Robots/UR10_wheel_01/Props/short_gripper.usd"
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/RG2_v2/RG2_v2.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_wheel_01/ee_link")
+        gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_wheel_01/ee_link", translate=0.1611, direction="x")
+        self.ur10_wheel_01 = scene.add(
+            SingleManipulator(prim_path="/World/UR10_wheel_01", name="my_ur10_wheel_01", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-27.1031, 4.48605, 0.24168]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
+        )
+        self.ur10_wheel_01.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+
+        # adding UR10_wheel_01 for screwing in part
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/Screw_driving_UR10_wheel_01")
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/screw_driver_link/screw_driver_link.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10_wheel_01/ee_link")
+        screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10_wheel_01/ee_link", translate=0, direction="x")
+        self.screw_ur10_wheel_01 = scene.add(
+            SingleManipulator(prim_path="/World/Screw_driving_UR10_wheel_01", name="my_screw_ur10_wheel_01", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-27.29981, 6.5455, 0.24168]), orientation=np.array([0, 0, 0, 1]), scale=np.array([1,1,1]))
+        )
+        self.screw_ur10_wheel_01.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+
+        self.wheel_bringer = scene.add(
+            WheeledRobot(
+                prim_path="/wheel_bringer",
+                name="wheel_bringer",
+                wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
+                create_robot=True,
+                usd_path=small_robot_asset_path,
+                position=np.array([-20.518, 3.516, 0.035]),
+                orientation=np.array([1,0,0,0]),
+            )
+        )
+
         return
 
     def get_observations(self):
@@ -295,6 +350,11 @@ class AssemblyTask(BaseTask):
 
         current_eb_position_trunk, current_eb_orientation_trunk = self.trunk_bringer.get_world_pose()
         current_joint_positions_ur10_trunk = self.ur10_trunk.get_joint_positions()
+        
+        current_eb_position_wheel, current_eb_orientation_wheel = self.wheel_bringer.get_world_pose()
+        current_joint_positions_ur10_wheel = self.ur10_wheel.get_joint_positions()
+        current_joint_positions_ur10_wheel_01 = self.ur10_wheel_01.get_joint_positions()
+
         observations= {
             "task_event": self._task_event,
             self.moving_platform.name: {
@@ -342,7 +402,20 @@ class AssemblyTask(BaseTask):
             },
             self.screw_ur10_trunk.name: {
                 "joint_positions": current_joint_positions_ur10_trunk,
+            },
+            self.ur10_wheel.name: {
+                "joint_positions": current_joint_positions_ur10_wheel,
+            },
+            self.screw_ur10_wheel.name: {
+                "joint_positions": current_joint_positions_ur10_wheel,
+            },
+            self.ur10_wheel_01.name: {
+                "joint_positions": current_joint_positions_ur10_wheel_01,
+            },
+            self.screw_ur10_wheel_01.name: {
+                "joint_positions": current_joint_positions_ur10_wheel_01,
             }
+
         }
         return observations
 
@@ -372,6 +445,11 @@ class AssemblyTask(BaseTask):
         params_representation["arm_name_trunk"] = {"value": self.ur10_trunk.name, "modifiable": False}
         params_representation["screw_arm_trunk"] = {"value": self.screw_ur10_trunk.name, "modifiable": False}
         params_representation["eb_name_trunk"] = {"value": self.trunk_bringer.name, "modifiable": False}
+
+        # wheel task
+        params_representation["arm_name_wheel"] = {"value": self.ur10_wheel.name, "modifiable": False}
+        params_representation["screw_arm_wheel"] = {"value": self.screw_ur10_wheel.name, "modifiable": False}
+        params_representation["eb_name_wheel"] = {"value": self.wheel_bringer.name, "modifiable": False}
         
         return params_representation
     
