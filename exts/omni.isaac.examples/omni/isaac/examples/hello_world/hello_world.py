@@ -235,6 +235,36 @@ class HelloWorld(BaseSample):
 
         self.articulation_controller_trunk = self.ur10_trunk.get_articulation_controller()
         self.screw_articulation_controller_trunk = self.screw_ur10_trunk.get_articulation_controller()
+
+        # wheel cell set up ---------------------------------------------------------------------------------
+        # bring in moving platforms 
+        self.wheel_bringer = self._world.scene.get_object(task_params["eb_name_wheel"]["value"])
+        
+        self.add_part_custom("World/Environment","wheel", "wheel_01", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","wheel", "wheel_02", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","wheel", "wheel_03", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","wheel", "wheel_04", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+
+
+        # Initialize our controller after load and the first reset
+
+        self.ur10_wheel = self._world.scene.get_object(task_params["arm_name_wheel"]["value"])
+        self.screw_ur10_wheel = self._world.scene.get_object(task_params["screw_arm_wheel"]["value"])
+
+        self.my_controller_wheel = KinematicsSolver(self.ur10_wheel, attach_gripper=True)
+        self.screw_my_controller_wheel = KinematicsSolver(self.screw_ur10_wheel, attach_gripper=True)
+
+        self.articulation_controller_wheel = self.ur10_wheel.get_articulation_controller()
+        self.screw_articulation_controller_wheel = self.screw_ur10_wheel.get_articulation_controller()
+
+        self.ur10_wheel_01 = self._world.scene.get_object(task_params["arm_name_wheel_01"]["value"])
+        self.screw_ur10_wheel_01 = self._world.scene.get_object(task_params["screw_arm_wheel_01"]["value"])
+
+        self.my_controller_wheel_01 = KinematicsSolver(self.ur10_wheel_01, attach_gripper=True)
+        self.screw_my_controller_wheel_01 = KinematicsSolver(self.screw_ur10_wheel_01, attach_gripper=True)
+
+        self.articulation_controller_wheel_01 = self.ur10_wheel_01.get_articulation_controller()
+        self.screw_articulation_controller_wheel_01 = self.screw_ur10_wheel_01.get_articulation_controller()
         return
 
     async def setup_post_reset(self):
@@ -810,6 +840,29 @@ class HelloWorld(BaseSample):
             "571":"screw_wheel", 
             "581":"arm_remove_wheel",
             "502":"wait",
+            "601":"move_to_wheel_cell",
+            "651":"arm_place_wheel",
+            "671":"screw_wheel", 
+            "681":"arm_remove_wheel",
+            "602":"wait",
+            "701":"move_to_lower_cover_cell",
+            "751":"arm_place_lower_cover",
+            "771":"screw_lower_cover", 
+            "781":"arm_remove_lower_cover",
+            "702":"wait",
+            "721":"move_to_main_cover_cell",
+            "731":"arm_place_main_cover",
+            "703":"wait",
+            "801":"move_to_handle_cell",
+            "851":"arm_place_handle",
+            "871":"screw_handle", 
+            "881":"arm_remove_handle",
+            "802":"wait",
+            "901":"move_to_light_cell",
+            "951":"arm_place_light",
+            "971":"screw_light", 
+            "981":"arm_remove_light",
+            "902":"wait"
         }
 
         # schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201"])

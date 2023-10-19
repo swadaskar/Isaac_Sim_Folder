@@ -449,6 +449,8 @@ class AssemblyTask(BaseTask):
         # wheel task
         params_representation["arm_name_wheel"] = {"value": self.ur10_wheel.name, "modifiable": False}
         params_representation["screw_arm_wheel"] = {"value": self.screw_ur10_wheel.name, "modifiable": False}
+        params_representation["arm_name_wheel_01"] = {"value": self.ur10_wheel_01.name, "modifiable": False}
+        params_representation["screw_arm_wheel_01"] = {"value": self.screw_ur10_wheel_01.name, "modifiable": False}
         params_representation["eb_name_wheel"] = {"value": self.wheel_bringer.name, "modifiable": False}
         
         return params_representation
