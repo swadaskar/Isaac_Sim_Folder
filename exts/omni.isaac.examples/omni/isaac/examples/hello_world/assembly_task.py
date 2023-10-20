@@ -111,8 +111,8 @@ class AssemblyTask(BaseTask):
                 # position=np.array([-4.78521, -10.1757,0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before fuel cell
                 # position=np.array([-9.60803, -17.35671, 0.03551]), orientation=np.array([0, 0, 0, 1]),# initial before battery cell
                 # position=np.array([-32.5, 3.516, 0.03551]), orientation=np.array([0.70711, 0, 0, 0.70711]),# initial before trunk cell
-                position=np.array([-19.86208, 9.65617, 0.03551]), orientation=np.array([1, 0, 0, 0]),# initial before wheel cell
-                # orientation=np.array([0,0,0,1]), # start orientation
+                # position=np.array([-19.86208, 9.65617, 0.03551]), orientation=np.array([1, 0, 0, 0]),# initial before wheel cell
+                position=np.array([-21.13755, -15.54504, 0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before wheel cell
             )
         )
 
@@ -239,7 +239,7 @@ class AssemblyTask(BaseTask):
                 wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
                 create_robot=True,
                 usd_path=small_robot_asset_path,
-                position=np.array([-18.37412, -13.44433, 0.035]),
+                position=np.array([-18.36667, -15.53466, 0.035]),
                 orientation=np.array([0.70711,0, 0,-0.70711]),
             )
         )
@@ -333,56 +333,56 @@ class AssemblyTask(BaseTask):
             )
         )
 
-        # # main and lower cover task assembly --------------------------------------------------
-        #  # adding UR10_main_cover for pick and place
-        # add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10_main_cover")
-        # gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/Cover_Gripper/Cover_Gripper.usd"
-        # add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_main_cover/ee_link")
-        # gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_main_cover/ee_link", translate=0.1611, direction="x")
-        # self.ur10_main_cover = scene.add(
-        #     SingleManipulator(prim_path="/World/UR10_main_cover", name="my_ur10_main_cover", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-17.73638,-17.06779, 0.81965]), orientation=np.array([0.70711, 0, 0, -0.70711]), scale=np.array([1,1,1]))
-        # )
-        # self.ur10_main_cover.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+        # main and lower cover task assembly --------------------------------------------------
+         # adding UR10_main_cover for pick and place
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10_main_cover")
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/Cover_Gripper/Cover_Gripper.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_main_cover/ee_link")
+        gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_main_cover/ee_link", translate=0.1611, direction="x")
+        self.ur10_main_cover = scene.add(
+            SingleManipulator(prim_path="/World/UR10_main_cover", name="my_ur10_main_cover", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-17.73638-11.83808,-17.06779, 0.81965]), orientation=np.array([0.70711, 0, 0, -0.70711]), scale=np.array([1,1,1]))
+        )
+        self.ur10_main_cover.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
 
-        # # adding UR10_lower_cover for pick and place
-        # add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10_lower_cover")
-        # gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/RG2_v2/RG2_v2.usd"
-        # add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_lower_cover/ee_link")
-        # gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_lower_cover/ee_link", translate=0.1611, direction="x")
-        # self.ur10_lower_cover = scene.add(
-        #     SingleManipulator(prim_path="/World/UR10_lower_cover", name="my_ur10_lower_cover", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-14.28725, -16.26194, 0.24133]), orientation=np.array([1,0,0,0]), scale=np.array([1,1,1]))
-        # )
-        # self.ur10_lower_cover.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+        # adding UR10_lower_cover for pick and place
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10_lower_cover")
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/RG2_v2/RG2_v2.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_lower_cover/ee_link")
+        gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_lower_cover/ee_link", translate=0, direction="x")
+        self.ur10_lower_cover = scene.add(
+            SingleManipulator(prim_path="/World/UR10_lower_cover", name="my_ur10_lower_cover", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-26.05908, -16.25914, 0.24133]), orientation=np.array([1,0,0,0]), scale=np.array([1,1,1]))
+        )
+        self.ur10_lower_cover.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
 
-        # # adding UR10_lower_cover_01 for pick and place
-        # add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10_lower_cover_01")
-        # gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/RG2_v2/RG2_v2.usd"
-        # add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_lower_cover_01/ee_link")
-        # gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_lower_cover_01/ee_link", translate=0.1611, direction="x")
-        # self.ur10_lower_cover_01 = scene.add(
-        #     SingleManipulator(prim_path="/World/UR10_lower_cover_01", name="my_ur10_lower_cover_01", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-14.28725, -18.32192, 0.24133]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
-        # )
-        # self.ur10_lower_cover_01.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+        # adding UR10_lower_cover_01 for pick and place
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10_lower_cover_01")
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/RG2_v2/RG2_v2.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_lower_cover_01/ee_link")
+        gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_lower_cover_01/ee_link", translate=0, direction="x")
+        self.ur10_lower_cover_01 = scene.add(
+            SingleManipulator(prim_path="/World/UR10_lower_cover_01", name="my_ur10_lower_cover_01", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-26.05908, -18.31912, 0.24133]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
+        )
+        self.ur10_lower_cover_01.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
 
-        # # adding UR10_lower_cover for screwing in part
-        # add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/Screw_driving_UR10_lower_cover")
-        # gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/screw_driver_link/screw_driver_link.usd"
-        # add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10_lower_cover/ee_link")
-        # screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10_lower_cover/ee_link", translate=0, direction="x")
-        # self.screw_ur10_lower_cover = scene.add(
-        #     SingleManipulator(prim_path="/World/Screw_driving_UR10_lower_cover", name="my_screw_ur10_lower_cover", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-15.71653, -16.26185, 0.24133]), orientation=np.array([1,0,0,0]), scale=np.array([1,1,1]))
-        # )
-        # self.screw_ur10_lower_cover.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+        # adding UR10_lower_cover for screwing in part
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/Screw_driving_UR10_lower_cover")
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/screw_driver_link/screw_driver_link.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10_lower_cover/ee_link")
+        screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10_lower_cover/ee_link", translate=0, direction="x")
+        self.screw_ur10_lower_cover = scene.add(
+            SingleManipulator(prim_path="/World/Screw_driving_UR10_lower_cover", name="my_screw_ur10_lower_cover", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-27.48836, -16.25905, 0.24133]), orientation=np.array([1,0,0,0]), scale=np.array([1,1,1]))
+        )
+        self.screw_ur10_lower_cover.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
 
-        # # adding UR10_lower_cover_01 for screwing in part
-        # add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/Screw_driving_UR10_lower_cover_01")
-        # gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/screw_driver_link/screw_driver_link.usd"
-        # add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10_lower_cover_01/ee_link")
-        # screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10_lower_cover_01/ee_link", translate=0, direction="x")
-        # self.screw_ur10_lower_cover_01 = scene.add(
-        #     SingleManipulator(prim_path="/World/Screw_driving_UR10_lower_cover_01", name="my_screw_ur10_lower_cover_01", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-15.7071, -18.31962, 0.24133]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
-        # )
-        # self.screw_ur10_lower_cover_01.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+        # adding UR10_lower_cover_01 for screwing in part
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/Screw_driving_UR10_lower_cover_01")
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/screw_driver_link/screw_driver_link.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10_lower_cover_01/ee_link")
+        screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10_lower_cover_01/ee_link", translate=0, direction="x")
+        self.screw_ur10_lower_cover_01 = scene.add(
+            SingleManipulator(prim_path="/World/Screw_driving_UR10_lower_cover_01", name="my_screw_ur10_lower_cover_01", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-27.47893, -18.31682, 0.24133]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
+        )
+        self.screw_ur10_lower_cover_01.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
 
         # # handle task assembly --------------------------------------------------
         # # adding UR10_handle for pick and place
@@ -390,7 +390,7 @@ class AssemblyTask(BaseTask):
         # # gripper_usd = assets_root_path + "/Isaac/Robots/UR10_handle/Props/short_gripper.usd"
         # gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/RG2_v2/RG2_v2.usd"
         # add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_handle/ee_link")
-        # gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_handle/ee_link", translate=0.1611, direction="x")
+        # gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_handle/ee_link", translate=0, direction="x")
         # self.ur10_handle = scene.add(
         #     SingleManipulator(prim_path="/World/UR10_handle", name="my_ur10_handle", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-27.1031, 4.48605, 0.24168]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
         # )
@@ -424,7 +424,7 @@ class AssemblyTask(BaseTask):
         # # gripper_usd = assets_root_path + "/Isaac/Robots/UR10_light/Props/short_gripper.usd"
         # gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/RG2_v2/RG2_v2.usd"
         # add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_light/ee_link")
-        # gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_light/ee_link", translate=0.1611, direction="x")
+        # gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_light/ee_link", translate=0, direction="x")
         # self.ur10_light = scene.add(
         #     SingleManipulator(prim_path="/World/UR10_light", name="my_ur10_light", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-27.1031, 4.48605, 0.24168]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
         # )
@@ -476,9 +476,9 @@ class AssemblyTask(BaseTask):
         current_joint_positions_ur10_wheel_01 = self.ur10_wheel_01.get_joint_positions()
 
         # current_eb_position_lower_cover, current_eb_orientation_lower_cover = self.lower_cover_bringer.get_world_pose()
-        # current_joint_positions_ur10_lower_cover = self.ur10_lower_cover.get_joint_positions()
-        # current_joint_positions_ur10_main_cover = self.ur10_main_cover.get_joint_positions()
-        # current_joint_positions_ur10_lower_cover_01 = self.ur10_lower_cover_01.get_joint_positions()
+        current_joint_positions_ur10_lower_cover = self.ur10_lower_cover.get_joint_positions()
+        current_joint_positions_ur10_main_cover = self.ur10_main_cover.get_joint_positions()
+        current_joint_positions_ur10_lower_cover_01 = self.ur10_lower_cover_01.get_joint_positions()
 
         # current_eb_position_handle, current_eb_orientation_handle = self.handle_bringer.get_world_pose()
         # current_joint_positions_ur10_handle = self.ur10_handle.get_joint_positions()
@@ -546,21 +546,21 @@ class AssemblyTask(BaseTask):
             self.screw_ur10_wheel_01.name: {
                 "joint_positions": current_joint_positions_ur10_wheel_01,
             },
-            # self.ur10_lower_cover.name: {
-            #     "joint_positions": current_joint_positions_ur10_lower_cover,
-            # },
-            # self.screw_ur10_lower_cover.name: {
-            #     "joint_positions": current_joint_positions_ur10_lower_cover,
-            # },
-            # self.ur10_lower_cover_01.name: {
-            #     "joint_positions": current_joint_positions_ur10_lower_cover_01,
-            # },
-            # self.screw_ur10_lower_cover_01.name: {
-            #     "joint_positions": current_joint_positions_ur10_lower_cover_01,
-            # },
-            # self.ur10_main_cover.name: {
-            #     "joint_positions": current_joint_positions_ur10_main_cover,
-            # },
+            self.ur10_lower_cover.name: {
+                "joint_positions": current_joint_positions_ur10_lower_cover,
+            },
+            self.screw_ur10_lower_cover.name: {
+                "joint_positions": current_joint_positions_ur10_lower_cover,
+            },
+            self.ur10_lower_cover_01.name: {
+                "joint_positions": current_joint_positions_ur10_lower_cover_01,
+            },
+            self.screw_ur10_lower_cover_01.name: {
+                "joint_positions": current_joint_positions_ur10_lower_cover_01,
+            },
+            self.ur10_main_cover.name: {
+                "joint_positions": current_joint_positions_ur10_main_cover,
+            },
             # self.ur10_handle.name: {
             #     "joint_positions": current_joint_positions_ur10_handle,
             # },
@@ -610,12 +610,12 @@ class AssemblyTask(BaseTask):
         params_representation["screw_arm_wheel_01"] = {"value": self.screw_ur10_wheel_01.name, "modifiable": False}
         params_representation["eb_name_wheel"] = {"value": self.wheel_bringer.name, "modifiable": False}
         
-        # # lower_cover task
-        # params_representation["arm_name_main_cover"] = {"value": self.ur10_main_cover.name, "modifiable": False}
-        # params_representation["arm_name_lower_cover"] = {"value": self.ur10_lower_cover.name, "modifiable": False}
-        # params_representation["screw_arm_lower_cover"] = {"value": self.screw_ur10_lower_cover.name, "modifiable": False}
-        # params_representation["arm_name_lower_cover_01"] = {"value": self.ur10_lower_cover_01.name, "modifiable": False}
-        # params_representation["screw_arm_lower_cover_01"] = {"value": self.screw_ur10_lower_cover_01.name, "modifiable": False}
+        # lower_cover task
+        params_representation["arm_name_main_cover"] = {"value": self.ur10_main_cover.name, "modifiable": False}
+        params_representation["arm_name_lower_cover"] = {"value": self.ur10_lower_cover.name, "modifiable": False}
+        params_representation["screw_arm_lower_cover"] = {"value": self.screw_ur10_lower_cover.name, "modifiable": False}
+        params_representation["arm_name_lower_cover_01"] = {"value": self.ur10_lower_cover_01.name, "modifiable": False}
+        params_representation["screw_arm_lower_cover_01"] = {"value": self.screw_ur10_lower_cover_01.name, "modifiable": False}
         # params_representation["eb_name_lower_cover"] = {"value": self.lower_cover_bringer.name, "modifiable": False}
         
         # # handle task
