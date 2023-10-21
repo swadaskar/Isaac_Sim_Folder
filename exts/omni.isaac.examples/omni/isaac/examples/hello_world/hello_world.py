@@ -107,7 +107,7 @@ class HelloWorld(BaseSample):
         print("inside setup_scene", self.motion_task_counter)
         # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201"])
         # self.schedule = deque(["501", "505","553","573","554","574"])
-        self.schedule = deque(["901"])
+        self.schedule = deque(["901","951","971"])
         self.right_side = self.left_side = False
         # "6":"wait",
         #     "5":"move_to_suspension_cell",
@@ -313,7 +313,6 @@ class HelloWorld(BaseSample):
         self.handle_bringer = self._world.scene.get_object(task_params["eb_name_handle"]["value"])
         
         self.add_part_custom("World/Environment","handle", "handle", np.array([0.001,0.001,0.001]), np.array([-29.70213, -7.25934, 1.08875]), np.array([0, 0.70711, 0.70711, 0]))
-        # self.add_part_custom("World/Environment","handle", "handle_02", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
 
         # Initialize our controller after load and the first reset
 
@@ -326,23 +325,26 @@ class HelloWorld(BaseSample):
         self.articulation_controller_handle = self.ur10_handle.get_articulation_controller()
         self.screw_articulation_controller_handle = self.screw_ur10_handle.get_articulation_controller()
 
-        # # light cell set up ---------------------------------------------------------------------------------
-        # # bring in moving platforms 
-        # self.light_bringer = self._world.scene.get_object(task_params["eb_name_light"]["value"])
+        # light cell set up ---------------------------------------------------------------------------------
+        # bring in moving platforms 
+        self.light_bringer = self._world.scene.get_object(task_params["eb_name_light"]["value"])
         
-        # self.add_part_custom("World/Environment","light", "light_01", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
-        # self.add_part_custom("World/Environment","light", "light_02", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","FFrontLightAssembly", "light_01", np.array([0.001,0.001,0.001]), np.array([-18.07685, -6.94868, -0.71703]), np.array([0.28511, -0.28511, -0.64708, -0.64708]))
+        self.add_part_custom("World/Environment","FFrontLightAssembly", "light_02", np.array([0.001,0.001,0.001]), np.array([-18.07685, -7.14276, -0.71703]), np.array([0.28511, -0.28511, -0.64708, -0.64708]))
+        self.add_part_custom("World/Environment","FFrontLightAssembly", "light_03", np.array([0.001,0.001,0.001]), np.array([-18.07685, -7.35866, -0.71703]), np.array([0.28511, -0.28511, -0.64708, -0.64708]))
 
-        # # Initialize our controller after load and the first reset
+        self.add_part_custom("mock_robot/platform","handle", "xhandle", np.array([0.001,0.001,0.001]), np.array([0.82439, 0.44736, 1.16068]), np.array([0.20721, 0.68156, -0.67309, -0.19874]))
+        self.add_part_custom("mock_robot/platform","main_cover", "xmain_cover", np.array([0.001,0.001,0.001]), np.array([-0.81508, 0.27909, 0.19789]), np.array([0.70711, 0.70711, 0, 0]))
+        # Initialize our controller after load and the first reset
 
-        # self.ur10_light = self._world.scene.get_object(task_params["arm_name_light"]["value"])
-        # self.screw_ur10_light = self._world.scene.get_object(task_params["screw_arm_light"]["value"])
+        self.ur10_light = self._world.scene.get_object(task_params["arm_name_light"]["value"])
+        self.screw_ur10_light = self._world.scene.get_object(task_params["screw_arm_light"]["value"])
 
-        # self.my_controller_light = KinematicsSolver(self.ur10_light, attach_gripper=True)
-        # self.screw_my_controller_light = KinematicsSolver(self.screw_ur10_light, attach_gripper=True)
+        self.my_controller_light = KinematicsSolver(self.ur10_light, attach_gripper=True)
+        self.screw_my_controller_light = KinematicsSolver(self.screw_ur10_light, attach_gripper=True)
 
-        # self.articulation_controller_light = self.ur10_light.get_articulation_controller()
-        # self.screw_articulation_controller_light = self.screw_ur10_light.get_articulation_controller()
+        self.articulation_controller_light = self.ur10_light.get_articulation_controller()
+        self.screw_articulation_controller_light = self.screw_ur10_light.get_articulation_controller()
         return
 
     async def setup_post_reset(self):
@@ -1527,10 +1529,10 @@ class HelloWorld(BaseSample):
         
         if self.motion_task_counter==6 and not self.bool_done[27]:
             self.bool_done[27] = True
-            print("Done placing right lower cover")
+            print("Done placing handle")
             self.remove_part("World/UR10_handle/ee_link", "qhandle")
             self.add_part_custom("mock_robot/platform","handle", "xhandle", np.array([0.001,0.001,0.001]), np.array([0.82439, 0.44736, 1.16068]), np.array([0.20721, 0.68156, -0.67309, -0.19874]))
-
+            
         if self.motion_task_counter==8:
             self.motion_task_counter=0
             return True
@@ -1549,9 +1551,6 @@ class HelloWorld(BaseSample):
                        {"index":7, "position": np.array([-0.77943, -0.21316, -0.16+0.4263]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-25.91611, -6.77978, 0.66945]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
                        {"index":8, "position": np.array([-0.77943, -0.21316, -0.16+0.4263+0.2]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-25.91611, -6.77978, 0.66945+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
 
-                    #    {"index":9, "position": np.array([-0.00975, 0.77293, -0.16+0.42757+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-27.46819, -19.08897, 0.66977+0.2]), "goal_orientation":np.array([0, -0.70711, 0, 0.70711])},
-                    #    {"index":10, "position": np.array([-0.71345, -0.63679, -0.16+0.26949+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-26.76467, -17.681, 0.51169+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-
                        {"index":9, "position": np.array([0.83599, -0.02487, -0.16+0.7457+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-27.53249, -6.96836, 0.98886+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
                        {"index":10, "position": np.array([0.83599, -0.02487, -0.16+0.7457]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-27.53249, -6.96836, 0.98886]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
                        {"index":11, "position": np.array([0.83599, -0.02487, -0.16+0.7457+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-27.53249, -6.96836, 0.98886+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
@@ -1559,7 +1558,7 @@ class HelloWorld(BaseSample):
                        {"index":12, "position": np.array([-0.77943, -0.21316, -0.16+0.4263+0.2]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-25.91611, -6.77978, 0.66945+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])}]
         self.do_screw_driving(motion_plan,"_handle")
         if self.motion_task_counter==13:
-            print("Done screwing right lower cover")
+            print("Done screwing handle")
             self.motion_task_counter=0
             return True
         return False
@@ -1575,6 +1574,80 @@ class HelloWorld(BaseSample):
             return True
         return False
 
+    def arm_place_light(self):
+        motion_plan = [{"index":0, "position": np.array([0.5517, 0.68287, -0.16+0.34371+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.38395, -7.23584, 0.58583+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":1, "position": np.array([0.5517, 0.68287, -0.16+0.34371]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.38395, -7.23584, 0.58583]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":2, "position": np.array([0.5517, 0.68287, -0.16+0.34371+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.38395, -7.23584, 0.58583+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+
+                       {"index":3, "position": np.array([-0.57726, -0.00505, -0.16+0.65911]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-17.25466, -6.54783, 0.90123]), "goal_orientation":np.array([0, -0.70711, 0, 0.70711])},
+
+                       {"index":4, "position": np.array([0.32558+0.12, -0.65596, -0.16+0.65947]), "orientation": np.array([0.65861, -0.65861, 0.25736, 0.25736]), "goal_position":np.array([-18.15724, -5.8969, 0.90133]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       {"index":5, "position": np.array([0.36852+0.12, -0.65596, -0.16+0.61986]), "orientation": np.array([0.65861, -0.65861, 0.25736, 0.25736]), "goal_position":np.array([-18.2, -5.8969, 0.86172]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       {"index":6, "position": np.array([0.32558+0.12, -0.65596, -0.16+0.65947]), "orientation": np.array([0.65861, -0.65861, 0.25736, 0.25736]), "goal_position":np.array([-18.15724, -5.8969, 0.90133]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+
+                       {"index":7, "position": np.array([0.5517, 0.68287, -0.16+0.34371+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.38395, -7.23584, 0.58583+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])}]
+        self.move_ur10(motion_plan, "_light")
+
+        if self.motion_task_counter==2 and not self.bool_done[28]:
+            self.bool_done[28] = True
+            self.remove_part("World/Environment", "light_03")
+            self.add_part_custom("World/UR10_light/ee_link","FFrontLightAssembly", "qlight", np.array([0.001,0.001,0.001]), np.array([1.30826, -0.30485, -0.12023]), np.array([0.36036, -0.00194, 0.00463, 0.9328]))
+        
+        if self.motion_task_counter==6 and not self.bool_done[29]:
+            self.bool_done[29] = True
+            print("Done placing light")
+            self.remove_part("World/UR10_light/ee_link", "qlight")
+            self.add_part_custom("mock_robot/platform","FFrontLightAssembly", "xlight", np.array([0.001,0.001,0.001]), np.array([0.8669, -0.10851, 1.76492]), np.array([0.47905, -0.49076, 0.50734, 0.52179]))
+
+        if self.motion_task_counter==8:
+            self.motion_task_counter=0
+            return True
+        return False
+
+    def screw_light(self):
+        # motion plan for normal facing UR10
+        motion_plan = [{"index":0, "position": np.array([0.03932, -0.71305, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.06987, -3.9, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       {"index":1, "position": np.array([0.03932, -0.71305, -0.16+0.42576]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.06987, -3.9, 0.66799]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       {"index":2, "position": np.array([0.03932, -0.71305, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.06987, -3.9, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       
+                       {"index":3, "position": np.array([0.28884, 1.24034, -0.16+0.59452+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.31939, -5.85404, 0.83674+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":4, "position": np.array([0.28884, 1.24034, -0.16+0.59452]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.31939, -5.85404, 0.83674]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":5, "position": np.array([0.28884, 1.24034, -0.16+0.59452+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.31939, -5.85404, 0.83674+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+
+                       {"index":6, "position": np.array([0.21655, -0.71124, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.24711, -3.90246, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       {"index":7, "position": np.array([0.21655, -0.71124, -0.16+0.42576]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.24711, -3.90246, 0.66799]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       {"index":8, "position": np.array([0.21655, -0.71124, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.24711, -3.90246, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+               
+                       {"index":9, "position": np.array([0.28466, 1.33127, -0.16+0.59452+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.31522, -5.94497, 0.83674+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":10, "position": np.array([0.28466, 1.33127, -0.16+0.59452+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.31522, -5.94497, 0.83674+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":11, "position": np.array([0.28466, 1.33127, -0.16+0.59452+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.31522, -5.94497, 0.83674+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+
+                       {"index":12, "position": np.array([0.03932, -0.71305, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.06987, -3.9, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])}]
+        
+        # # motion plan for tilted screw UR10 
+        # motion_plan = [{"index":0, "position": np.array([-0.74125, -0.03855, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.07058, -4.37811, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+        #                {"index":1, "position": np.array([-0.74125, -0.03855, -0.16+0.42576]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.07058, -4.37811, 0.66799]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+        #                {"index":2, "position": np.array([-0.74125, -0.03855, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.07058, -4.37811, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+
+        #                {"index":3, "position": np.array([0.73967, -0.18831, -0.16+0.68824+0.2]), "orientation": np.array([0.5, 0.5, 0.5 ,-0.5]), "goal_position":np.array([-18.22018, -5.85917, 0.92937+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+        #                {"index":4, "position": np.array([0.73967, -0.18831, -0.16+0.68824]), "orientation": np.array([0.5, 0.5, 0.5 ,-0.5]), "goal_position":np.array([-18.22018, -5.85917, 0.92937]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+        #                {"index":5, "position": np.array([0.73967, -0.18831, -0.16+0.68824+0.2]), "orientation": np.array([0.5, 0.5, 0.5 ,-0.5]), "goal_position":np.array([-18.22018, -5.85917, 0.92937+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                   
+        #                {"index":6, "position": np.array([-0.73795, -0.21536, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.24739, -4.38141, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+        #                {"index":7, "position": np.array([-0.73795, -0.21536, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.24739, -4.38141, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+        #                {"index":8, "position": np.array([-0.73795, -0.21536, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.24739, -4.38141, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+
+        #                {"index":9, "position": np.array([0.81841, -0.18831, -0.16+0.68824+0.2]), "orientation": np.array([0.5, 0.5, 0.5 ,-0.5]), "goal_position":np.array([-18.22018, -5.9379, 0.92937+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+        #                {"index":10, "position": np.array([0.81841, -0.18831, -0.16+0.68824]), "orientation": np.array([0.5, 0.5, 0.5 ,-0.5]), "goal_position":np.array([-18.22018, -5.9379, 0.92937]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+        #                {"index":11, "position": np.array([0.81841, -0.18831, -0.16+0.68824+0.2]), "orientation": np.array([0.5, 0.5, 0.5 ,-0.5]), "goal_position":np.array([-18.22018, -5.9379, 0.92937+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+
+        #                {"index":12, "position": np.array([-0.74125, -0.03855, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.07058, -4.37811, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])}]
+        self.do_screw_driving(motion_plan,"_light")
+        if self.motion_task_counter==13:
+            print("Done screwing light")
+            self.motion_task_counter=0
+            return True
+        return False
 
     def send_robot_actions(self, step_size):
         current_observations = self._world.get_observations()
@@ -1639,8 +1712,7 @@ class HelloWorld(BaseSample):
 
             "901":"move_to_light_cell",
             "951":"arm_place_light",
-            "971":"screw_light", 
-            "981":"arm_remove_light",
+            "971":"screw_light",
             "902":"wait"
         }
 

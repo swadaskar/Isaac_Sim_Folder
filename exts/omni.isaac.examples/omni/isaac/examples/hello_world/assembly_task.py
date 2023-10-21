@@ -419,39 +419,39 @@ class AssemblyTask(BaseTask):
             )
         )
 
-        # # light task assembly --------------------------------------------------
-        # # adding UR10_light for pick and place
-        # add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10_light")
-        # # gripper_usd = assets_root_path + "/Isaac/Robots/UR10_light/Props/short_gripper.usd"
-        # gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/RG2_v2/RG2_v2.usd"
-        # add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_light/ee_link")
-        # gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_light/ee_link", translate=0, direction="x")
-        # self.ur10_light = scene.add(
-        #     SingleManipulator(prim_path="/World/UR10_light", name="my_ur10_light", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-27.1031, 4.48605, 0.24168]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
-        # )
-        # self.ur10_light.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+        # light task assembly --------------------------------------------------
+        # adding UR10_light for pick and place
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/UR10_light")
+        # gripper_usd = assets_root_path + "/Isaac/Robots/UR10_light/Props/short_gripper.usd"
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/RG2_v2/RG2_v2.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/UR10_light/ee_link")
+        gripper = SurfaceGripper(end_effector_prim_path="/World/UR10_light/ee_link", translate=0, direction="x")
+        self.ur10_light = scene.add(
+            SingleManipulator(prim_path="/World/UR10_light", name="my_ur10_light", end_effector_prim_name="ee_link", gripper=gripper, translation = np.array([-17.83209, -6.55292, 0.24168]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
+        )
+        self.ur10_light.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
 
-        # # adding UR10_light for screwing in part
-        # add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/Screw_driving_UR10_light")
-        # gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/screw_driver_link/screw_driver_link.usd"
-        # add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10_light/ee_link")
-        # screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10_light/ee_link", translate=0, direction="x")
-        # self.screw_ur10_light = scene.add(
-        #     SingleManipulator(prim_path="/World/Screw_driving_UR10_light", name="my_screw_ur10_light", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-27.29981, 6.5455, 0.24168]), orientation=np.array([0, 0, 0, 1]), scale=np.array([1,1,1]))
-        # )
-        # self.screw_ur10_light.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
+        # adding UR10_light for screwing in part
+        add_reference_to_stage(usd_path=robot_arm_path, prim_path="/World/Screw_driving_UR10_light")
+        gripper_usd = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/robot_tools/screw_driver_link/screw_driver_link.usd"
+        add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10_light/ee_link")
+        screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10_light/ee_link", translate=0, direction="x")
+        self.screw_ur10_light = scene.add(
+            SingleManipulator(prim_path="/World/Screw_driving_UR10_light", name="my_screw_ur10_light", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-18.03193, -5.1195, 0.24168]), orientation=np.array([0.70711, 0, 0, -0.70711]), scale=np.array([1,1,1]))
+        )
+        self.screw_ur10_light.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
 
-        # self.light_bringer = scene.add(
-        #     WheeledRobot(
-        #         prim_path="/light_bringer",
-        #         name="light_bringer",
-        #         wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
-        #         create_robot=True,
-        #         usd_path=small_robot_asset_path,
-        #         position=np.array([-30.518, 3.516, 0.035]),
-        #         orientation=np.array([1,0,0,0]),
-        #     )
-        # )
+        self.light_bringer = scene.add(
+            WheeledRobot(
+                prim_path="/light_bringer",
+                name="light_bringer",
+                wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
+                create_robot=True,
+                usd_path=small_robot_asset_path,
+                position=np.array([-18.20414, -2.99376, 0.035]),
+                orientation=np.array([1,0,0,0]),
+            )
+        )
 
         return
 
@@ -484,8 +484,8 @@ class AssemblyTask(BaseTask):
         current_eb_position_handle, current_eb_orientation_handle = self.handle_bringer.get_world_pose()
         current_joint_positions_ur10_handle = self.ur10_handle.get_joint_positions()
 
-        # current_eb_position_light, current_eb_orientation_light = self.light_bringer.get_world_pose()
-        # current_joint_positions_ur10_light = self.ur10_light.get_joint_positions()
+        current_eb_position_light, current_eb_orientation_light = self.light_bringer.get_world_pose()
+        current_joint_positions_ur10_light = self.ur10_light.get_joint_positions()
 
         observations= {
             "task_event": self._task_event,
@@ -568,12 +568,12 @@ class AssemblyTask(BaseTask):
             self.screw_ur10_handle.name: {
                 "joint_positions": current_joint_positions_ur10_handle,
             },
-            # self.ur10_light.name: {
-            #     "joint_positions": current_joint_positions_ur10_light,
-            # },
-            # self.screw_ur10_light.name: {
-            #     "joint_positions": current_joint_positions_ur10_light,
-            # }
+            self.ur10_light.name: {
+                "joint_positions": current_joint_positions_ur10_light,
+            },
+            self.screw_ur10_light.name: {
+                "joint_positions": current_joint_positions_ur10_light,
+            }
         }
         return observations
 
@@ -624,10 +624,10 @@ class AssemblyTask(BaseTask):
         params_representation["screw_arm_handle"] = {"value": self.screw_ur10_handle.name, "modifiable": False}
         params_representation["eb_name_handle"] = {"value": self.handle_bringer.name, "modifiable": False}
 
-        # # front light task
-        # params_representation["arm_name_light"] = {"value": self.ur10_light.name, "modifiable": False}
-        # params_representation["screw_arm_light"] = {"value": self.screw_ur10_light.name, "modifiable": False}
-        # params_representation["eb_name_light"] = {"value": self.light_bringer.name, "modifiable": False}
+        # front light task
+        params_representation["arm_name_light"] = {"value": self.ur10_light.name, "modifiable": False}
+        params_representation["screw_arm_light"] = {"value": self.screw_ur10_light.name, "modifiable": False}
+        params_representation["eb_name_light"] = {"value": self.light_bringer.name, "modifiable": False}
 
         
         return params_representation
