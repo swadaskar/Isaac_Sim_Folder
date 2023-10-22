@@ -437,7 +437,7 @@ class AssemblyTask(BaseTask):
         add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10_light/ee_link")
         screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10_light/ee_link", translate=0, direction="x")
         self.screw_ur10_light = scene.add(
-            SingleManipulator(prim_path="/World/Screw_driving_UR10_light", name="my_screw_ur10_light", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-18.03193, -5.1195, 0.24168]), orientation=np.array([0.70711, 0, 0, -0.70711]), scale=np.array([1,1,1]))
+            SingleManipulator(prim_path="/World/Screw_driving_UR10_light", name="my_screw_ur10_light", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-18.03193, -5.1195, 0.24168]), orientation=np.array([0,0,0,1]), scale=np.array([1,1,1]))
         )
         self.screw_ur10_light.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
 
