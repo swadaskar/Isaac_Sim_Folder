@@ -107,7 +107,9 @@ class HelloWorld(BaseSample):
         print("inside setup_scene", self.motion_task_counter)
         # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201"])
         # self.schedule = deque(["501", "505","553","573","554","574"])
-        self.schedule = deque(["901","951","971"])
+        # self.schedule = deque(["901","951","971"])
+        self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","881","802","901","951","971","902"])
+        # self.schedule = deque(["1","71","2","72","3","4","6","5","102","301","302","201","202","401","402","501","505","502","701","721","703","801","802","901","902"])
         self.right_side = self.left_side = False
         # "6":"wait",
         #     "5":"move_to_suspension_cell",
@@ -188,8 +190,8 @@ class HelloWorld(BaseSample):
         self.add_part_custom("World/Environment","fuel", "fuel_03", np.array([0.001,0.001,0.001]), np.array([-6.54859, -15.46717, 0.41958]), np.array([0, 0, -0.70711, -0.70711]))
         self.add_part_custom("World/Environment","fuel", "fuel_04", np.array([0.001,0.001,0.001]), np.array([-6.14395, -15.47402, 0.41958]), np.array([0, 0, -0.70711, -0.70711]))
 
-        self.add_part_custom("mock_robot/platform","FSuspensionBack", "xFSuspensionBack", np.array([0.001,0.001,0.001]), np.array([-0.90761, 0.03096, 0.69056]), np.array([0.48732, -0.51946, 0.50085, -0.49176]))
-        self.add_part_custom("mock_robot/platform","engine_no_rigid", "engine", np.array([0.001,0.001,0.001]), np.array([-0.16041, -0.00551, 0.46581]), np.array([0.98404, -0.00148, -0.17792, -0.00274]))
+        # self.add_part_custom("mock_robot/platform","FSuspensionBack", "xFSuspensionBack", np.array([0.001,0.001,0.001]), np.array([-0.90761, 0.03096, 0.69056]), np.array([0.48732, -0.51946, 0.50085, -0.49176]))
+        # self.add_part_custom("mock_robot/platform","engine_no_rigid", "engine", np.array([0.001,0.001,0.001]), np.array([-0.16041, -0.00551, 0.46581]), np.array([0.98404, -0.00148, -0.17792, -0.00274]))
         # self.add_part_custom("mock_robot/platform","fuel", "xfuel", np.array([0.001,0.001,0.001]), np.array([0.11281, -0.08612, 0.59517]), np.array([0, 0, -0.70711, -0.70711]))
         # Initialize our controller after load and the first reset
 
@@ -333,8 +335,8 @@ class HelloWorld(BaseSample):
         self.add_part_custom("World/Environment","FFrontLightAssembly", "light_02", np.array([0.001,0.001,0.001]), np.array([-18.07685, -7.14276, -0.71703]), np.array([0.28511, -0.28511, -0.64708, -0.64708]))
         self.add_part_custom("World/Environment","FFrontLightAssembly", "light_03", np.array([0.001,0.001,0.001]), np.array([-18.07685, -7.35866, -0.71703]), np.array([0.28511, -0.28511, -0.64708, -0.64708]))
 
-        self.add_part_custom("mock_robot/platform","handle", "xhandle", np.array([0.001,0.001,0.001]), np.array([0.82439, 0.44736, 1.16068]), np.array([0.20721, 0.68156, -0.67309, -0.19874]))
-        self.add_part_custom("mock_robot/platform","main_cover", "xmain_cover", np.array([0.001,0.001,0.001]), np.array([-0.81508, 0.27909, 0.19789]), np.array([0.70711, 0.70711, 0, 0]))
+        # self.add_part_custom("mock_robot/platform","handle", "xhandle", np.array([0.001,0.001,0.001]), np.array([0.82439, 0.44736, 1.16068]), np.array([0.20721, 0.68156, -0.67309, -0.19874]))
+        # self.add_part_custom("mock_robot/platform","main_cover", "xmain_cover", np.array([0.001,0.001,0.001]), np.array([-0.81508, 0.27909, 0.19789]), np.array([0.70711, 0.70711, 0, 0]))
         # Initialize our controller after load and the first reset
 
         self.ur10_light = self._world.scene.get_object(task_params["arm_name_light"]["value"])
@@ -708,7 +710,7 @@ class HelloWorld(BaseSample):
     def move_to_fuel_cell(self):
         print(self.path_plan_counter)
         path_plan = [["translate", [-5.95, 0, True]],
-                     ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
+                     ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, False]],
                      ["translate", [-15.945, 1, True]]]
         self.move_mp(path_plan)
         if len(path_plan) == self.path_plan_counter:
@@ -725,8 +727,8 @@ class HelloWorld(BaseSample):
 
         self.move_ur10(motion_plan, "_fuel")
 
-        if self.motion_task_counter==2 and not self.bool_done[3]:
-            self.bool_done[3] = True
+        if self.motion_task_counter==2 and not self.bool_done[4]:
+            self.bool_done[4] = True
             self.remove_part("World/Environment", "fuel_01")
             self.add_part_custom("World/UR10_fuel/ee_link","fuel", "qfuel", np.array([0.001,0.001,0.001]), np.array([0.05467, -0.16886, 0.08908]), np.array([0.70711,0,0.70711,0]))
         
@@ -806,8 +808,8 @@ class HelloWorld(BaseSample):
 
                     #    {"index":3, "position": np.array([0.87593, -0.08943, 0.60328-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-17.42989, -16.24038, 0.8463]), "goal_orientation":np.array([0, -0.70711, 0, 0.70711])},
 
-                       {"index":3, "position": np.array([-0.15683+0.05, 0.85859, 0.57477+0.1-0.16]), "orientation": np.array([0.81202, 0, 0.58362, 0]), "goal_position":np.array([-16.39705, -17.18895, 0.81657+0.1]), "goal_orientation":np.array([0, -0.58362, 0, 0.81202])},
-                       {"index":4, "position": np.array([-0.15683+0.05, 0.85859, 0.57477-0.16]), "orientation": np.array([0.81202, 0, 0.58362, 0]), "goal_position":np.array([-16.39705, -17.18895, 0.81657]), "goal_orientation":np.array([0, -0.58362, 0, 0.81202])}]
+                       {"index":3, "position": np.array([-0.15683+0.05, 0.95185, 0.57477+0.1-0.16]), "orientation": np.array([0.81202, 0, 0.58362, 0]), "goal_position":np.array([-16.39705, -17.18895-0.09326, 0.81657+0.1]), "goal_orientation":np.array([0, -0.58362, 0, 0.81202])},
+                       {"index":4, "position": np.array([-0.15683+0.05, 0.95185, 0.57477-0.16]), "orientation": np.array([0.81202, 0, 0.58362, 0]), "goal_position":np.array([-16.39705, -17.18895-0.09326, 0.81657]), "goal_orientation":np.array([0, -0.58362, 0, 0.81202])}]
         self.move_ur10(motion_plan, "_battery")
 
         if self.motion_task_counter==2 and not self.bool_done[3]:
@@ -832,17 +834,17 @@ class HelloWorld(BaseSample):
                        {"index":2, "position": transform(np.array([-0.03593, 0.62489, 0.44932])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.3161, -18.79419, 0.69132]), "goal_orientation":np.array([0,0.70711,0,-0.70711])},
                        {"index":1, "position": transform(np.array([-0.03593, 0.62489, 0.44932+0.1])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.3161, -18.79419, 0.69132+0.1]), "goal_orientation":np.array([0,0.70711,0,-0.70711])},
 
-                       {"index":3, "position": transform(np.array([0.28749, -1.04157, 0.61049])), "orientation": np.array([0, 0.58727, 0, -0.80939]), "goal_position":np.array([-16.63905, -17.12807, 0.85257]), "goal_orientation":np.array([0.80939, 0, 0.58727, 0])},
-                       {"index":4, "position": transform(np.array([0.255, -1.04157, 0.53925])), "orientation": np.array([0, 0.58727, 0, -0.80939]), "goal_position":np.array([-16.60656, -17.12807, 0.78133]), "goal_orientation":np.array([0.80939, 0, 0.58727, 0])},
-                       {"index":5, "position": transform(np.array([0.28749, -1.04157, 0.61049])), "orientation": np.array([0, 0.58727, 0, -0.80939]), "goal_position":np.array([-16.63905, -17.12807, 0.85257]), "goal_orientation":np.array([0.80939, 0, 0.58727, 0])},
+                       {"index":3, "position": transform(np.array([0.28749, -1.04157+0.08784, 0.61049])), "orientation": np.array([0, 0.58727, 0, -0.80939]), "goal_position":np.array([-16.63905, -17.12807-0.08784, 0.85257]), "goal_orientation":np.array([0.80939, 0, 0.58727, 0])},
+                       {"index":4, "position": transform(np.array([0.255, -1.04157+0.08784, 0.53925])), "orientation": np.array([0, 0.58727, 0, -0.80939]), "goal_position":np.array([-16.60656, -17.12807-0.08784, 0.78133]), "goal_orientation":np.array([0.80939, 0, 0.58727, 0])},
+                       {"index":5, "position": transform(np.array([0.28749, -1.04157+0.08784, 0.61049])), "orientation": np.array([0, 0.58727, 0, -0.80939]), "goal_position":np.array([-16.63905, -17.12807-0.08784, 0.85257]), "goal_orientation":np.array([0.80939, 0, 0.58727, 0])},
                        
                        {"index":6, "position": transform(np.array([-0.21277, 0.62489, 0.44932+0.1])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.13927, -18.79419, 0.69132+0.1]), "goal_orientation":np.array([0,0.70711,0,-0.70711])},
                        {"index":7, "position": transform(np.array([-0.21277, 0.62489, 0.44932])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.13927, -18.79419, 0.69132]), "goal_orientation":np.array([0,0.70711,0,-0.70711])},
                        {"index":8, "position": transform(np.array([-0.21277, 0.62489, 0.44932+0.1])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.13927, -18.79419, 0.69132+0.1]), "goal_orientation":np.array([0,0.70711,0,-0.70711])},
 
-                       {"index":9, "position": transform(np.array([0.28749, -0.92175, 0.61049])), "orientation": np.array([0, 0.58727, 0, -0.80939]), "goal_position":np.array([-16.63905, -17.24789, 0.85257]), "goal_orientation":np.array([0.80939, 0, 0.58727, 0])},
-                       {"index":10, "position": transform(np.array([0.255, -0.92175, 0.53925])), "orientation": np.array([0, 0.58727, 0, -0.80939]), "goal_position":np.array([-16.60656, -17.24789, 0.78133]), "goal_orientation":np.array([0.80939, 0, 0.58727, 0])},
-                       {"index":11, "position": transform(np.array([0.28749, -0.92175, 0.61049])), "orientation": np.array([0, 0.58727, 0, -0.80939]), "goal_position":np.array([-16.63905, -17.24789, 0.85257]), "goal_orientation":np.array([0.80939, 0, 0.58727, 0])},
+                       {"index":9, "position": transform(np.array([0.28749, -0.92175+0.08784, 0.61049])), "orientation": np.array([0, 0.58727, 0, -0.80939]), "goal_position":np.array([-16.63905, -17.24789-0.08784, 0.85257]), "goal_orientation":np.array([0.80939, 0, 0.58727, 0])},
+                       {"index":10, "position": transform(np.array([0.255, -0.92175+0.08784, 0.53925])), "orientation": np.array([0, 0.58727, 0, -0.80939]), "goal_position":np.array([-16.60656, -17.24789-0.08784, 0.78133]), "goal_orientation":np.array([0.80939, 0, 0.58727, 0])},
+                       {"index":11, "position": transform(np.array([0.28749, -0.92175+0.08784, 0.61049])), "orientation": np.array([0, 0.58727, 0, -0.80939]), "goal_position":np.array([-16.63905, -17.24789-0.08784, 0.85257]), "goal_orientation":np.array([0.80939, 0, 0.58727, 0])},
                        
                        {"index":12, "position": transform(np.array([-0.21277, 0.62489, 0.44932+0.2])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.13927, -18.79419, 0.69132+0.2]), "goal_orientation":np.array([0,0.70711,0,-0.70711])}]
         self.do_screw_driving(motion_plan,"_battery")
@@ -853,7 +855,7 @@ class HelloWorld(BaseSample):
         return False
 
     def arm_remove_battery(self):
-        motion_plan = [{"index":0, "position": np.array([-0.15683+0.05, 0.85859, 0.57477+0.1-0.16]), "orientation": np.array([0.81202, 0, 0.58362, 0]), "goal_position":np.array([-16.39705, -17.18895, 0.81657+0.1]), "goal_orientation":np.array([0, -0.58362, 0, 0.81202])},
+        motion_plan = [ {"index":0, "position": np.array([-0.15683+0.05, 0.95185, 0.57477+0.1-0.16]), "orientation": np.array([0.81202, 0, 0.58362, 0]), "goal_position":np.array([-16.39705, -17.18895-0.09326, 0.81657+0.1]), "goal_orientation":np.array([0, -0.58362, 0, 0.81202])},
                        {"index":1, "position": np.array([0.03497, -0.67758, 0.82296]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-16.589,-15.6521,1.22562]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])}]
         self.move_ur10(motion_plan, "_battery")
         if self.motion_task_counter==2:
@@ -865,12 +867,13 @@ class HelloWorld(BaseSample):
     def move_to_trunk_cell(self):
         print(self.path_plan_counter)
         path_plan = [
-            # ["translate", [-23.49, 1, False]],
-            #          ["rotate", [np.array([0, 0, 0, -1]), 0.503, True]],
-            #          ["translate", [-35.47, 0, False]],
-            #          ["rotate", [np.array([0.70711, 0, 0, 0.70711]), 0.0042, True]],
-                     ["translate", [5, 1, False]],
-                     ["rotate", [np.array([1, 0, 0, 0]), 0.0042, True]],
+            ["translate", [-23.49, 1, False]],
+                     ["rotate", [np.array([0, 0, 0, -1]), 0.0042, True]],
+                     ["translate", [-35.47, 0, False]],
+                     ["rotate", [np.array([-0.70711, 0, 0, -0.70711]), 0.0042, True]],
+                    #  ["translate", [5, 1, False]],
+                     ["translate", [5.1, 1, False]],
+                     ["rotate", [np.array([-1, 0, 0, 0]), 0.0042, True]],
                      ["translate", [-26.75, 0, False]]]
         self.move_mp(path_plan)
         if len(path_plan) == self.path_plan_counter:
@@ -936,13 +939,13 @@ class HelloWorld(BaseSample):
     def move_to_wheel_cell(self):
         print(self.path_plan_counter)
         path_plan = [
-                    # ["translate", [-21.3, 0, False]],
-                    #  ["rotate", [np.array([0.70711, 0, 0, 0.70711]), 0.0042, False]],
-                    #  ["translate", [9.3, 1, False]],
-                    #  ["rotate", [np.array([1, 0, 0, 0]), 0.0042, True]],
+                    ["translate", [-21.3, 0, False]],
+                     ["rotate", [np.array([-0.70711, 0, 0, -0.70711]), 0.0042, False]],
+                     ["translate", [9.3, 1, False]],
+                     ["rotate", [np.array([-1, 0, 0, 0]), 0.0042, True]],
                      ["translate", [-17.15, 0, False]],
-                     ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, True]],
-                    #  ["translate", [5.39, 1, False]]
+                     ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, True]],
+                    #  ["translate", [5.39, 1, False]],
                     ["translate", [6, 1, False]]
                      ]
         self.move_mp(path_plan)
@@ -972,8 +975,8 @@ class HelloWorld(BaseSample):
                        {"index":8, "position": np.array([0.00762, 0.77686, -0.16+0.48217]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-17.935, 4.105, 0.723]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])}]
         self.move_ur10(motion_plan, "_wheel_01")
 
-        if self.motion_task_counter==2 and not self.bool_done[5]:
-            self.bool_done[5] = True
+        if self.motion_task_counter==2 and not self.bool_done[45]:
+            self.bool_done[45] = True
             self.remove_part("World/Environment", "wheel_03")
             self.add_part_custom("World/UR10_wheel_01/ee_link","FWheel", "qwheel_03", np.array([0.001,0.001,0.001]), np.array([0.25604, -0.18047, -0.18125]), np.array([0, 0, 0.70711, 0.70711]))
         
@@ -1286,15 +1289,27 @@ class HelloWorld(BaseSample):
     
     def move_to_lower_cover_cell(self):
         print(self.path_plan_counter)
+        # path_plan = [
+        #              ["rotate", [np.array([0.73548, 0, 0, -0.67755]), 0.0042, False]],
+        #              ["translate", [-0.64, 1, False]],
+        #              ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, True]],
+        #              ["translate", [-12.037, 1, False]],
+        #              ["rotate", [np.array([0, 0, 0, -1]), 0.0042, True]],
+        #              ["translate", [-20.15, 0, False]],
+        #              ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, False]],
+        #              ["translate", [-17, 1, False]],
+        #              ["rotate", [np.array([0, 0, 0, 1]), 0.0042, True]],
+        #              ["translate", [-26.9114, 0, False]]]
         path_plan = [
-                    #  ["rotate", [np.array([0.73548, 0, 0, -0.67755]), 0.0042, False]],
-                    #  ["translate", [-0.64, 1, False]],
-                    #  ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, True]],
-                    #  ["translate", [-12.037, 1, False]],
-                    #  ["rotate", [np.array([0, 0, 0, -1]), 0.0042, True]],
-                    #  ["translate", [-20.15, 0, False]],
-                    #  ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, False]],
-                     ["translate", [-17, 1, False]],
+                     ["rotate", [np.array([-0.73548, 0, 0, 0.67755]), 0.0042, False]],
+                     ["translate", [-0.64, 1, False]],
+                     ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, True]],
+                     ["translate", [-12.037, 1, False]],
+                     ["rotate", [np.array([0, 0, 0, 1]), 0.0042, True]],
+                     ["translate", [-20.2, 0, False]],
+                     ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
+                    #  ["translate", [-17, 1, False]],
+                    ["translate", [-17.1, 1, False]],
                      ["rotate", [np.array([0, 0, 0, 1]), 0.0042, True]],
                      ["translate", [-26.9114, 0, False]]]
         self.move_mp(path_plan)
@@ -1440,6 +1455,10 @@ class HelloWorld(BaseSample):
     
     def move_to_main_cover_cell(self):
         print(self.path_plan_counter)
+        # path_plan = [
+        #              ["translate", [-27.9, 0, False]],
+        #              ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
+        #              ["translate", [-17.18, 1, True]]]
         path_plan = [
                      ["translate", [-27.9, 0, False]],
                      ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
@@ -1496,6 +1515,13 @@ class HelloWorld(BaseSample):
 
     def move_to_handle_cell(self):
         print(self.path_plan_counter)
+        # path_plan = [
+        #              ["translate", [-13.2, 1, True]],
+        #              ["rotate", [np.array([-0.56641, 0, 0, 0.82413]), 0.0042, True]],
+        #              ["translate", [-10.46, 1, True]],
+        #              ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
+        #              ["translate", [-6.69, 1, True]]]
+        
         path_plan = [
                      ["translate", [-13.2, 1, True]],
                      ["rotate", [np.array([-0.56641, 0, 0, 0.82413]), 0.0042, True]],
@@ -1565,8 +1591,11 @@ class HelloWorld(BaseSample):
 
     def move_to_light_cell(self):
         print(self.path_plan_counter)
+        # path_plan = [["translate", [-6.41, 1, True]],
+        #              ["rotate", [np.array([-1, 0, 0, 0]), 0.0042, False]],
+        #              ["translate", [-18.56, 0, False]]]
         path_plan = [["translate", [-6.41, 1, True]],
-                     ["rotate", [np.array([-1, 0, 0, 0]), 0.0042, False]],
+                     ["rotate", [np.array([1, 0, 0, 0]), 0.0042, False]],
                      ["translate", [-18.56, 0, False]]]
         self.move_mp(path_plan)
         if len(path_plan) == self.path_plan_counter:
@@ -1611,25 +1640,6 @@ class HelloWorld(BaseSample):
         return False
 
     def screw_light(self):
-        # motion plan for normal facing UR10
-        # motion_plan = [{"index":0, "position": np.array([0.03932, -0.71305, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.06987, -3.9, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-        #                {"index":1, "position": np.array([0.03932, -0.71305, -0.16+0.42576]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.06987, -3.9, 0.66799]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-        #                {"index":2, "position": np.array([0.03932, -0.71305, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.06987, -3.9, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-                       
-        #                {"index":3, "position": np.array([0.28884, 1.24034, -0.16+0.59452+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.31939, -5.85404, 0.83674+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-        #                {"index":4, "position": np.array([0.28884, 1.24034, -0.16+0.59452]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.31939, -5.85404, 0.83674]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-        #                {"index":5, "position": np.array([0.28884, 1.24034, -0.16+0.59452+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.31939, -5.85404, 0.83674+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-
-        #                {"index":6, "position": np.array([0.21655, -0.71124, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.24711, -3.90246, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-        #                {"index":7, "position": np.array([0.21655, -0.71124, -0.16+0.42576]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.24711, -3.90246, 0.66799]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-        #                {"index":8, "position": np.array([0.21655, -0.71124, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.24711, -3.90246, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-               
-        #                {"index":9, "position": np.array([0.28466, 1.33127, -0.16+0.59452+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.31522, -5.94497, 0.83674+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-        #                {"index":10, "position": np.array([0.28466, 1.33127, -0.16+0.59452+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.31522, -5.94497, 0.83674+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-        #                {"index":11, "position": np.array([0.28466, 1.33127, -0.16+0.59452+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.31522, -5.94497, 0.83674+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-
-        #                {"index":12, "position": np.array([0.03932, -0.71305, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.06987, -3.9, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])}]
-        
         motion_plan = [{"index":0, "position": np.array([0.03769, -0.74077, -0.16+0.43386+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.06964, -4.37873, 0.67627+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
                        {"index":1, "position": np.array([0.03769, -0.74077, -0.16+0.43386]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.06964, -4.37873, 0.67627]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
                        {"index":2, "position": np.array([0.03769, -0.74077, -0.16+0.43386+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.06964, -4.37873, 0.67627+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
@@ -1648,25 +1658,6 @@ class HelloWorld(BaseSample):
 
                        {"index":12, "position": np.array([0.03932, -0.71305, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.06987, -3.9, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])}]
         
-
-        # # motion plan for tilted screw UR10 
-        # motion_plan = [{"index":0, "position": np.array([-0.74125, -0.03855, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.07058, -4.37811, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-        #                {"index":1, "position": np.array([-0.74125, -0.03855, -0.16+0.42576]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.07058, -4.37811, 0.66799]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-        #                {"index":2, "position": np.array([-0.74125, -0.03855, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.07058, -4.37811, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-
-        #                {"index":3, "position": np.array([0.73967, -0.18831, -0.16+0.68824+0.2]), "orientation": np.array([0.5, 0.5, 0.5 ,-0.5]), "goal_position":np.array([-18.22018, -5.85917, 0.92937+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-        #                {"index":4, "position": np.array([0.73967, -0.18831, -0.16+0.68824]), "orientation": np.array([0.5, 0.5, 0.5 ,-0.5]), "goal_position":np.array([-18.22018, -5.85917, 0.92937]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-        #                {"index":5, "position": np.array([0.73967, -0.18831, -0.16+0.68824+0.2]), "orientation": np.array([0.5, 0.5, 0.5 ,-0.5]), "goal_position":np.array([-18.22018, -5.85917, 0.92937+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-                   
-        #                {"index":6, "position": np.array([-0.73795, -0.21536, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.24739, -4.38141, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-        #                {"index":7, "position": np.array([-0.73795, -0.21536, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.24739, -4.38141, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-        #                {"index":8, "position": np.array([-0.73795, -0.21536, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.24739, -4.38141, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-
-        #                {"index":9, "position": np.array([0.81841, -0.18831, -0.16+0.68824+0.2]), "orientation": np.array([0.5, 0.5, 0.5 ,-0.5]), "goal_position":np.array([-18.22018, -5.9379, 0.92937+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-        #                {"index":10, "position": np.array([0.81841, -0.18831, -0.16+0.68824]), "orientation": np.array([0.5, 0.5, 0.5 ,-0.5]), "goal_position":np.array([-18.22018, -5.9379, 0.92937]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-        #                {"index":11, "position": np.array([0.81841, -0.18831, -0.16+0.68824+0.2]), "orientation": np.array([0.5, 0.5, 0.5 ,-0.5]), "goal_position":np.array([-18.22018, -5.9379, 0.92937+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-
-        #                {"index":12, "position": np.array([-0.74125, -0.03855, -0.16+0.42576+0.2]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-18.07058, -4.37811, 0.66799+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])}]
         self.do_screw_driving(motion_plan,"_light")
         if self.motion_task_counter==13:
             print("Done screwing light")
@@ -1690,21 +1681,25 @@ class HelloWorld(BaseSample):
             "3":"turn_mobile_platform",
             "4":"screw_engine_two",
             "6":"wait",
+
             "5":"move_to_suspension_cell",
             "151":"arm_place_suspension",
             "171":"screw_suspension",
             "181":"arm_remove_suspension",
             "102":"wait",
+
             "301":"move_to_battery_cell",
             "351":"arm_place_battery",
             "371":"screw_battery", 
             "381":"arm_remove_battery",
             "302":"wait",
+
             "201":"move_to_fuel_cell",
             "251":"arm_place_fuel",
             "271":"screw_fuel", 
             "281":"arm_remove_fuel",
             "202":"wait",
+
             "401":"move_to_trunk_cell",
             "451":"arm_place_trunk",
             "471":"screw_trunk", 
@@ -1723,7 +1718,6 @@ class HelloWorld(BaseSample):
             "790":"arm_place_lower_cover_together",
             "791":"screw_lower_cover_together",
             "702":"wait",
-
             "721":"move_to_main_cover_cell",
             "731":"arm_place_main_cover",
             "703":"wait",
@@ -1734,14 +1728,14 @@ class HelloWorld(BaseSample):
             "881":"arm_remove_handle",
             "802":"wait",
 
-
             "901":"move_to_light_cell",
             "951":"arm_place_light",
             "971":"screw_light",
             "902":"wait"
         }
 
-        # schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201"])
+        # schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","881","802","901","951","971","902"])
+        # schedule = deque(["1","71","2","72","3","4","6","5","102","301","302","201","202","401","402","501","505","502","701","721","703","801","851","871","881","802","901","902"])
         # schedule = deque(["1","71"])
 
         if self.schedule:
