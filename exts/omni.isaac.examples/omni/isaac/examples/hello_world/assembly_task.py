@@ -107,9 +107,9 @@ class AssemblyTask(BaseTask):
                 wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
                 create_robot=True,
                 usd_path=large_robot_asset_path,
-                position=np.array([2.5, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
+                # position=np.array([2.5, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
                 # position=np.array([-4.78521, -10.1757,0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before fuel cell
-                # position=np.array([-9.60803, -17.35671, 0.03551]), orientation=np.array([0, 0, 0, 1]),# initial before battery cell
+                position=np.array([-9.60803, -17.35671, 0.03551]), orientation=np.array([0, 0, 0, 1]),# initial before battery cell
                 # position=np.array([-32.5, 3.516, 0.03551]), orientation=np.array([0.70711, 0, 0, 0.70711]),# initial before trunk cell
                 # position=np.array([-19.86208, 9.65617, 0.03551]), orientation=np.array([1, 0, 0, 0]),# initial before wheel cell
                 # position=np.array([-20.84299, 6.46358, 0.03551]), orientation=np.array([-0.70711, 0, 0, -0.70711]),# initial before wheel cell
@@ -241,8 +241,8 @@ class AssemblyTask(BaseTask):
                 wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
                 create_robot=True,
                 usd_path=small_robot_asset_path,
-                position=np.array([-18.36667, -15.53466, 0.035]),
-                orientation=np.array([0.70711,0, 0,-0.70711]),
+                # position=np.array([-18.36667, -15.53466, 0.035]), orientation=np.array([0.70711,0, 0,-0.70711]),
+                position=np.array([-17.409, -13.17316, 0.035]), orientation=np.array([0.70711,0, 0,-0.70711]),
             )
         )
 
