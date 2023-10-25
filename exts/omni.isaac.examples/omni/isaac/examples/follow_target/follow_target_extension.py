@@ -133,6 +133,8 @@ class FollowTargetExtension(BaseSampleExtension):
 
         self._sample._goal_pub.publish(goal_msg)
 
+        # self._check_goal_reached(pose)
+
         world = self.get_world()
         if not world.physics_callback_exists("mp_nav_check"):
             world.add_physics_callback("mp_nav_check", lambda step_size: self._check_goal_reached(pose))

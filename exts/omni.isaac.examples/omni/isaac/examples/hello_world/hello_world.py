@@ -1,3 +1,5 @@
+import carb
+
 from omni.isaac.core.prims import GeometryPrim, XFormPrim
 from omni.isaac.examples.base_sample import BaseSample
 from omni.isaac.core.utils.nucleus import get_assets_root_path
@@ -21,8 +23,12 @@ import omni.usd
 from omni.isaac.dynamic_control import _dynamic_control
 
 from omni.isaac.universal_robots import KinematicsSolver
-import carb
+
 from collections import deque, defaultdict
+from geometry_msgs.msg import PoseStamped
+import rosgraph
+from tf.transformations import euler_from_quaternion, quaternion_from_euler
+from math import pi 
 
 from omni.isaac.examples.hello_world.assembly_task import AssemblyTask
 import time
@@ -109,8 +115,8 @@ class HelloWorld(BaseSample):
         # self.schedule = deque(["501", "505","553","573","554","574"])
         # self.schedule = deque(["901","951","971"])
         # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
-        # self.schedule = deque(["1","71","2","6","4"])
-        self.schedule = deque(["305","306"])
+        self.schedule = deque(["1","71","2","6","4"])
+        # self.schedule = deque(["1"])
         # self.schedule = deque(["701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         self.right_side = self.left_side = False
@@ -211,18 +217,18 @@ class HelloWorld(BaseSample):
         # bring in moving platforms 
         self.battery_bringer = self._world.scene.get_object(task_params["eb_name_battery"]["value"])
         
-        # self.add_part_custom("World/Environment","battery", "battery_01", np.array([0.001,0.001,0.001]), np.array([-16.47861, -15.68368, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
-        # self.add_part_custom("World/Environment","battery", "battery_02", np.array([0.001,0.001,0.001]), np.array([-16.0548, -15.67949, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
-        # self.add_part_custom("World/Environment","battery", "battery_03", np.array([0.001,0.001,0.001]), np.array([-16.02688, -16.10727, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
-        # self.add_part_custom("World/Environment","battery", "battery_04", np.array([0.001,0.001,0.001]), np.array([-16.01519, -16.40193, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
+        self.add_part_custom("World/Environment","battery", "battery_01", np.array([0.001,0.001,0.001]), np.array([-16.47861, -15.68368, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
+        self.add_part_custom("World/Environment","battery", "battery_02", np.array([0.001,0.001,0.001]), np.array([-16.0548, -15.67949, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
+        self.add_part_custom("World/Environment","battery", "battery_03", np.array([0.001,0.001,0.001]), np.array([-16.02688, -16.10727, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
+        self.add_part_custom("World/Environment","battery", "battery_04", np.array([0.001,0.001,0.001]), np.array([-16.01519, -16.40193, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
 
         # part feeding battery --------------------------------------
-        self.add_part_custom("battery_bringer/platform","battery", "battery_01", np.array([0.001,0.001,0.001]), np.array([-0.23374, 0.08958, 0.2623]), np.array([0, 0, 0.70711, 0.70711]))
-        self.add_part_custom("battery_bringer/platform","battery", "battery_02", np.array([0.001,0.001,0.001]), np.array([-0.23374, -0.13743, 0.2623]), np.array([0, 0, 0.70711, 0.70711]))
-        self.add_part_custom("battery_bringer/platform","battery", "battery_03", np.array([0.001,0.001,0.001]), np.array([0.04161, -0.13743, 0.2623]), np.array([0, 0, 0.70711, 0.70711]))
-        self.add_part_custom("battery_bringer/platform","battery", "battery_04", np.array([0.001,0.001,0.001]), np.array([0.30769, -0.13743, 0.2623]), np.array([0, 0, 0.70711, 0.70711]))
-        self.add_part_custom("battery_bringer/platform","battery", "battery_05", np.array([0.001,0.001,0.001]), np.array([0.03519, 0.08958, 0.2623]), np.array([0, 0, 0.70711, 0.70711]))
-        self.add_part_custom("battery_bringer/platform","battery", "battery_06", np.array([0.001,0.001,0.001]), np.array([0.30894, 0.08958, 0.2623]), np.array([0, 0, 0.70711, 0.70711]))
+        # self.add_part_custom("battery_bringer/platform","battery", "battery_01", np.array([0.001,0.001,0.001]), np.array([-0.23374, 0.08958, 0.2623]), np.array([0, 0, 0.70711, 0.70711]))
+        # self.add_part_custom("battery_bringer/platform","battery", "battery_02", np.array([0.001,0.001,0.001]), np.array([-0.23374, -0.13743, 0.2623]), np.array([0, 0, 0.70711, 0.70711]))
+        # self.add_part_custom("battery_bringer/platform","battery", "battery_03", np.array([0.001,0.001,0.001]), np.array([0.04161, -0.13743, 0.2623]), np.array([0, 0, 0.70711, 0.70711]))
+        # self.add_part_custom("battery_bringer/platform","battery", "battery_04", np.array([0.001,0.001,0.001]), np.array([0.30769, -0.13743, 0.2623]), np.array([0, 0, 0.70711, 0.70711]))
+        # self.add_part_custom("battery_bringer/platform","battery", "battery_05", np.array([0.001,0.001,0.001]), np.array([0.03519, 0.08958, 0.2623]), np.array([0, 0, 0.70711, 0.70711]))
+        # self.add_part_custom("battery_bringer/platform","battery", "battery_06", np.array([0.001,0.001,0.001]), np.array([0.30894, 0.08958, 0.2623]), np.array([0, 0, 0.70711, 0.70711]))
 
 
         # Initialize our controller after load and the first reset
@@ -376,10 +382,41 @@ class HelloWorld(BaseSample):
 
         # self.add_part_custom("mock_robot/platform","battery", "xbattery", np.array([0.001,0.001,0.001]), np.array([-0.20126, 0.06146, 0.58443]), np.array([0.4099, 0.55722, -0.58171, -0.42791]))
         # self.add_part_custom("mock_robot/platform","fuel", "xfuel", np.array([0.001,0.001,0.001]), np.array([0.11281, -0.08612, 0.59517]), np.array([0, 0, -0.70711, -0.70711]))
-        self.add_part_custom("mock_robot/platform","FSuspensionBack", "xFSuspensionBack", np.array([0.001,0.001,0.001]), np.array([-0.87892, 0.0239, 0.82432]), np.array([0.40364, -0.58922, 0.57252, -0.40262]))
-        self.add_part_custom("mock_robot/platform","engine_no_rigid", "engine", np.array([0.001,0.001,0.001]), np.array([-0.16041, -0.00551, 0.46581]), np.array([0.98404, -0.00148, -0.17792, -0.00274]))
+        # self.add_part_custom("mock_robot/platform","FSuspensionBack", "xFSuspensionBack", np.array([0.001,0.001,0.001]), np.array([-0.87892, 0.0239, 0.82432]), np.array([0.40364, -0.58922, 0.57252, -0.40262]))
+        # self.add_part_custom("mock_robot/platform","engine_no_rigid", "engine", np.array([0.001,0.001,0.001]), np.array([-0.16041, -0.00551, 0.46581]), np.array([0.98404, -0.00148, -0.17792, -0.00274]))
 
+        # # part feeder stuff ----------------------------
+        # self.add_part_custom("fuel_bringer/platform","fuel", "fuel_05", np.array([0.001,0.001,0.001]), np.array([-0.17458, 0.136, 0.26034]), np.array([0.5 ,0.5, -0.5, -0.5]))
+        # self.add_part_custom("fuel_bringer/platform","fuel", "fuel_06", np.array([0.001,0.001,0.001]), np.array([0.10727, 0.136, 0.26034]), np.array([0.5 ,0.5, -0.5, -0.5]))
+        # self.add_part_custom("fuel_bringer/platform","fuel", "fuel_07", np.array([0.001,0.001,0.001]), np.array([0.375, 0.136, 0.26034]), np.array([0.5 ,0.5, -0.5, -0.5]))
         
+        # self.add_part_custom("suspension_bringer/platform","FSuspensionBack", "FSuspensionBack_10", np.array([0.001,0.001,0.001]), np.array([0.16356, -0.19391, 0.25373]), np.array([0.70711, 0, -0.70711, 0]))
+        # self.add_part_custom("suspension_bringer/platform","FSuspensionBack", "FSuspensionBack_11", np.array([0.001,0.001,0.001]), np.array([0.31896, -0.19391, 0.25373]), np.array([0.70711, 0, -0.70711, 0]))
+        # self.add_part_custom("suspension_bringer/platform","FSuspensionBack", "FSuspensionBack_12", np.array([0.001,0.001,0.001]), np.array([0.47319, -0.19391, 0.25373]), np.array([0.70711, 0, -0.70711, 0]))
+        # self.add_part_custom("suspension_bringer/platform","FSuspensionBack", "FSuspensionBack_13", np.array([0.001,0.001,0.001]), np.array([0.6372, -0.19391, 0.25373]), np.array([0.70711, 0, -0.70711, 0]))
+        # self.add_part_custom("suspension_bringer/platform","FSuspensionBack", "FSuspensionBack_14", np.array([0.001,0.001,0.001]), np.array([0.80216, -0.19391, 0.25373]), np.array([0.70711, 0, -0.70711, 0]))
+
+        # self.add_part_custom("engine_bringer/platform","engine_no_rigid", "engine_11", np.array([0.001,0.001,0.001]), np.array([0, 0, 0.43148]), np.array([0.99457, 0, -0.10407, 0]))
+
+        # navigation declarations -----------------------------------------------
+
+        if not rosgraph.is_master_online():
+            print("Please run roscore before executing this script")
+            return
+        
+        try:
+            rospy.init_node("set_goal_py")
+        except rospy.exceptions.ROSException as e:
+            print("Node has already been initialized, do nothing")
+        
+        # FIXME
+        # self._initial_goal_publisher = rospy.Publisher("initialpose", PoseWithCovarianceStamped, queue_size=1)
+        # self.__send_initial_pose()
+        # await asyncio.sleep(1.0)
+        # self._action_client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
+        self._goal_pub = rospy.Publisher("/move_base_simple/goal", PoseStamped, queue_size=1)
+        self._xy_goal_tolerance = 0.25
+        self._yaw_goal_tolerance = 0.05
         return
 
     async def setup_post_reset(self):
@@ -523,12 +560,61 @@ class HelloWorld(BaseSample):
         position[2]+=-0.00419
         return position   
     
+    def _check_goal_reached(self, goal_pose):
+        # Cannot get result from ROS because /move_base/result also uses move_base_msgs module
+        mp_position, mp_orientation = self.moving_platform.get_world_pose()
+        _, _, mp_yaw = euler_from_quaternion(mp_orientation)
+        _, _, goal_yaw = euler_from_quaternion(goal_pose[3:])
+        
+        # FIXME: pi needed for yaw tolerance here because map rotated 180 degrees
+        if np.allclose(mp_position[:2], goal_pose[:2], atol=self._xy_goal_tolerance) \
+            and abs(mp_yaw-goal_yaw) <= pi + self._yaw_goal_tolerance:
+            print("Goal "+str(goal_pose)+" reached!")
+            # This seems to crash Isaac sim...
+            # self.get_world().remove_physics_callback("mp_nav_check")
+    
+    # Goal hardcoded for now
+    def _send_navigation_goal(self, x=None, y=None, a=None):
+        # x, y, a = -18, 14, 3.14
+        # x,y,a = -4.65, 5.65,3.14
+        orient_x, orient_y, orient_z, orient_w = quaternion_from_euler(0, 0, a)
+        pose = [x, y, 0, orient_x, orient_y, orient_z, orient_w]
+
+        goal_msg = PoseStamped()
+        goal_msg.header.frame_id = "map"
+        goal_msg.header.stamp = rospy.get_rostime()
+        print("goal pose: "+str(pose))
+        goal_msg.pose.position.x = pose[0]
+        goal_msg.pose.position.y = pose[1]
+        goal_msg.pose.position.z = pose[2]
+        goal_msg.pose.orientation.x = pose[3]
+        goal_msg.pose.orientation.y = pose[4]
+        goal_msg.pose.orientation.z = pose[5]
+        goal_msg.pose.orientation.w = pose[6]
+
+        world = self.get_world()
+
+        self._goal_pub.publish(goal_msg)
+
+        # self._check_goal_reached(pose)
+
+        world = self.get_world()
+        if not world.physics_callback_exists("mp_nav_check"):
+            world.add_physics_callback("mp_nav_check", lambda step_size: self._check_goal_reached(pose))
+        # Overwrite check with new goal
+        else:
+            world.remove_physics_callback("mp_nav_check")
+            world.add_physics_callback("mp_nav_check", lambda step_size: self._check_goal_reached(pose))
+    
     def move_to_engine_cell(self):
-        current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
-        self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
-        if current_mp_position[0]<-4.98951:
-            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
-            return True
+        print("sending nav goal")
+        self._send_navigation_goal(-4.65, 5.65, 3.14)
+        # current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
+        # self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
+        # if current_mp_position[0]<-4.98951:
+        #     self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
+        #     return True
+        # return False
         return False
 
     def arm_place_engine(self):
@@ -729,6 +815,111 @@ class HelloWorld(BaseSample):
         elif move_type == "wait":
             print("Waiting ...")
             self.battery_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+            if self.delay>60:
+                print("Done waiting")
+                self.delay=0
+                self.path_plan_counter+=1
+            self.delay+=1
+
+    def move_mp_fuel(self, path_plan):
+        if not path_plan:
+            return
+        current_mp_position, current_mp_orientation = self.fuel_bringer.get_world_pose()
+        move_type, goal = path_plan[self.path_plan_counter]
+        if move_type == "translate":
+            goal_pos, axis, reverse = goal
+            print(current_mp_position[axis], goal_pos, abs(current_mp_position[axis]-goal_pos))
+            if reverse:
+                self.fuel_bringer.apply_action(self._my_custom_controller.forward(command=[-0.5,0]))
+            else:
+                self.fuel_bringer.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
+            if abs(current_mp_position[axis]-goal_pos)<0.01:
+                self.fuel_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+        elif move_type == "rotate":
+            goal_ori, error_threshold, rotate_right = goal
+            if rotate_right:
+                self.fuel_bringer.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/2]))
+            else:
+                self.fuel_bringer.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/2]))
+            curr_error = np.mean(np.abs(current_mp_orientation-goal_ori))
+            print(current_mp_orientation, goal_ori, curr_error)
+            if curr_error< error_threshold:
+                self.fuel_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+        elif move_type == "wait":
+            print("Waiting ...")
+            self.fuel_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+            if self.delay>60:
+                print("Done waiting")
+                self.delay=0
+                self.path_plan_counter+=1
+            self.delay+=1
+
+    def move_mp_suspension(self, path_plan):
+        if not path_plan:
+            return
+        current_mp_position, current_mp_orientation = self.suspension_bringer.get_world_pose()
+        move_type, goal = path_plan[self.path_plan_counter]
+        if move_type == "translate":
+            goal_pos, axis, reverse = goal
+            print(current_mp_position[axis], goal_pos, abs(current_mp_position[axis]-goal_pos))
+            if reverse:
+                self.suspension_bringer.apply_action(self._my_custom_controller.forward(command=[-0.5,0]))
+            else:
+                self.suspension_bringer.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
+            if abs(current_mp_position[axis]-goal_pos)<0.01:
+                self.suspension_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+        elif move_type == "rotate":
+            goal_ori, error_threshold, rotate_right = goal
+            if rotate_right:
+                self.suspension_bringer.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/2]))
+            else:
+                self.suspension_bringer.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/2]))
+            curr_error = np.mean(np.abs(current_mp_orientation-goal_ori))
+            print(current_mp_orientation, goal_ori, curr_error)
+            if curr_error< error_threshold:
+                self.suspension_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+        elif move_type == "wait":
+            print("Waiting ...")
+            self.suspension_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+            if self.delay>60:
+                print("Done waiting")
+                self.delay=0
+                self.path_plan_counter+=1
+            self.delay+=1
+
+    def move_mp_engine(self, path_plan):
+        if not path_plan:
+            return
+        current_mp_position, current_mp_orientation = self.engine_bringer.get_world_pose()
+        move_type, goal = path_plan[self.path_plan_counter]
+        if move_type == "translate":
+            goal_pos, axis, reverse = goal
+            print(current_mp_position[axis], goal_pos, abs(current_mp_position[axis]-goal_pos))
+            if reverse:
+                self.engine_bringer.apply_action(self._my_custom_controller.forward(command=[-0.5,0]))
+            else:
+                self.engine_bringer.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
+            if abs(current_mp_position[axis]-goal_pos)<0.01:
+                self.engine_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+        elif move_type == "rotate":
+            goal_ori, error_threshold, rotate_right = goal
+            if rotate_right:
+                self.engine_bringer.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/2]))
+            else:
+                self.engine_bringer.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/2]))
+            curr_error = np.mean(np.abs(current_mp_orientation-goal_ori))
+            print(current_mp_orientation, goal_ori, curr_error)
+            if curr_error< error_threshold:
+                self.engine_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+        elif move_type == "wait":
+            print("Waiting ...")
+            self.engine_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
             if self.delay>60:
                 print("Done waiting")
                 self.delay=0
@@ -997,6 +1188,37 @@ class HelloWorld(BaseSample):
         self.move_mp_battery(path_plan)
         if len(path_plan) == self.path_plan_counter:
             self.path_plan_counter=0
+            return True
+        return False
+    
+    def moving_part_feeders(self):
+        print(self.path_plan_counter)
+        if not self.bool_done[0]:
+            path_plan = [
+                ["translate", [-16.41, 1, True]]]
+            self.move_mp_battery(path_plan)
+            if len(path_plan) == self.path_plan_counter:
+                self.bool_done[0]=True
+        if not self.bool_done[1]:
+            path_plan = [
+                ["translate", [-6.84552, 0, False]]]
+            self.move_mp_fuel(path_plan)
+            if len(path_plan) == self.path_plan_counter:
+                self.bool_done[1]=True
+        if not self.bool_done[2]:
+            path_plan = [
+                ["translate", [-6.491, 0, False]]]
+            self.move_mp_suspension(path_plan)
+            if len(path_plan) == self.path_plan_counter:
+                self.bool_done[2]=True
+        if not self.bool_done[3]:
+            path_plan = [
+                ["translate", [-5.07, 0, False]]]
+            self.move_mp_engine(path_plan)
+            if len(path_plan) == self.path_plan_counter:
+                self.bool_done[3]=True
+        
+        if self.bool_done[0] and self.bool_done[1] and self.bool_done[2] and self.bool_done[3]:
             return True
         return False
     
@@ -1911,6 +2133,7 @@ class HelloWorld(BaseSample):
 
             "305":"move_mp_to_battery_cell",
             "306":"battery_part_feeding",
+            "307":"moving_part_feeders",
 
             "201":"move_to_fuel_cell",
             "251":"arm_place_fuel",
