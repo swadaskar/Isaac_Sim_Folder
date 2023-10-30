@@ -95,10 +95,10 @@ class AssemblyTask(BaseTask):
         
         # small_robot_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform/mobile_platform1.usd"
 
-        # large_robot_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform_unfinished/mobile_platform_flattened.usd"
+        large_robot_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform_unfinished/mobile_platform_flattened.usd"
         small_robot_asset_path= "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform_unfinished/mobile_platform_flattened.usd"
 
-        large_robot_asset_path = "/home/lm-2023/Isaac_Sim/navigation/Collected_real_microfactory_show/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform/mobile_platform_ag.usd"
+        # large_robot_asset_path = "/home/lm-2023/Isaac_Sim/navigation/Collected_real_microfactory_show/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform/mobile_platform_ag.usd"
         # add floor
         add_reference_to_stage(usd_path=asset_path, prim_path="/World/Environment")
 
@@ -143,7 +143,7 @@ class AssemblyTask(BaseTask):
                 create_robot=True,
                 usd_path=small_robot_asset_path,
                 # position=np.array([-6.919, 7.764, 0.03551]), orientation=np.array([0.70711,0, 0,-0.70711]),
-                position=np.array([3.19, 5.7848, 0.03551]), orientation=np.array([0, 0,0 ,-1]),
+                position=np.array([-9.76, 10.697, 0.03551]), orientation=np.array([0, 0,0 ,-1]),
             )
         )
 
@@ -268,7 +268,7 @@ class AssemblyTask(BaseTask):
         add_reference_to_stage(usd_path=gripper_usd, prim_path="/World/Screw_driving_UR10_trunk/ee_link")
         screw_gripper = SurfaceGripper(end_effector_prim_path="/World/Screw_driving_UR10_trunk/ee_link", translate=0, direction="x")
         self.screw_ur10_trunk = scene.add(
-            SingleManipulator(prim_path="/World/Screw_driving_UR10_trunk", name="my_screw_ur10_trunk", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-27.29981, 6.5455, 0.24168]), orientation=np.array([0, 0, 0, 1]), scale=np.array([1,1,1]))
+            SingleManipulator(prim_path="/World/Screw_driving_UR10_trunk", name="my_screw_ur10_trunk", end_effector_prim_name="ee_link", gripper=screw_gripper, translation = np.array([-27.29981, 6.46287+0.08474, 0.24168]), orientation=np.array([0, 0, 0, 1]), scale=np.array([1,1,1]))
         )
         self.screw_ur10_trunk.set_joints_default_state(positions=np.array([-np.pi / 2, -np.pi / 2, -np.pi / 2, -np.pi / 2, np.pi / 2, 0]))
 
