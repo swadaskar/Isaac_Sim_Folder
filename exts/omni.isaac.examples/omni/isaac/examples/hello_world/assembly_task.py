@@ -55,6 +55,8 @@ class AssemblyTask(BaseTask):
 
         self._bool_event = 0
         self.count=0
+
+        self.num_of_ATVs = 2
         return
 
     def set_up_scene(self, scene):
@@ -98,29 +100,31 @@ class AssemblyTask(BaseTask):
         large_robot_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform_unfinished/mobile_platform_flattened.usd"
         small_robot_asset_path= "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform_unfinished/mobile_platform_flattened.usd"
 
-        large_robot_asset_path = "/home/lm-2023/Isaac_Sim/navigation/Collected_real_microfactory_show/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform/mobile_platform_ag.usd"
+        # large_robot_asset_path = "/home/lm-2023/Isaac_Sim/navigation/Collected_real_microfactory_show/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform/mobile_platform_ag.usd"
         # add floor
         add_reference_to_stage(usd_path=asset_path, prim_path="/World/Environment")
 
-        # add moving platform
-        self.moving_platform = scene.add(
-            WheeledRobot(
-                prim_path="/mock_robot",
-                name="moving_platform",
-                wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
-                create_robot=True,
-                usd_path=large_robot_asset_path,
-                # position=np.array([2.5, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
-                position=np.array([-0.378, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
-                # position=np.array([-4.78521, -10.1757,0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before fuel cell
-                # position=np.array([-9.60803, -17.35671, 0.03551]), orientation=np.array([0, 0, 0, 1]),# initial before battery cell
-                # position=np.array([-32.5, 3.516, 0.03551]), orientation=np.array([0.70711, 0, 0, 0.70711]),# initial before trunk cell
-                # position=np.array([-19.86208, 9.65617, 0.03551]), orientation=np.array([1, 0, 0, 0]),# initial before wheel cell
-                # position=np.array([-20.84299, 6.46358, 0.03551]), orientation=np.array([-0.70711, 0, 0, -0.70711]),# initial before wheel cell
-                # position=np.array([-21.13755, -15.54504, 0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before cover cell
-                # position=np.array([-27.52625, -7.11835, 0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before light cell
-            )
-        )
+        # # add moving platform
+        # self.moving_platform = scene.add(
+        #     WheeledRobot(
+        #         prim_path=f"/mock_robot",
+        #         name=f"moving_platform",
+        #         wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
+        #         create_robot=True,
+        #         usd_path=large_robot_asset_path,
+        #         # position=np.array([2.5, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
+        #         position=np.array([-0.378, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
+        #         # position=np.array([-4.78521, -10.1757,0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before fuel cell
+        #         # position=np.array([-9.60803, -17.35671, 0.03551]), orientation=np.array([0, 0, 0, 1]),# initial before battery cell
+        #         # position=np.array([-32.5, 3.516, 0.03551]), orientation=np.array([0.70711, 0, 0, 0.70711]),# initial before trunk cell
+        #         # position=np.array([-19.86208, 9.65617, 0.03551]), orientation=np.array([1, 0, 0, 0]),# initial before wheel cell
+        #         # position=np.array([-20.84299, 6.46358, 0.03551]), orientation=np.array([-0.70711, 0, 0, -0.70711]),# initial before wheel cell
+        #         # position=np.array([-21.13755, -15.54504, 0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before cover cell
+        #         # position=np.array([-27.52625, -7.11835, 0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before light cell
+        #     )
+        # )
+
+        
 
         # # Second view from contingency 
         # self.moving_platform = scene.add(
@@ -461,7 +465,7 @@ class AssemblyTask(BaseTask):
         return
 
     def get_observations(self):
-        current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
+        # current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
         current_eb_position, current_eb_orientation = self.engine_bringer.get_world_pose()
         current_joint_positions_ur10 = self.ur10.get_joint_positions()
 
@@ -494,11 +498,11 @@ class AssemblyTask(BaseTask):
 
         observations= {
             "task_event": self._task_event,
-            self.moving_platform.name: {
-                "position": current_mp_position,
-                "orientation": current_mp_orientation,
-                "goal_position": self.mp_goal_position
-            },
+            # self.moving_platform.name: {
+            #     "position": current_mp_position,
+            #     "orientation": current_mp_orientation,
+            #     "goal_position": self.mp_goal_position
+            # },
             self.engine_bringer.name: {
                 "position": current_eb_position,
                 "orientation": current_eb_orientation,
@@ -586,7 +590,7 @@ class AssemblyTask(BaseTask):
         params_representation = {}
         params_representation["arm_name"] = {"value": self.ur10.name, "modifiable": False}
         params_representation["screw_arm"] = {"value": self.screw_ur10.name, "modifiable": False}
-        params_representation["mp_name"] = {"value": self.moving_platform.name, "modifiable": False}
+        # params_representation["mp_name"] = {"value": self.moving_platform.name, "modifiable": False}
         params_representation["eb_name"] = {"value": self.engine_bringer.name, "modifiable": False}
 
         # suspension task

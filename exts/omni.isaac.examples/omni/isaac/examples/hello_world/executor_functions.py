@@ -11,6 +11,8 @@ class ExecutorFunctions:
 
         self.world = None
 
+        self.id = None
+
         # Engine cell set up ----------------------------------------------------------------------------
         # bring in moving platforms 
 
@@ -107,6 +109,8 @@ class ExecutorFunctions:
     def declare_utils(self):
 
         self.util.world = self.world
+
+        self.util.id = self.id
 
         # Engine cell set up ----------------------------------------------------------------------------
         # bring in moving platforms 
@@ -250,7 +254,7 @@ class ExecutorFunctions:
             self.util.motion_task_counter=0
             print("Done placing engine")
             self.util.remove_part("World/UR10/ee_link", "qengine_small")
-            self.util.add_part_custom("mock_robot/platform","engine_no_rigid", "engine", np.array([0.001,0.001,0.001]), np.array([-0.16041, -0.00551, 0.46581]), np.array([0.98404, -0.00148, -0.17792, -0.00274]))
+            self.util.add_part_custom(f"mock_robot_{self.id}/platform","engine_no_rigid", "engine", np.array([0.001,0.001,0.001]), np.array([-0.16041, -0.00551, 0.46581]), np.array([0.98404, -0.00148, -0.17792, -0.00274]))
             return True
         return False
     
@@ -397,7 +401,7 @@ class ExecutorFunctions:
             print("Done placing fuel")
             self.util.motion_task_counter=0
             self.util.remove_part("World/UR10_suspension/ee_link", "qFSuspensionBack")
-            self.util.add_part_custom("mock_robot/platform","FSuspensionBack", "xFSuspensionBack", np.array([0.001,0.001,0.001]), np.array([-0.87892, 0.0239, 0.82432]), np.array([0.40364, -0.58922, 0.57252, -0.40262]))
+            self.util.add_part_custom(f"mock_robot_{self.id}/platform","FSuspensionBack", "xFSuspensionBack", np.array([0.001,0.001,0.001]), np.array([-0.87892, 0.0239, 0.82432]), np.array([0.40364, -0.58922, 0.57252, -0.40262]))
             return True
         return False
     
@@ -466,7 +470,7 @@ class ExecutorFunctions:
             print("Done placing fuel")
             self.util.motion_task_counter=0
             self.util.remove_part("World/UR10_fuel/ee_link", "qfuel")
-            self.util.add_part_custom("mock_robot/platform","fuel", "xfuel", np.array([0.001,0.001,0.001]), np.array([0.11281, -0.08612, 0.59517]), np.array([0, 0, -0.70711, -0.70711]))
+            self.util.add_part_custom(f"mock_robot_{self.id}/platform","fuel", "xfuel", np.array([0.001,0.001,0.001]), np.array([0.11281, -0.08612, 0.59517]), np.array([0, 0, -0.70711, -0.70711]))
             return True
         return False
 
@@ -552,7 +556,7 @@ class ExecutorFunctions:
             print("Done placing battery")
             self.util.motion_task_counter=0
             self.util.remove_part("World/UR10_battery/ee_link", "qbattery")
-            self.util.add_part_custom("mock_robot/platform","battery", "xbattery", np.array([0.001,0.001,0.001]), np.array([-0.20126, 0.06146, 0.58443]), np.array([0.4099, 0.55722, -0.58171, -0.42791]))
+            self.util.add_part_custom(f"mock_robot_{self.id}/platform","battery", "xbattery", np.array([0.001,0.001,0.001]), np.array([-0.20126, 0.06146, 0.58443]), np.array([0.4099, 0.55722, -0.58171, -0.42791]))
             return True
         return False
 
@@ -763,7 +767,7 @@ class ExecutorFunctions:
             print("Done placing trunk")
             self.util.motion_task_counter=0
             self.util.remove_part("World/UR10_trunk/ee_link", "qtrunk")
-            self.util.add_part_custom("mock_robot/platform","trunk", "xtrunk", np.array([0.001,0.001,0.001]), np.array([-0.79319, -0.21112, 0.70114]), np.array([0.5, 0.5, 0.5, 0.5]))
+            self.util.add_part_custom(f"mock_robot_{self.id}/platform","trunk", "xtrunk", np.array([0.001,0.001,0.001]), np.array([-0.79319, -0.21112, 0.70114]), np.array([0.5, 0.5, 0.5, 0.5]))
             return True
         return False
 
@@ -849,7 +853,7 @@ class ExecutorFunctions:
             self.bool_done[6] = True
             print("Done placing wheel")
             self.util.remove_part("World/UR10_wheel_01/ee_link", "qwheel_03")
-            self.util.add_part_custom("mock_robot/platform","FWheel", "xwheel_03", np.array([0.001,0.001,0.001]), np.array([0.15255, -0.1948, 0.56377]), np.array([0.5, -0.5, 0.5, -0.5]))
+            self.util.add_part_custom(f"mock_robot_{self.id}/platform","FWheel", "xwheel_03", np.array([0.001,0.001,0.001]), np.array([0.15255, -0.1948, 0.56377]), np.array([0.5, -0.5, 0.5, -0.5]))
         
         if self.util.motion_task_counter==9:
             self.util.motion_task_counter=0
@@ -919,7 +923,7 @@ class ExecutorFunctions:
             self.bool_done[8] = True
             print("Done placing wheel")
             self.util.remove_part("World/UR10_wheel/ee_link", "qwheel_01")
-            self.util.add_part_custom("mock_robot/platform","FWheel", "xwheel_01", np.array([0.001,0.001,0.001]), np.array([0.1522, 0.33709, 0.56377]), np.array([0.5, -0.5, 0.5, -0.5]))
+            self.util.add_part_custom(f"mock_robot_{self.id}/platform","FWheel", "xwheel_01", np.array([0.001,0.001,0.001]), np.array([0.1522, 0.33709, 0.56377]), np.array([0.5, -0.5, 0.5, -0.5]))
         
         if self.util.motion_task_counterl==10:
             self.util.motion_task_counterl=0
@@ -994,7 +998,7 @@ class ExecutorFunctions:
             self.bool_done[10] = True
             print("Done placing wheel")
             self.util.remove_part("World/UR10_wheel_01/ee_link", "qwheel_04")
-            self.util.add_part_custom("mock_robot/platform","FWheel", "xwheel_04", np.array([0.001,0.001,0.001]), np.array([-0.80845, -0.22143, 0.43737]), np.array([0.5, -0.5, 0.5, -0.5]))
+            self.util.add_part_custom(f"mock_robot_{self.id}/platform","FWheel", "xwheel_04", np.array([0.001,0.001,0.001]), np.array([-0.80845, -0.22143, 0.43737]), np.array([0.5, -0.5, 0.5, -0.5]))
         
         if self.util.motion_task_counter==9:
             self.util.motion_task_counter=0
@@ -1064,7 +1068,7 @@ class ExecutorFunctions:
             self.bool_done[12] = True
             print("Done placing wheel")
             self.util.remove_part("World/UR10_wheel/ee_link", "qwheel_02")
-            self.util.add_part_custom("mock_robot/platform","FWheel", "xwheel_02", np.array([0.001,0.001,0.001]), np.array([-0.80934, 0.35041, 0.43888]), np.array([0.5, -0.5, 0.5, -0.5]))
+            self.util.add_part_custom(f"mock_robot_{self.id}/platform","FWheel", "xwheel_02", np.array([0.001,0.001,0.001]), np.array([-0.80934, 0.35041, 0.43888]), np.array([0.5, -0.5, 0.5, -0.5]))
         
         if self.util.motion_task_counterl==10:
             self.util.motion_task_counterl=0
@@ -1208,7 +1212,7 @@ class ExecutorFunctions:
             self.bool_done[21] = True
             print("Done placing right lower cover")
             self.util.remove_part("World/UR10_lower_cover/ee_link", "qlower_cover")
-            self.util.add_part_custom("mock_robot/platform","lower_cover", "xlower_cover", np.array([0.001,0.001,0.001]), np.array([0.03325, -0.29278, 0.31255]), np.array([0, 0, 0.70711, 0.70711]))
+            self.util.add_part_custom(f"mock_robot_{self.id}/platform","lower_cover", "xlower_cover", np.array([0.001,0.001,0.001]), np.array([0.03325, -0.29278, 0.31255]), np.array([0, 0, 0.70711, 0.70711]))
             # np.array([435.65021, 418.57531,21.83379]), np.array([0.50942, 0.50942,0.4904, 0.4904])
         if self.util.motion_task_counter==8:
             self.util.motion_task_counter=0
@@ -1263,7 +1267,7 @@ class ExecutorFunctions:
             self.bool_done[23] = True
             print("Done placing right lower cover")
             self.util.remove_part("World/UR10_lower_cover_01/ee_link", "qlower_cover_04")
-            self.util.add_part_custom("mock_robot/platform","lower_cover", "xlower_cover_04", np.array([0.001,0.001,0.001]), np.array([0.03589, 0.13349, 0.30227]), np.array([0, 0, -0.70711, -0.70711]))
+            self.util.add_part_custom(f"mock_robot_{self.id}/platform","lower_cover", "xlower_cover_04", np.array([0.001,0.001,0.001]), np.array([0.03589, 0.13349, 0.30227]), np.array([0, 0, -0.70711, -0.70711]))
 
         if self.util.motion_task_counterl==8:
             self.util.motion_task_counterl=0
@@ -1377,7 +1381,7 @@ class ExecutorFunctions:
         if self.util.motion_task_counter==13 and not self.bool_done[25]:
             self.bool_done[25] = True
             self.util.remove_part("World/UR10_main_cover/ee_link", "qmain_cover")
-            self.util.add_part_custom("mock_robot/platform","main_cover", "xmain_cover", np.array([0.001,0.001,0.001]), np.array([-0.81508, 0.27909, 0.19789]), np.array([0.70711, 0.70711, 0, 0]))
+            self.util.add_part_custom(f"mock_robot_{self.id}/platform","main_cover", "xmain_cover", np.array([0.001,0.001,0.001]), np.array([-0.81508, 0.27909, 0.19789]), np.array([0.70711, 0.70711, 0, 0]))
 
         if self.util.motion_task_counter==19:
             print("Done placing main cover")
@@ -1433,7 +1437,7 @@ class ExecutorFunctions:
             self.bool_done[27] = True
             print("Done placing handle")
             self.util.remove_part("World/UR10_handle/ee_link", "qhandle")
-            self.util.add_part_custom("mock_robot/platform","handle", "xhandle", np.array([0.001,0.001,0.001]), np.array([0.82439, 0.44736, 1.16068]), np.array([0.20721, 0.68156, -0.67309, -0.19874]))
+            self.util.add_part_custom(f"mock_robot_{self.id}/platform","handle", "xhandle", np.array([0.001,0.001,0.001]), np.array([0.82439, 0.44736, 1.16068]), np.array([0.20721, 0.68156, -0.67309, -0.19874]))
             
         if self.util.motion_task_counter==8:
             self.util.motion_task_counter=0
@@ -1510,7 +1514,7 @@ class ExecutorFunctions:
             self.bool_done[29] = True
             print("Done placing light")
             self.util.remove_part("World/UR10_light/ee_link", "qlight")
-            self.util.add_part_custom("mock_robot/platform","FFrontLightAssembly", "xlight", np.array([0.001,0.001,0.001]), np.array([0.8669, -0.10851, 1.76492]), np.array([0.47905, -0.49076, 0.50734, 0.52179]))
+            self.util.add_part_custom(f"mock_robot_{self.id}/platform","FFrontLightAssembly", "xlight", np.array([0.001,0.001,0.001]), np.array([0.8669, -0.10851, 1.76492]), np.array([0.47905, -0.49076, 0.50734, 0.52179]))
 
         if self.util.motion_task_counter==8:
             self.util.motion_task_counter=0

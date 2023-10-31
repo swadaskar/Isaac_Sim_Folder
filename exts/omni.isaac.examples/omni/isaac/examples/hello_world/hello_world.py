@@ -31,6 +31,7 @@ from tf.transformations import euler_from_quaternion, quaternion_from_euler
 from math import pi 
 
 from omni.isaac.examples.hello_world.assembly_task import AssemblyTask
+from omni.isaac.examples.hello_world.ATV_task import ATVTask
 import time
 import asyncio
 import rospy
@@ -122,7 +123,7 @@ class HelloWorld(BaseSample):
         # self.schedule = deque(["901","951","971"])
         # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102"])
-        self.schedule = deque(["6","6","6","6","6","6","6","1"])
+        self.schedule = deque([])
         # self.schedule = deque(["6","6","1"])
         # self.schedule = deque(["701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
@@ -140,8 +141,11 @@ class HelloWorld(BaseSample):
         #     "202":"wait"
         # func()
         # self.utils = Utils()
-        self.ATV = ExecutorFunctions()
 
+        # ATV declarations -------------------------------------------------------------------------
+        self.num_of_ATVs = 10
+        for i in range(self.num_of_ATVs):
+            world.add_task(ATVTask(name=f"ATV_{i}",offset=np.array([0, i*2, 0])))
 
         # navigation declarations -----------------------------------------------
         
@@ -169,10 +173,22 @@ class HelloWorld(BaseSample):
     async def setup_post_load(self):
         self._world = self.get_world()
 
+        # mobile platform set up -------------------------------------------------------------------------
+        self.ATV_tasks = []
+        self.moving_platforms = []
+        self.ATV_executions = []
+        for i in range(self.num_of_ATVs):
+            self.ATV_tasks.append(self._world.get_task(f"ATV_{i}"))
+            task_params = self.ATV_tasks[i].get_params()
+            self.moving_platforms.append(self._world.scene.get_object(task_params["mp_name"]["value"]))
+
+            atv = ExecutorFunctions()
+            self.ATV_executions.append(atv)
+
         # Engine cell set up ----------------------------------------------------------------------------
         task_params = self._world.get_task("assembly_task").get_params()
         # bring in moving platforms 
-        self.moving_platform = self._world.scene.get_object(task_params["mp_name"]["value"])
+        # self.moving_platform = self._world.scene.get_object(task_params["mp_name"]["value"])
         self.engine_bringer = self._world.scene.get_object(task_params["eb_name"]["value"])
         self._world.add_physics_callback("sending_actions", callback_fn=self.send_robot_actions)
         # Initialize our controller after load and the first reset
@@ -188,7 +204,7 @@ class HelloWorld(BaseSample):
         self.articulation_controller = self.ur10.get_articulation_controller()
         self.screw_articulation_controller = self.screw_ur10.get_articulation_controller()
 
-        self.add_part("FFrame", "frame", np.array([0.001, 0.001, 0.001]), np.array([0.45216, -0.32084, 0.28512]), np.array([0, 0, 0.70711, 0.70711]))
+        # self.add_part("FFrame", "frame", np.array([0.001, 0.001, 0.001]), np.array([0.45216, -0.32084, 0.28512]), np.array([0, 0, 0.70711, 0.70711]))
         self.add_part_custom("World/Environment","engine_no_rigid", "engine_small", np.array([0.001, 0.001, 0.001]), np.array([-4.86938, 8.14712, 0.59038]), np.array([0.99457, 0, -0.10411, 0]))
 
         # Suspension cell set up ------------------------------------------------------------------------
@@ -431,100 +447,104 @@ class HelloWorld(BaseSample):
         # self.add_part_custom("engine_bringer/platform","engine_no_rigid", "engine_11", np.array([0.001,0.001,0.001]), np.array([0, 0, 0.43148]), np.array([0.99457, 0, -0.10407, 0]))
 
         
+        # ATV executor class declaration -------------------------------------------------
+
+        for i,ATV in enumerate(self.ATV_executions):
+            # id ----------------
+            ATV.id = i
+
+            # ATV declarations ----------------------------------------------------------
+            ATV.moving_platform = self.moving_platforms[i]
+
+            # Engine cell setup -------------------------
+            ATV.my_controller = self.my_controller
+            ATV.screw_my_controller = self.screw_my_controller
+            ATV.articulation_controller = self.articulation_controller
+            ATV.screw_articulation_controller = self.screw_articulation_controller
+
+            # Suspension cell set up ------------------------------------------------------------------------
+
+            ATV.my_controller_suspension = self.my_controller_suspension
+            ATV.screw_my_controller_suspension = self.screw_my_controller_suspension
+
+            ATV.articulation_controller_suspension = self.articulation_controller_suspension
+            ATV.screw_articulation_controller_suspension = self.screw_articulation_controller_suspension
 
 
-        # ATV declarations ----------------------------------------------------------
-        self.ATV.moving_platform = self.moving_platform
+            # Fuel cell set up ---------------------------------------------------------------------------------
 
-        # Engine cell setup -------------------------
-        self.ATV.my_controller = self.my_controller
-        self.ATV.screw_my_controller = self.screw_my_controller
-        self.ATV.articulation_controller = self.articulation_controller
-        self.ATV.screw_articulation_controller = self.screw_articulation_controller
+            ATV.my_controller_fuel = self.my_controller_fuel
+            ATV.screw_my_controller_fuel = self.screw_my_controller_fuel
 
-        # Suspension cell set up ------------------------------------------------------------------------
+            ATV.articulation_controller_fuel = self.articulation_controller_fuel
+            ATV.screw_articulation_controller_fuel = self.screw_articulation_controller_fuel
 
-        self.ATV.my_controller_suspension = self.my_controller_suspension
-        self.ATV.screw_my_controller_suspension = self.screw_my_controller_suspension
+            # battery cell set up ---------------------------------------------------------------------------------
 
-        self.ATV.articulation_controller_suspension = self.articulation_controller_suspension
-        self.ATV.screw_articulation_controller_suspension = self.screw_articulation_controller_suspension
+            ATV.my_controller_battery = self.my_controller_battery
+            ATV.screw_my_controller_battery = self.screw_my_controller_battery
 
+            ATV.articulation_controller_battery = self.articulation_controller_battery
+            ATV.screw_articulation_controller_battery = self.screw_articulation_controller_battery
 
-        # Fuel cell set up ---------------------------------------------------------------------------------
+            # trunk cell set up ---------------------------------------------------------------------------------
 
-        self.ATV.my_controller_fuel = self.my_controller_fuel
-        self.ATV.screw_my_controller_fuel = self.screw_my_controller_fuel
+            ATV.my_controller_trunk = self.my_controller_trunk
+            ATV.screw_my_controller_trunk = self.screw_my_controller_trunk
 
-        self.ATV.articulation_controller_fuel = self.articulation_controller_fuel
-        self.ATV.screw_articulation_controller_fuel = self.screw_articulation_controller_fuel
+            ATV.articulation_controller_trunk = self.articulation_controller_trunk
+            ATV.screw_articulation_controller_trunk = self.screw_articulation_controller_trunk
 
-        # battery cell set up ---------------------------------------------------------------------------------
+            # wheel cell set up ---------------------------------------------------------------------------------
 
-        self.ATV.my_controller_battery = self.my_controller_battery
-        self.ATV.screw_my_controller_battery = self.screw_my_controller_battery
+            ATV.my_controller_wheel = self.my_controller_wheel
+            ATV.screw_my_controller_wheel = self.screw_my_controller_wheel
 
-        self.ATV.articulation_controller_battery = self.articulation_controller_battery
-        self.ATV.screw_articulation_controller_battery = self.screw_articulation_controller_battery
+            ATV.articulation_controller_wheel = self.articulation_controller_wheel
+            ATV.screw_articulation_controller_wheel = self.screw_articulation_controller_wheel
 
-        # trunk cell set up ---------------------------------------------------------------------------------
+            ATV.my_controller_wheel_01 = self.my_controller_wheel_01
+            ATV.screw_my_controller_wheel_01 = self.screw_my_controller_wheel_01
 
-        self.ATV.my_controller_trunk = self.my_controller_trunk
-        self.ATV.screw_my_controller_trunk = self.screw_my_controller_trunk
+            ATV.articulation_controller_wheel_01 = self.articulation_controller_wheel_01
+            ATV.screw_articulation_controller_wheel_01 = self.screw_articulation_controller_wheel_01
 
-        self.ATV.articulation_controller_trunk = self.articulation_controller_trunk
-        self.ATV.screw_articulation_controller_trunk = self.screw_articulation_controller_trunk
+            # lower_cover cell set up ---------------------------------------------------------------------------------
 
-        # wheel cell set up ---------------------------------------------------------------------------------
+            ATV.my_controller_lower_cover = self.my_controller_lower_cover
+            ATV.screw_my_controller_lower_cover = self.screw_my_controller_lower_cover
 
-        self.ATV.my_controller_wheel = self.my_controller_wheel
-        self.ATV.screw_my_controller_wheel = self.screw_my_controller_wheel
+            ATV.articulation_controller_lower_cover = self.articulation_controller_lower_cover
+            ATV.screw_articulation_controller_lower_cover = self.screw_articulation_controller_lower_cover
 
-        self.ATV.articulation_controller_wheel = self.articulation_controller_wheel
-        self.ATV.screw_articulation_controller_wheel = self.screw_articulation_controller_wheel
+            ATV.my_controller_lower_cover_01 = self.my_controller_lower_cover_01
+            ATV.screw_my_controller_lower_cover_01 = self.screw_my_controller_lower_cover_01
 
-        self.ATV.my_controller_wheel_01 = self.my_controller_wheel_01
-        self.ATV.screw_my_controller_wheel_01 = self.screw_my_controller_wheel_01
+            ATV.articulation_controller_lower_cover_01 = self.articulation_controller_lower_cover_01
+            ATV.screw_articulation_controller_lower_cover_01 = self.screw_articulation_controller_lower_cover_01
 
-        self.ATV.articulation_controller_wheel_01 = self.articulation_controller_wheel_01
-        self.ATV.screw_articulation_controller_wheel_01 = self.screw_articulation_controller_wheel_01
+            ATV.my_controller_main_cover = self.my_controller_main_cover
 
-        # lower_cover cell set up ---------------------------------------------------------------------------------
+            ATV.articulation_controller_main_cover = self.articulation_controller_main_cover
+            
+            # handle cell set up ---------------------------------------------------------------------------------
 
-        self.ATV.my_controller_lower_cover = self.my_controller_lower_cover
-        self.ATV.screw_my_controller_lower_cover = self.screw_my_controller_lower_cover
+            ATV.my_controller_handle = self.my_controller_handle
+            ATV.screw_my_controller_handle = self.screw_my_controller_handle
 
-        self.ATV.articulation_controller_lower_cover = self.articulation_controller_lower_cover
-        self.ATV.screw_articulation_controller_lower_cover = self.screw_articulation_controller_lower_cover
+            ATV.articulation_controller_handle = self.articulation_controller_handle
+            ATV.screw_articulation_controller_handle = self.screw_articulation_controller_handle
 
-        self.ATV.my_controller_lower_cover_01 = self.my_controller_lower_cover_01
-        self.ATV.screw_my_controller_lower_cover_01 = self.screw_my_controller_lower_cover_01
+            # light cell set up --------------------------------------------------------------------------------
+            ATV.my_controller_light = self.my_controller_light
+            ATV.screw_my_controller_light = self.screw_my_controller_light
 
-        self.ATV.articulation_controller_lower_cover_01 = self.articulation_controller_lower_cover_01
-        self.ATV.screw_articulation_controller_lower_cover_01 = self.screw_articulation_controller_lower_cover_01
+            ATV.articulation_controller_light = self.articulation_controller_light
+            ATV.screw_articulation_controller_light = self.screw_articulation_controller_light
+            
+            ATV.world = self._world
 
-        self.ATV.my_controller_main_cover = self.my_controller_main_cover
-
-        self.ATV.articulation_controller_main_cover = self.articulation_controller_main_cover
-        
-        # handle cell set up ---------------------------------------------------------------------------------
-
-        self.ATV.my_controller_handle = self.my_controller_handle
-        self.ATV.screw_my_controller_handle = self.screw_my_controller_handle
-
-        self.ATV.articulation_controller_handle = self.articulation_controller_handle
-        self.ATV.screw_articulation_controller_handle = self.screw_articulation_controller_handle
-
-        # light cell set up --------------------------------------------------------------------------------
-        self.ATV.my_controller_light = self.my_controller_light
-        self.ATV.screw_my_controller_light = self.screw_my_controller_light
-
-        self.ATV.articulation_controller_light = self.articulation_controller_light
-        self.ATV.screw_articulation_controller_light = self.screw_articulation_controller_light
-        
-        self.ATV.world = self._world
-
-        self.ATV.declare_utils()
+            ATV.declare_utils()
 
         
         return
@@ -672,7 +692,7 @@ class HelloWorld(BaseSample):
     
     def _check_goal_reached(self, goal_pose):
         # Cannot get result from ROS because /move_base/result also uses move_base_msgs module
-        mp_position, mp_orientation = self.moving_platform.get_world_pose()
+        mp_position, mp_orientation = self.moving_platforms[0].get_world_pose()
         _, _, mp_yaw = euler_from_quaternion(mp_orientation)
         _, _, goal_yaw = euler_from_quaternion(goal_pose[3:])
         
@@ -2305,7 +2325,7 @@ class HelloWorld(BaseSample):
         if self.schedule:
             curr_schedule = self.schedule[0]
 
-            curr_schedule_function = getattr(self, task_to_func_map[curr_schedule])
+            curr_schedule_function = getattr(self.ATV_executions[0], task_to_func_map[curr_schedule])
 
             function_done = curr_schedule_function()
             print(self.schedule)
@@ -2313,239 +2333,6 @@ class HelloWorld(BaseSample):
                 print("Done with", task_to_func_map[curr_schedule])
                 self.schedule.popleft()
 
-        return
-
-
-        # # engine task --------------------------------------------------------------------------
-        ## Task event numbering:
-        # 1 - 30 normal events: forward, stop and add piece, turn
-        # 51 - 61 smaller moving platforms events: forward, stop, disappear piece
-        # 71 - pick place tasks
-
-
-        # Terminology
-        # mp - moving platform
-
-        # second view tasks
-        # if current_observations["task_event"] == 21:
-        #     self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
-        # elif current_observations["task_event"] == 22:
-        #     self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
-        #     self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[-0.5, 0.5, -0.5, 0.5],0]))
-
-        # iteration 1 
-        # go forward
-        if current_observations["task_event"] == 1:
-            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
-        
-         # arm_robot picks and places part
-        elif current_observations["task_event"] == 71:
-            print("bool counter: task 71:", current_observations["bool_counter"])
-            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
-            if not self.isDone[current_observations["task_event"]]:
-                
-                motion_plan = [{"index":0, "position": np.array([0.97858+0.14-0.3, -0.12572, 0.21991]), "orientation": np.array([1, 0, 0, 0]), "goal_position":np.array([-4.86054, 7.95174-0.3, 0.46095]), "goal_orientation":np.array([0.70711, 0, 0, 0.70711])},
-                               {"index":1, "position": np.array([0.97858+0.14, -0.12572, 0.21991]), "orientation": np.array([1, 0, 0, 0]), "goal_position":np.array([-4.86054, 7.95174, 0.46095]), "goal_orientation":np.array([0.70711, 0, 0, 0.70711])},
-                               
-                               {"index":2, "position": np.array([0.93302+0.14, -0.12572, 0.54475]), "orientation": np.array([1, 0, 0, 0]), "goal_position":np.array([-4.86054, 7.90617, 0.78578]), "goal_orientation":np.array([0.70711, 0, 0, 0.70711])},
-                            #    {"index":3, "position": np.array([1.00103, -0.12198, 0.24084]), "orientation": np.array([1, 0, 0, 0]), "goal_position":np.array([-4.86409, 7.96971, 0.48132]), "goal_orientation":np.array([0.70711, 0, 0, 0.70711])},
-
-                               {"index":3, "position": np.array([0.80658+0.15, 0.24732, 0.54475]), "orientation": np.array([0.99217, 0, 0, 0.12489]), "goal_position":np.array([-5.23375, 7.77959, 0.78578]), "goal_orientation":np.array([0.61326, 0, 0, 0.78988])},
-                               {"index":4, "position": np.array([0.65068+0.15, 0.39893, 0.54475]), "orientation": np.array([0.97001, 0, 0, 0.24305]), "goal_position":np.array([-5.38549, 7.6235, 0.78578]), "goal_orientation":np.array([0.51404, 0, 0, 0.85777])},
-                               {"index":5, "position": np.array([0.53837+0.15, 0.63504, 0.54475]), "orientation": np.array([0.92149, 0, 0, 0.38841]), "goal_position":np.array([-5.62169, 7.51092, 0.78578]), "goal_orientation":np.array([0.37695, 0, 0, 0.92624])},
-                               {"index":6, "position": np.array([0.33707, 0.82498, 0.54475]), "orientation": np.array([0.77061, 0, 0, 0.6373]), "goal_position":np.array([-5.81157, 7.30908, 0.78578]), "goal_orientation":np.array([0.09427, 0, 0, 0.99555])},
-                               {"index":7, "position": np.array([0.04974, 0.90202, 0.54475]), "orientation": np.array([0.65945, 0, 0, 0.75175]), "goal_position":np.array([-5.88845+0.16, 7.0215, 0.78578]), "goal_orientation":np.array([0.06527, 0, 0, -0.99787])},
-                               {"index":8, "position": np.array([-0.25724, 0.83912, 0.54475]), "orientation": np.array([0.41054, 0, 0, 0.91184]), "goal_position":np.array([-5.82509, 6.71424, 0.78578]), "goal_orientation":np.array([0.35448, 0, 0, -0.93506])},
-                               {"index":9, "position": np.array([-0.54443, 0.27481, 0.37107]), "orientation": np.array([0.14679, 0, 0, 0.98917]), "goal_position":np.array([-5.26026, 6.42705, 0.61211]), "goal_orientation":np.array([0.59565, 0, 0, -0.80324])},
-                               {"index":10, "position": np.array([-0.60965, -0.03841, 0.37107]), "orientation": np.array([0,0,0,-1]), "goal_position":np.array([-4.94679, 6.36196, 0.61211]), "goal_orientation":np.array([0.70711,0,0,-0.70711])},
-                               {"index":11, "position": np.array([-0.67167, -0.03841, 0.16822]), "orientation": np.array([0,0,0,-1]), "goal_position":np.array([-4.94679, 6.29994, 0.40925]), "goal_orientation":np.array([0.70711, 0, 0, -0.70711])},
-                               {"index":12, "position": np.array([-1.05735, -0.06372, 0.1323]), "orientation": np.array([0,0,0,-1]), "goal_position":np.array([-4.92148, 5.91425, 0.37333]), "goal_orientation":np.array([0.70711, 0, 0, -0.70711])},
-                               {"index":13, "position": np.array([-1.10475-0.16+0.06, -0.11984, 0.13512]), "orientation": np.array([0,0,0.08495,-0.99639]), "goal_position":np.array([-4.86552, 5.86784+0.06, 0.37552]), "goal_orientation":np.array([0.70455, -0.06007, 0.6007, -0.70455])}]
-                
-                self.move_ur10(motion_plan)
-
-                if self.motion_task_counter==2 and not self.bool_done[current_observations["bool_counter"]]:
-                    self.bool_done[current_observations["bool_counter"]] = True
-                    self.remove_part("World/Environment", "engine_small")
-                    self.add_part_custom("World/UR10/ee_link","engine_no_rigid", "qengine_small", np.array([0.001,0.001,0.001]), np.array([0.17441, 0.00314, 0.11018]), np.array([0.70365, -0.06987, -0.06987, -0.70365]))
-
-                if self.motion_task_counter==14:
-                    self.isDone[current_observations["task_event"]]=True
-                    self.motion_task_counter=0
-                    print("Done motion plan")
-                   
-
-        # remove engine and add engine
-        elif current_observations["task_event"] == 2:
-            print("bool counter: task 2:", current_observations["bool_counter"])
-            if not self.bool_done[current_observations["bool_counter"]]:
-                self.bool_done[current_observations["bool_counter"]] = True
-                self.remove_part("World/UR10/ee_link", "qengine_small")
-                self.add_part_custom("mock_robot/platform","engine_no_rigid", "engine", np.array([0.001,0.001,0.001]), np.array([-0.16041, -0.00551, 0.46581]), np.array([0.98404, -0.00148, -0.17792, -0.00274]))
-                
-                self.motion_task_counter=0
-                # self.add_part_custom("mock_robot/platform","engine_no_rigid", "engine", np.array([0.001,0.001,0.001]), np.array([-0.16041, -0.00551, 0.46581]), np.array([0.98404, -0.00148, -0.17792, -0.00274]))
-            
-            if not self.isDone[current_observations["task_event"]]:
-
-                motion_plan = [{"index":0, "position": np.array([-0.68114, -0.10741, -0.16+0.43038+0.2]), "orientation": np.array([0,-0.70711, 0, 0.70711]), "goal_position":np.array([-4.63079, 3.98461, 0.67129+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-                               {"index":1, "position": np.array([-0.68114, -0.10741, -0.16+0.43038]), "orientation": np.array([0,-0.70711, 0, 0.70711]), "goal_position":np.array([-4.63079, 3.98461, 0.67129]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-                               {"index":2, "position": np.array([-0.68114, -0.10741, -0.16+0.43038+0.2]), "orientation": np.array([0,-0.70711, 0, 0.70711]), "goal_position":np.array([-4.63079, 3.98461, 0.67129+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-                               
-                               {"index":3, "position": self.transform_for_screw_ur10(np.array([0.74286, 0.3942, 0.24203])), "orientation": np.array([0.24137, -0.97029, -0.00397, -0.0163]), "goal_position":np.array([-5.14051,5.40792,0.477701]), "goal_orientation":np.array([0.18255, -0.68481, -0.68739, 0.15875])},
-                               {"index":4, "position": self.transform_for_screw_ur10(np.array([0.60205, 0.3942, 0.24203])), "orientation": np.array([0.24137, -0.97029, -0.00397, -0.0163]), "goal_position":np.array([-5.14051,5.40792-0.14,0.477701]), "goal_orientation":np.array([0.18255, -0.68481, -0.68739, 0.15875])},
-
-                               {"index":5, "position": np.array([-0.68114, -0.10741, -0.16+0.43038+0.2]), "orientation": np.array([0,-0.70711, 0, 0.70711]), "goal_position":np.array([-4.63079, 3.98461, 0.67129+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-                               {"index":6, "position": np.array([-0.68114, -0.10741, -0.16+0.43038]), "orientation": np.array([0,-0.70711, 0, 0.70711]), "goal_position":np.array([-4.63079, 3.98461, 0.67129]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-                               {"index":7, "position": np.array([-0.68114, -0.10741, -0.16+0.43038+0.2]), "orientation": np.array([0,-0.70711, 0, 0.70711]), "goal_position":np.array([-4.63079, 3.98461, 0.67129+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-                               
-                               {"index":8, "position": self.transform_for_screw_ur10(np.array([0.82391-0.2, -0.02307, 0.15366])), "orientation": np.array([0.34479, 0.93825, -0.02095, 0.019]), "goal_position":np.array([-4.70797, 5.48974-0.2, 0.40163]), "goal_orientation":np.array([0.20664, 0.69092, 0.65241, 0.233])},
-                               {"index":9, "position": self.transform_for_screw_ur10(np.array([0.96984-0.2, -0.03195, 0.16514])), "orientation": np.array([0.34479, 0.93825, -0.02095, 0.019]), "goal_position":np.array([-4.70384, 5.63505-0.2, 0.40916]), "goal_orientation":np.array([0.20664, 0.69092, 0.65241, 0.233])},
-                               
-                               {"index":10, "position": np.array([-0.03152, -0.69498, 0.14425]), "orientation": np.array([0.69771, -0.07322, 0.09792, -0.70587]), "goal_position":np.array([-4.20, 4.63272, 0.38666]), "goal_orientation":np.array([0.99219, -0.12149, 0.01374, 0.02475])}]
-
-                self.do_screw_driving(motion_plan)
-                if self.motion_task_counter==11:
-                    self.isDone[current_observations["task_event"]]=True
-                    print("done", self.motion_task_counter)
-                    self.motion_task_counter=0
-
-        elif current_observations["task_event"] == 72:
-            if not self.bool_done[current_observations["bool_counter"]]:
-                self.bool_done[current_observations["bool_counter"]] = True
-                self.motion_task_counter=0
-            print(self.motion_task_counter)
-            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
-            if not self.isDone[current_observations["task_event"]]:
-                
-                motion_plan = [{"index":0, "position": np.array([-0.60965-0.16, -0.03841, 0.37107]), "orientation": np.array([0,0,0,-1]), "goal_position":np.array([-4.94679, 6.36196, 0.61211]), "goal_orientation":np.array([0.70711,0,0,-0.70711])},
-                               {"index":1, "position": np.array([0.07, -0.81, 0.21]), "orientation": np.array([-0.69, 0, 0, 0.72]), "goal_position":np.array([-4.18372, 7.03628, 0.44567]), "goal_orientation":np.array([0.9999, 0, 0, 0])}]
-                self.move_ur10(motion_plan)
-                if self.motion_task_counter==2:
-                    self.isDone[current_observations["task_event"]]=True
-                    self.motion_task_counter=0
-                    print("Done motion plan")
-
-
-        elif current_observations["task_event"] == 3:
-            self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[-0.5, 0.5, -0.5, 0.5],0]))
-            
-        elif current_observations["task_event"] == 4:
-            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
-            if not self.isDone[current_observations["task_event"]]:
-                motion_plan = [{"index":0, "position": np.array([-0.68984, 0.06874, -0.16+0.43038+0.2]), "orientation": np.array([0,-0.70711, 0, 0.70711]), "goal_position":np.array([-4.80693, 3.97591, 0.67129+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-                               {"index":1, "position": np.array([-0.68984, 0.06874, -0.16+0.43038]), "orientation": np.array([0,-0.70711, 0, 0.70711]), "goal_position":np.array([-4.80693, 3.97591, 0.67129]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-                               {"index":2, "position": np.array([-0.68984, 0.06874, -0.16+0.43038+0.2]), "orientation": np.array([0,-0.70711, 0, 0.70711]), "goal_position":np.array([-4.80693, 3.97591, 0.67129+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-
-                               {"index":3, "position": self.transform_for_screw_ur10(np.array([0.7558-0.2, 0.59565, 0.17559])), "orientation": np.array([0.24137, -0.97029, -0.00397, -0.0163]), "goal_position":np.array([-5.3358, 5.42428-0.2, 0.41358]), "goal_orientation":np.array([0.18255, -0.68481, -0.68739, 0.15875])},
-                               {"index":4, "position": self.transform_for_screw_ur10(np.array([0.92167-0.2, 0.59565, 0.17559])), "orientation": np.array([0.24137, -0.97029, -0.00397, -0.0163]), "goal_position":np.array([-5.3358, 5.59014-0.2, 0.41358]), "goal_orientation":np.array([0.18255, -0.68481, -0.68739, 0.15875])},
-
-                               {"index":5, "position": np.array([-0.68984, 0.06874, -0.16+0.43038+0.2]), "orientation": np.array([0,-0.70711, 0, 0.70711]), "goal_position":np.array([-4.80693, 3.97591, 0.67129+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-                               {"index":6, "position": np.array([-0.68984, 0.06874, -0.16+0.43038]), "orientation": np.array([0,-0.70711, 0, 0.70711]), "goal_position":np.array([-4.80693, 3.97591, 0.67129]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-                               {"index":7, "position": np.array([-0.68984, 0.06874, -0.16+0.43038+0.2]), "orientation": np.array([0,-0.70711, 0, 0.70711]), "goal_position":np.array([-4.80693, 3.97591, 0.67129+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-
-                               {"index":8, "position": self.transform_for_screw_ur10(np.array([0.7743-0.2, 0.13044, 0.24968])), "orientation": np.array([0.14946, 0.98863, 0.00992, 0.01353]), "goal_position":np.array([-4.8676, 5.44277-0.2, 0.48787]), "goal_orientation":np.array([0.09521, 0.6933, 0.70482, 0.1162])},
-                               {"index":9, "position": self.transform_for_screw_ur10(np.array([0.92789-0.2, 0.13045, 0.24968])), "orientation": np.array([0.14946, 0.98863, 0.00992, 0.01353]), "goal_position":np.array([-4.8676, 5.59636-0.2, 0.48787]), "goal_orientation":np.array([0.09521, 0.6933, 0.70482, 0.1162])},
-                               {"index":10, "position": np.array([0.16394, 0.68797, 0.64637]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-5.42692, 4.82896, 0.88836]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])}]
-                self.do_screw_driving(motion_plan)
-                if self.motion_task_counter==11:
-                    self.isDone[current_observations["task_event"]]=True
-                    print("done", self.motion_task_counter)
-        elif current_observations["task_event"] == 6:
-            print("task delay")
-            self.motion_task_counter=0
-        elif current_observations["task_event"] == 5:
-            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
-        
-        # #  Suspension task ----------------------------------------------------------
-
-        # iteration 1 
-        # go forward
-        elif current_observations["task_event"] == 101:
-            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
-            if not self.isDone[current_observations["task_event"]]:
-                self.isDone[current_observations["task_event"]]=True
-        # small mp brings in part
-        elif current_observations["task_event"] == 151:
-            print(self.motion_task_counter)
-            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
-            if not self.isDone[current_observations["task_event"]]:
-                motion_plan = [{"index":0, "position": np.array([0.72034, -0.05477, 0.33852-0.16+0.2]), "orientation": np.array([0.5,-0.5,0.5,0.5]), "goal_position":np.array([-6.822, -5.13962, 0.58122+0.2]), "goal_orientation":np.array([0.5,0.5,0.5,-0.5])},
-                               {"index":1, "position": np.array([0.72034, -0.05477, 0.33852-0.16]), "orientation": np.array([0.5,-0.5,0.5,0.5]), "goal_position":np.array([-6.822, -5.13962, 0.58122]), "goal_orientation":np.array([0.5,0.5,0.5,-0.5])},
-                               {"index":2, "position": np.array([0.72034, -0.05477, 0.33852-0.16+0.2]), "orientation": np.array([0.5,-0.5,0.5,0.5]), "goal_position":np.array([-6.822, -5.13962, 0.58122+0.2]), "goal_orientation":np.array([0.5,0.5,0.5,-0.5])},
-                               
-                               {"index":3, "position": np.array([-0.96615-0.16, -0.56853+0.12, 0.31143]), "orientation": np.array([-0.00257, 0.00265, -0.82633, -0.56318]), "goal_position":np.array([-5.13459, -4.62413-0.12, 0.55254]), "goal_orientation":np.array([0.56316, 0.82633, -0.00001, -0.00438])},
-                               {"index":4, "position": np.array([-1.10845-0.16, -0.56853+0.12, 0.31143]), "orientation": np.array([-0.00257, 0.00265, -0.82633, -0.56318]), "goal_position":np.array([-4.99229, -4.62413-0.12, 0.55254]), "goal_orientation":np.array([0.56316, 0.82633, -0.00001, -0.00438])},
-                               {"index":5, "position": np.array([-1.10842-0.16, -0.39583, 0.29724]), "orientation": np.array([-0.00055, 0.0008, -0.82242, -0.56888]), "goal_position":np.array([-5.00127, -4.80822, 0.53949]), "goal_orientation":np.array([0.56437, 0.82479, 0.02914, 0.01902])}]
-                
-                #                {"index":0, "position": np.array([1.11096, -0.01839, 0.31929-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-7.2154, -5.17695, 0.56252]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
-                #                {"index":1, "position": np.array([1.11096, -0.01839, 0.19845-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-7.2154, -5.17695, 0.44167]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
-                #                {"index":2, "position": np.array([1.11096, -0.01839, 0.31929]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-7.2154, -5.17695, 0.56252]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
-                self.move_ur10(motion_plan, "_suspension")
-
-                if self.motion_task_counter==2 and not self.bool_done[current_observations["bool_counter"]]:
-                    self.bool_done[current_observations["bool_counter"]] = True
-                    self.remove_part("World/Environment", "FSuspensionBack_01")
-                    self.add_part_custom("World/UR10_suspension/ee_link","FSuspensionBack", "qFSuspensionBack", np.array([0.001,0.001,0.001]), np.array([0.16839, 0.158, -0.44332]), np.array([0,0,0,1]))
-                
-                if self.motion_task_counter==6:
-                    print("Done motion plan")
-                    self.isDone[current_observations["task_event"]]=True
-        
-         # arm_robot picks and places part
-        elif current_observations["task_event"] == 171:
-            
-            if not self.isDone[current_observations["task_event"]]:
-                if not self.bool_done[current_observations["bool_counter"]]:
-                    self.bool_done[current_observations["bool_counter"]] = True
-                    print("Part removal done")
-                    self.remove_part("World/UR10_suspension/ee_link", "qFSuspensionBack")
-                    self.motion_task_counter=0
-                    self.add_part_custom("mock_robot/platform","FSuspensionBack", "xFSuspensionBack", np.array([0.001,0.001,0.001]), np.array([-0.87892, 0.0239, 0.82432]), np.array([0.40364, -0.58922, 0.57252, -0.40262]))
-            
-
-                motion_plan = [{"index":0, "position": self.transform_for_screw_ur10_suspension(np.array([-0.56003, 0.05522, -0.16+0.43437+0.25])), "orientation": np.array([0, -0.70711,0,0.70711]), "goal_position":np.array([-3.2273, -5.06269, 0.67593+0.25]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
-                               {"index":1, "position": self.transform_for_screw_ur10_suspension(np.array([-0.56003, 0.05522, -0.16+0.43437])), "orientation": np.array([0, -0.70711,0,0.70711]), "goal_position":np.array([-3.2273, -5.06269, 0.67593]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
-                               {"index":2, "position": self.transform_for_screw_ur10_suspension(np.array([-0.56003, 0.05522, -0.16+0.43437+0.25])), "orientation": np.array([0, -0.70711,0,0.70711]), "goal_position":np.array([-3.2273, -5.06269, 0.67593+0.25]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
-                               
-                               {"index":3, "position": self.transform_for_screw_ur10_suspension(np.array([0.83141+0.16-0.2, -0.16343, 0.34189])), "orientation": np.array([1,0,0,0]), "goal_position":np.array([-4.61995+0.2, -4.84629, 0.58477]), "goal_orientation":np.array([0,0,0,1])},
-                               {"index":4, "position": self.transform_for_screw_ur10_suspension(np.array([0.87215+0.16, -0.16343, 0.34189])), "orientation": np.array([1,0,0,0]), "goal_position":np.array([-4.66069, -4.84629,0.58477]), "goal_orientation":np.array([0,0,0,1])},
-                               {"index":5, "position": self.transform_for_screw_ur10_suspension(np.array([0.83141+0.16-0.2, -0.16343, 0.34189])), "orientation": np.array([1,0,0,0]), "goal_position":np.array([-4.61995+0.2, -4.84629, 0.58477]), "goal_orientation":np.array([0,0,0,1])},
-                               
-                               {"index":6, "position": self.transform_for_screw_ur10_suspension(np.array([-0.55625, -0.1223, -0.16+0.43437+0.2])), "orientation": np.array([0, -0.70711,0,0.70711]), "goal_position":np.array([-3.23108, -4.88517, 0.67593+0.25]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
-                               {"index":7, "position": self.transform_for_screw_ur10_suspension(np.array([-0.55625, -0.1223, -0.16+0.43437])), "orientation": np.array([0, -0.70711,0,0.70711]), "goal_position":np.array([-3.23108, -4.88517, 0.67593]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
-                               {"index":8, "position": self.transform_for_screw_ur10_suspension(np.array([-0.55625, -0.1223, -0.16+0.43437+0.2])), "orientation": np.array([0, -0.70711,0,0.70711]), "goal_position":np.array([-3.23108, -4.88517, 0.67593+0.25]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
-
-                               {"index":9, "position": self.transform_for_screw_ur10_suspension(np.array([0.81036+0.16-0.1, -0.26815, 0.24723])), "orientation": np.array([0,-1, 0, 0]), "goal_position":np.array([-4.59801+0.1, -4.7396, 0.49012]), "goal_orientation":np.array([0,0,1,0])},
-                               {"index":10, "position": self.transform_for_screw_ur10_suspension(np.array([0.91167+0.16, -0.26815, 0.24723])), "orientation": np.array([0,-1, 0, 0]), "goal_position":np.array([-4.69933, -4.7396, 0.49012]), "goal_orientation":np.array([0,0,1,0])},
-                               {"index":11, "position": self.transform_for_screw_ur10_suspension(np.array([0.81036+0.16-0.1, -0.26815, 0.24723])), "orientation": np.array([0,-1, 0, 0]), "goal_position":np.array([-4.59801+0.1, -4.7396, 0.49012]), "goal_orientation":np.array([0,0,1,0])},
-                               
-                               {"index":12, "position": self.transform_for_screw_ur10_suspension(np.array([-0.08295-0.16, -0.58914, 0.32041-0.15])), "orientation": np.array([0,0.70711, 0, -0.70711]), "goal_position":np.array([-3.70349, -4.41856, 0.56125]), "goal_orientation":np.array([0.70711,0,0.70711,0])}]
-                print(self.motion_task_counter)
-                self.do_screw_driving(motion_plan, "_suspension")
-                if self.motion_task_counter==13:
-                    self.isDone[current_observations["task_event"]]=True
-                    self.done = True
-                    self.motion_task_counter=0
-                    motion_plan = [{"index":0, "position": np.array([-0.95325-0.16, -0.38757, 0.31143]), "orientation": np.array([-0.00257, 0.00265, -0.82633, -0.56318]), "goal_position":np.array([-5.14749, -4.80509, 0.55254]), "goal_orientation":np.array([0.56316, 0.82633, -0.00001, -0.00438])},
-                                   {"index":1, "position": np.array([0.07, -0.81, 0.21]), "orientation": np.array([-0.69, 0, 0, 0.72]), "goal_position":np.array([-4.18372, 7.03628, 0.44567]), "goal_orientation":np.array([0.9999, 0, 0, 0])}]
-                    self.move_ur10(motion_plan, "_suspension")
-                    # self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
-                    print("done", self.motion_task_counter)
-
-        # remove engine and add engine
-        elif current_observations["task_event"] == 102:
-            if not self.isDone[current_observations["task_event"]]:
-                self.isDone[current_observations["task_event"]]=True
-                self.done = True
-                self.motion_task_counter=0
-                motion_plan = [{"index":0, "position": np.array([-0.95325-0.16, -0.38757, 0.31143]), "orientation": np.array([-0.00257, 0.00265, -0.82633, -0.56318]), "goal_position":np.array([-5.14749, -4.80509, 0.55254]), "goal_orientation":np.array([0.56316, 0.82633, -0.00001, -0.00438])},
-                                {"index":1, "position": np.array([0.07, -0.81, 0.21]), "orientation": np.array([-0.69, 0, 0, 0.72]), "goal_position":np.array([-4.18372, 7.03628, 0.44567]), "goal_orientation":np.array([0.9999, 0, 0, 0])}]
-                self.move_ur10(motion_plan,  "_suspension")
-            print("task 102 delay")
-        elif current_observations["task_event"] == 103:
-            print("task 103")
-            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
         return
     
     def add_part(self, part_name, prim_name, scale, position, orientation):

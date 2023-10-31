@@ -51,6 +51,8 @@ class Utils:
         self.motion_task_counter = 0
         self.motion_task_counterl = 0
 
+        self.id = None
+
         # Engine cell set up ----------------------------------------------------------------------------
         # bring in moving platforms 
         self.moving_platform = None
@@ -324,7 +326,7 @@ class Utils:
         base_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/Materials/atvsstlfiles/"
 
         add_reference_to_stage(usd_path=base_asset_path+f"{part_name}/{part_name}.usd", prim_path=f"/mock_robot/platform/{prim_name}") # gives asset ref path
-        part= world.scene.add(XFormPrim(prim_path=f'/mock_robot/platform/{prim_name}', name=f"q{prim_name}")) # declares in the world
+        part= world.scene.add(XFormPrim(prim_path=f'/mock_robot_{self.id}/platform/{prim_name}', name=f"q{prim_name}")) # declares in the world
 
         ## add part
         part.set_local_scale(scale)
