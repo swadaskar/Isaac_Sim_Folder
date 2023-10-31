@@ -119,9 +119,9 @@ class HelloWorld(BaseSample):
         # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201"])
         # self.schedule = deque(["501", "505","553","573","554","574"])
         # self.schedule = deque(["901","951","971"])
-        self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
+        # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102"])
-        # self.schedule = deque(["591"])
+        self.schedule = deque(["6","6","6","6","6","6","6","1"])
         # self.schedule = deque(["701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         self.right_side = self.left_side = False
@@ -139,6 +139,26 @@ class HelloWorld(BaseSample):
         # func()
         # self.utils = Utils()
         self.ATV = ExecutorFunctions()
+
+        # navigation declarations -----------------------------------------------
+        
+        if not rosgraph.is_master_online():
+            print("Please run roscore before executing this script")
+            return
+        
+        try:
+            rospy.init_node("set_goal_py")
+        except rospy.exceptions.ROSException as e:
+            print("Node has already been initialized, do nothing")
+        
+        # FIXME
+        # self._initial_goal_publisher = rospy.Publisher("initialpose", PoseWithCovarianceStamped, queue_size=1)
+        # self.__send_initial_pose()
+        # await asyncio.sleep(1.0)
+        # self._action_client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
+        self._goal_pub = rospy.Publisher("/move_base_simple/goal", PoseStamped, queue_size=1)
+        self._xy_goal_tolerance = 0.25
+        self._yaw_goal_tolerance = 0.05
         return
 
     async def setup_post_load(self):
@@ -405,7 +425,7 @@ class HelloWorld(BaseSample):
 
         # self.add_part_custom("engine_bringer/platform","engine_no_rigid", "engine_11", np.array([0.001,0.001,0.001]), np.array([0, 0, 0.43148]), np.array([0.99457, 0, -0.10407, 0]))
 
-        # navigation declarations -----------------------------------------------
+        
 
 
         # ATV declarations ----------------------------------------------------------
@@ -501,23 +521,7 @@ class HelloWorld(BaseSample):
 
         self.ATV.declare_utils()
 
-        if not rosgraph.is_master_online():
-            print("Please run roscore before executing this script")
-            return
         
-        try:
-            rospy.init_node("set_goal_py")
-        except rospy.exceptions.ROSException as e:
-            print("Node has already been initialized, do nothing")
-        
-        # FIXME
-        # self._initial_goal_publisher = rospy.Publisher("initialpose", PoseWithCovarianceStamped, queue_size=1)
-        # self.__send_initial_pose()
-        # await asyncio.sleep(1.0)
-        # self._action_client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
-        self._goal_pub = rospy.Publisher("/move_base_simple/goal", PoseStamped, queue_size=1)
-        self._xy_goal_tolerance = 0.25
-        self._yaw_goal_tolerance = 0.05
         return
 
     async def setup_post_reset(self):
@@ -661,71 +665,71 @@ class HelloWorld(BaseSample):
         position[2]+=-0.00419
         return position   
     
-    # def _check_goal_reached(self, goal_pose):
-    #     # Cannot get result from ROS because /move_base/result also uses move_base_msgs module
-    #     mp_position, mp_orientation = self.moving_platform.get_world_pose()
-    #     _, _, mp_yaw = euler_from_quaternion(mp_orientation)
-    #     _, _, goal_yaw = euler_from_quaternion(goal_pose[3:])
+    def _check_goal_reached(self, goal_pose):
+        # Cannot get result from ROS because /move_base/result also uses move_base_msgs module
+        mp_position, mp_orientation = self.moving_platform.get_world_pose()
+        _, _, mp_yaw = euler_from_quaternion(mp_orientation)
+        _, _, goal_yaw = euler_from_quaternion(goal_pose[3:])
         
-    #     # FIXME: pi needed for yaw tolerance here because map rotated 180 degrees
-    #     if np.allclose(mp_position[:2], goal_pose[:2], atol=self._xy_goal_tolerance) \
-    #         and abs(mp_yaw-goal_yaw) <= pi + self._yaw_goal_tolerance:
-    #         print("Goal "+str(goal_pose)+" reached!")
-    #         # This seems to crash Isaac sim...
-    #         # self.get_world().remove_physics_callback("mp_nav_check")
+        # FIXME: pi needed for yaw tolerance here because map rotated 180 degrees
+        if np.allclose(mp_position[:2], goal_pose[:2], atol=self._xy_goal_tolerance) \
+            and abs(mp_yaw-goal_yaw) <= pi + self._yaw_goal_tolerance:
+            print("Goal "+str(goal_pose)+" reached!")
+            # This seems to crash Isaac sim...
+            # self.get_world().remove_physics_callback("mp_nav_check")
     
-    # # Goal hardcoded for now
-    # def _send_navigation_goal(self, x=None, y=None, a=None):
-    #     # x, y, a = -18, 14, 3.14
-    #     # x,y,a = -4.65, 5.65,3.14
-    #     orient_x, orient_y, orient_z, orient_w = quaternion_from_euler(0, 0, a)
-    #     pose = [x, y, 0, orient_x, orient_y, orient_z, orient_w]
+    # Goal hardcoded for now
+    def _send_navigation_goal(self, x=None, y=None, a=None):
+        # x, y, a = -18, 14, 3.14
+        # x,y,a = -4.65, 5.65,3.14
+        orient_x, orient_y, orient_z, orient_w = quaternion_from_euler(0, 0, a)
+        pose = [x, y, 0, orient_x, orient_y, orient_z, orient_w]
 
-    #     goal_msg = PoseStamped()
-    #     goal_msg.header.frame_id = "map"
-    #     goal_msg.header.stamp = rospy.get_rostime()
-    #     print("goal pose: "+str(pose))
-    #     goal_msg.pose.position.x = pose[0]
-    #     goal_msg.pose.position.y = pose[1]
-    #     goal_msg.pose.position.z = pose[2]
-    #     goal_msg.pose.orientation.x = pose[3]
-    #     goal_msg.pose.orientation.y = pose[4]
-    #     goal_msg.pose.orientation.z = pose[5]
-    #     goal_msg.pose.orientation.w = pose[6]
+        goal_msg = PoseStamped()
+        goal_msg.header.frame_id = "map"
+        goal_msg.header.stamp = rospy.get_rostime()
+        print("goal pose: "+str(pose))
+        goal_msg.pose.position.x = pose[0]
+        goal_msg.pose.position.y = pose[1]
+        goal_msg.pose.position.z = pose[2]
+        goal_msg.pose.orientation.x = pose[3]
+        goal_msg.pose.orientation.y = pose[4]
+        goal_msg.pose.orientation.z = pose[5]
+        goal_msg.pose.orientation.w = pose[6]
 
-    #     world = self.get_world()
+        world = self.get_world()
 
-    #     self._goal_pub.publish(goal_msg)
+        self._goal_pub.publish(goal_msg)
 
-    #     # self._check_goal_reached(pose)
+        # self._check_goal_reached(pose)
 
-    #     world = self.get_world()
-    #     if not world.physics_callback_exists("mp_nav_check"):
-    #         world.add_physics_callback("mp_nav_check", lambda step_size: self._check_goal_reached(pose))
-    #     # Overwrite check with new goal
-    #     else:
-    #         world.remove_physics_callback("mp_nav_check")
-    #         world.add_physics_callback("mp_nav_check", lambda step_size: self._check_goal_reached(pose))
+        world = self.get_world()
+        if not world.physics_callback_exists("mp_nav_check"):
+            world.add_physics_callback("mp_nav_check", lambda step_size: self._check_goal_reached(pose))
+        # Overwrite check with new goal
+        else:
+            world.remove_physics_callback("mp_nav_check")
+            world.add_physics_callback("mp_nav_check", lambda step_size: self._check_goal_reached(pose))
     
     def move_to_engine_cell(self):
         # # print("sending nav goal")
-        # # self._send_navigation_goal(-4.65, 5.65, 3.14)
+        self._send_navigation_goal(-4.65, 5.65, 3.14)
         # current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
         # self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
         # if current_mp_position[0]<-4.98951:
         #     self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
         #     return True
-        # return False
+        return False
         # # return False
 
 
-        print(self.path_plan_counter)
-        path_plan = [["translate", [-4.98951, 0, False]]]
-        self.move_mp(path_plan)
-        if len(path_plan) == self.path_plan_counter:
-            self.path_plan_counter=0
-            return True
-        return False
+        # print(self.path_plan_counter)
+        # path_plan = [["translate", [-4.98951, 0, False]]]
+        # self.move_mp(path_plan)
+        # if len(path_plan) == self.path_plan_counter:
+        #     self.path_plan_counter=0
+        #     return True
+        # return False
 
     def arm_place_engine(self):
         print("doing motion plan")
@@ -2294,7 +2298,7 @@ class HelloWorld(BaseSample):
         if self.schedule:
             curr_schedule = self.schedule[0]
 
-            curr_schedule_function = getattr(self.ATV, task_to_func_map[curr_schedule])
+            curr_schedule_function = getattr(self, task_to_func_map[curr_schedule])
 
             function_done = curr_schedule_function()
             print(self.schedule)
