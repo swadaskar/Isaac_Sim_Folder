@@ -92,6 +92,7 @@ class HelloWorld(BaseSample):
         self.done = False
 
         
+        
         return
 
     def setup_scene(self):
@@ -122,6 +123,7 @@ class HelloWorld(BaseSample):
         # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102"])
         self.schedule = deque(["6","6","6","6","6","6","6","1"])
+        # self.schedule = deque(["6","6","1"])
         # self.schedule = deque(["701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         self.right_side = self.left_side = False
@@ -140,6 +142,7 @@ class HelloWorld(BaseSample):
         # self.utils = Utils()
         self.ATV = ExecutorFunctions()
 
+
         # navigation declarations -----------------------------------------------
         
         if not rosgraph.is_master_online():
@@ -147,7 +150,7 @@ class HelloWorld(BaseSample):
             return
         
         try:
-            rospy.init_node("set_goal_py")
+            rospy.init_node("set_goal_py",anonymous=True, disable_signals=True, log_level=rospy.ERROR)
         except rospy.exceptions.ROSException as e:
             print("Node has already been initialized, do nothing")
         
@@ -159,6 +162,8 @@ class HelloWorld(BaseSample):
         self._goal_pub = rospy.Publisher("/move_base_simple/goal", PoseStamped, queue_size=1)
         self._xy_goal_tolerance = 0.25
         self._yaw_goal_tolerance = 0.05
+
+        
         return
 
     async def setup_post_load(self):
@@ -713,7 +718,9 @@ class HelloWorld(BaseSample):
     
     def move_to_engine_cell(self):
         # # print("sending nav goal")
-        self._send_navigation_goal(-4.65, 5.65, 3.14)
+        if not self.bool_done[123]:
+            self._send_navigation_goal(-4.65, 5.65, 3.14)
+            self.bool_done[123] = True
         # current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
         # self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
         # if current_mp_position[0]<-4.98951:
