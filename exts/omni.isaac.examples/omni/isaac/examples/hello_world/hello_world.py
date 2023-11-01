@@ -37,6 +37,7 @@ import asyncio
 import rospy
 
 from omni.isaac.examples.hello_world.executor_functions import ExecutorFunctions
+from omni.isaac.core import SimulationContext
 
 # def func():
 #     try:
@@ -121,9 +122,10 @@ class HelloWorld(BaseSample):
         # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201"])
         # self.schedule = deque(["501", "505","553","573","554","574"])
         # self.schedule = deque(["901","951","971"])
-        # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
-        # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102"])
-        self.schedule = deque([])
+        self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
+        self.schedule_1 = deque(["1","71","2","72","3","4","6","5","151","171","181","102"])
+        # self.schedule = deque(["1"])
+        # self.schedule_1 = deque(["1"])
         # self.schedule = deque(["6","6","1"])
         # self.schedule = deque(["701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
@@ -181,6 +183,7 @@ class HelloWorld(BaseSample):
             self.ATV_tasks.append(self._world.get_task(f"ATV_{i}"))
             task_params = self.ATV_tasks[i].get_params()
             self.moving_platforms.append(self._world.scene.get_object(task_params["mp_name"]["value"]))
+            self.add_part_custom(f"mock_robot_{i}/platform","FFrame", f"frame_{i}", np.array([0.001, 0.001, 0.001]), np.array([0.45216, -0.32084, 0.28512]), np.array([0, 0, 0.70711, 0.70711]))
 
             atv = ExecutorFunctions()
             self.ATV_executions.append(atv)
@@ -2322,6 +2325,9 @@ class HelloWorld(BaseSample):
         # schedule = deque(["1","71","2","72","3","4","6","5","102","301","302","201","202","401","402","501","505","502","701","721","703","801","851","871","881","802","901","902"])
         # schedule = deque(["1","71"])
 
+        sc = SimulationContext()
+        print("Time:", sc.current_time)
+
         if self.schedule:
             curr_schedule = self.schedule[0]
 
@@ -2332,6 +2338,17 @@ class HelloWorld(BaseSample):
             if function_done:
                 print("Done with", task_to_func_map[curr_schedule])
                 self.schedule.popleft()
+
+        if self.schedule_1 and sc.current_time>40:
+            curr_schedule = self.schedule_1[0]
+
+            curr_schedule_function = getattr(self.ATV_executions[1], task_to_func_map[curr_schedule])
+
+            function_done = curr_schedule_function()
+            print(self.schedule_1)
+            if function_done:
+                print("Done with", task_to_func_map[curr_schedule])
+                self.schedule_1.popleft()
 
         return
     
