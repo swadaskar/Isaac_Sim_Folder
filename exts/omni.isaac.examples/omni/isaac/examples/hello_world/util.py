@@ -221,9 +221,9 @@ class Utils:
         if success:
             print("still homing on this location")
             articulation_controller_name = getattr(self,"screw_articulation_controller"+task_name)
-            print(articulation_controller_name, task_name, "screw_articulation_controller"+task_name, self.screw_articulation_controller_wheel)
-            print(self.articulation_controller_wheel_01)
-            print(self.screw_articulation_controller_wheel_01)
+            # print(articulation_controller_name, task_name, "screw_articulation_controller"+task_name, self.screw_articulation_controller_wheel)
+            # print(self.articulation_controller_wheel_01)
+            # print(self.screw_articulation_controller_wheel_01)
             articulation_controller_name.apply_action(actions)
         else:
             carb.log_warn("IK did not converge to a solution.  No action is being taken.")
@@ -371,3 +371,143 @@ class Utils:
         action = self._my_controller.forward(start_position=position, start_orientation=orientation, goal_position=goal_position)  # Change the goal position to what you want
         full_action = ArticulationAction(joint_efforts=np.concatenate([action.joint_efforts, action.joint_efforts]) if action.joint_efforts else None, joint_velocities=np.concatenate([action.joint_velocities, action.joint_velocities]), joint_positions=np.concatenate([action.joint_positions, action.joint_positions]) if action.joint_positions else None)
         self.moving_platform.apply_action(full_action)
+
+    def move_mp_battery(self, path_plan):
+        if not path_plan:
+            return
+        current_mp_position, current_mp_orientation = self.battery_bringer.get_world_pose()
+        move_type, goal = path_plan[self.path_plan_counter]
+        if move_type == "translate":
+            goal_pos, axis, reverse = goal
+            print(current_mp_position[axis], goal_pos, abs(current_mp_position[axis]-goal_pos))
+            if reverse:
+                self.battery_bringer.apply_action(self._my_custom_controller.forward(command=[-0.5,0]))
+            else:
+                self.battery_bringer.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
+            if abs(current_mp_position[axis]-goal_pos)<0.01:
+                self.battery_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+        elif move_type == "rotate":
+            goal_ori, error_threshold, rotate_right = goal
+            if rotate_right:
+                self.battery_bringer.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/2]))
+            else:
+                self.battery_bringer.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/2]))
+            curr_error = np.mean(np.abs(current_mp_orientation-goal_ori))
+            print(current_mp_orientation, goal_ori, curr_error)
+            if curr_error< error_threshold:
+                self.battery_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+        elif move_type == "wait":
+            print("Waiting ...")
+            self.battery_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+            if self.delay>60:
+                print("Done waiting")
+                self.delay=0
+                self.path_plan_counter+=1
+            self.delay+=1
+
+    def move_mp_fuel(self, path_plan):
+        if not path_plan:
+            return
+        current_mp_position, current_mp_orientation = self.fuel_bringer.get_world_pose()
+        move_type, goal = path_plan[self.path_plan_counter]
+        if move_type == "translate":
+            goal_pos, axis, reverse = goal
+            print(current_mp_position[axis], goal_pos, abs(current_mp_position[axis]-goal_pos))
+            if reverse:
+                self.fuel_bringer.apply_action(self._my_custom_controller.forward(command=[-0.5,0]))
+            else:
+                self.fuel_bringer.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
+            if abs(current_mp_position[axis]-goal_pos)<0.01:
+                self.fuel_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+        elif move_type == "rotate":
+            goal_ori, error_threshold, rotate_right = goal
+            if rotate_right:
+                self.fuel_bringer.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/2]))
+            else:
+                self.fuel_bringer.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/2]))
+            curr_error = np.mean(np.abs(current_mp_orientation-goal_ori))
+            print(current_mp_orientation, goal_ori, curr_error)
+            if curr_error< error_threshold:
+                self.fuel_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+        elif move_type == "wait":
+            print("Waiting ...")
+            self.fuel_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+            if self.delay>60:
+                print("Done waiting")
+                self.delay=0
+                self.path_plan_counter+=1
+            self.delay+=1
+
+    def move_mp_suspension(self, path_plan):
+        if not path_plan:
+            return
+        current_mp_position, current_mp_orientation = self.suspension_bringer.get_world_pose()
+        move_type, goal = path_plan[self.path_plan_counter]
+        if move_type == "translate":
+            goal_pos, axis, reverse = goal
+            print(current_mp_position[axis], goal_pos, abs(current_mp_position[axis]-goal_pos))
+            if reverse:
+                self.suspension_bringer.apply_action(self._my_custom_controller.forward(command=[-0.5,0]))
+            else:
+                self.suspension_bringer.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
+            if abs(current_mp_position[axis]-goal_pos)<0.01:
+                self.suspension_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+        elif move_type == "rotate":
+            goal_ori, error_threshold, rotate_right = goal
+            if rotate_right:
+                self.suspension_bringer.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/2]))
+            else:
+                self.suspension_bringer.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/2]))
+            curr_error = np.mean(np.abs(current_mp_orientation-goal_ori))
+            print(current_mp_orientation, goal_ori, curr_error)
+            if curr_error< error_threshold:
+                self.suspension_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+        elif move_type == "wait":
+            print("Waiting ...")
+            self.suspension_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+            if self.delay>60:
+                print("Done waiting")
+                self.delay=0
+                self.path_plan_counter+=1
+            self.delay+=1
+
+    def move_mp_engine(self, path_plan):
+        if not path_plan:
+            return
+        current_mp_position, current_mp_orientation = self.engine_bringer.get_world_pose()
+        move_type, goal = path_plan[self.path_plan_counter]
+        if move_type == "translate":
+            goal_pos, axis, reverse = goal
+            print(current_mp_position[axis], goal_pos, abs(current_mp_position[axis]-goal_pos))
+            if reverse:
+                self.engine_bringer.apply_action(self._my_custom_controller.forward(command=[-0.5,0]))
+            else:
+                self.engine_bringer.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
+            if abs(current_mp_position[axis]-goal_pos)<0.01:
+                self.engine_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+        elif move_type == "rotate":
+            goal_ori, error_threshold, rotate_right = goal
+            if rotate_right:
+                self.engine_bringer.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/2]))
+            else:
+                self.engine_bringer.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/2]))
+            curr_error = np.mean(np.abs(current_mp_orientation-goal_ori))
+            print(current_mp_orientation, goal_ori, curr_error)
+            if curr_error< error_threshold:
+                self.engine_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+                self.path_plan_counter+=1
+        elif move_type == "wait":
+            print("Waiting ...")
+            self.engine_bringer.apply_action(self._my_custom_controller.forward(command=[0,0]))
+            if self.delay>60:
+                print("Done waiting")
+                self.delay=0
+                self.path_plan_counter+=1
+            self.delay+=1

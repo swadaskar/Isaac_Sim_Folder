@@ -494,7 +494,7 @@ class ExecutorFunctions:
 
     def arm_remove_fuel(self):
         motion_plan = [{"index":0, "position": np.array([-0.70299-0.16-0.04247, -0.19609, 0.65442]), "orientation": np.array([0, 0, -0.70711, -0.70711]), "goal_position":np.array([-5.39448+0.04247, -15.9671, 0.89604]), "goal_orientation":np.array([0.70711, 0.70711, 0, 0])},
-                       {"index":1, "position": np.array([0.14684, 0.7364+0.16, 0.53588]), "orientation": np.array([0.5,0.5,0.5,0.5]), "goal_position":np.array([-6.24423, -16.89961, 0.77749]), "goal_orientation":np.array([0.5,0.5,-0.5,-0.5])}]
+                       {"index":1, "position": np.array([0.16394, 0.68797, 0.64637]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-6.2616, -16.8517, 1.04836]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])}]
         self.util.move_ur10(motion_plan,"_fuel")
         if self.util.motion_task_counter==2:
             print("Done arm removal")
@@ -563,7 +563,7 @@ class ExecutorFunctions:
                        {"index":10, "position": transform(np.array([0.255, -0.92175+0, 0.53925])), "orientation": np.array([0, 0.58727, 0, -0.80939]), "goal_position":np.array([-16.60656, -17.24789-0, 0.78133]), "goal_orientation":np.array([0.80939, 0, 0.58727, 0])},
                        {"index":11, "position": transform(np.array([0.28749, -0.92175+0, 0.61049])), "orientation": np.array([0, 0.58727, 0, -0.80939]), "goal_position":np.array([-16.63905, -17.24789-0, 0.85257]), "goal_orientation":np.array([0.80939, 0, 0.58727, 0])},
                        
-                       {"index":12, "position": transform(np.array([-0.21277, 0.62489, 0.44932+0.2])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.13927, -18.79419, 0.69132+0.2]), "goal_orientation":np.array([0,0.70711,0,-0.70711])}]
+                       {"index":12, "position": np.array([0.16394, 0.68797, 0.64637]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.515, -18.858, 1.04836]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])}]
         
         # motion_plan = [{"index":0, "position": transform(np.array([-0.03593, 0.62489, 0.44932+0.1])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.3161, -18.79419, 0.69132+0.1]), "goal_orientation":np.array([0,0.70711,0,-0.70711])},
         #                {"index":1, "position": transform(np.array([-0.03593, 0.62489, 0.44932])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.3161, -18.79419, 0.69132]), "goal_orientation":np.array([0,0.70711,0,-0.70711])},
@@ -595,7 +595,7 @@ class ExecutorFunctions:
 
     def arm_remove_battery(self):
         motion_plan = [ {"index":0, "position": np.array([-0.15683+0.05, 0.95185, 0.57477+0.1-0.16]), "orientation": np.array([0.81202, 0, 0.58362, 0]), "goal_position":np.array([-16.39705, -17.18895-0.09326, 0.81657+0.1]), "goal_orientation":np.array([0, -0.58362, 0, 0.81202])},
-                       {"index":1, "position": np.array([0.03497, -0.67758, 0.82296]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-16.589,-15.6521,1.22562]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])}]
+                       {"index":1, "position": np.array([0.16394, 0.68797, 0.64637]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.7179, -17.0181, 1.04897]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])}]
         self.util.move_ur10(motion_plan, "_battery")
         if self.util.motion_task_counter==2:
             print("Done arm removal")
@@ -762,11 +762,11 @@ class ExecutorFunctions:
                        {"index":1, "position": transform(np.array([-0.15245, -0.65087-0.24329, -0.16+0.43677])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-27.14748, 7.43945, 0.67876]), "goal_orientation":np.array([0,-0.70711,0,0.70711])},
                        {"index":2, "position": transform(np.array([-0.15245, -0.65087-0.24329, -0.16+0.43677+0.2])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-27.14748, 7.43945, 0.67876+0.2]), "goal_orientation":np.array([0,-0.70711,0,0.70711])},
                        
-                       {"index":3, "position": transform(np.array([-0.12592, 1.126+0.16-0.24329+0.02396+0.11321, 0.48602])), "orientation": np.array([0.5, 0.5, 0.5, 0.5]), "goal_position":np.array([-27.17401, 5.66311-0.02396-0.11321, 0.7279]), "goal_orientation":np.array([0.5, 0.5, -0.5, -0.5])},
-                       {"index":4, "position": transform(np.array([-0.12592, 1.33575+0.16-0.24329+0.02396+0.11321, 0.48602])), "orientation": np.array([0.5, 0.5, 0.5, 0.5]), "goal_position":np.array([-27.17401, 5.45335-0.02396-0.11321, 0.7279]), "goal_orientation":np.array([0.5, 0.5, -0.5, -0.5])},
-                       {"index":5, "position": transform(np.array([-0.12592, 1.126+0.16-0.24329+0.02396+0.11321, 0.48602])), "orientation": np.array([0.5, 0.5, 0.5, 0.5]), "goal_position":np.array([-27.17401, 5.66311-0.02396-0.11321, 0.7279]), "goal_orientation":np.array([0.5, 0.5, -0.5, -0.5])},
+                       {"index":3, "position": transform(np.array([-0.12592, 1.126+0.16-0.24329+0.02396+0.11321-0.2, 0.48602])), "orientation": np.array([0.5, 0.5, 0.5, 0.5]), "goal_position":np.array([-27.17401, 5.66311-0.02396-0.11321+0.2, 0.7279]), "goal_orientation":np.array([0.5, 0.5, -0.5, -0.5])},
+                       {"index":4, "position": transform(np.array([-0.12592, 1.33575+0.16-0.24329+0.02396+0.11321-0.2, 0.48602])), "orientation": np.array([0.5, 0.5, 0.5, 0.5]), "goal_position":np.array([-27.17401, 5.45335-0.02396-0.11321+0.2, 0.7279]), "goal_orientation":np.array([0.5, 0.5, -0.5, -0.5])},
+                       {"index":5, "position": transform(np.array([-0.12592, 1.126+0.16-0.24329+0.02396+0.11321-0.2, 0.48602])), "orientation": np.array([0.5, 0.5, 0.5, 0.5]), "goal_position":np.array([-27.17401, 5.66311-0.02396-0.11321+0.2, 0.7279]), "goal_orientation":np.array([0.5, 0.5, -0.5, -0.5])},
                        
-                       {"index":6, "position": transform(np.array([-0.15245, -0.65087-0.24329, -0.16+0.43677+0.3])), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-27.14748, 7.43945, 0.67876+0.3]), "goal_orientation":np.array([0,-0.70711,0,0.70711])}]
+                       {"index":6, "position": np.array([0.16394, 0.68797, 0.64637]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-27.4637, 5.85911, 1.04836]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])}]
         self.util.do_screw_driving(motion_plan,"_trunk")
         if self.util.motion_task_counter==7:
             print("Done screwing trunk")
@@ -776,7 +776,7 @@ class ExecutorFunctions:
 
     def arm_remove_trunk(self):
         motion_plan = [{"index":0, "position": np.array([0.42543, -0.81339+0.02396+0, -0.16+0.75942+0.1]), "orientation": np.array([0, 0.70711, 0, -0.70711]), "goal_position":np.array([-27.52862, 5.26-0.02396-0, 1.00113+0.1]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
-                       {"index":1, "position": np.array([0.9596, 0.21244, -0.16+0.4547+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-28.06, 4.27349, 0.69642+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])}]
+                       {"index":1, "position": np.array([0.16394, 0.68797, 0.64637]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-27.2673, 3.79761, 1.04836]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])}]
         self.util.move_ur10(motion_plan, "_trunk")
         if self.util.motion_task_counter==2:
             print("Done arm removal")
@@ -893,7 +893,7 @@ class ExecutorFunctions:
                        {"index":7, "position": np.array([0.46203+0.16, -0.76392, 0.15278]), "orientation": np.array([0.70711, 0.70711, 0, 0]), "goal_position":np.array([-16.32833, 5.65751, 0.3945]), "goal_orientation":np.array([0.70711, 0.70711, 0, 0])},
 
                        {"index":8, "position": np.array([0.35597, -0.15914, -0.16+0.48217]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-16.221, 5.05282, 0.725]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
-                       {"index":9, "position": np.array([-0.00762, 0.77686, -0.16+0.48217]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-15.858, 4.105, 0.723]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])}]
+                       {"index":9, "position": np.array([0.16394, 0.68797, 0.64637]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.0297, 4.20519, 1.04836]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])}]
         self.util.move_ur10_extra(motion_plan, "_wheel")
 
         if self.util.motion_task_counterl==2 and not self.bool_done[7]:
@@ -1038,6 +1038,7 @@ class ExecutorFunctions:
                        {"index":7, "position": np.array([0.46203+0.16, -0.76392, 0.0258]), "orientation": np.array([0.70711, 0.70711, 0, 0]), "goal_position":np.array([-16.32833, 5.65751, 0.274]), "goal_orientation":np.array([0.70711, 0.70711, 0, 0])},
 
                        {"index":8, "position": np.array([0.35597, -0.15914, -0.16+0.48217]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-16.221, 5.05282, 0.725]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       
                        {"index":9, "position": np.array([-0.00762, 0.77686, -0.16+0.48217]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-15.858, 4.105, 0.723]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])}]
         self.util.move_ur10_extra(motion_plan, "_wheel")
 
