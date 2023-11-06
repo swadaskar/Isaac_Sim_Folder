@@ -1,5 +1,11 @@
 import numpy as np
 from omni.isaac.examples.hello_world.util import Utils
+import asyncio
+import rospy
+from geometry_msgs.msg import PoseStamped
+import rosgraph
+from tf.transformations import euler_from_quaternion, quaternion_from_euler
+from math import pi 
 
 class ExecutorFunctions:
     def __init__(self) -> None:
@@ -104,6 +110,10 @@ class ExecutorFunctions:
         self.articulation_controller_light = None
         self.screw_articulation_controller_light = None
 
+        self._goal_pub = rospy.Publisher(f"/move_base_simple/goal_{self.id}", PoseStamped, queue_size=1)
+        self._xy_goal_tolerance = 0.25
+        self._yaw_goal_tolerance = 0.05
+
 
         # Util declarations ----------------------------------------------------------------------------------
     def declare_utils(self):
@@ -203,6 +213,58 @@ class ExecutorFunctions:
         self.util.articulation_controller_light = self.articulation_controller_light
         self.util.screw_articulation_controller_light = self.screw_articulation_controller_light
 
+    def _check_goal_reached(self, goal_pose):
+        # Cannot get result from ROS because /move_base/result also uses move_base_msgs module
+        mp_position, mp_orientation = self.moving_platform.get_world_pose()
+        _, _, mp_yaw = euler_from_quaternion(mp_orientation)
+        _, _, goal_yaw = euler_from_quaternion(goal_pose[3:])
+        
+        # FIXME: pi needed for yaw tolerance here because map rotated 180 degrees
+        if np.allclose(mp_position[:2], goal_pose[:2], atol=self._xy_goal_tolerance) \
+            and abs(mp_yaw-goal_yaw) <= pi + self._yaw_goal_tolerance:
+            print(f"Goal for mp_{self.id} "+str(goal_pose)+" reached!")
+            # This seems to crash Isaac sim...
+            # self.get_world().remove_physics_callback("mp_nav_check")
+    
+    # Goal hardcoded for now
+    def _send_navigation_goal(self, x=None, y=None, a=None):
+        # x, y, a = -18, 14, 3.14
+        # x,y,a = -4.65, 5.65,3.14
+        orient_x, orient_y, orient_z, orient_w = quaternion_from_euler(0, 0, a)
+        pose = [x, y, 0, orient_x, orient_y, orient_z, orient_w]
+
+        goal_msg = PoseStamped()
+        goal_msg.header.frame_id = "map"
+        goal_msg.header.stamp = rospy.get_rostime()
+        print("goal pose: "+str(pose))
+        goal_msg.pose.position.x = pose[0]
+        goal_msg.pose.position.y = pose[1]
+        goal_msg.pose.position.z = pose[2]
+        goal_msg.pose.orientation.x = pose[3]
+        goal_msg.pose.orientation.y = pose[4]
+        goal_msg.pose.orientation.z = pose[5]
+        goal_msg.pose.orientation.w = pose[6]
+
+        world = self.get_world()
+
+        self._goal_pub.publish(goal_msg)
+
+        # self._check_goal_reached(pose)
+
+        world = self.get_world()
+        if not world.physics_callback_exists(f"mp_nav_check_{self.id}"):
+            world.add_physics_callback(f"mp_nav_check_{self.id}", lambda step_size: self._check_goal_reached(pose))
+        # Overwrite check with new goal
+        else:
+            world.remove_physics_callback(f"mp_nav_check_{self.id}")
+            world.add_physics_callback(f"mp_nav_check_{self.id}", lambda step_size: self._check_goal_reached(pose))
+    
+    def move_to_engine_cell_nav(self):
+        # # print("sending nav goal")
+        if not self.bool_done[123]:
+            self._send_navigation_goal(-4.65, 5.65, 3.14)
+            self.bool_done[123] = True
+        return False
         
     def move_to_engine_cell(self):
         print(self.util.path_plan_counter)

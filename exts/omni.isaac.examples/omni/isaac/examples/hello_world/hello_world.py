@@ -39,6 +39,8 @@ import rospy
 from omni.isaac.examples.hello_world.executor_functions import ExecutorFunctions
 from omni.isaac.core import SimulationContext
 
+import omni.graph.core as og
+
 # def func():
 #     try:
 #         rospy.init_node("hello", anonymous=True, disable_signals=True, log_level=rospy.ERROR)
@@ -170,10 +172,6 @@ class HelloWorld(BaseSample):
         # self.__send_initial_pose()
         # await asyncio.sleep(1.0)
         # self._action_client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
-        self._goal_pub = rospy.Publisher("/move_base_simple/goal", PoseStamped, queue_size=1)
-        self._xy_goal_tolerance = 0.25
-        self._yaw_goal_tolerance = 0.05
-
         
         return
 
@@ -192,6 +190,10 @@ class HelloWorld(BaseSample):
 
             atv = ExecutorFunctions()
             self.ATV_executions.append(atv)
+
+            og.Controller.set(og.Controller.attribute(f"/mock_robot_{i}/TwistSub" + "/node_namespace.inputs:value"), f"mp{i+1}")
+            og.Controller.set(og.Controller.attribute(f"/mock_robot_{i}/LidarPub" + "/node_namespace.inputs:value"), f"mp{i+1}")
+            og.Controller.set(og.Controller.attribute(f"/mock_robot_{i}/TfAndOdomPub" + "/node_namespace.inputs:value"), f"mp{i+1}")
 
         # Engine cell set up ----------------------------------------------------------------------------
         task_params = self._world.get_task("assembly_task").get_params()
@@ -623,6 +625,7 @@ class HelloWorld(BaseSample):
 
     def send_robot_actions(self, step_size):
         current_observations = self._world.get_observations()
+
         # print("\n\n\n\nCurrent observations:",current_observations)
 
         # naming convention
@@ -711,17 +714,17 @@ class HelloWorld(BaseSample):
                 print("Done with", task_to_func_map[curr_schedule])
                 self.schedule.popleft()
 
-        if self.schedule_1 and sc.current_time>40:
-            curr_schedule = self.schedule_1[0]
+        # if self.schedule_1 and sc.current_time>40:
+        #     curr_schedule = self.schedule_1[0]
 
-            curr_schedule_function = getattr(self, task_to_func_map[curr_schedule])
+        #     curr_schedule_function = getattr(self, task_to_func_map[curr_schedule])
 
-            function_done = curr_schedule_function()
-            print(self.schedule_1)
-            if function_done:
-                print("Done with", task_to_func_map[curr_schedule])
-                self.schedule_1.popleft()
-
+        #     function_done = curr_schedule_function()
+        #     print(self.schedule_1)
+        #     if function_done:
+        #         print("Done with", task_to_func_map[curr_schedule])
+        #         self.schedule_1.popleft()
+    
         return
     
     def add_part_custom(self, parent_prim_name, part_name, prim_name, scale, position, orientation):
