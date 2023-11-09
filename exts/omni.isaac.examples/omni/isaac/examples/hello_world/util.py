@@ -285,16 +285,38 @@ class Utils:
         position[2]+=-0.00419
         return position   
     
+    def move_mp_wbpc(self, path_plan_last):
+        print("Using wheel base pose controller")
+        _, _, goal_position = path_plan_last
+        position, orientation = self.moving_platform.get_world_pose()
+        # In the function where you are sending robot commands
+        print(goal_position)
+        action = self._my_controller.forward(start_position=position, start_orientation=orientation, goal_position=goal_position["position"])  # Change the goal position to what you want
+        full_action = ArticulationAction(joint_efforts=np.concatenate([action.joint_efforts, action.joint_efforts]) if action.joint_efforts else None, joint_velocities=np.concatenate([action.joint_velocities, action.joint_velocities]), joint_positions=np.concatenate([action.joint_positions, action.joint_positions]) if action.joint_positions else None)
+        self.moving_platform.apply_action(full_action)
+        print("Current", position)
+        print("Goal", goal_position["position"])
+        print(np.mean(np.abs(position-goal_position["position"])))
+        if np.mean(np.abs(position-goal_position["position"])) <0.033:
+            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
+            self.path_plan_counter+=1
+    
     def move_mp(self, path_plan):
         if not path_plan:
             return
+
+        if len(path_plan)-1 == self.path_plan_counter and path_plan[self.path_plan_counter][0]!="rotate" and path_plan[self.path_plan_counter][0]!="wait":
+            self.move_mp_wbpc(path_plan[self.path_plan_counter])
+            return
+
         current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
-        move_type, goal = path_plan[self.path_plan_counter]
+
+        move_type, goal = path_plan[self.path_plan_counter][0], path_plan[self.path_plan_counter][1]
         if move_type == "translate":
             goal_pos, axis, reverse = goal
             print(current_mp_position[axis], goal_pos, abs(current_mp_position[axis]-goal_pos))
             if reverse:
-                self.moving_platform.apply_action(self._my_custom_controller.forward(command=[-0.5,0]))
+                self.moving_platform.apply_action(self._my_custom_controller.forward(command=[-0.5,0])) # 0.5
             else:
                 self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
             if abs(current_mp_position[axis]-goal_pos)<0.01:
@@ -303,7 +325,7 @@ class Utils:
         elif move_type == "rotate":
             goal_ori, error_threshold, rotate_right = goal
             if rotate_right:
-                self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/2]))
+                self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/2])) # 2
             else:
                 self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/2]))
             curr_error = np.mean(np.abs(current_mp_orientation-goal_ori))
@@ -361,16 +383,12 @@ class Utils:
         # world = self.get_world()
 
         prims.delete_prim(prim_path)
-    
-    def move(self, task):
-        mp = self._world.get_observations()[self._world.get_task("engine_task").get_params()["mp_name"]["value"]]
-        print(mp)
-        position, orientation, goal_position = mp['position'], mp['orientation'], mp['goal_position'][task-1]
-        # In the function where you are sending robot commands
-        print(goal_position)
-        action = self._my_controller.forward(start_position=position, start_orientation=orientation, goal_position=goal_position)  # Change the goal position to what you want
-        full_action = ArticulationAction(joint_efforts=np.concatenate([action.joint_efforts, action.joint_efforts]) if action.joint_efforts else None, joint_velocities=np.concatenate([action.joint_velocities, action.joint_velocities]), joint_positions=np.concatenate([action.joint_positions, action.joint_positions]) if action.joint_positions else None)
-        self.moving_platform.apply_action(full_action)
+
+    def check_prim_exists(self, prim_path):
+        curr_prim = self.world.stage.GetPrimAtPath("/"+prim_path)
+        if curr_prim.IsValid():
+            return True
+        return False
 
     def move_mp_battery(self, path_plan):
         if not path_plan:

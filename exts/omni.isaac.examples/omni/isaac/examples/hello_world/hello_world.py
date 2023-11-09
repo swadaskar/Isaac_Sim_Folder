@@ -59,38 +59,6 @@ import omni.graph.core as og
 
 #     asyncio.ensure_future(my_task())
 
-class CustomDifferentialController(BaseController):
-    def __init__(self):
-        super().__init__(name="my_cool_controller")
-        # An open loop controller that uses a unicycle model
-        self._wheel_radius = 0.125
-        self._wheel_base = 1.152
-
-        return
-
-    def forward(self, command):
-        # command will have two elements, first element is the forward velocity
-        # second element is the angular velocity (yaw only).
-        joint_velocities = [0.0, 0.0, 0.0, 0.0]
-        joint_velocities[0] = ((2 * command[0]) - (command[1] * self._wheel_base)) / (2 * self._wheel_radius)
-        joint_velocities[1] = ((2 * command[0]) + (command[1] * self._wheel_base)) / (2 * self._wheel_radius)
-        joint_velocities[2] = ((2 * command[0]) - (command[1] * self._wheel_base)) / (2 * self._wheel_radius)
-        joint_velocities[3] = ((2 * command[0]) + (command[1] * self._wheel_base)) / (2 * self._wheel_radius)
-        # A controller has to return an ArticulationAction
-        return ArticulationAction(joint_velocities=joint_velocities)
-    
-    def turn(self, command):
-        # command will have two elements, first element is the forward velocity
-        # second element is the angular velocity (yaw only).
-        joint_velocities = [0.0, 0.0, 0.0, 0.0]
-        joint_velocities[0] = ((2 * command[0][0]) - (command[1] * self._wheel_base)) / (2 * self._wheel_radius)
-        joint_velocities[1] = ((2 * command[0][1]) + (command[1] * self._wheel_base)) / (2 * self._wheel_radius)
-        joint_velocities[2] = ((2 * command[0][2]) - (command[1] * self._wheel_base)) / (2 * self._wheel_radius)
-        joint_velocities[3] = ((2 * command[0][3]) + (command[1] * self._wheel_base)) / (2 * self._wheel_radius)
-        # A controller has to return an ArticulationAction
-        return ArticulationAction(joint_velocities=joint_velocities)
-
-
 class HelloWorld(BaseSample):
     def __init__(self) -> None:
         super().__init__()
@@ -120,19 +88,24 @@ class HelloWorld(BaseSample):
         self.motion_task_counterr=0
         self.path_plan_counter=0
         self.delay=0
-        
+
+        # ATV declarations -------------------------------------------------------------------------
+        self.num_of_ATVs = 8
+        for i in range(self.num_of_ATVs):
+            world.add_task(ATVTask(name=f"ATV_{i}",offset=np.array([0, i*2, 0])))
+
         print("inside setup_scene", self.motion_task_counter)
         # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201"])
         # self.schedule = deque(["501", "505","553","573","554","574"])
         # self.schedule = deque(["901","951","971"])
-        # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
-        # self.schedule_1 = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
+
+        self.schedules = [deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"]) for _ in range(self.num_of_ATVs)]
 
         # self.schedule = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule_1 = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule_1 = deque(["1","71","2","72","3","4","6","5","151","171","181","102"])
-        self.schedule = deque(["6","6","6","6","6","6","1"])
-        self.schedule_1 = deque(["6","6","6","6","6","6","1"])
+        # self.schedule = deque(["6","6","6","6","6","6","0"])
+        # self.schedule_1 = deque(["6","6","6","6","6","6","0"])
         # self.schedule = deque(["6","6","1"])
         # self.schedule = deque(["701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
@@ -150,11 +123,7 @@ class HelloWorld(BaseSample):
         #     "202":"wait"
         # func()
         # self.utils = Utils()
-
-        # ATV declarations -------------------------------------------------------------------------
-        self.num_of_ATVs = 3
-        for i in range(self.num_of_ATVs):
-            world.add_task(ATVTask(name=f"ATV_{i}",offset=np.array([0, i*2, 0])))
+        
 
         # navigation declarations -----------------------------------------------
         
@@ -191,9 +160,9 @@ class HelloWorld(BaseSample):
             atv = ExecutorFunctions()
             self.ATV_executions.append(atv)
 
-            og.Controller.set(og.Controller.attribute(f"/mock_robot_{i}/TwistSub" + "/node_namespace.inputs:value"), f"mp{i+1}")
-            og.Controller.set(og.Controller.attribute(f"/mock_robot_{i}/LidarPub" + "/node_namespace.inputs:value"), f"mp{i+1}")
-            og.Controller.set(og.Controller.attribute(f"/mock_robot_{i}/TfAndOdomPub" + "/node_namespace.inputs:value"), f"mp{i+1}")
+            # og.Controller.set(og.Controller.attribute(f"/mock_robot_{i}/TwistSub" + "/node_namespace.inputs:value"), f"mp{i+1}")
+            # og.Controller.set(og.Controller.attribute(f"/mock_robot_{i}/LidarPub" + "/node_namespace.inputs:value"), f"mp{i+1}")
+            # og.Controller.set(og.Controller.attribute(f"/mock_robot_{i}/TfAndOdomPub" + "/node_namespace.inputs:value"), f"mp{i+1}")
 
         # Engine cell set up ----------------------------------------------------------------------------
         task_params = self._world.get_task("assembly_task").get_params()
@@ -202,8 +171,8 @@ class HelloWorld(BaseSample):
         self.engine_bringer = self._world.scene.get_object(task_params["eb_name"]["value"])
         self._world.add_physics_callback("sending_actions", callback_fn=self.send_robot_actions)
         # Initialize our controller after load and the first reset
-        self._my_custom_controller = CustomDifferentialController()
-        self._my_controller = WheelBasePoseController(name="cool_controller", open_loop_wheel_controller=DifferentialController(name="simple_control", wheel_radius=0.125, wheel_base=0.46), is_holonomic=False)
+        # self._my_custom_controller = CustomDifferentialController()
+        # self._my_controller = WheelBasePoseController(name="cool_controller", open_loop_wheel_controller=DifferentialController(name="simple_control", wheel_radius=0.125, wheel_base=0.46), is_holonomic=False)
 
         self.ur10 = self._world.scene.get_object(task_params["arm_name"]["value"])
         self.screw_ur10 = self._world.scene.get_object(task_params["screw_arm"]["value"])
@@ -633,6 +602,7 @@ class HelloWorld(BaseSample):
         # p1_stationB_install_chain_engine_31
     
         task_to_func_map = {
+            "0":"move_to_engine_cell_nav",
             "1": "move_to_engine_cell",
             "71":"arm_place_engine",
             "2":"screw_engine",
@@ -703,21 +673,22 @@ class HelloWorld(BaseSample):
         sc = SimulationContext()
         print("Time:", sc.current_time)
 
-        if self.schedule:
-            curr_schedule = self.schedule[0]
+        for i in range(len(self.schedules)):
+            if self.schedules[i] and sc.current_time>i*60:
+                curr_schedule = self.schedules[i][0]
 
-            curr_schedule_function = getattr(self, task_to_func_map[curr_schedule])
+                curr_schedule_function = getattr(self.ATV_executions[i], task_to_func_map[curr_schedule])
 
-            function_done = curr_schedule_function()
-            print(self.schedule)
-            if function_done:
-                print("Done with", task_to_func_map[curr_schedule])
-                self.schedule.popleft()
+                function_done = curr_schedule_function()
+                print("ATV "+str(i)+": ", self.schedules[i])
+                if function_done:
+                    print("Done with", task_to_func_map[curr_schedule])
+                    self.schedules[i].popleft()
 
         # if self.schedule_1 and sc.current_time>40:
         #     curr_schedule = self.schedule_1[0]
 
-        #     curr_schedule_function = getattr(self, task_to_func_map[curr_schedule])
+        #     curr_schedule_function = getattr(self.ATV_executions[1], task_to_func_map[curr_schedule])
 
         #     function_done = curr_schedule_function()
         #     print(self.schedule_1)

@@ -39,11 +39,11 @@ class ATVTask(BaseTask):
         super().set_up_scene(scene)
 
 
-        # large_robot_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform_unfinished/mobile_platform_flattened.usd"
+        large_robot_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform_unfinished/mobile_platform_flattened.usd"
 
         # large_robot_asset_path = "/home/lm-2023/Isaac_Sim/navigation/Collected_real_microfactory_show/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform/mobile_platform_ag.usd"
 
-        large_robot_asset_path = "/home/lm-2023/Isaac_Sim/navigation/Collected_real_microfactory_multiple_mp/Collected_real_microfactory_show/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform/mobile_platform_ag.usd"
+        # large_robot_asset_path = "/home/lm-2023/Isaac_Sim/navigation/Collected_real_microfactory_multiple_mp/Collected_real_microfactory_show/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform/mobile_platform_ag.usd"
         
         # add floor
         _,num = self.name.split("_")
@@ -85,11 +85,6 @@ class ATVTask(BaseTask):
         params_representation = {}
         params_representation["mp_name"] = {"value": self.moving_platform.name, "modifiable": False}
         return params_representation
-    
-    def check_prim_exists(self, prim):
-        if prim:
-            return True
-        return False
     
     def give_location(self, prim_path):
         dc=_dynamic_control.acquire_dynamic_control_interface()

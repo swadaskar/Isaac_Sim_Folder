@@ -110,9 +110,9 @@ class ExecutorFunctions:
         self.articulation_controller_light = None
         self.screw_articulation_controller_light = None
 
-        self._goal_pub = rospy.Publisher(f"/move_base_simple/goal_{self.id}", PoseStamped, queue_size=1)
-        self._xy_goal_tolerance = 0.25
-        self._yaw_goal_tolerance = 0.05
+        # self._goal_pub = rospy.Publisher(f"/mp{self.id+1}/move_base_simple/goal", PoseStamped, queue_size=1)
+        # self._xy_goal_tolerance = 0.25
+        # self._yaw_goal_tolerance = 0.05
 
 
         # Util declarations ----------------------------------------------------------------------------------
@@ -268,7 +268,7 @@ class ExecutorFunctions:
         
     def move_to_engine_cell(self):
         print(self.util.path_plan_counter)
-        path_plan = [["translate", [-4.98951, 0, False]]]
+        path_plan = [["translate", [-4.98951, 0, False], {"position": np.array([-4.98951, 5.65, 0.03551]), "orientation": np.array([0, 0, 0, 1])}]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:
             self.util.path_plan_counter=0
@@ -276,6 +276,10 @@ class ExecutorFunctions:
         return False
 
     def arm_place_engine(self):
+
+        flag = self.util.check_prim_exists("World/Environment/engine_small")
+
+
         print("doing motion plan")
         motion_plan = [{"index":0, "position": np.array([0.97858+0.14-0.3, -0.12572, 0.21991]), "orientation": np.array([1, 0, 0, 0]), "goal_position":np.array([-4.86054, 7.95174-0.3, 0.46095]), "goal_orientation":np.array([0.70711, 0, 0, 0.70711])},
                         {"index":1, "position": np.array([0.97858+0.14, -0.12572, 0.21991]), "orientation": np.array([1, 0, 0, 0]), "goal_position":np.array([-4.86054, 7.95174, 0.46095]), "goal_orientation":np.array([0.70711, 0, 0, 0.70711])},
@@ -413,13 +417,19 @@ class ExecutorFunctions:
     def move_to_suspension_cell(self):
         print(self.util.path_plan_counter)
         path_plan = [["translate", [-1, 0, False]],
+                     ["wait",[]],
                      ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, True]],
+                     ["wait",[]],
                      ["translate", [2.29, 1, False]],
-                     ["rotate", [np.array([0, 0, 0, 1]), 0.503, True]],
+                     ["wait",[]],
+                     ["rotate", [np.array([0, 0, 0, -1]), 0.0042, True]], # 503
+                     ["wait",[]],
                     #  ["translate", [-4.22, 0, False]],
-                     ["translate", [-4.22, 0, False]],
+                     ["translate", [-4.6, 0, False]],
+                     ["wait",[]],
                      ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, False]],
-                     ["translate", [-5.3, 1, False]]]
+                     ["wait",[]],
+                     ["translate", [-5.3, 1, False], {"position": np.array([-5.3, -4.876, 0.03551]), "orientation": np.array([0, 0, 0, 1])}]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:
             self.util.path_plan_counter=0
@@ -489,6 +499,7 @@ class ExecutorFunctions:
         path_plan = [["translate", [-5.15, 0, True]],
                      ["wait",[]],
                      ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, False]],
+                     ["wait",[]],
                      ["translate", [-15.945, 1, True]]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:

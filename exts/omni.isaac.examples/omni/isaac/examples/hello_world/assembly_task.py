@@ -56,7 +56,7 @@ class AssemblyTask(BaseTask):
         self._bool_event = 0
         self.count=0
 
-        self.num_of_ATVs = 2
+        # self.num_of_ATVs = 2
         return
 
     def set_up_scene(self, scene):
@@ -180,8 +180,8 @@ class AssemblyTask(BaseTask):
                 wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
                 create_robot=True,
                 usd_path=small_robot_asset_path,
-                position=np.array([3.19, -6.04631, 0.035]),
-                orientation=np.array([0, 0, 0, -1]),
+                position=np.array([-0.927, -1.334, 0.035]), orientation=np.array([0, 0, 0, -1]), # initial position
+                # position=np.array([3.19, -6.04631, 0.035]), orientation=np.array([0, 0, 0, -1]), # for part feeding
             )
         )
 
@@ -214,8 +214,8 @@ class AssemblyTask(BaseTask):
                 wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
                 create_robot=True,
                 usd_path=small_robot_asset_path,
-                position=np.array([3.19, -17.511, 0.035]),
-                orientation=np.array([0, 0, 0, 1]),
+                position=np.array([-0.8, -12.874, 0.035]), orientation=np.array([0, 0, 0, 1]), # initial position
+                # position=np.array([3.19, -17.511, 0.035]), orientation=np.array([0, 0, 0, 1]), # for part feeding
             )
         )
 
@@ -249,8 +249,8 @@ class AssemblyTask(BaseTask):
                 wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
                 create_robot=True,
                 usd_path=small_robot_asset_path,
-                # position=np.array([-18.36667, -15.53466, 0.035]), orientation=np.array([0.70711,0, 0,-0.70711]),
-                position=np.array([-17.409, -25.38847, 0.035]), orientation=np.array([0.70711,0, 0,-0.70711]),
+                position=np.array([-18.36667, -15.53466, 0.035]), orientation=np.array([0.70711,0, 0,-0.70711]),
+                # position=np.array([-17.409, -25.38847, 0.035]), orientation=np.array([0.70711,0, 0,-0.70711]),
             )
         )
 
