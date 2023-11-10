@@ -95,15 +95,15 @@ class HelloWorld(BaseSample):
             world.add_task(ATVTask(name=f"ATV_{i}",offset=np.array([0, i*2, 0])))
 
         print("inside setup_scene", self.motion_task_counter)
-        # self.schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201"])
+        # self.schedule = deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201"])
         # self.schedule = deque(["501", "505","553","573","554","574"])
         # self.schedule = deque(["901","951","971"])
 
-        self.schedules = [deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"]) for _ in range(self.num_of_ATVs)]
+        self.schedules = [deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"]) for _ in range(self.num_of_ATVs)]
 
         # self.schedule = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule_1 = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
-        # self.schedule_1 = deque(["1","71","2","72","3","4","6","5","151","171","181","102"])
+        # self.schedule_1 = deque(["1","71","2","72","3","4","6","101","151","171","181","102"])
         # self.schedule = deque(["6","6","6","6","6","6","0"])
         # self.schedule_1 = deque(["6","6","6","6","6","6","0"])
         # self.schedule = deque(["6","6","1"])
@@ -184,7 +184,7 @@ class HelloWorld(BaseSample):
         self.screw_articulation_controller = self.screw_ur10.get_articulation_controller()
 
         # self.add_part("FFrame", "frame", np.array([0.001, 0.001, 0.001]), np.array([0.45216, -0.32084, 0.28512]), np.array([0, 0, 0.70711, 0.70711]))
-        self.add_part_custom("World/Environment","engine_no_rigid", "engine_small", np.array([0.001, 0.001, 0.001]), np.array([-4.86938, 8.14712, 0.59038]), np.array([0.99457, 0, -0.10411, 0]))
+        self.add_part_custom("World/Environment","engine_no_rigid", "engine_small_0", np.array([0.001, 0.001, 0.001]), np.array([-4.86938, 8.14712, 0.59038]), np.array([0.99457, 0, -0.10411, 0]))
 
         # Suspension cell set up ------------------------------------------------------------------------
         # bring in moving platforms 
@@ -192,7 +192,7 @@ class HelloWorld(BaseSample):
 
         # static suspensions on the table
         self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack", np.array([0.001,0.001,0.001]), np.array([-6.66288, -4.83704, 0.41322]), np.array([0.5, 0.5, -0.5, 0.5]))
-        self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack_01", np.array([0.001,0.001,0.001]), np.array([-6.66288, -4.69733, 0.41322]), np.array([0.5, 0.5, -0.5, 0.5]))
+        self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack_01_0", np.array([0.001,0.001,0.001]), np.array([-6.66288, -4.69733, 0.41322]), np.array([0.5, 0.5, -0.5, 0.5]))
         self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack_02", np.array([0.001,0.001,0.001]), np.array([-6.66288, -4.54469, 0.41322]), np.array([0.5, 0.5, -0.5, 0.5]))
         self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack_03", np.array([0.001,0.001,0.001]), np.array([-6.66288, -4.3843, 0.41322]), np.array([0.5, 0.5, -0.5, 0.5]))
         self.add_part_custom("World/Environment","FSuspensionBack", "FSuspensionBack_04", np.array([0.001,0.001,0.001]), np.array([-6.66288, -4.22546, 0.41322]), np.array([0.5, 0.5, -0.5, 0.5]))
@@ -221,7 +221,7 @@ class HelloWorld(BaseSample):
         self.fuel_bringer = self._world.scene.get_object(task_params["eb_name_fuel"]["value"])
         
         # self.add_part_custom("fuel_bringer/platform","fuel", "fuel", np.array([0.001,0.001,0.001]), np.array([-0.1769, 0.13468, 0.24931]), np.array([0.5,0.5,-0.5,-0.5]))
-        self.add_part_custom("World/Environment","fuel", "fuel_01", np.array([0.001,0.001,0.001]), np.array([-7.01712, -15.89918, 0.41958]), np.array([0.5, 0.5, -0.5, -0.5]))
+        self.add_part_custom("World/Environment","fuel", "fuel_01_0", np.array([0.001,0.001,0.001]), np.array([-7.01712, -15.89918, 0.41958]), np.array([0.5, 0.5, -0.5, -0.5]))
         self.add_part_custom("World/Environment","fuel", "fuel_02", np.array([0.001,0.001,0.001]), np.array([-7.01712, -15.49449, 0.41958]), np.array([0.5, 0.5, -0.5, -0.5]))
         self.add_part_custom("World/Environment","fuel", "fuel_03", np.array([0.001,0.001,0.001]), np.array([-6.54859, -15.46717, 0.41958]), np.array([0, 0, -0.70711, -0.70711]))
         self.add_part_custom("World/Environment","fuel", "fuel_04", np.array([0.001,0.001,0.001]), np.array([-6.14395, -15.47402, 0.41958]), np.array([0, 0, -0.70711, -0.70711]))
@@ -244,7 +244,7 @@ class HelloWorld(BaseSample):
         # bring in moving platforms 
         self.battery_bringer = self._world.scene.get_object(task_params["eb_name_battery"]["value"])
         
-        self.add_part_custom("World/Environment","battery", "battery_01", np.array([0.001,0.001,0.001]), np.array([-16.47861, -15.68368, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
+        self.add_part_custom("World/Environment","battery", "battery_01_0", np.array([0.001,0.001,0.001]), np.array([-16.47861, -15.68368, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
         self.add_part_custom("World/Environment","battery", "battery_02", np.array([0.001,0.001,0.001]), np.array([-16.0548, -15.67949, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
         self.add_part_custom("World/Environment","battery", "battery_03", np.array([0.001,0.001,0.001]), np.array([-16.02688, -16.10727, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
         self.add_part_custom("World/Environment","battery", "battery_04", np.array([0.001,0.001,0.001]), np.array([-16.01519, -16.40193, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
@@ -274,7 +274,7 @@ class HelloWorld(BaseSample):
         self.trunk_bringer = self._world.scene.get_object(task_params["eb_name_trunk"]["value"])
         
         self.add_part_custom("World/Environment","trunk", "trunk_01", np.array([0.001,0.001,0.001]), np.array([-27.84904, 3.75405, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
-        self.add_part_custom("World/Environment","trunk", "trunk_02", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","trunk", "trunk_02_0", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
 
         # Initialize our controller after load and the first reset
 
@@ -291,10 +291,10 @@ class HelloWorld(BaseSample):
         # bring in moving platforms 
         self.wheel_bringer = self._world.scene.get_object(task_params["eb_name_wheel"]["value"])
         
-        self.add_part_custom("World/Environment","FWheel", "wheel_01", np.array([0.001,0.001,0.001]), np.array([-15.17319, 4.72577, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
-        self.add_part_custom("World/Environment","FWheel", "wheel_02", np.array([0.001,0.001,0.001]), np.array([-15.17319, 5.24566, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
-        self.add_part_custom("World/Environment","FWheel", "wheel_03", np.array([0.001,0.001,0.001]), np.array([-18.97836, 4.72577, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
-        self.add_part_custom("World/Environment","FWheel", "wheel_04", np.array([0.001,0.001,0.001]), np.array([-18.97836, 5.24566, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+        self.add_part_custom("World/Environment","FWheel", "wheel_01_0", np.array([0.001,0.001,0.001]), np.array([-15.17319, 4.72577, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+        self.add_part_custom("World/Environment","FWheel", "wheel_02_0", np.array([0.001,0.001,0.001]), np.array([-15.17319, 5.24566, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+        self.add_part_custom("World/Environment","FWheel", "wheel_03_0", np.array([0.001,0.001,0.001]), np.array([-18.97836, 4.72577, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+        self.add_part_custom("World/Environment","FWheel", "wheel_04_0", np.array([0.001,0.001,0.001]), np.array([-18.97836, 5.24566, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
 
         # Initialize our controller after load and the first reset
 
@@ -320,15 +320,15 @@ class HelloWorld(BaseSample):
         # bring in moving platforms 
         # self.lower_cover_bringer = self._world.scene.get_object(task_params["eb_name_lower_cover"]["value"])
         
-        self.add_part_custom("World/Environment","lower_cover", "lower_cover_01", np.array([0.001,0.001,0.001]), np.array([-26.2541, -15.57458, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_cover_01_0", np.array([0.001,0.001,0.001]), np.array([-26.2541, -15.57458, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
         self.add_part_custom("World/Environment","lower_cover", "lower_cover_02", np.array([0.001,0.001,0.001]), np.array([-26.2541, -15.30883, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
         self.add_part_custom("World/Environment","lower_cover", "lower_cover_03", np.array([0.001,0.001,0.001]), np.array([-25.86789, -15.30883, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
 
-        self.add_part_custom("World/Environment","lower_cover", "lower_cover_04", np.array([0.001,0.001,0.001]), np.array([-26.26153, -19.13631, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_cover_04_0", np.array([0.001,0.001,0.001]), np.array([-26.26153, -19.13631, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
         self.add_part_custom("World/Environment","lower_cover", "lower_cover_05", np.array([0.001,0.001,0.001]), np.array([-26.26153, -19.3805, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
         self.add_part_custom("World/Environment","lower_cover", "lower_cover_06", np.array([0.001,0.001,0.001]), np.array([-25.88587, -19.3805, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
         
-        self.add_part_custom("World/Environment","main_cover", "main_cover", np.array([0.001,0.001,0.001]), np.array([-18.7095-11.83808, -15.70872, 0.28822]), np.array([0.70711, 0.70711,0,0]))
+        self.add_part_custom("World/Environment","main_cover", "main_cover_0", np.array([0.001,0.001,0.001]), np.array([-18.7095-11.83808, -15.70872, 0.28822]), np.array([0.70711, 0.70711,0,0]))
         # Initialize our controller after load and the first reset
 
         self.ur10_lower_cover = self._world.scene.get_object(task_params["arm_name_lower_cover"]["value"])
@@ -359,7 +359,7 @@ class HelloWorld(BaseSample):
         # bring in moving platforms 
         self.handle_bringer = self._world.scene.get_object(task_params["eb_name_handle"]["value"])
         
-        self.add_part_custom("World/Environment","handle", "handle", np.array([0.001,0.001,0.001]), np.array([-29.70213, -7.25934, 1.08875]), np.array([0, 0.70711, 0.70711, 0]))
+        self.add_part_custom("World/Environment","handle", "handle_0", np.array([0.001,0.001,0.001]), np.array([-29.70213, -7.25934, 1.08875]), np.array([0, 0.70711, 0.70711, 0]))
 
         # Initialize our controller after load and the first reset
 
@@ -378,7 +378,7 @@ class HelloWorld(BaseSample):
         
         self.add_part_custom("World/Environment","FFrontLightAssembly", "light_01", np.array([0.001,0.001,0.001]), np.array([-18.07685, -6.94868, -0.71703]), np.array([0.28511, -0.28511, -0.64708, -0.64708]))
         self.add_part_custom("World/Environment","FFrontLightAssembly", "light_02", np.array([0.001,0.001,0.001]), np.array([-18.07685, -7.14276, -0.71703]), np.array([0.28511, -0.28511, -0.64708, -0.64708]))
-        self.add_part_custom("World/Environment","FFrontLightAssembly", "light_03", np.array([0.001,0.001,0.001]), np.array([-18.07685, -7.35866, -0.71703]), np.array([0.28511, -0.28511, -0.64708, -0.64708]))
+        self.add_part_custom("World/Environment","FFrontLightAssembly", "light_03_0", np.array([0.001,0.001,0.001]), np.array([-18.07685, -7.35866, -0.71703]), np.array([0.28511, -0.28511, -0.64708, -0.64708]))
 
         # self.add_part_custom("mock_robot/platform","handle", "xhandle", np.array([0.001,0.001,0.001]), np.array([0.82439, 0.44736, 1.16068]), np.array([0.20721, 0.68156, -0.67309, -0.19874]))
         # self.add_part_custom("mock_robot/platform","main_cover", "xmain_cover", np.array([0.001,0.001,0.001]), np.array([-0.81508, 0.27909, 0.19789]), np.array([0.70711, 0.70711, 0, 0]))
@@ -611,7 +611,7 @@ class HelloWorld(BaseSample):
             "4":"screw_engine_two",
             "6":"wait",
 
-            "5":"move_to_suspension_cell",
+            "101":"move_to_suspension_cell",
             "151":"arm_place_suspension",
             "171":"screw_suspension",
             "181":"arm_remove_suspension",
@@ -666,8 +666,8 @@ class HelloWorld(BaseSample):
             "902":"wait"
         }
 
-        # schedule = deque(["1","71","2","72","3","4","6","5","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","881","802","901","951","971","902"])
-        # schedule = deque(["1","71","2","72","3","4","6","5","102","301","302","201","202","401","402","501","505","502","701","721","703","801","851","871","881","802","901","902"])
+        # schedule = deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","881","802","901","951","971","902"])
+        # schedule = deque(["1","71","2","72","3","4","6","101","102","301","302","201","202","401","402","501","505","502","701","721","703","801","851","871","881","802","901","902"])
         # schedule = deque(["1","71"])
 
         sc = SimulationContext()
@@ -685,17 +685,11 @@ class HelloWorld(BaseSample):
                     print("Done with", task_to_func_map[curr_schedule])
                     self.schedules[i].popleft()
 
-        # if self.schedule_1 and sc.current_time>40:
-        #     curr_schedule = self.schedule_1[0]
+        for i in range(1,self.num_of_ATVs):
+            print("Tasks", int(self.schedules[i-1][0])//100, int(self.schedules[i][0])//100)
+            if int(self.schedules[i-1][0])//100 > int(self.schedules[i][0])//100:
+                self.ATV_executions[i].spawn_new_parts()
 
-        #     curr_schedule_function = getattr(self.ATV_executions[1], task_to_func_map[curr_schedule])
-
-        #     function_done = curr_schedule_function()
-        #     print(self.schedule_1)
-        #     if function_done:
-        #         print("Done with", task_to_func_map[curr_schedule])
-        #         self.schedule_1.popleft()
-    
         return
     
     def add_part_custom(self, parent_prim_name, part_name, prim_name, scale, position, orientation):

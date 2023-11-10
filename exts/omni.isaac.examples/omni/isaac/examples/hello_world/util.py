@@ -305,9 +305,9 @@ class Utils:
         if not path_plan:
             return
 
-        if len(path_plan)-1 == self.path_plan_counter and path_plan[self.path_plan_counter][0]!="rotate" and path_plan[self.path_plan_counter][0]!="wait":
-            self.move_mp_wbpc(path_plan[self.path_plan_counter])
-            return
+        # if len(path_plan)-1 == self.path_plan_counter and path_plan[self.path_plan_counter][0]!="rotate" and path_plan[self.path_plan_counter][0]!="wait":
+        #     self.move_mp_wbpc(path_plan[self.path_plan_counter])
+        #     return
 
         current_mp_position, current_mp_orientation = self.moving_platform.get_world_pose()
 

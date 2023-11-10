@@ -213,6 +213,59 @@ class ExecutorFunctions:
         self.util.articulation_controller_light = self.articulation_controller_light
         self.util.screw_articulation_controller_light = self.screw_articulation_controller_light
 
+
+    def spawn_new_parts(self):
+
+        if self.id>0:
+            
+            # Engine cell set up ----------------------------------------------------------------------------
+            # if not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id}") and not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/engine_{self.id}"):
+            if not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id}") and not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/engine_{self.id-1}"):
+                self.util.add_part_custom("World/Environment","engine_no_rigid", f"engine_small_{self.id}", np.array([0.001, 0.001, 0.001]), np.array([-4.86938, 8.14712, 0.59038]), np.array([0.99457, 0, -0.10411, 0]))
+                print(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n --------------------------------------spawned engine "+str(self.id)+" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+
+            # Suspension cell set up ------------------------------------------------------------------------
+            # if not self.util.check_prim_exists(f"World/Environment/FSuspensionBack_01_{self.id}") and not self.util.check_prim_exists(f"World/Environment/FSuspensionBack_01_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xFSuspensionBack_{self.id}"):
+            if not self.util.check_prim_exists(f"World/Environment/FSuspensionBack_01_{self.id}") and not self.util.check_prim_exists(f"World/Environment/FSuspensionBack_01_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/xFSuspensionBack_{self.id-1}"):
+                self.util.add_part_custom("World/Environment","FSuspensionBack", f"FSuspensionBack_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-6.66288, -4.69733, 0.41322]), np.array([0.5, 0.5, -0.5, 0.5]))
+                print(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n --------------------------------------spawned suspension "+str(self.id)+" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+        
+            # Fuel cell set up ---------------------------------------------------------------------------------
+            if not self.util.check_prim_exists(f"World/Environment/fuel_01_{self.id}") and not self.util.check_prim_exists(f"World/Environment/fuel_01_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xfuel_{self.id}"):
+                self.util.add_part_custom("World/Environment","fuel", f"fuel_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-7.01712, -15.89918, 0.41958]), np.array([0.5, 0.5, -0.5, -0.5]))
+
+
+            # battery cell set up ---------------------------------------------------------------------------------
+            if not self.util.check_prim_exists(f"World/Environment/battery_01_{self.id}") and not self.util.check_prim_exists(f"World/Environment/battery_01_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xbattery_{self.id}"):
+                self.util.add_part_custom("World/Environment","battery", f"battery_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-16.47861, -15.68368, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
+
+            # trunk cell set up ---------------------------------------------------------------------------------
+            if not self.util.check_prim_exists(f"World/Environment/trunk_02_{self.id}") and not self.util.check_prim_exists(f"World/Environment/trunk_02_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xtrunk_{self.id}"):
+                self.util.add_part_custom("World/Environment","trunk", f"trunk_02_{self.id}", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
+
+            # wheel cell set up ---------------------------------------------------------------------------------
+            if not self.util.check_prim_exists(f"World/Environment/wheel_02_{self.id}") and not self.util.check_prim_exists(f"World/Environment/wheel_02_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xwheel_02_{self.id}"):
+                self.util.add_part_custom("World/Environment","FWheel", f"wheel_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-15.17319, 4.72577, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+                self.util.add_part_custom("World/Environment","FWheel", f"wheel_02_{self.id}", np.array([0.001,0.001,0.001]), np.array([-15.17319, 5.24566, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+                self.util.add_part_custom("World/Environment","FWheel", f"wheel_03_{self.id}", np.array([0.001,0.001,0.001]), np.array([-18.97836, 4.72577, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+                self.util.add_part_custom("World/Environment","FWheel", f"wheel_04_{self.id}", np.array([0.001,0.001,0.001]), np.array([-18.97836, 5.24566, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+
+            # lower_cover cell set up ---------------------------------------------------------------------------------
+            if not self.util.check_prim_exists(f"World/Environment/main_cover_{self.id}") and not self.util.check_prim_exists(f"World/Environment/main_cover_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xmain_cover_{self.id}"):
+                self.util.add_part_custom("World/Environment","lower_cover", f"lower_cover_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-26.2541, -15.57458, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
+
+                self.util.add_part_custom("World/Environment","lower_cover", f"lower_cover_04_{self.id}", np.array([0.001,0.001,0.001]), np.array([-26.26153, -19.13631, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
+
+                self.util.add_part_custom("World/Environment","main_cover", f"main_cover_{self.id}", np.array([0.001,0.001,0.001]), np.array([-18.7095-11.83808, -15.70872, 0.28822]), np.array([0.70711, 0.70711,0,0]))
+            
+            # handle cell set up ---------------------------------------------------------------------------------
+            if not self.util.check_prim_exists(f"World/Environment/handle_{self.id}") and not self.util.check_prim_exists(f"World/Environment/handle_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xhandle_{self.id}"):
+                self.util.add_part_custom("World/Environment","handle", f"handle_{self.id}", np.array([0.001,0.001,0.001]), np.array([-29.70213, -7.25934, 1.08875]), np.array([0, 0.70711, 0.70711, 0]))
+
+            # light cell set up ---------------------------------------------------------------------------------
+            if not self.util.check_prim_exists(f"World/Environment/light_03_{self.id}") and not self.util.check_prim_exists(f"World/Environment/light_03_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xlight_{self.id}"):
+                self.util.add_part_custom("World/Environment","FFrontLightAssembly", f"light_03_{self.id}", np.array([0.001,0.001,0.001]), np.array([-18.07685, -7.35866, -0.71703]), np.array([0.28511, -0.28511, -0.64708, -0.64708]))
+
     def _check_goal_reached(self, goal_pose):
         # Cannot get result from ROS because /move_base/result also uses move_base_msgs module
         mp_position, mp_orientation = self.moving_platform.get_world_pose()
@@ -302,7 +355,7 @@ class ExecutorFunctions:
 
         if self.util.motion_task_counter==2 and not self.bool_done[1]:
             self.bool_done[1] = True
-            self.util.remove_part("World/Environment", "engine_small")
+            self.util.remove_part("World/Environment", f"engine_small_{self.id}")
             self.util.add_part_custom("World/UR10/ee_link","engine_no_rigid", f"qengine_small_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.17441, 0.00314, 0.11018]), np.array([0.70365, -0.06987, -0.06987, -0.70365]))
 
         if self.util.motion_task_counter==14:
@@ -425,7 +478,7 @@ class ExecutorFunctions:
                      ["rotate", [np.array([0, 0, 0, -1]), 0.0042, True]], # 503
                      ["wait",[]],
                     #  ["translate", [-4.22, 0, False]],
-                     ["translate", [-4.6, 0, False]],
+                     ["translate", [-4.7, 0, False]],
                      ["wait",[]],
                      ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, False]],
                      ["wait",[]],
@@ -448,7 +501,7 @@ class ExecutorFunctions:
         self.util.move_ur10(motion_plan, "_suspension")
         if self.util.motion_task_counter==2 and not self.bool_done[2]:
             self.bool_done[2] = True
-            self.util.remove_part("World/Environment", "FSuspensionBack_01")
+            self.util.remove_part("World/Environment", f"FSuspensionBack_01_{self.id}")
             self.util.add_part_custom("World/UR10_suspension/ee_link","FSuspensionBack", f"qFSuspensionBack_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.16839, 0.158, -0.44332]), np.array([0,0,0,1]))
         
         if self.util.motion_task_counter==6:
@@ -518,7 +571,7 @@ class ExecutorFunctions:
 
         if self.util.motion_task_counter==2 and not self.bool_done[4]:
             self.bool_done[4] = True
-            self.util.remove_part("World/Environment", "fuel_01")
+            self.util.remove_part("World/Environment", f"fuel_01_{self.id}")
             self.util.add_part_custom("World/UR10_fuel/ee_link","fuel", f"qfuel_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.05467, -0.16886, 0.08908]), np.array([0.70711,0,0.70711,0]))
         
         if self.util.motion_task_counter==5:
@@ -604,7 +657,7 @@ class ExecutorFunctions:
 
         if self.util.motion_task_counter==2 and not self.bool_done[3]:
             self.bool_done[3] = True
-            self.util.remove_part("World/Environment", "battery_01")
+            self.util.remove_part("World/Environment", f"battery_01_{self.id}")
             self.util.add_part_custom("World/UR10_battery/ee_link","battery", f"qbattery_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.2361, 0.05277, 0.03064]), np.array([0.00253, -0.7071, 0.7071, 0.00253]))
         
         if self.util.motion_task_counter==5:
@@ -815,7 +868,7 @@ class ExecutorFunctions:
 
         if self.util.motion_task_counter==2 and not self.bool_done[5]:
             self.bool_done[5] = True
-            self.util.remove_part("World/Environment", "trunk_02")
+            self.util.remove_part("World/Environment", f"trunk_02_{self.id}")
             self.util.add_part_custom("World/UR10_trunk/ee_link","trunk", f"qtrunk_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.28167, -0.21084, -0.00861]), np.array([0.70711, 0, 0, 0.70711]))
         
         if self.util.motion_task_counter==6:
@@ -901,7 +954,7 @@ class ExecutorFunctions:
 
         if self.util.motion_task_counter==2 and not self.bool_done[45]:
             self.bool_done[45] = True
-            self.util.remove_part("World/Environment", "wheel_03")
+            self.util.remove_part("World/Environment", f"wheel_03_{self.id}")
             self.util.add_part_custom("World/UR10_wheel_01/ee_link","FWheel", f"qwheel_03_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.25604, -0.18047, -0.18125]), np.array([0, 0, 0.70711, 0.70711]))
         
         if self.util.motion_task_counter==5 and not self.bool_done[6]:
@@ -971,7 +1024,7 @@ class ExecutorFunctions:
 
         if self.util.motion_task_counterl==2 and not self.bool_done[7]:
             self.bool_done[7] = True
-            self.util.remove_part("World/Environment", "wheel_01")
+            self.util.remove_part("World/Environment", f"wheel_01_{self.id}")
             self.util.add_part_custom("World/UR10_wheel/ee_link","FWheel", f"qwheel_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.25604, -0.18047, -0.18125]), np.array([0, 0, 0.70711, 0.70711]))
         
         if self.util.motion_task_counterl==7 and not self.bool_done[8]:
@@ -1046,7 +1099,7 @@ class ExecutorFunctions:
 
         if self.util.motion_task_counter==2 and not self.bool_done[9]:
             self.bool_done[9] = True
-            self.util.remove_part("World/Environment", "wheel_04")
+            self.util.remove_part("World/Environment", f"wheel_04_{self.id}")
             self.util.add_part_custom("World/UR10_wheel_01/ee_link","FWheel", f"qwheel_04_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.25604, -0.18047, -0.18125]), np.array([0, 0, 0.70711, 0.70711]))
         
         if self.util.motion_task_counter==5 and not self.bool_done[10]:
@@ -1117,7 +1170,7 @@ class ExecutorFunctions:
 
         if self.util.motion_task_counterl==2 and not self.bool_done[11]:
             self.bool_done[11] = True
-            self.util.remove_part("World/Environment", "wheel_02")
+            self.util.remove_part("World/Environment", f"wheel_02_{self.id}")
             self.util.add_part_custom("World/UR10_wheel/ee_link","FWheel", f"qwheel_02_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.25604, -0.18047, -0.18125]), np.array([0, 0, 0.70711, 0.70711]))
         
         if self.util.motion_task_counterl==7 and not self.bool_done[12]:
@@ -1261,7 +1314,7 @@ class ExecutorFunctions:
 
         if self.util.motion_task_counter==2 and not self.bool_done[20]:
             self.bool_done[20] = True
-            self.util.remove_part("World/Environment", "lower_cover_01")
+            self.util.remove_part("World/Environment", f"lower_cover_01_{self.id}")
             self.util.add_part_custom("World/UR10_lower_cover/ee_link","lower_cover", f"qlower_cover_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.27893, -0.08083, 0.29584]), np.array([0.5, -0.5, 0.5, 0.5]))
         
         if self.util.motion_task_counter==6 and not self.bool_done[21]:
@@ -1316,7 +1369,7 @@ class ExecutorFunctions:
 
         if self.util.motion_task_counterl==2 and not self.bool_done[22]:
             self.bool_done[22] = True
-            self.util.remove_part("World/Environment", "lower_cover_04")
+            self.util.remove_part("World/Environment", f"lower_cover_04_{self.id}")
             self.util.add_part_custom("World/UR10_lower_cover_01/ee_link","lower_cover", f"qlower_cover_04_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.28058, 0.07474, -0.29292]), np.array([0.5, 0.5, -0.5, 0.5]))
         
         if self.util.motion_task_counterl==6 and not self.bool_done[23]:
@@ -1430,7 +1483,7 @@ class ExecutorFunctions:
         # remove world main cover and add ee main cover
         if self.util.motion_task_counter==2 and not self.bool_done[24]:
             self.bool_done[24] = True
-            self.util.remove_part("World/Environment", "main_cover")
+            self.util.remove_part("World/Environment", f"main_cover_{self.id}")
             self.util.add_part_custom("World/UR10_main_cover/ee_link","main_cover", f"qmain_cover_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.71735, 0.26961, -0.69234]), np.array([0.5, 0.5, -0.5, 0.5]))
 
         # remove ee main cover and add mobile platform main cover
@@ -1486,7 +1539,7 @@ class ExecutorFunctions:
 
         if self.util.motion_task_counter==2 and not self.bool_done[26]:
             self.bool_done[26] = True
-            self.util.remove_part("World/Environment", "handle")
+            self.util.remove_part("World/Environment", f"handle_{self.id}")
             self.util.add_part_custom("World/UR10_handle/ee_link","handle", f"qhandle_{self.id}", np.array([0.001,0.001,0.001]), np.array([-0.5218, 0.42317, 0.36311]), np.array([0.5, -0.5, 0.5, -0.5]))
         
         if self.util.motion_task_counter==6 and not self.bool_done[27]:
@@ -1563,7 +1616,7 @@ class ExecutorFunctions:
 
         if self.util.motion_task_counter==2 and not self.bool_done[28]:
             self.bool_done[28] = True
-            self.util.remove_part("World/Environment", "light_03")
+            self.util.remove_part("World/Environment", f"light_03_{self.id}")
             self.util.add_part_custom("World/UR10_light/ee_link","FFrontLightAssembly", f"qlight_{self.id}", np.array([0.001,0.001,0.001]), np.array([1.30826, -0.30485, -0.12023]), np.array([0.36036, -0.00194, 0.00463, 0.9328]))
         
         if self.util.motion_task_counter==6 and not self.bool_done[29]:
