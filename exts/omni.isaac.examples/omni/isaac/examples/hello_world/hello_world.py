@@ -686,8 +686,12 @@ class HelloWorld(BaseSample):
                     self.schedules[i].popleft()
 
         for i in range(1,self.num_of_ATVs):
-            print("Tasks", int(self.schedules[i-1][0])//100, int(self.schedules[i][0])//100)
-            if int(self.schedules[i-1][0])//100 > int(self.schedules[i][0])//100:
+            if self.schedules[i-1]:
+                print("Task "+str(i), int(self.schedules[i-1][0])//100, int(self.schedules[i][0])//100)
+                if int(self.schedules[i-1][0])//100 > int(self.schedules[i][0])//100:
+                    self.ATV_executions[i].spawn_new_parts()
+            else:
+                print("Task "+str(i), "F", int(self.schedules[i][0])//100)
                 self.ATV_executions[i].spawn_new_parts()
 
         return

@@ -216,42 +216,53 @@ class ExecutorFunctions:
 
     def spawn_new_parts(self):
 
-        if self.id>0:
+        if self.id ==2:
+            print(not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id}") and not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/engine_{self.id-1}"))
+
+
+        if self.id!=0:
             
             # Engine cell set up ----------------------------------------------------------------------------
             # if not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id}") and not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/engine_{self.id}"):
-            if not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id}") and not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/engine_{self.id-1}"):
+            if not self.isDone[0] and not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id}") and not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/engine_{self.id-1}"):
+                self.isDone[0] = True
                 self.util.add_part_custom("World/Environment","engine_no_rigid", f"engine_small_{self.id}", np.array([0.001, 0.001, 0.001]), np.array([-4.86938, 8.14712, 0.59038]), np.array([0.99457, 0, -0.10411, 0]))
                 print(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n --------------------------------------spawned engine "+str(self.id)+" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 
             # Suspension cell set up ------------------------------------------------------------------------
             # if not self.util.check_prim_exists(f"World/Environment/FSuspensionBack_01_{self.id}") and not self.util.check_prim_exists(f"World/Environment/FSuspensionBack_01_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xFSuspensionBack_{self.id}"):
-            if not self.util.check_prim_exists(f"World/Environment/FSuspensionBack_01_{self.id}") and not self.util.check_prim_exists(f"World/Environment/FSuspensionBack_01_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/xFSuspensionBack_{self.id-1}"):
+            if not self.isDone[1] and not self.util.check_prim_exists(f"World/Environment/FSuspensionBack_01_{self.id}") and not self.util.check_prim_exists(f"World/Environment/FSuspensionBack_01_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/xFSuspensionBack_{self.id-1}"):
+                self.isDone[1] = True
                 self.util.add_part_custom("World/Environment","FSuspensionBack", f"FSuspensionBack_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-6.66288, -4.69733, 0.41322]), np.array([0.5, 0.5, -0.5, 0.5]))
                 print(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n --------------------------------------spawned suspension "+str(self.id)+" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
         
             # Fuel cell set up ---------------------------------------------------------------------------------
-            if not self.util.check_prim_exists(f"World/Environment/fuel_01_{self.id}") and not self.util.check_prim_exists(f"World/Environment/fuel_01_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xfuel_{self.id}"):
+            if not self.isDone[2] and not self.util.check_prim_exists(f"World/Environment/fuel_01_{self.id}") and not self.util.check_prim_exists(f"World/Environment/fuel_01_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/xfuel_{self.id-1}"):
+                self.isDone[2] = True
                 self.util.add_part_custom("World/Environment","fuel", f"fuel_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-7.01712, -15.89918, 0.41958]), np.array([0.5, 0.5, -0.5, -0.5]))
 
 
             # battery cell set up ---------------------------------------------------------------------------------
-            if not self.util.check_prim_exists(f"World/Environment/battery_01_{self.id}") and not self.util.check_prim_exists(f"World/Environment/battery_01_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xbattery_{self.id}"):
+            if not self.isDone[3] and not self.util.check_prim_exists(f"World/Environment/battery_01_{self.id}") and not self.util.check_prim_exists(f"World/Environment/battery_01_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/xbattery_{self.id-1}"):
+                self.isDone[3] = True
                 self.util.add_part_custom("World/Environment","battery", f"battery_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-16.47861, -15.68368, 0.41467]), np.array([0.70711, 0.70711, 0, 0]))
 
             # trunk cell set up ---------------------------------------------------------------------------------
-            if not self.util.check_prim_exists(f"World/Environment/trunk_02_{self.id}") and not self.util.check_prim_exists(f"World/Environment/trunk_02_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xtrunk_{self.id}"):
+            if not self.isDone[4] and not self.util.check_prim_exists(f"World/Environment/trunk_02_{self.id}") and not self.util.check_prim_exists(f"World/Environment/trunk_02_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/xtrunk_{self.id-1}"):
+                self.isDone[4] = True
                 self.util.add_part_custom("World/Environment","trunk", f"trunk_02_{self.id}", np.array([0.001,0.001,0.001]), np.array([-27.84904, 4.26505, 0.41467]), np.array([0, 0, -0.70711, -0.70711]))
 
             # wheel cell set up ---------------------------------------------------------------------------------
-            if not self.util.check_prim_exists(f"World/Environment/wheel_02_{self.id}") and not self.util.check_prim_exists(f"World/Environment/wheel_02_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xwheel_02_{self.id}"):
+            if not self.isDone[5] and not self.util.check_prim_exists(f"World/Environment/wheel_02_{self.id}") and not self.util.check_prim_exists(f"World/Environment/wheel_02_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/xwheel_02_{self.id-1}"):
+                self.isDone[5] = True
                 self.util.add_part_custom("World/Environment","FWheel", f"wheel_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-15.17319, 4.72577, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
                 self.util.add_part_custom("World/Environment","FWheel", f"wheel_02_{self.id}", np.array([0.001,0.001,0.001]), np.array([-15.17319, 5.24566, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
                 self.util.add_part_custom("World/Environment","FWheel", f"wheel_03_{self.id}", np.array([0.001,0.001,0.001]), np.array([-18.97836, 4.72577, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
                 self.util.add_part_custom("World/Environment","FWheel", f"wheel_04_{self.id}", np.array([0.001,0.001,0.001]), np.array([-18.97836, 5.24566, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
 
             # lower_cover cell set up ---------------------------------------------------------------------------------
-            if not self.util.check_prim_exists(f"World/Environment/main_cover_{self.id}") and not self.util.check_prim_exists(f"World/Environment/main_cover_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xmain_cover_{self.id}"):
+            if not self.isDone[6] and not self.util.check_prim_exists(f"World/Environment/main_cover_{self.id}") and not self.util.check_prim_exists(f"World/Environment/main_cover_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/xmain_cover_{self.id-1}"):
+                self.isDone[6] = True
                 self.util.add_part_custom("World/Environment","lower_cover", f"lower_cover_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-26.2541, -15.57458, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
 
                 self.util.add_part_custom("World/Environment","lower_cover", f"lower_cover_04_{self.id}", np.array([0.001,0.001,0.001]), np.array([-26.26153, -19.13631, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
@@ -259,11 +270,13 @@ class ExecutorFunctions:
                 self.util.add_part_custom("World/Environment","main_cover", f"main_cover_{self.id}", np.array([0.001,0.001,0.001]), np.array([-18.7095-11.83808, -15.70872, 0.28822]), np.array([0.70711, 0.70711,0,0]))
             
             # handle cell set up ---------------------------------------------------------------------------------
-            if not self.util.check_prim_exists(f"World/Environment/handle_{self.id}") and not self.util.check_prim_exists(f"World/Environment/handle_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xhandle_{self.id}"):
+            if not self.isDone[7] and not self.util.check_prim_exists(f"World/Environment/handle_{self.id}") and not self.util.check_prim_exists(f"World/Environment/handle_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/xhandle_{self.id-1}"):
+                self.isDone[7] = True
                 self.util.add_part_custom("World/Environment","handle", f"handle_{self.id}", np.array([0.001,0.001,0.001]), np.array([-29.70213, -7.25934, 1.08875]), np.array([0, 0.70711, 0.70711, 0]))
 
             # light cell set up ---------------------------------------------------------------------------------
-            if not self.util.check_prim_exists(f"World/Environment/light_03_{self.id}") and not self.util.check_prim_exists(f"World/Environment/light_03_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xlight_{self.id}"):
+            if not self.isDone[8] and not self.util.check_prim_exists(f"World/Environment/light_03_{self.id}") and not self.util.check_prim_exists(f"World/Environment/light_03_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/xlight_{self.id-1}"):
+                self.isDone[8] = True
                 self.util.add_part_custom("World/Environment","FFrontLightAssembly", f"light_03_{self.id}", np.array([0.001,0.001,0.001]), np.array([-18.07685, -7.35866, -0.71703]), np.array([0.28511, -0.28511, -0.64708, -0.64708]))
 
     def _check_goal_reached(self, goal_pose):
@@ -415,7 +428,7 @@ class ExecutorFunctions:
     
     def turn_mobile_platform(self):
         print(self.util.path_plan_counter)
-        path_plan = [["rotate", [np.array([0.70711, 0.70711, 0, 0]), 0.255, True]]]
+        path_plan = [["rotate", [np.array([1, 0, 0, 0]), 0.0042, True]]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:
             self.util.path_plan_counter=0
@@ -631,12 +644,20 @@ class ExecutorFunctions:
     def move_to_battery_cell(self):
         print(self.util.path_plan_counter)
         path_plan = [
+            ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, True]],
+            ["wait",[]],
                     ["translate", [-12.5, 1, False]],
+                    ["wait",[]],
                      ["rotate", [np.array([0, 0, 0, 1]), 0.503, True]],
-                     ["translate", [-8.63, 0, False]],
+                     ["wait",[]],
+                     ["translate", [-9.54, 0, False]],
+                     ["wait",[]],
                      ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, False]],
-                     ["translate", [-16.85, 1, False]],
+                     ["wait",[]],
+                     ["translate", [-17.17, 1, False]],
+                     ["wait",[]],
                      ["rotate", [np.array([0, 0, 0, -1]), 0.0042, True]],
+                     ["wait",[]],
                      ["translate", [-16.7, 0, False]]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:
@@ -841,12 +862,17 @@ class ExecutorFunctions:
         print(self.util.path_plan_counter)
         path_plan = [
             ["translate", [-23.49, 1, False]],
+            ["wait",[]],
                      ["rotate", [np.array([0, 0, 0, -1]), 0.0042, True]],
+                     ["wait",[]],
                      ["translate", [-35.47, 0, False]],
+                     ["wait",[]],
                      ["rotate", [np.array([-0.70711, 0, 0, -0.70711]), 0.0042, True]],
+                     ["wait",[]],
                      ["translate", [5.15, 1, False]],
                      ["wait",[]],
                      ["rotate", [np.array([-1, 0, 0, 0]), 0.0032, True]],
+                     ["wait",[]],
                      ["translate", [-26.75, 0, False]]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:
@@ -916,12 +942,15 @@ class ExecutorFunctions:
                     ["translate", [-21.3, 0, False]],
                     ["wait",[]],
                      ["rotate", [np.array([-0.70711, 0, 0, -0.70711]), 0.0042, False]],
+                     ["wait",[]],
                      ["translate", [9.3, 1, False]],
                      ["wait",[]],
                      ["rotate", [np.array([-1, 0, 0, 0]), 0.0042, True]],
+                     ["wait",[]],
                      ["translate", [-16.965, 0, False]],
                      ["wait",[]],
                      ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, True]],
+                     ["wait",[]],
                     #  ["translate", [5.39, 1, False]],
                     ["translate", [6, 1, False]]
                      ]
@@ -1280,17 +1309,24 @@ class ExecutorFunctions:
         #              ["translate", [-26.9114, 0, False]]]
         path_plan = [
                      ["rotate", [np.array([-0.73548, 0, 0, 0.67755]), 0.0042, False]],
+                     ["wait",[]],
                      ["translate", [-0.64, 1, False]],
+                     ["wait",[]],
                      ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, True]],
+                     ["wait",[]],
                      ["translate", [-12.1, 1, False]],
+                     ["wait",[]],
                      ["rotate", [np.array([0, 0, 0, 1]), 0.0042, True]],
+                     ["wait",[]],
                      ["translate", [-21.13755, 0, False]], # 20.2 earlier
                      ["wait",[]],
                      ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
+                     ["wait",[]],
                      ["translate", [-17.1, 1, False]],
                     ["translate", [-17.34, 1, False]],
                     ["wait",[]],
                      ["rotate", [np.array([0, 0, 0, 1]), 0.0042, True]],
+                     ["wait",[]],
                      ["translate", [-26.9114, 0, False]]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:
@@ -1447,6 +1483,7 @@ class ExecutorFunctions:
                      ["translate", [-28.6, 0, False]],
                      ["wait",[]],
                      ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
+                     ["wait",[]],
                      ["translate", [-17.18, 1, True]]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:
@@ -1511,11 +1548,13 @@ class ExecutorFunctions:
                      ["translate", [-13.2, 1, True]],
                      ["wait",[]],
                      ["rotate", [np.array([-0.56641, 0, 0, 0.82413]), 0.0042, True]],
+                     ["wait",[]],
                     #  ["translate", [-10.46, 1, True]],
                     #  ["translate", [-10.3, 1, True]],
                      ["translate", [-10.43, 1, True]],
                      ["wait",[]],
                      ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
+                     ["wait",[]],
                      ["translate", [-6.69, 1, True]]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:
@@ -1587,6 +1626,7 @@ class ExecutorFunctions:
                      ["wait",[]],
                     #  ["rotate", [np.array([-1, 0, 0, 0]), 0.008, False]],
                     ["rotate", [np.array([-1, 0, 0, 0]), 0.0042, False]],
+                     ["wait",[]],
                      ["translate", [-18.56, 0, False]]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:

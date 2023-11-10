@@ -1,5 +1,6 @@
 import carb
 import numpy as np
+import math
 from omni.isaac.core.utils import prims
 from omni.isaac.core.utils.stage import add_reference_to_stage
 from omni.isaac.dynamic_control import _dynamic_control
@@ -8,7 +9,7 @@ from omni.isaac.motion_generation import WheelBasePoseController
 from omni.isaac.wheeled_robots.controllers.differential_controller import DifferentialController
 from omni.isaac.core.utils.types import ArticulationAction
 from omni.isaac.core.controllers import BaseController
-
+from tf.transformations import euler_from_quaternion, quaternion_from_euler
 from omni.isaac.core.prims import GeometryPrim, XFormPrim
 
 class CustomDifferentialController(BaseController):
@@ -46,7 +47,7 @@ class Utils:
         self.world = None
 
         self.delay = 0
-        
+        self.beta = 1
         self.path_plan_counter = 0
         self.motion_task_counter = 0
         self.motion_task_counterl = 0
@@ -324,15 +325,52 @@ class Utils:
                 self.path_plan_counter+=1
         elif move_type == "rotate":
             goal_ori, error_threshold, rotate_right = goal
-            if rotate_right:
-                self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/2])) # 2
+            # if rotate_right:
+            #     self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/4])) # 2
+            # else:
+            #     self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/4]))
+            # curr_error = np.mean(np.abs(current_mp_orientation-goal_ori))
+            # print(current_mp_orientation, goal_ori, curr_error)
+            # print("diff:",current_mp_orientation-goal_ori)
+            # if curr_error< error_threshold:
+            #     self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
+            #     self.path_plan_counter+=1
+
+
+            curr_euler_orientation = euler_from_quaternion(current_mp_orientation)[0]
+            goal_euler_orientation = euler_from_quaternion(goal_ori)[0]
+            print(current_mp_orientation, goal_ori)
+            print(curr_euler_orientation, goal_euler_orientation)
+
+            if curr_euler_orientation<0:
+                curr_euler_orientation = math.pi*2 + curr_euler_orientation
+            if goal_euler_orientation<0:
+                goal_euler_orientation = math.pi*2 + goal_euler_orientation
+            print(curr_euler_orientation, goal_euler_orientation)
+            if goal_euler_orientation > curr_euler_orientation:
+                if curr_euler_orientation+math.pi < goal_euler_orientation:
+                    rotate_right = False
+                else:
+                    rotate_right = True
             else:
-                self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/2]))
-            curr_error = np.mean(np.abs(current_mp_orientation-goal_ori))
-            print(current_mp_orientation, goal_ori, curr_error)
-            if curr_error< error_threshold:
+                if goal_euler_orientation+math.pi > curr_euler_orientation:
+                    rotate_right = False
+                else:
+                    rotate_right = True
+            print("Rotate right:","True" if rotate_right else "False")
+            
+            if rotate_right:
+                self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/4])) # 2
+            else:
+                self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/4]))
+            curr_error = abs(curr_euler_orientation-goal_euler_orientation)
+            print(curr_error)
+            if curr_error <=0.002:
                 self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
                 self.path_plan_counter+=1
+            else:
+                self.beta*=1.00001
+
         elif move_type == "wait":
             print("Waiting ...")
             self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
