@@ -51,7 +51,8 @@ class Utils:
         self.path_plan_counter = 0
         self.motion_task_counter = 0
         self.motion_task_counterl = 0
-
+        self.bool_done = [False]*1000
+        self.curr_way  = False
         self.id = None
 
         # Engine cell set up ----------------------------------------------------------------------------
@@ -314,27 +315,65 @@ class Utils:
 
         move_type, goal = path_plan[self.path_plan_counter][0], path_plan[self.path_plan_counter][1]
         if move_type == "translate":
-            goal_pos, axis, reverse = goal
+            goal_pos, axis, _ = goal
             print(current_mp_position[axis], goal_pos, abs(current_mp_position[axis]-goal_pos))
-            if reverse:
-                self.moving_platform.apply_action(self._my_custom_controller.forward(command=[-0.5,0])) # 0.5
+
+            # getting current z angle of mp in degrees
+            curr_euler_orientation = euler_from_quaternion(current_mp_orientation)[0]+math.pi
+            print(curr_euler_orientation)
+            if curr_euler_orientation<0:
+                curr_euler_orientation = math.pi*2 + curr_euler_orientation
+            
+            curr_euler_degree_orientation = curr_euler_orientation*(180/math.pi)
+            print(curr_euler_degree_orientation)
+
+            # logic for determining to reverse or not
+            if axis == 0:
+                if (curr_euler_degree_orientation-180)<1:
+                    if goal_pos<current_mp_position[axis]:
+                        reverse = False
+                    else:
+                        reverse = True
+                # elif (curr_euler_degree_orientation-360)<0.1 or (curr_euler_degree_orientation)<0.1:
+                else:
+                    if goal_pos>current_mp_position[axis]:
+                        reverse = False
+                    else:
+                        reverse = True
             else:
-                self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5,0]))
-            if abs(current_mp_position[axis]-goal_pos)<0.01:
+                if (curr_euler_degree_orientation-270)<1:
+                    if goal_pos<current_mp_position[axis]:
+                        reverse = False
+                    else:
+                        reverse = True
+                else:
+                    if goal_pos>current_mp_position[axis]:
+                        reverse = False
+                    else:
+                        reverse = True
+
+            # check if reverse swap happened
+            if not self.bool_done[0]:
+                print("iniitial\n\n")
+                self.bool_done[0]=True
+                self.curr_way = reverse
+                self.speed = 0.5
+
+            if self.curr_way != reverse:
+                self.speed/=1.0001
+            
+            print(self.speed)
+
+            if reverse:
+                self.moving_platform.apply_action(self._my_custom_controller.forward(command=[-self.speed,0])) # 0.5
+            else:
+                self.moving_platform.apply_action(self._my_custom_controller.forward(command=[self.speed,0]))
+
+            if abs(current_mp_position[axis]-goal_pos)<0.002:
                 self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
                 self.path_plan_counter+=1
         elif move_type == "rotate":
             goal_ori, error_threshold, rotate_right = goal
-            # if rotate_right:
-            #     self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],np.pi/4])) # 2
-            # else:
-            #     self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/4]))
-            # curr_error = np.mean(np.abs(current_mp_orientation-goal_ori))
-            # print(current_mp_orientation, goal_ori, curr_error)
-            # print("diff:",current_mp_orientation-goal_ori)
-            # if curr_error< error_threshold:
-            #     self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
-            #     self.path_plan_counter+=1
 
 
             curr_euler_orientation = euler_from_quaternion(current_mp_orientation)[0]

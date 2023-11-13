@@ -863,17 +863,17 @@ class ExecutorFunctions:
         path_plan = [
             ["translate", [-23.49, 1, False]],
             ["wait",[]],
-                     ["rotate", [np.array([0, 0, 0, -1]), 0.0042, True]],
-                     ["wait",[]],
-                     ["translate", [-35.47, 0, False]],
-                     ["wait",[]],
-                     ["rotate", [np.array([-0.70711, 0, 0, -0.70711]), 0.0042, True]],
-                     ["wait",[]],
-                     ["translate", [5.15, 1, False]],
-                     ["wait",[]],
-                     ["rotate", [np.array([-1, 0, 0, 0]), 0.0032, True]],
-                     ["wait",[]],
-                     ["translate", [-26.75, 0, False]]]
+            ["rotate", [np.array([0, 0, 0, -1]), 0.0042, True]],
+            ["wait",[]],
+            ["translate", [-35.47, 0, False]],
+            ["wait",[]],
+            ["rotate", [np.array([-0.70711, 0, 0, -0.70711]), 0.0042, True]],
+            ["wait",[]],
+            ["translate", [5.35, 1, False]],
+            ["wait",[]],
+            ["rotate", [np.array([1, 0, 0, 0]), 0.0032, True]],
+            ["wait",[]],
+            ["translate", [-26.75, 0, False]]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:
             self.util.path_plan_counter=0
