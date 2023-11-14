@@ -319,7 +319,7 @@ class Utils:
             print(current_mp_position[axis], goal_pos, abs(current_mp_position[axis]-goal_pos))
 
             # getting current z angle of mp in degrees
-            curr_euler_orientation = euler_from_quaternion(current_mp_orientation)[0]+math.pi
+            curr_euler_orientation = euler_from_quaternion(current_mp_orientation)[0]
             print(curr_euler_orientation)
             if curr_euler_orientation<0:
                 curr_euler_orientation = math.pi*2 + curr_euler_orientation
@@ -329,19 +329,24 @@ class Utils:
 
             # logic for determining to reverse or not
             if axis == 0:
-                if (curr_euler_degree_orientation-180)<1:
-                    if goal_pos<current_mp_position[axis]:
-                        reverse = False
-                    else:
-                        reverse = True
+                # if :
+                #     if goal_pos<current_mp_position[axis]:
+                #         reverse = False
+                #     else:
+                #         reverse = True
                 # elif (curr_euler_degree_orientation-360)<0.1 or (curr_euler_degree_orientation)<0.1:
-                else:
+                if abs(curr_euler_degree_orientation-180)<3:
                     if goal_pos>current_mp_position[axis]:
                         reverse = False
                     else:
                         reverse = True
+                else:
+                    if goal_pos<current_mp_position[axis]:
+                        reverse = False
+                    else:
+                        reverse = True
             else:
-                if (curr_euler_degree_orientation-270)<1:
+                if abs(curr_euler_degree_orientation-270)<3:
                     if goal_pos<current_mp_position[axis]:
                         reverse = False
                     else:
@@ -369,9 +374,10 @@ class Utils:
             else:
                 self.moving_platform.apply_action(self._my_custom_controller.forward(command=[self.speed,0]))
 
-            if abs(current_mp_position[axis]-goal_pos)<0.002:
+            if abs(current_mp_position[axis]-goal_pos)<0.001: # 0.002
                 self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
                 self.path_plan_counter+=1
+                self.speed = 0.5
         elif move_type == "rotate":
             goal_ori, error_threshold, rotate_right = goal
 
@@ -404,7 +410,7 @@ class Utils:
                 self.moving_platform.apply_action(self._my_custom_controller.turn(command=[[0,0,0,0],-np.pi/4]))
             curr_error = abs(curr_euler_orientation-goal_euler_orientation)
             print(curr_error)
-            if curr_error <=0.002:
+            if curr_error <=0.001: # 0.002
                 self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0,0]))
                 self.path_plan_counter+=1
             else:
