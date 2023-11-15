@@ -335,7 +335,7 @@ class Utils:
                 #     else:
                 #         reverse = True
                 # elif (curr_euler_degree_orientation-360)<0.1 or (curr_euler_degree_orientation)<0.1:
-                if abs(curr_euler_degree_orientation-180)<3:
+                if abs(curr_euler_degree_orientation-180)<30:
                     if goal_pos>current_mp_position[axis]:
                         reverse = False
                     else:
@@ -346,7 +346,7 @@ class Utils:
                     else:
                         reverse = True
             else:
-                if abs(curr_euler_degree_orientation-270)<3:
+                if abs(curr_euler_degree_orientation-270)<30:
                     if goal_pos<current_mp_position[axis]:
                         reverse = False
                     else:

@@ -217,7 +217,8 @@ class ExecutorFunctions:
     def spawn_new_parts(self):
 
         if self.id ==2:
-            print(not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id}") and not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/engine_{self.id-1}"))
+            # print(not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id}") and not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/engine_{self.id-1}"))
+            pass
 
 
         if self.id!=0:
@@ -227,19 +228,23 @@ class ExecutorFunctions:
             if not self.isDone[0] and not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id}") and not self.util.check_prim_exists(f"World/Environment/engine_small_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/engine_{self.id-1}"):
                 self.isDone[0] = True
                 self.util.add_part_custom("World/Environment","engine_no_rigid", f"engine_small_{self.id}", np.array([0.001, 0.001, 0.001]), np.array([-4.86938, 8.14712, 0.59038]), np.array([0.99457, 0, -0.10411, 0]))
-                print(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n --------------------------------------spawned engine "+str(self.id)+" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                # print(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n --------------------------------------spawned engine "+str(self.id)+" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 
             # Suspension cell set up ------------------------------------------------------------------------
             # if not self.util.check_prim_exists(f"World/Environment/FSuspensionBack_01_{self.id}") and not self.util.check_prim_exists(f"World/Environment/FSuspensionBack_01_{self.id-1}") and not self.util.check_prim_exists(f"mock_robot_{self.id}/platform/xFSuspensionBack_{self.id}"):
             if not self.isDone[1] and not self.util.check_prim_exists(f"World/Environment/FSuspensionBack_01_{self.id}") and not self.util.check_prim_exists(f"World/Environment/FSuspensionBack_01_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/xFSuspensionBack_{self.id-1}"):
                 self.isDone[1] = True
                 self.util.add_part_custom("World/Environment","FSuspensionBack", f"FSuspensionBack_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-6.66288, -4.69733, 0.41322]), np.array([0.5, 0.5, -0.5, 0.5]))
-                print(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n --------------------------------------spawned suspension "+str(self.id)+" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+                # print(" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n --------------------------------------spawned suspension "+str(self.id)+" \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
         
             # Fuel cell set up ---------------------------------------------------------------------------------
             if not self.isDone[2] and not self.util.check_prim_exists(f"World/Environment/fuel_01_{self.id}") and not self.util.check_prim_exists(f"World/Environment/fuel_01_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/xfuel_{self.id-1}"):
                 self.isDone[2] = True
-                self.util.add_part_custom("World/Environment","fuel", f"fuel_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-7.01712, -15.89918, 0.41958]), np.array([0.5, 0.5, -0.5, -0.5]))
+
+                if self.id%2==0:
+                    self.util.add_part_custom("World/Environment","fuel", f"fuel_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-7.01712, -15.89918, 0.41958]), np.array([0.5, 0.5, -0.5, -0.5]))
+                else:
+                    self.util.add_part_custom("World/Environment","fuel_yellow", f"fuel_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-7.01712, -15.89918, 0.41958]), np.array([0.5, 0.5, -0.5, -0.5]))
 
 
             # battery cell set up ---------------------------------------------------------------------------------
@@ -266,8 +271,11 @@ class ExecutorFunctions:
                 self.util.add_part_custom("World/Environment","lower_cover", f"lower_cover_01_{self.id}", np.array([0.001,0.001,0.001]), np.array([-26.2541, -15.57458, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
 
                 self.util.add_part_custom("World/Environment","lower_cover", f"lower_cover_04_{self.id}", np.array([0.001,0.001,0.001]), np.array([-26.26153, -19.13631, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
-
-                self.util.add_part_custom("World/Environment","main_cover", f"main_cover_{self.id}", np.array([0.001,0.001,0.001]), np.array([-18.7095-11.83808, -15.70872, 0.28822]), np.array([0.70711, 0.70711,0,0]))
+                
+                if self.id%2==0:
+                    self.util.add_part_custom("World/Environment","main_cover", f"main_cover_{self.id}", np.array([0.001,0.001,0.001]), np.array([-18.7095-11.83808, -15.70872, 0.28822]), np.array([0.70711, 0.70711,0,0]))
+                else:
+                    self.util.add_part_custom("World/Environment","main_cover_orange", f"main_cover_{self.id}", np.array([0.001,0.001,0.001]), np.array([-18.7095-11.83808, -15.70872, 0.28822]), np.array([0.70711, 0.70711,0,0]))
             
             # handle cell set up ---------------------------------------------------------------------------------
             if not self.isDone[7] and not self.util.check_prim_exists(f"World/Environment/handle_{self.id}") and not self.util.check_prim_exists(f"World/Environment/handle_{self.id-1}") and self.util.check_prim_exists(f"mock_robot_{self.id-1}/platform/xhandle_{self.id-1}"):
@@ -585,13 +593,19 @@ class ExecutorFunctions:
         if self.util.motion_task_counter==2 and not self.bool_done[4]:
             self.bool_done[4] = True
             self.util.remove_part("World/Environment", f"fuel_01_{self.id}")
-            self.util.add_part_custom("World/UR10_fuel/ee_link","fuel", f"qfuel_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.05467, -0.16886, 0.08908]), np.array([0.70711,0,0.70711,0]))
+            if self.id%2==0:
+                self.util.add_part_custom("World/UR10_fuel/ee_link","fuel", f"qfuel_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.05467, -0.16886, 0.08908]), np.array([0.70711,0,0.70711,0]))
+            else:
+                self.util.add_part_custom("World/UR10_fuel/ee_link","fuel_yellow", f"qfuel_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.05467, -0.16886, 0.08908]), np.array([0.70711,0,0.70711,0]))
         
         if self.util.motion_task_counter==5:
             print("Done placing fuel")
             self.util.motion_task_counter=0
             self.util.remove_part("World/UR10_fuel/ee_link", f"qfuel_{self.id}")
-            self.util.add_part_custom(f"mock_robot_{self.id}/platform","fuel", f"xfuel_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.11281, -0.08612, 0.59517]), np.array([0, 0, -0.70711, -0.70711]))
+            if self.id%2==0:
+                self.util.add_part_custom(f"mock_robot_{self.id}/platform","fuel", f"xfuel_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.11281, -0.08612, 0.59517]), np.array([0, 0, -0.70711, -0.70711]))
+            else:
+                self.util.add_part_custom(f"mock_robot_{self.id}/platform","fuel_yellow", f"xfuel_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.11281, -0.08612, 0.59517]), np.array([0, 0, -0.70711, -0.70711]))
             return True
         return False
 
@@ -1521,13 +1535,19 @@ class ExecutorFunctions:
         if self.util.motion_task_counter==2 and not self.bool_done[24]:
             self.bool_done[24] = True
             self.util.remove_part("World/Environment", f"main_cover_{self.id}")
-            self.util.add_part_custom("World/UR10_main_cover/ee_link","main_cover", f"qmain_cover_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.71735, 0.26961, -0.69234]), np.array([0.5, 0.5, -0.5, 0.5]))
+            if self.id==0:
+                self.util.add_part_custom("World/UR10_main_cover/ee_link","main_cover", f"qmain_cover_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.71735, 0.26961, -0.69234]), np.array([0.5, 0.5, -0.5, 0.5]))
+            else:
+                self.util.add_part_custom("World/UR10_main_cover/ee_link","main_cover_orange", f"qmain_cover_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.71735, 0.26961, -0.69234]), np.array([0.5, 0.5, -0.5, 0.5]))
 
         # remove ee main cover and add mobile platform main cover
         if self.util.motion_task_counter==13 and not self.bool_done[25]:
             self.bool_done[25] = True
             self.util.remove_part("World/UR10_main_cover/ee_link", f"qmain_cover_{self.id}")
-            self.util.add_part_custom(f"mock_robot_{self.id}/platform","main_cover", f"xmain_cover_{self.id}", np.array([0.001,0.001,0.001]), np.array([-0.81508, 0.27909, 0.19789]), np.array([0.70711, 0.70711, 0, 0]))
+            if self.id%2==0:
+                self.util.add_part_custom(f"mock_robot_{self.id}/platform","main_cover", f"xmain_cover_{self.id}", np.array([0.001,0.001,0.001]), np.array([-0.81508, 0.27909, 0.19789]), np.array([0.70711, 0.70711, 0, 0]))
+            else:
+                self.util.add_part_custom(f"mock_robot_{self.id}/platform","main_cover_orange", f"xmain_cover_{self.id}", np.array([0.001,0.001,0.001]), np.array([-0.81508, 0.27909, 0.19789]), np.array([0.70711, 0.70711, 0, 0]))
 
         if self.util.motion_task_counter==19:
             print("Done placing main cover")

@@ -100,7 +100,9 @@ class HelloWorld(BaseSample):
         # self.schedule = deque(["901","951","971"])
 
         self.schedules = [deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"]) for _ in range(self.num_of_ATVs)]
-
+        
+        for i in range(3, len(self.schedules)):
+            self.schedules[i]=deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule_1 = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
         # self.schedule_1 = deque(["1","71","2","72","3","4","6","101","151","171","181","102"])
@@ -675,23 +677,24 @@ class HelloWorld(BaseSample):
 
         for i in range(len(self.schedules)):
             if self.schedules[i] and sc.current_time>i*60:
+                print("ATV "+str(i)+": ", self.schedules[i])
                 curr_schedule = self.schedules[i][0]
 
                 curr_schedule_function = getattr(self.ATV_executions[i], task_to_func_map[curr_schedule])
 
                 function_done = curr_schedule_function()
-                print("ATV "+str(i)+": ", self.schedules[i])
+                
                 if function_done:
                     print("Done with", task_to_func_map[curr_schedule])
                     self.schedules[i].popleft()
 
         for i in range(1,self.num_of_ATVs):
-            if self.schedules[i-1]:
-                print("Task "+str(i), int(self.schedules[i-1][0])//100, int(self.schedules[i][0])//100)
+            if self.schedules[i-1] and self.schedules[i]:
+                # print("Task "+str(i), int(self.schedules[i-1][0])//100, int(self.schedules[i][0])//100)
                 if int(self.schedules[i-1][0])//100 > int(self.schedules[i][0])//100:
                     self.ATV_executions[i].spawn_new_parts()
             else:
-                print("Task "+str(i), "F", int(self.schedules[i][0])//100)
+                # print("Task "+str(i), "F", int(self.schedules[i][0])//100)
                 self.ATV_executions[i].spawn_new_parts()
 
         return

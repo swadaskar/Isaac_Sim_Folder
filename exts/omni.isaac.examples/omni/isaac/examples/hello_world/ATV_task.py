@@ -26,8 +26,9 @@ from collections import deque, defaultdict
 import time
 
 class ATVTask(BaseTask):
-    def __init__(self, name, offset=None):
+    def __init__(self, name, offset=None, mp_name=None):
         super().__init__(name=name, offset=offset)
+        self.mp_name = mp_name
         self._task_event = 0
         self.task_done = [False]*1000
 
@@ -46,26 +47,48 @@ class ATVTask(BaseTask):
         # large_robot_asset_path = "/home/lm-2023/Isaac_Sim/navigation/Collected_real_microfactory_multiple_mp/Collected_real_microfactory_show/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform/mobile_platform_ag.usd"
         
         # add floor
-        _,num = self.name.split("_")
+        
         # add moving platform
-        self.moving_platform = scene.add(
-            WheeledRobot(
-                prim_path=f"/mock_robot_{num}",
-                name=f"moving_platform_{num}",
-                wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
-                create_robot=True,
-                usd_path=large_robot_asset_path,
-                # position=np.array([2.5, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
-                position=np.array([-0.378+int(num)*2, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
-                # position=np.array([-4.78521, -10.1757,0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before fuel cell
-                # position=np.array([-9.60803, -17.35671, 0.03551]), orientation=np.array([0, 0, 0, 1]),# initial before battery cell
-                # position=np.array([-32.5-int(num)*2, 3.516, 0.03551]), orientation=np.array([0.70711, 0, 0, 0.70711]),# initial before trunk cell
-                # position=np.array([-19.86208-int(num)*2, 9.65617, 0.03551]), orientation=np.array([1, 0, 0, 0]),# initial before wheel cell
-                # position=np.array([-20.84299, 6.46358, 0.03551]), orientation=np.array([-0.70711, 0, 0, -0.70711]),# initial before wheel cell
-                # position=np.array([-21.13755, -15.54504, 0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before cover cell
-                # position=np.array([-27.52625, -7.11835, 0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before light cell
+        if not self.mp_name:
+            _,num = self.name.split("_")
+            self.moving_platform = scene.add(
+                WheeledRobot(
+                    prim_path=f"/mock_robot_{num}",
+                    name=f"moving_platform_{num}",
+                    wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
+                    create_robot=True,
+                    usd_path=large_robot_asset_path,
+                    # position=np.array([2.5, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
+                    position=np.array([-0.378+int(num)*2, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
+                    # position=np.array([-4.78521, -10.1757,0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before fuel cell
+                    # position=np.array([-9.60803, -17.35671, 0.03551]), orientation=np.array([0, 0, 0, 1]),# initial before battery cell
+                    # position=np.array([-32.5-int(num)*2, 3.516, 0.03551]), orientation=np.array([0.70711, 0, 0, 0.70711]),# initial before trunk cell
+                    # position=np.array([-19.86208-int(num)*2, 9.65617, 0.03551]), orientation=np.array([1, 0, 0, 0]),# initial before wheel cell
+                    # position=np.array([-20.84299, 6.46358, 0.03551]), orientation=np.array([-0.70711, 0, 0, -0.70711]),# initial before wheel cell
+                    # position=np.array([-21.13755, -15.54504, 0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before cover cell
+                    # position=np.array([-27.52625, -7.11835, 0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before light cell
+                )
             )
-        )
+        else:
+            _,num = self.mp_name.split("_")
+            self.moving_platform = scene.add(
+                WheeledRobot(
+                    prim_path=f"/{self.mp_name}",
+                    name=f"moving_platform_{num}",
+                    wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
+                    create_robot=True,
+                    usd_path=large_robot_asset_path,
+                    # position=np.array([2.5, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
+                    position=np.array([-0.378+int(num)*2, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
+                    # position=np.array([-4.78521, -10.1757,0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before fuel cell
+                    # position=np.array([-9.60803, -17.35671, 0.03551]), orientation=np.array([0, 0, 0, 1]),# initial before battery cell
+                    # position=np.array([-32.5-int(num)*2, 3.516, 0.03551]), orientation=np.array([0.70711, 0, 0, 0.70711]),# initial before trunk cell
+                    # position=np.array([-19.86208-int(num)*2, 9.65617, 0.03551]), orientation=np.array([1, 0, 0, 0]),# initial before wheel cell
+                    # position=np.array([-20.84299, 6.46358, 0.03551]), orientation=np.array([-0.70711, 0, 0, -0.70711]),# initial before wheel cell
+                    # position=np.array([-21.13755, -15.54504, 0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before cover cell
+                    # position=np.array([-27.52625, -7.11835, 0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before light cell
+                )
+            )
 
         return
 
