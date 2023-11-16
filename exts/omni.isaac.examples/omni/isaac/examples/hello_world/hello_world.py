@@ -94,6 +94,16 @@ class HelloWorld(BaseSample):
         for i in range(self.num_of_ATVs):
             world.add_task(ATVTask(name=f"ATV_{i}",offset=np.array([0, i*2, 0])))
 
+        # part feeder declarations -------------------------------------------------------------------------
+        self.num_of_PFs = 5
+        self.name_of_PFs = [{"name":"engine","position":np.array([0.07038, 0.03535, 0.42908]),"orientation":np.array([0, 0.12268, 0, 0.99245])},
+                            {"name":"trunk","position":np.array([-0.1389, -0.2191, 0.28512]),"orientation":np.array([0.5, 0.5, 0.5, 0.5])},
+                            "wheels",
+                            {"name":"main_cover","position":np.array([-0.72868, 0.2797, -0.03119]),"orientation":np.array([0.70711, 0.70711, 0, 0])},
+                            {"name":"handle","position":np.array([0.4143, -0.50492, 0.94076]),"orientation":np.array([0, 0, -1, 0])},]
+        for i in range(self.num_of_PFs):
+            world.add_task(ATVTask(name=f"PF_{i}",offset=np.array([0, i*2, 0]),mp_name=f"pf_{self.name_of_PFs[i]}_{i}"))
+
         print("inside setup_scene", self.motion_task_counter)
         # self.schedule = deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201"])
         # self.schedule = deque(["501", "505","553","573","554","574"])
@@ -148,6 +158,22 @@ class HelloWorld(BaseSample):
 
     async def setup_post_load(self):
         self._world = self.get_world()
+
+        # part feeders set up ----------------------------------------------------------------------------
+        self.PF_tasks = []
+        self.part_feeders = {}
+        for i in range(self.num_of_PFs):
+            self.PF_tasks.append(self._world.get_task(f"PF_{i}"))
+            task_params = self.PF_tasks[i].get_params()
+            self.part_feeders[f"{self.name_of_PFs}"]=self._world.scene.get_object(task_params["mp_name"]["value"])
+            if self.name_of_PFs[i] != "wheels":
+                self.add_part_custom("pf_"+{self.name_of_PFs[i]["name"]}+"/platform",self.name_of_PFs[i]["name"], self.name_of_PFs[i]["name"]+"_1", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["name"]["position"], self.name_of_PFs[i]["name"]["orientation"])
+            else:
+                self.add_part_custom(f"pf_{self.name_of_PFs[i]}/platform","FWheel", "wheel_01", np.array([0.001, 0.001, 0.001]), np.array([0.45216, -0.32084, 0.28512]), np.array([0, 0, 0.70711, 0.70711]))
+                self.add_part_custom(f"pf_{self.name_of_PFs[i]}/platform","FWheel", "wheel_02", np.array([0.001, 0.001, 0.001]), np.array([0.45216, -0.32084, 0.28512*2]), np.array([0, 0, 0.70711, 0.70711]))
+                self.add_part_custom(f"pf_{self.name_of_PFs[i]}/platform","FWheel", "wheel_03", np.array([0.001, 0.001, 0.001]), np.array([0.45216, -0.32084, 0.28512]), np.array([0, 0, 0.70711, 0.70711]))
+                self.add_part_custom(f"pf_{self.name_of_PFs[i]}/platform","FWheel", "wheel_04", np.array([0.001, 0.001, 0.001]), np.array([0.45216, -0.32084, 0.28512*2]), np.array([0, 0, 0.70711, 0.70711]))
+
 
         # mobile platform set up -------------------------------------------------------------------------
         self.ATV_tasks = []
