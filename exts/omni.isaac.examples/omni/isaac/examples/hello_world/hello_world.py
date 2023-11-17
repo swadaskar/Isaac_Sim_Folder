@@ -96,45 +96,25 @@ class HelloWorld(BaseSample):
 
         # part feeder declarations -------------------------------------------------------------------------
         self.num_of_PFs = 5
-        self.name_of_PFs = [{"name":"engine","position":np.array([0.07038, 0.03535, 0.42908]),"orientation":np.array([0, 0.12268, 0, 0.99245])},
-                            {"name":"trunk","position":np.array([-0.1389, -0.2191, 0.28512]),"orientation":np.array([0.5, 0.5, 0.5, 0.5])},
-                            "wheels",
-                            {"name":"main_cover","position":np.array([-0.72868, 0.2797, -0.03119]),"orientation":np.array([0.70711, 0.70711, 0, 0])},
-                            {"name":"handle","position":np.array([0.4143, -0.50492, 0.94076]),"orientation":np.array([0, 0, -1, 0])},]
+        self.name_of_PFs = [{"name":"engine","prim_name":"engine_small","position":np.array([0.07038, 0.03535, 0.42908]),"orientation":np.array([0, 0.12268, 0, 0.99245]),"mp_pos":np.array([8.61707, 17.63327, 0.03551]),"mp_ori":np.array([0,0,0,1])},
+                            {"name":"trunk","prim_name":"trunk_02","position":np.array([-0.1389, -0.2191, 0.28512]),"orientation":np.array([0.5, 0.5, 0.5, 0.5]),"mp_pos":np.array([-42.76706, 5.21645, 0.03551]),"mp_ori":np.array([1,0,0,0])},
+                            {"name":"wheels","prim_name":"wheel_02","position":np.array([0.45216, -0.32084, 0.28512]),"orientation":np.array([0, 0, 0.70711, 0.70711]),"mp_pos":np.array([-42.71662, 17.56147, 0.03551]),"mp_ori":np.array([1,0,0,0])},
+                            {"name":"main_cover","prim_name":"main_cover","position":np.array([-0.72868, 0.2797, -0.03119]),"orientation":np.array([0.70711, 0.70711, 0, 0]),"mp_pos":np.array([-28.39569, -31.19876, 0.03551]),"mp_ori":np.array([0.70711, 0, 0, 0.70711])},
+                            {"name":"handle","prim_name":"handle","position":np.array([0.4143, -0.50492, 0.94076]),"orientation":np.array([0, 0, -1, 0]),"mp_pos":np.array([-42.77298, -5.63293, 0.03551]),"mp_ori":np.array([0,0,0,1])}]
         for i in range(self.num_of_PFs):
-            world.add_task(ATVTask(name=f"PF_{i}",offset=np.array([0, i*2, 0]),mp_name=f"pf_{self.name_of_PFs[i]}_{i}"))
+            world.add_task(ATVTask(name=f"PF_{i}", offset=np.array([0, i*2, 0]), mp_name=f"pf_{self.name_of_PFs[i]['name']}_{i}",mp_pos=self.name_of_PFs[i]['mp_pos'],mp_ori=self.name_of_PFs[i]['mp_ori']))
 
         print("inside setup_scene", self.motion_task_counter)
-        # self.schedule = deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201"])
-        # self.schedule = deque(["501", "505","553","573","554","574"])
-        # self.schedule = deque(["901","951","971"])
 
-        self.schedules = [deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"]) for _ in range(self.num_of_ATVs)]
+        self.schedules = [deque(["1","71","2","72","3","4","6","101"])]
+
+        # self.schedules = [deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"]) for _ in range(self.num_of_ATVs)]
         
-        for i in range(3, len(self.schedules)):
-            self.schedules[i]=deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
-        # self.schedule = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
-        # self.schedule_1 = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
-        # self.schedule_1 = deque(["1","71","2","72","3","4","6","101","151","171","181","102"])
-        # self.schedule = deque(["6","6","6","6","6","6","0"])
-        # self.schedule_1 = deque(["6","6","6","6","6","6","0"])
-        # self.schedule = deque(["6","6","1"])
-        # self.schedule = deque(["701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
-        # self.schedule = deque(["501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
+        # for i in range(3, len(self.schedules)):
+        #     self.schedules[i]=deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
+
+        self.pf_schedules = [deque(["81","82","83"]) for _ in range(1)]
         self.right_side = self.left_side = False
-        # "6":"wait",
-        #     "5":"move_to_suspension_cell",
-        #     "151":"arm_place_suspension",
-        #     "171":"screw_suspension",
-        #     "181":"arm_remove_suspension",
-        #     "102":"wait",
-        #     "201":"move_to_fuel_cell",
-        #     "251":"arm_place_fuel",
-        #     "271":"screw_fuel", 
-        #     "281":"arm_remove_fuel",
-        #     "202":"wait"
-        # func()
-        # self.utils = Utils()
         
 
         # navigation declarations -----------------------------------------------
@@ -161,18 +141,24 @@ class HelloWorld(BaseSample):
 
         # part feeders set up ----------------------------------------------------------------------------
         self.PF_tasks = []
-        self.part_feeders = {}
+        self.part_feeders = []
+        self.PF_executions = []
         for i in range(self.num_of_PFs):
             self.PF_tasks.append(self._world.get_task(f"PF_{i}"))
             task_params = self.PF_tasks[i].get_params()
-            self.part_feeders[f"{self.name_of_PFs}"]=self._world.scene.get_object(task_params["mp_name"]["value"])
-            if self.name_of_PFs[i] != "wheels":
-                self.add_part_custom("pf_"+{self.name_of_PFs[i]["name"]}+"/platform",self.name_of_PFs[i]["name"], self.name_of_PFs[i]["name"]+"_1", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["name"]["position"], self.name_of_PFs[i]["name"]["orientation"])
+            self.part_feeders.append(self._world.scene.get_object(task_params["mp_name"]["value"]))
+            if self.name_of_PFs[i]['name'] == "engine":
+                self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform","engine_no_rigid", "pf_"+self.name_of_PFs[i]["name"]+f"_{i}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
+            elif self.name_of_PFs[i]['name'] != "wheels":
+                self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform",self.name_of_PFs[i]["name"], "pf_"+self.name_of_PFs[i]["name"]+f"_{i}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
             else:
-                self.add_part_custom(f"pf_{self.name_of_PFs[i]}/platform","FWheel", "wheel_01", np.array([0.001, 0.001, 0.001]), np.array([0.45216, -0.32084, 0.28512]), np.array([0, 0, 0.70711, 0.70711]))
-                self.add_part_custom(f"pf_{self.name_of_PFs[i]}/platform","FWheel", "wheel_02", np.array([0.001, 0.001, 0.001]), np.array([0.45216, -0.32084, 0.28512*2]), np.array([0, 0, 0.70711, 0.70711]))
-                self.add_part_custom(f"pf_{self.name_of_PFs[i]}/platform","FWheel", "wheel_03", np.array([0.001, 0.001, 0.001]), np.array([0.45216, -0.32084, 0.28512]), np.array([0, 0, 0.70711, 0.70711]))
-                self.add_part_custom(f"pf_{self.name_of_PFs[i]}/platform","FWheel", "wheel_04", np.array([0.001, 0.001, 0.001]), np.array([0.45216, -0.32084, 0.28512*2]), np.array([0, 0, 0.70711, 0.70711]))
+                self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform","FWheel", "pf_"+self.name_of_PFs[i]["name"]+f"_1_{i}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
+                self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform","FWheel", "pf_"+self.name_of_PFs[i]["name"]+f"_2_{i}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
+                self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform","FWheel", "pf_"+self.name_of_PFs[i]["name"]+f"_3_{i}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
+                self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform","FWheel", "pf_"+self.name_of_PFs[i]["name"]+f"_4_{i}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
+            
+            pf = ExecutorFunctions()
+            self.PF_executions.append(pf)
 
 
         # mobile platform set up -------------------------------------------------------------------------
@@ -553,6 +539,105 @@ class HelloWorld(BaseSample):
 
             ATV.declare_utils()
 
+        # PF executor class declaration -------------------------------------------------
+
+        for i,PF in enumerate(self.PF_executions):
+            # id ----------------
+            PF.id = i
+
+            # PF declarations ----------------------------------------------------------
+            PF.moving_platform = self.part_feeders[i]
+
+            # Engine cell setup -------------------------
+            PF.my_controller = self.my_controller
+            PF.screw_my_controller = self.screw_my_controller
+            PF.articulation_controller = self.articulation_controller
+            PF.screw_articulation_controller = self.screw_articulation_controller
+
+            # Suspension cell set up ------------------------------------------------------------------------
+
+            PF.my_controller_suspension = self.my_controller_suspension
+            PF.screw_my_controller_suspension = self.screw_my_controller_suspension
+
+            PF.articulation_controller_suspension = self.articulation_controller_suspension
+            PF.screw_articulation_controller_suspension = self.screw_articulation_controller_suspension
+
+
+            # Fuel cell set up ---------------------------------------------------------------------------------
+
+            PF.my_controller_fuel = self.my_controller_fuel
+            PF.screw_my_controller_fuel = self.screw_my_controller_fuel
+
+            PF.articulation_controller_fuel = self.articulation_controller_fuel
+            PF.screw_articulation_controller_fuel = self.screw_articulation_controller_fuel
+
+            # battery cell set up ---------------------------------------------------------------------------------
+
+            PF.my_controller_battery = self.my_controller_battery
+            PF.screw_my_controller_battery = self.screw_my_controller_battery
+
+            PF.articulation_controller_battery = self.articulation_controller_battery
+            PF.screw_articulation_controller_battery = self.screw_articulation_controller_battery
+
+            # trunk cell set up ---------------------------------------------------------------------------------
+
+            PF.my_controller_trunk = self.my_controller_trunk
+            PF.screw_my_controller_trunk = self.screw_my_controller_trunk
+
+            PF.articulation_controller_trunk = self.articulation_controller_trunk
+            PF.screw_articulation_controller_trunk = self.screw_articulation_controller_trunk
+
+            # wheel cell set up ---------------------------------------------------------------------------------
+
+            PF.my_controller_wheel = self.my_controller_wheel
+            PF.screw_my_controller_wheel = self.screw_my_controller_wheel
+
+            PF.articulation_controller_wheel = self.articulation_controller_wheel
+            PF.screw_articulation_controller_wheel = self.screw_articulation_controller_wheel
+
+            PF.my_controller_wheel_01 = self.my_controller_wheel_01
+            PF.screw_my_controller_wheel_01 = self.screw_my_controller_wheel_01
+
+            PF.articulation_controller_wheel_01 = self.articulation_controller_wheel_01
+            PF.screw_articulation_controller_wheel_01 = self.screw_articulation_controller_wheel_01
+
+            # lower_cover cell set up ---------------------------------------------------------------------------------
+
+            PF.my_controller_lower_cover = self.my_controller_lower_cover
+            PF.screw_my_controller_lower_cover = self.screw_my_controller_lower_cover
+
+            PF.articulation_controller_lower_cover = self.articulation_controller_lower_cover
+            PF.screw_articulation_controller_lower_cover = self.screw_articulation_controller_lower_cover
+
+            PF.my_controller_lower_cover_01 = self.my_controller_lower_cover_01
+            PF.screw_my_controller_lower_cover_01 = self.screw_my_controller_lower_cover_01
+
+            PF.articulation_controller_lower_cover_01 = self.articulation_controller_lower_cover_01
+            PF.screw_articulation_controller_lower_cover_01 = self.screw_articulation_controller_lower_cover_01
+
+            PF.my_controller_main_cover = self.my_controller_main_cover
+
+            PF.articulation_controller_main_cover = self.articulation_controller_main_cover
+            
+            # handle cell set up ---------------------------------------------------------------------------------
+
+            PF.my_controller_handle = self.my_controller_handle
+            PF.screw_my_controller_handle = self.screw_my_controller_handle
+
+            PF.articulation_controller_handle = self.articulation_controller_handle
+            PF.screw_articulation_controller_handle = self.screw_articulation_controller_handle
+
+            # light cell set up --------------------------------------------------------------------------------
+            PF.my_controller_light = self.my_controller_light
+            PF.screw_my_controller_light = self.screw_my_controller_light
+
+            PF.articulation_controller_light = self.articulation_controller_light
+            PF.screw_articulation_controller_light = self.screw_articulation_controller_light
+            
+            PF.world = self._world
+
+            PF.declare_utils()
+
         
         return
 
@@ -714,14 +799,32 @@ class HelloWorld(BaseSample):
                     print("Done with", task_to_func_map[curr_schedule])
                     self.schedules[i].popleft()
 
-        for i in range(1,self.num_of_ATVs):
-            if self.schedules[i-1] and self.schedules[i]:
-                # print("Task "+str(i), int(self.schedules[i-1][0])//100, int(self.schedules[i][0])//100)
-                if int(self.schedules[i-1][0])//100 > int(self.schedules[i][0])//100:
-                    self.ATV_executions[i].spawn_new_parts()
-            else:
-                # print("Task "+str(i), "F", int(self.schedules[i][0])//100)
-                self.ATV_executions[i].spawn_new_parts()
+        pf_to_function = {"6":"wait",
+                          "81":"move_pf_engine",
+                        "82":"place_engine",
+                        "83":"move_pf_engine_back"}
+
+        for i in range(len(self.pf_schedules)):
+            if self.pf_schedules[i] and not self.check_prim_exists("World/Environment/"+self.name_of_PFs[i]["prim_name"]):
+                print("PF "+str(i)+": ", self.pf_schedules[i])
+                curr_schedule = self.pf_schedules[i][0]
+
+                curr_schedule_function = getattr(self.PF_executions[i], pf_to_function[curr_schedule])
+
+                function_done = curr_schedule_function()
+                
+                if function_done:
+                    print("Done with", pf_to_function[curr_schedule])
+                    self.pf_schedules[i].popleft()
+
+        # for i in range(1,self.num_of_ATVs):
+        #     if self.schedules[i-1] and self.schedules[i]:
+        #         # print("Task "+str(i), int(self.schedules[i-1][0])//100, int(self.schedules[i][0])//100)
+        #         if int(self.schedules[i-1][0])//100 > int(self.schedules[i][0])//100:
+        #             self.ATV_executions[i].spawn_new_parts()
+        #     else:
+        #         # print("Task "+str(i), "F", int(self.schedules[i][0])//100)
+        #         self.ATV_executions[i].spawn_new_parts()
 
         return
     
@@ -743,4 +846,16 @@ class HelloWorld(BaseSample):
             self.delay=0
             return True
         self.delay+=1
+        return False
+    
+    def check_prim_exists(self, prim_path):
+        
+        # print("/"+prim_path+f"_{i}")
+        for i in range(self.num_of_ATVs):
+            print("/"+prim_path+f"_{i}")
+            curr_prim = self._world.stage.GetPrimAtPath("/"+prim_path+f"_{i}")
+            # curr_prim = self._world.stage.GetPrimAtPath("/mock_robot_0")
+            if curr_prim.IsValid():
+                print("valid return true")
+                return True
         return False

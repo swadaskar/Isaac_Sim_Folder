@@ -26,9 +26,11 @@ from collections import deque, defaultdict
 import time
 
 class ATVTask(BaseTask):
-    def __init__(self, name, offset=None, mp_name=None):
+    def __init__(self, name, offset=None, mp_name=None, mp_pos=None, mp_ori=None):
         super().__init__(name=name, offset=offset)
         self.mp_name = mp_name
+        self.mp_pos = mp_pos
+        self.mp_ori = mp_ori
         self._task_event = 0
         self.task_done = [False]*1000
 
@@ -78,15 +80,7 @@ class ATVTask(BaseTask):
                     wheel_dof_names=["wheel_tl_joint", "wheel_tr_joint", "wheel_bl_joint", "wheel_br_joint"],
                     create_robot=True,
                     usd_path=large_robot_asset_path,
-                    # position=np.array([2.5, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
-                    position=np.array([4.2+int(num)*2, 1.4, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
-                    # position=np.array([-4.78521, -10.1757,0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before fuel cell
-                    # position=np.array([-9.60803, -17.35671, 0.03551]), orientation=np.array([0, 0, 0, 1]),# initial before battery cell
-                    # position=np.array([-32.5-int(num)*2, 3.516, 0.03551]), orientation=np.array([0.70711, 0, 0, 0.70711]),# initial before trunk cell
-                    # position=np.array([-19.86208-int(num)*2, 9.65617, 0.03551]), orientation=np.array([1, 0, 0, 0]),# initial before wheel cell
-                    # position=np.array([-20.84299, 6.46358, 0.03551]), orientation=np.array([-0.70711, 0, 0, -0.70711]),# initial before wheel cell
-                    # position=np.array([-21.13755, -15.54504, 0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before cover cell
-                    # position=np.array([-27.52625, -7.11835, 0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before light cell
+                    position=self.mp_pos,  orientation=self.mp_ori, # start position
                 )
             )
 
