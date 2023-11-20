@@ -63,9 +63,8 @@ class HelloWorld(BaseSample):
     def __init__(self) -> None:
         super().__init__()
         self.done = False
+        self.isThere = [False]*1000
 
-        
-        
         return
 
     def setup_scene(self):
@@ -106,14 +105,14 @@ class HelloWorld(BaseSample):
 
         print("inside setup_scene", self.motion_task_counter)
 
-        self.schedules = [deque(["1","71","2","72","3","4","6","101"])]
+        self.schedules = [deque(["1","71","2","72","3","4","6","101"]) for _ in range(self.num_of_ATVs)]
 
         # self.schedules = [deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"]) for _ in range(self.num_of_ATVs)]
         
         # for i in range(3, len(self.schedules)):
         #     self.schedules[i]=deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
 
-        self.pf_schedules = [deque(["81","82","83"]) for _ in range(1)]
+        self.pf_schedules = [deque([]) for _ in range(1)]
         self.right_side = self.left_side = False
         
 
@@ -787,7 +786,23 @@ class HelloWorld(BaseSample):
         print("Time:", sc.current_time)
 
         for i in range(len(self.schedules)):
-            if self.schedules[i] and sc.current_time>i*60:
+            # wait for part feeder check
+            if i>0:
+                isWait = self.wait_for_parts(i)
+
+                if self.schedules[i-1] and self.schedules[i] and self.schedules[i]==self.schedules[i-1]:
+                    isWait=True
+                    if isWait and sc.current_time>i*60:
+                        print("ATV "+str(i)+": ", self.schedules[i])
+                        print("Waiting for next mp to move...")
+                else:
+                    if isWait and sc.current_time>i*60:
+                        print("ATV "+str(i)+": ", self.schedules[i])
+                        print("Waiting for part...")
+            else:
+                isWait = False
+
+            if self.schedules[i] and sc.current_time>i*60 and not isWait:
                 print("ATV "+str(i)+": ", self.schedules[i])
                 curr_schedule = self.schedules[i][0]
 
@@ -799,14 +814,36 @@ class HelloWorld(BaseSample):
                     print("Done with", task_to_func_map[curr_schedule])
                     self.schedules[i].popleft()
 
+                # updating visited status for each ATV
+                new_schedule = self.schedules[i][0]
+                if not self.ATV_executions[i].visited["engine"] and any(int(new_schedule) >= x for x in [0,1,2,3,4,6,71,72]):
+                    self.ATV_executions[i].visited["engine"]=True
+                if not self.ATV_executions[i].visited["trunk"] and any(int(new_schedule) >= x for x in [401,451,471,481,402]):
+                    self.ATV_executions[i].visited["trunk"]=True
+                if not self.ATV_executions[i].visited["wheels"] and any(int(new_schedule) >= x for x in [501,590,591,505,592,593,502]):
+                    self.ATV_executions[i].visited["wheels"]=True
+                if not self.ATV_executions[i].visited["cover"] and any(int(new_schedule) >= x for x in [701,790,791,702,721,731,703]):
+                    self.ATV_executions[i].visited["cover"]=True
+                if not self.ATV_executions[i].visited["handle"] and any(int(new_schedule) >= x for x in [801,851,871,802]):
+                    self.ATV_executions[i].visited["handle"]=True
+                
+
+
+
         pf_to_function = {"6":"wait",
                           "81":"move_pf_engine",
                         "82":"place_engine",
-                        "83":"move_pf_engine_back"}
+                        "83":"move_pf_engine_back"}             
 
-        for i in range(len(self.pf_schedules)):
-            if self.pf_schedules[i] and not self.check_prim_exists("World/Environment/"+self.name_of_PFs[i]["prim_name"]):
-                print("PF "+str(i)+": ", self.pf_schedules[i])
+        # for i in range(len(self.pf_schedules)):
+        for i in range(1):
+            
+            if not self.check_prim_exists_extra("World/Environment/"+self.name_of_PFs[i]["prim_name"]) and not self.pf_schedules[i]:
+                self.pf_schedules[i] = deque(["81","82","83"])
+
+            print("PF "+self.name_of_PFs[i]["name"]+": ", self.pf_schedules[i])
+            if self.pf_schedules[i]:
+                # print("PF "+str(i)+": ", self.pf_schedules[i])
                 curr_schedule = self.pf_schedules[i][0]
 
                 curr_schedule_function = getattr(self.PF_executions[i], pf_to_function[curr_schedule])
@@ -848,14 +885,24 @@ class HelloWorld(BaseSample):
         self.delay+=1
         return False
     
-    def check_prim_exists(self, prim_path):
-        
-        # print("/"+prim_path+f"_{i}")
+    def check_prim_exists_extra(self, prim_path):
         for i in range(self.num_of_ATVs):
-            print("/"+prim_path+f"_{i}")
             curr_prim = self._world.stage.GetPrimAtPath("/"+prim_path+f"_{i}")
-            # curr_prim = self._world.stage.GetPrimAtPath("/mock_robot_0")
             if curr_prim.IsValid():
-                print("valid return true")
                 return True
         return False
+    
+    def check_prim_exists(self, prim_path):
+        curr_prim = self._world.stage.GetPrimAtPath("/"+prim_path)
+        if curr_prim.IsValid():
+            return True
+        return False
+    
+    def wait_for_parts(self, id):
+        isWait = False
+        isWait |= not self.check_prim_exists(f"World/Environment/engine_small_{id}") and not self.ATV_executions[id].visited["engine"] and self.ATV_executions[id-1].visited["engine"]
+        isWait |= not self.check_prim_exists(f"World/Environment/trunk_02_{id}") and not self.ATV_executions[id].visited["trunk"] and self.ATV_executions[id-1].visited["trunk"]
+        isWait |= not self.check_prim_exists(f"World/Environment/wheel_02_{id}") and not self.ATV_executions[id].visited["wheels"] and self.ATV_executions[id-1].visited["wheels"]
+        isWait |= not self.check_prim_exists(f"World/Environment/main_cover_{id}") and not self.ATV_executions[id].visited["cover"] and self.ATV_executions[id-1].visited["cover"]
+        isWait |= not self.check_prim_exists(f"World/Environment/handle_{id}") and not self.ATV_executions[id].visited["handle"] and self.ATV_executions[id-1].visited["handle"]
+        return isWait
