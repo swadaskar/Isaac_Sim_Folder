@@ -1324,20 +1324,20 @@ class ExecutorFunctions:
         #              ["rotate", [np.array([0, 0, 0, 1]), 0.0042, True]],
         #              ["translate", [-26.9114, 0, False]]]
         path_plan = [
-                     ["rotate", [np.array([-0.73548, 0, 0, 0.67755]), 0.0042, False]],
-                     ["wait",[]],
-                     ["translate", [-0.64, 1, False]],
-                     ["wait",[]],
-                     ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, True]],
-                     ["wait",[]],
-                     ["translate", [-12.1, 1, False]],
-                     ["wait",[]],
-                     ["rotate", [np.array([0, 0, 0, 1]), 0.0042, True]],
-                     ["wait",[]],
-                     ["translate", [-21.13755, 0, False]], # 20.2 earlier
-                     ["wait",[]],
-                     ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
-                     ["wait",[]],
+                    #  ["rotate", [np.array([-0.73548, 0, 0, 0.67755]), 0.0042, False]],
+                    #  ["wait",[]],
+                    #  ["translate", [-0.64, 1, False]],
+                    #  ["wait",[]],
+                    #  ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, True]],
+                    #  ["wait",[]],
+                    #  ["translate", [-12.1, 1, False]],
+                    #  ["wait",[]],
+                    #  ["rotate", [np.array([0, 0, 0, 1]), 0.0042, True]],
+                    #  ["wait",[]],
+                    #  ["translate", [-21.13755, 0, False]], # 20.2 earlier
+                    #  ["wait",[]],
+                    #  ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
+                    #  ["wait",[]],
                      ["translate", [-17.1, 1, False]],
                     ["translate", [-17.34, 1, False]],
                     ["wait",[]],
@@ -1530,7 +1530,11 @@ class ExecutorFunctions:
                         {"index":16, "position": np.array([-0.74286, 0.42878, 0.51038-0.16]), "orientation": np.array([0.6511, -0.2758, 0.6511, 0.2758]), "goal_position":np.array([-17.30707-11.83808, -16.32381, 1.33072]), "goal_orientation":np.array([0.65542, 0.26538, 0.65542, -0.26538])},
                         {"index":17, "position": np.array([-0.89016, 0.32513, 0.51038-0.16]), "orientation": np.array([0.60698, -0.36274, 0.60698, 0.36274]), "goal_position":np.array([-17.41105-11.83808, -16.1764, 1.33072]), "goal_orientation":np.array([0.68569, 0.1727, 0.68569, -0.1727])},
                         
-                        {"index":18, "position": np.array([-1.09352, -0.27789, 0.58455-0.16]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-18.01444-11.83808, -15.97435, 1.40075]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])}]
+                        {"index":18, "position": np.array([-1.09352, -0.27789, 0.58455-0.16]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-18.01444-11.83808, -15.97435, 1.40075]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                        {'index': 19, 'position': np.array([-0.89016,  0.32513,  0.35038]), 'orientation': np.array([ 0.60698, -0.36274,  0.60698,  0.36274]), 'goal_position': np.array([-29.24913, -16.1764 ,   1.33072]), 'goal_orientation': np.array([ 0.68569,  0.1727 ,  0.68569, -0.1727 ])}, 
+                        {'index': 20, 'position': np.array([-0.74286,  0.42878,  0.35038]), 'orientation': np.array([ 0.6511, -0.2758,  0.6511,  0.2758]), 'goal_position': np.array([-29.14515, -16.32381,   1.33072]), 'goal_orientation': np.array([ 0.65542,  0.26538,  0.65542, -0.26538])}, 
+                        {"index": 21, "position": np.array([-0.5015, 0.55795, 0.51038-0.16]), "orientation": np.array([0.6954, -0.12814, 0.6954, 0.12814]), "goal_position":np.array([-17.17748-11.83808, -16.5655, 1.33072]), "goal_orientation":np.array([0.58233, 0.40111, 0.58233, -0.40111])},
+                        {'index': 22, 'position': np.array([0.16394, 0.68799,  0.44663]), 'orientation': np.array([ 0.70711, 0, 0.70711, 0]), 'goal_position': np.array([-28.88652, -17.23535,   1.42725]), 'goal_orientation': np.array([0.70711, 0.     , 0.70711, 0.     ])}]
         self.util.move_ur10(motion_plan, "_main_cover")
 
         # remove world main cover and add ee main cover
@@ -1551,7 +1555,7 @@ class ExecutorFunctions:
             else:
                 self.util.add_part_custom(f"mock_robot_{self.id}/platform","main_cover_orange", f"xmain_cover_{self.id}", np.array([0.001,0.001,0.001]), np.array([-0.81508, 0.27909, 0.19789]), np.array([0.70711, 0.70711, 0, 0]))
 
-        if self.util.motion_task_counter==19:
+        if self.util.motion_task_counter==22:
             print("Done placing main cover")
             self.util.motion_task_counter=0
             return True
@@ -1715,99 +1719,5 @@ class ExecutorFunctions:
         if self.util.motion_task_counter==13:
             print("Done screwing light")
             self.util.motion_task_counter=0
-            return True
-        return False
-    
-
-    # ---------------------------------------------------- part feeder functions ------------------------------------------------------------
-
-    def move_pf_engine(self):
-        print(self.util.path_plan_counter)
-        path_plan = [["translate", [-0.8, 0, False]],
-                     ["wait",[]],
-                     ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, False]],
-                     ["wait",[]],
-                     ["translate", [13.65, 1, False]],
-                     ["wait",[]],
-                     ["rotate", [np.array([0, 0, 0, 1]), 0.0042, True]],
-                     ["wait",[]],
-                     ["translate", [-4.947, 0, False]],
-                     ["wait",[]],
-                     ["rotate", [np.array([0.70711,0,0,-0.70711]), 0.0042, False]],
-                     ["wait",[]],
-                     ["translate", [10.042, 1, False]],
-                     ["wait",[]],
-                     ["rotate", [np.array([0, 0, 0, 1]), 0.0042, False]],
-                     ["wait",[]],
-                     ["translate", [-6.28358, 0, False]],
-                     ["wait",[]],
-                     ["rotate", [np.array([0.70711,0,0,-0.70711]), 0.0042, False]],
-                     ["wait",[]],
-                     ["translate", [7.1069, 1, False]]]
-        self.util.move_mp(path_plan)
-        if len(path_plan) == self.util.path_plan_counter:
-            self.util.path_plan_counter=0
-            return True
-        return False
-    
-    def place_engine(self):
-        print("doing motion plan")
-        motion_plan = [{"index":0, "position": np.array([0.16871, 0.73405+0.16, 0.08489]), "orientation": np.array([0.70711, 0, 0, 0.70711]), "goal_position":np.array([-5.71975, 7.14096, 0.32698]), "goal_orientation":np.array([0,0,0,-1])},
-                        {"index":1, "position": np.array([0.16871, 1.09027+0.16, 0.08489]), "orientation": np.array([0.70711, 0, 0, 0.70711]), "goal_position":np.array([-6.07597, 7.14096, 0.32698]), "goal_orientation":np.array([0,0,0,-1])},
-                        {"index":2, "position": np.array([0.16871, 1.09027+0.16, 0.35359]), "orientation": np.array([0.70711, 0, 0, 0.70711]), "goal_position":np.array([-6.07597, 7.14096, 0.59568]), "goal_orientation":np.array([0,0,0,-1])},
-                        
-                        {"index":3, "position": np.array([0.71113, 0.57884, 0.65168]), "orientation": np.array([0.94313, 0, 0, 0.33242]), "goal_position":np.array([-5.46465, 7.557, 0.89377]), "goal_orientation":np.array([0.43184, 0, 0, 0.90195])},# -5.56465, 7.68341, 0.89377
-
-                        {"index":4, "position": np.array([0.97986+0.16, -0.22219, 0.54922]), "orientation": np.array([1,0,0,0]), "goal_position":np.array([-4.76367, 7.95221, 0.79131]), "goal_orientation":np.array([0.70711, 0, 0, 0.70711])},
-                        {"index":5, "position": np.array([0.97986+0.16, -0.22219, 0.23754]), "orientation": np.array([1,0,0,0]), "goal_position":np.array([-4.76367, 7.95221, 0.47963]), "goal_orientation":np.array([0.70711, 0, 0, 0.70711])},
-                        {"index":6, "position": np.array([0.60234+0.16, -0.22219, 0.23754]), "orientation": np.array([1,0,0,0]), "goal_position":np.array([-4.76367, 7.57469, 0.47963]), "goal_orientation":np.array([0.70711, 0, 0, 0.70711])},
-
-                        {"index":7, "position": np.array([0.16394, 0.68797, 0.64637]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-5.67382, 7.1364, 1.04897]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])}]
-        self.util.move_ur10(motion_plan)
-
-        if self.util.motion_task_counter==2 and not self.bool_done[self.id*10]:
-            self.bool_done[self.id*10] = True
-            self.util.remove_part("pf_engine/platform", f"pf_engine_{self.id}")
-            self.util.add_part_custom("World/UR10/ee_link","engine_no_rigid", f"pf_qengine_small_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.19536, 0.10279, 0.11708]), np.array([0.70177, -0.08674, -0.08674, -0.70177]))
-
-        if self.util.motion_task_counter==6 and not self.bool_done[self.id*10+1]:
-            self.bool_done[self.id*10+1] = True
-            self.util.remove_part("World/UR10/ee_link", f"pf_qengine_small_{self.id}")
-            self.util.add_part_custom(f"World/Environment","engine_no_rigid", f"engine_small_{self.id+1}", np.array([0.001,0.001,0.001]), np.array([-4.86938, 8.14712, 0.59038]), np.array([0.99457, 0, -0.10411, 0]))
-            
-        if self.util.motion_task_counter==8:
-            self.util.motion_task_counter=0
-            print("Done placing engine")
-            return True
-        return False
-    
-    def move_pf_engine_back(self):
-        print(self.util.path_plan_counter)
-        path_plan = [["translate", [9.65, 1, False]],
-             ["wait", []],
-             ["rotate", [np.array([0, 0, 0, 1]), 0.0042, False]],
-             ["wait", []],
-             ["translate", [-4.947, 0, False]],
-             ["wait", []],
-             ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, False]],
-             ["wait", []],
-             ["translate", [12.8358, 1, False]],
-             ["wait", []],
-             ["rotate", [np.array([0, 0, 0, 1]), 0.0042, False]],
-             ["wait", []],
-             ["translate", [-1.22, 0, False]],
-             ["wait", []],
-             ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, True]],
-             ["wait", []],
-             ["translate", [17.63327, 1, False]],
-             ["wait", []],
-             ["rotate", [np.array([0, 0, 0, 1]), 0.0042, False]],
-             ["wait", []],
-             ["translate", [8.61707, 0, False]]]
-        self.util.move_mp(path_plan)
-        if len(path_plan) == self.util.path_plan_counter:
-            self.util.path_plan_counter=0
-            self.util.add_part_custom("pf_engine/platform","engine_no_rigid", "pf_engine"+f"_{self.id+1}", np.array([0.001, 0.001, 0.001]), np.array([0.07038, 0.03535, 0.42908]), np.array([0, 0.12268, 0, 0.99245]))
-            self.id+=1
             return True
         return False
