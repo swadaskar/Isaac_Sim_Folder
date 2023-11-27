@@ -19,6 +19,11 @@ class ExecutorFunctions:
 
         self.id = None
 
+        # non part feeder parts
+        self.suspension = None
+        self.battery = None
+        self.fuel = None
+
         # visited array
         # meaning of its values:
         # False - not visited
@@ -513,10 +518,7 @@ class ExecutorFunctions:
         return False
 
     def arm_place_suspension(self):
-        motion_plan = [{"index":0, "position": np.array([0.72034, -0.05477, 0.33852-0.16+0.2]), "orientation": np.array([0.5,-0.5,0.5,0.5]), "goal_position":np.array([-6.822, -5.13962, 0.58122+0.2]), "goal_orientation":np.array([0.5,0.5,0.5,-0.5])},
-                        {"index":1, "position": np.array([0.72034, -0.05477, 0.33852-0.16]), "orientation": np.array([0.5,-0.5,0.5,0.5]), "goal_position":np.array([-6.822, -5.13962, 0.58122]), "goal_orientation":np.array([0.5,0.5,0.5,-0.5])},
-                        {"index":2, "position": np.array([0.72034, -0.05477, 0.33852-0.16+0.2]), "orientation": np.array([0.5,-0.5,0.5,0.5]), "goal_position":np.array([-6.822, -5.13962, 0.58122+0.2]), "goal_orientation":np.array([0.5,0.5,0.5,-0.5])},
-                        
+        motion_plan = [*self.suspension,
                         {"index":3, "position": np.array([-0.96615-0.16, -0.56853+0.12, 0.31143]), "orientation": np.array([-0.00257, 0.00265, -0.82633, -0.56318]), "goal_position":np.array([-5.13459, -4.62413-0.12, 0.55254]), "goal_orientation":np.array([0.56316, 0.82633, -0.00001, -0.00438])},
                         {"index":4, "position": np.array([-1.10845-0.16, -0.56853+0.12, 0.31143]), "orientation": np.array([-0.00257, 0.00265, -0.82633, -0.56318]), "goal_position":np.array([-4.99229, -4.62413-0.12, 0.55254]), "goal_orientation":np.array([0.56316, 0.82633, -0.00001, -0.00438])},
                         {"index":5, "position": np.array([-1.10842-0.16, -0.39583, 0.29724]), "orientation": np.array([-0.00055, 0.0008, -0.82242, -0.56888]), "goal_position":np.array([-5.00127, -4.80822, 0.53949]), "goal_orientation":np.array([0.56437, 0.82479, 0.02914, 0.01902])}]
@@ -524,7 +526,7 @@ class ExecutorFunctions:
         self.util.move_ur10(motion_plan, "_suspension")
         if self.util.motion_task_counter==2 and not self.bool_done[2]:
             self.bool_done[2] = True
-            self.util.remove_part("World/Environment", f"FSuspensionBack_01_{self.id}")
+            self.util.remove_part("World/Environment", f"FSuspensionBack_0{self.id}")
             self.util.add_part_custom("World/UR10_suspension/ee_link","FSuspensionBack", f"qFSuspensionBack_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.16839, 0.158, -0.44332]), np.array([0,0,0,1]))
         
         if self.util.motion_task_counter==6:
@@ -584,9 +586,11 @@ class ExecutorFunctions:
         return False
 
     def arm_place_fuel(self):
-        motion_plan = [{"index":0, "position": np.array([0.71705+0.16, -0.17496, 0.34496]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.81443, -15.98881, 0.58618]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])},
-                        {"index":1, "position": np.array([0.87135+0.16, -0.17496, 0.34496]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.96873, -15.98881, 0.58618]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])},
-                        {"index":2, "position": np.array([0.87135+0.16, -0.17496, 0.48867]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.96873, -15.98881, 0.72989]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])},
+        motion_plan = [
+                        # {"index":0, "position": np.array([0.71705+0.16, -0.17496, 0.34496]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.81443, -15.98881, 0.58618]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])},
+                        # {"index":1, "position": np.array([0.87135+0.16, -0.17496, 0.34496]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.96873, -15.98881, 0.58618]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])},
+                        # {"index":2, "position": np.array([0.87135+0.16, -0.17496, 0.48867]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.96873, -15.98881, 0.72989]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])},
+                        *self.fuel,
                        {"index":3, "position": np.array([-0.70299-0.16-0.04247, -0.19609, 0.65442]), "orientation": np.array([0, 0, -0.70711, -0.70711]), "goal_position":np.array([-5.39448+0.04247, -15.9671, 0.89604]), "goal_orientation":np.array([0.70711, 0.70711, 0, 0])},
                        {"index":4, "position": np.array([-0.70299-0.16-0.04247, -0.19609, 0.53588]), "orientation": np.array([0, 0, -0.70711, -0.70711]), "goal_position":np.array([-5.39448+0.04247, -15.9671, 0.77749]), "goal_orientation":np.array([0.70711, 0.70711, 0, 0])}]
 
@@ -594,7 +598,7 @@ class ExecutorFunctions:
 
         if self.util.motion_task_counter==2 and not self.bool_done[4]:
             self.bool_done[4] = True
-            self.util.remove_part("World/Environment", f"fuel_01_{self.id}")
+            self.util.remove_part("World/Environment", f"fuel_0{self.id}")
             if self.id%2==0:
                 self.util.add_part_custom("World/UR10_fuel/ee_link","fuel", f"qfuel_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.05467, -0.16886, 0.08908]), np.array([0.70711,0,0.70711,0]))
             else:
@@ -682,9 +686,11 @@ class ExecutorFunctions:
         return False
 
     def arm_place_battery(self):
-        motion_plan = [{"index":0, "position": np.array([-0.12728, -0.61362, 0.4+0.1-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.42647, -15.71631, 0.64303+0.1]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-                       {"index":1, "position": np.array([-0.12728, -0.61362, 0.4-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.42647, -15.71631, 0.64303]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-                       {"index":2, "position": np.array([-0.12728, -0.61362, 0.4+0.1-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.42647, -15.71631, 0.64303+0.1]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+        motion_plan = [
+                    #     {"index":0, "position": np.array([-0.12728, -0.61362, 0.4+0.1-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.42647, -15.71631, 0.64303+0.1]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                    #    {"index":1, "position": np.array([-0.12728, -0.61362, 0.4-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.42647, -15.71631, 0.64303]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                    #    {"index":2, "position": np.array([-0.12728, -0.61362, 0.4+0.1-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.42647, -15.71631, 0.64303+0.1]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                    *self.battery,
 
                     #    {"index":3, "position": np.array([0.87593, -0.08943, 0.60328-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-17.42989, -16.24038, 0.8463]), "goal_orientation":np.array([0, -0.70711, 0, 0.70711])},
 
@@ -694,7 +700,7 @@ class ExecutorFunctions:
 
         if self.util.motion_task_counter==2 and not self.bool_done[3]:
             self.bool_done[3] = True
-            self.util.remove_part("World/Environment", f"battery_01_{self.id}")
+            self.util.remove_part("World/Environment", f"battery_0{self.id}")
             self.util.add_part_custom("World/UR10_battery/ee_link","battery", f"qbattery_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.2361, 0.05277, 0.03064]), np.array([0.00253, -0.7071, 0.7071, 0.00253]))
         
         if self.util.motion_task_counter==5:
@@ -1324,20 +1330,20 @@ class ExecutorFunctions:
         #              ["rotate", [np.array([0, 0, 0, 1]), 0.0042, True]],
         #              ["translate", [-26.9114, 0, False]]]
         path_plan = [
-                    #  ["rotate", [np.array([-0.73548, 0, 0, 0.67755]), 0.0042, False]],
-                    #  ["wait",[]],
-                    #  ["translate", [-0.64, 1, False]],
-                    #  ["wait",[]],
-                    #  ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, True]],
-                    #  ["wait",[]],
-                    #  ["translate", [-12.1, 1, False]],
-                    #  ["wait",[]],
-                    #  ["rotate", [np.array([0, 0, 0, 1]), 0.0042, True]],
-                    #  ["wait",[]],
-                    #  ["translate", [-21.13755, 0, False]], # 20.2 earlier
-                    #  ["wait",[]],
-                    #  ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
-                    #  ["wait",[]],
+                     ["rotate", [np.array([-0.73548, 0, 0, 0.67755]), 0.0042, False]],
+                     ["wait",[]],
+                     ["translate", [-0.64, 1, False]],
+                     ["wait",[]],
+                     ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, True]],
+                     ["wait",[]],
+                     ["translate", [-12.1, 1, False]],
+                     ["wait",[]],
+                     ["rotate", [np.array([0, 0, 0, 1]), 0.0042, True]],
+                     ["wait",[]],
+                     ["translate", [-21.13755, 0, False]], # 20.2 earlier
+                     ["wait",[]],
+                     ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
+                     ["wait",[]],
                      ["translate", [-17.1, 1, False]],
                     ["translate", [-17.34, 1, False]],
                     ["wait",[]],

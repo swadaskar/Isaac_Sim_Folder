@@ -547,7 +547,6 @@ class PartFeederFunctions:
         return False
     
     def place_handle(self):
-        pass
         motion_plan = [{"index":0, "position": np.array([0.15669, 0.84626, 0.19321-0.16+0.2]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-28.6592, -8.04267, 0.4333+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
                        {"index":1, "position": np.array([0.15669, 0.84626, 0.19321-0.16]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-28.6592, -8.04267, 0.4333]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
                        {"index":2, "position": np.array([0.15669, 0.84626, 0.19321-0.16+0.2]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-28.6592, -8.04267, 0.4333+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
