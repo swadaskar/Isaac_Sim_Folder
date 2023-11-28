@@ -23,6 +23,7 @@ class ExecutorFunctions:
         self.suspension = None
         self.battery = None
         self.fuel = None
+        self.light = None
 
         # visited array
         # meaning of its values:
@@ -1673,9 +1674,11 @@ class ExecutorFunctions:
             self.util.do_screw_driving(motion_plan, "_light")
             self.util.motion_task_counter=0
 
-        motion_plan = [{"index":0, "position": np.array([0.5517, 0.68287, -0.16+0.34371+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.38395, -7.23584, 0.58583+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-                       {"index":1, "position": np.array([0.5517, 0.68287, -0.16+0.34371]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.38395, -7.23584, 0.58583]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
-                       {"index":2, "position": np.array([0.5517, 0.68287, -0.16+0.34371+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.38395, -7.23584, 0.58583+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+        motion_plan = [
+                    #    {"index":0, "position": np.array([0.5517, 0.68287, -0.16+0.34371+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.38395, -7.23584, 0.58583+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                    #    {"index":1, "position": np.array([0.5517, 0.68287, -0.16+0.34371]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.38395, -7.23584, 0.58583]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                    #    {"index":2, "position": np.array([0.5517, 0.68287, -0.16+0.34371+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.38395, -7.23584, 0.58583+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       *self.light,
 
                        {"index":3, "position": np.array([-0.57726, -0.00505, -0.16+0.65911]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-17.25466, -6.54783, 0.90123]), "goal_orientation":np.array([0, -0.70711, 0, 0.70711])},
 
@@ -1683,12 +1686,15 @@ class ExecutorFunctions:
                        {"index":5, "position": np.array([0.36852+0.12, -0.65596+0.04105, -0.16+0.61986]), "orientation": np.array([0.65861, -0.65861, 0.25736, 0.25736]), "goal_position":np.array([-18.2, -5.8969-0.04105, 0.86172]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
                        {"index":6, "position": np.array([0.32558+0.12, -0.65596+0.04105, -0.16+0.65947]), "orientation": np.array([0.65861, -0.65861, 0.25736, 0.25736]), "goal_position":np.array([-18.15724, -5.8969-0.04105, 0.90133]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
 
-                       {"index":7, "position": np.array([0.5517, 0.68287, -0.16+0.34371+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.38395, -7.23584, 0.58583+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])}]
+                        # {"index":7, "position": np.array([0.11405, 0.9514, -0.16+0.34371+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-17.94611, -7.50448, 0.58583+0.2]), "goal_orientation":np.array([0, -0.70711, 0, 0.70711])}
+                        # {"index":7, "position": np.array([-0.57726, -0.00505, -0.16+0.65911]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-17.25466, -6.54783, 0.90123]), "goal_orientation":np.array([0, -0.70711, 0, 0.70711])},
+                       {"index":7, "position": np.array([0.5517, 0.68287, -0.16+0.34371+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.38395, -7.23584, 0.58583+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])}
+                       ]
         self.util.move_ur10(motion_plan, "_light")
 
         if self.util.motion_task_counter==2 and not self.bool_done[28]:
             self.bool_done[28] = True
-            self.util.remove_part("World/Environment", f"light_03_{self.id}")
+            self.util.remove_part("World/Environment", f"light_0{self.id}")
             self.util.add_part_custom("World/UR10_light/ee_link","FFrontLightAssembly", f"qlight_{self.id}", np.array([0.001,0.001,0.001]), np.array([1.30826, -0.30485, -0.12023]), np.array([0.36036, -0.00194, 0.00463, 0.9328]))
         
         if self.util.motion_task_counter==6 and not self.bool_done[29]:
