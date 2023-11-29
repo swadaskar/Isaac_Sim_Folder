@@ -385,7 +385,8 @@ class PartFeederFunctions:
              ["wait", []],
              ["rotate", [np.array([0, 0, 0, 1]), 0.0042, False]],
              ["wait", []],
-             ["translate", [8.61707, 0, False]]]
+             ["translate", [8.61707, 0, False]],
+             ["wait", []]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:
             self.util.path_plan_counter=0
@@ -453,7 +454,206 @@ class PartFeederFunctions:
         return False
     
     # -----------------------------wheels---------------------------------
+    
+    def move_pf_wheels(self):
+        # return True
+        print(self.util.path_plan_counter)
+        path_plan = [["translate", [-16.85, 0, False]],
+                     ["wait",[]],
+                     ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, True]],
+                    ["wait", []],
+                    ["translate", [5.00712, 1, False]],
+                    ["wait", []],
+                    ["rotate", [np.array([1,0,0,0]), 0.0042, False]],]
+        self.util.move_mp(path_plan)
+        if len(path_plan) == self.util.path_plan_counter:
+            self.util.path_plan_counter=0
+            return True
+        return False
+    
+    def place_wheels_1eft(self):
+        tire_offset = 0.1462+0.2
+        motion_plan = [
+                        {"index":0, "position": np.array([0.16286, 0.68548, 0.63765-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.02865, 4.20818, 0.87901]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                       
+                       {"index":1, "position": np.array([0.69558, -0.10273, 0.42205+0.2-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.5615, 4.99639, 0.66395+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":2, "position": np.array([0.69558, -0.10273, 0.42205-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.5615, 4.99639, 0.66395]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":3, "position": np.array([0.69558, -0.10273, 0.42205+0.2-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.5615, 4.99639, 0.66395+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
 
+                       {"index":4, "position": np.array([0.16286, 0.68548, 0.63765-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.02865, 4.20818, 0.87901]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+
+                       {"index":5, "position": np.array([-0.87307, -0.01687, 0.436-0.16+0.2]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-14.9927, 4.91057, 0.67736+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       {"index":6, "position": np.array([-0.87307, -0.01687, 0.436-0.16]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-14.9927, 4.91057, 0.67736]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       {"index":7, "position": np.array([-0.87307, -0.01687, 0.436-0.16+0.2]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-14.9927, 4.91057, 0.67736+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       
+                       ]
+        self.util.move_ur10_extra(motion_plan, "_wheel")
+
+        if self.util.motion_task_counterl==3 and not self.bool_done[self.id*10]:
+            self.bool_done[self.id*10] = True
+            self.util.remove_part("pf_wheels/platform", f"pf_wheels_1_{self.id}")
+            self.util.add_part_custom("World/UR10_wheel/ee_link","FWheel", f"pf_qwheels_1_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.25604, -0.18047, -0.18125]), np.array([0, 0, 0.70711, 0.70711]))
+        
+        if self.util.motion_task_counterl==7 and not self.bool_done[self.id*10+1]:
+            self.bool_done[self.id*10+1] = True
+            self.util.remove_part("World/UR10_wheel/ee_link", f"pf_qwheels_1_{self.id}")
+            self.util.add_part_custom(f"World/Environment","FWheel", f"wheel_01_{self.id+1}", np.array([0.001,0.001,0.001]), np.array([-15.17319, 4.72577, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+            
+        if self.util.motion_task_counterl==8:
+            self.util.motion_task_counterl=0
+            print("Done placing wheel")
+            return True
+        return False
+    
+    def place_wheels_1eft_01(self):
+        tire_offset = 0.52214
+        motion_plan = [
+                        {"index":0, "position": np.array([-0.87307, -0.01687-tire_offset, 0.436-0.16+0.2]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-14.9927, 4.91057+tire_offset, 0.67736+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       
+                       {"index":1, "position": np.array([0.69558, -0.10273, 0.30352+0.2-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.5615, 4.99639, 0.54541+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":2, "position": np.array([0.69558, -0.10273, 0.30352-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.5615, 4.99639, 0.54541]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":3, "position": np.array([0.69558, -0.10273, 0.30352+0.2-0.16]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-16.5615, 4.99639, 0.54541+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+
+                       {"index":4, "position": np.array([0.16286, 0.68548, 0.63765-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.02865, 4.20818, 0.87901]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+
+                       {"index":5, "position": np.array([-0.87307, -0.01687-tire_offset, 0.436-0.16+0.2]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-14.9927, 4.91057+tire_offset, 0.67736+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       {"index":6, "position": np.array([-0.87307, -0.01687-tire_offset, 0.436-0.16]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-14.9927, 4.91057+tire_offset, 0.67736]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       {"index":7, "position": np.array([-0.87307, -0.01687-tire_offset, 0.436-0.16+0.2]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-14.9927, 4.91057+tire_offset, 0.67736+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       
+                       {"index":8, "position": np.array([0.16286, 0.68548, 0.63765-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-16.02865, 4.20818, 0.87901]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                       ]
+        self.util.move_ur10_extra(motion_plan, "_wheel")
+
+        if self.util.motion_task_counterl==3 and not self.bool_done[self.id*10+2]:
+            self.bool_done[self.id*10+2] = True
+            self.util.remove_part("pf_wheels/platform", f"pf_wheels_3_{self.id}")
+            self.util.add_part_custom("World/UR10_wheel/ee_link","FWheel", f"pf_qwheels_2_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.25604, -0.18047, -0.18125]), np.array([0, 0, 0.70711, 0.70711]))
+        
+        if self.util.motion_task_counterl==7 and not self.bool_done[self.id*10+3]:
+            self.bool_done[self.id*10+3] = True
+            self.util.remove_part("World/UR10_wheel/ee_link", f"pf_qwheels_2_{self.id}")
+            self.util.add_part_custom(f"World/Environment","FWheel", f"wheel_02_{self.id+1}", np.array([0.001,0.001,0.001]), np.array([-15.17319, 5.24566, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+            
+        if self.util.motion_task_counterl==9:
+            self.util.motion_task_counterl=0
+            print("Done placing wheel")
+            return True
+        return False
+    
+    def place_wheels_right(self):
+        tire_offset = 0.1462+0.2
+        motion_plan = [
+                        {"index":0, "position": np.array([0.16345, 0.69284, 0.62942-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-18.09182, 4.18911, 0.87105]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                       
+                       {"index":1, "position": np.array([-0.89369, -0.11909, 0.44644+0.2-0.16]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-17.03464, 5.00114, 0.68807+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       {"index":2, "position": np.array([-0.89369, -0.11909, 0.44644-0.16]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-17.03464, 5.00114, 0.68807]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       {"index":3, "position": np.array([-0.89369, -0.11909, 0.44644+0.2-0.16]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-17.03464, 5.00114, 0.68807+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+
+                       {"index":4, "position": np.array([0.16345, 0.69284, 0.62942-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-18.09182, 4.18911, 0.87105]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+
+                       {"index":5, "position": np.array([0.86452, -0.02427, 0.4366-0.16+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.79301, 4.90626, 0.67823+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":6, "position": np.array([0.86452, -0.02427, 0.4366-0.16+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.79301, 4.90626, 0.67823+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":7, "position": np.array([0.86452, -0.02427, 0.4366-0.16+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.79301, 4.90626, 0.67823+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       
+                       ]
+        self.util.move_ur10(motion_plan, "_wheel_01")
+
+        if self.util.motion_task_counter==3 and not self.bool_done[self.id*10+4]:
+            self.bool_done[self.id*10+4] = True
+            self.util.remove_part("pf_wheels/platform", f"pf_wheels_2_{self.id}")
+            self.util.add_part_custom("World/UR10_wheel_01/ee_link","FWheel", f"pf_qwheels_3_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.25604, -0.18047, -0.18125]), np.array([0, 0, 0.70711, 0.70711]))
+        
+        if self.util.motion_task_counter==7 and not self.bool_done[self.id*10+5]:
+            self.bool_done[self.id*10+5] = True
+            self.util.remove_part("World/UR10_wheel_01/ee_link", f"pf_qwheels_3_{self.id}")
+            self.util.add_part_custom(f"World/Environment","FWheel", f"wheel_03_{self.id+1}", np.array([0.001,0.001,0.001]), np.array([-18.97836, 4.72577, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+            
+        if self.util.motion_task_counter==8:
+            self.util.motion_task_counter=0
+            print("Done placing wheel")
+            return True
+        return False
+    
+    def place_wheels_right_01(self):
+        tire_offset = 0.1462+0.2
+        motion_plan = [
+                        {"index":0, "position": np.array([0.16345, 0.69284, 0.62942-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-18.09182, 4.18911, 0.87105]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                       
+                       {"index":1, "position": np.array([-0.89369, -0.11909, 0.30402+0.2-0.16]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-17.03464, 5.00114, 0.54564+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       {"index":2, "position": np.array([-0.89369, -0.11909, 0.30402-0.16]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-17.03464, 5.00114, 0.54564]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+                       {"index":3, "position": np.array([-0.89369, -0.11909, 0.30402+0.2-0.16]), "orientation": np.array([0.5, -0.5, 0.5, 0.5]), "goal_position":np.array([-17.03464, 5.00114, 0.54564+0.2]), "goal_orientation":np.array([0.5, 0.5, 0.5, -0.5])},
+
+                    #    {"index":4, "position": np.array([0.16345, 0.69284, 0.62942-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-18.09182, 4.18911, 0.87105]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+
+                       {"index":4, "position": np.array([0.86452, -0.54305, 0.4366-0.16+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.79301, 5.42505, 0.67823+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":5, "position": np.array([0.86452, -0.54305, 0.4366-0.16+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.79301, 5.42505, 0.67823+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       {"index":6, "position": np.array([0.86452, -0.54305, 0.4366-0.16+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.79301, 5.42505, 0.67823+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
+                       
+                       {"index":7, "position": np.array([0.16345, 0.69284, 0.62942-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-18.09182, 4.18911, 0.87105]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])}
+                       ]
+        self.util.move_ur10(motion_plan, "_wheel_01")
+
+        if self.util.motion_task_counter==3 and not self.bool_done[self.id*10+6]:
+            self.bool_done[self.id*10+6] = True
+            self.util.remove_part("pf_wheels/platform", f"pf_wheels_4_{self.id}")
+            self.util.add_part_custom("World/UR10_wheel_01/ee_link","FWheel", f"pf_qwheels_4_{self.id}", np.array([0.001,0.001,0.001]), np.array([0.25604, -0.18047, -0.18125]), np.array([0, 0, 0.70711, 0.70711]))
+        
+        if self.util.motion_task_counter==6 and not self.bool_done[self.id*10+7]:
+            self.bool_done[self.id*10+7] = True
+            self.util.remove_part("World/UR10_wheel_01/ee_link", f"pf_qwheels_4_{self.id}")
+            self.util.add_part_custom(f"World/Environment","FWheel", f"wheel_04_{self.id+1}", np.array([0.001,0.001,0.001]), np.array([-18.97836, 5.24566, 0.42127]), np.array([0.5, -0.5, -0.5, -0.5]))
+            
+        if self.util.motion_task_counter==8:
+            self.util.motion_task_counter=0
+            print("Done placing wheel")
+            return True
+        return False
+    
+    def place_wheels(self):
+        if not self.right_side:
+            self.right_side = self.place_wheels_right()
+        if not self.left_side:
+            self.left_side = self.place_wheels_1eft()
+
+        if self.left_side and self.right_side:
+            self.left_side = self.right_side = False
+            return True
+        return False
+    
+    def place_wheels_01(self):
+        if not self.right_side:
+            self.right_side = self.place_wheels_right_01()
+        if not self.left_side:
+            self.left_side = self.place_wheels_1eft_01()
+
+        if self.left_side and self.right_side:
+            self.left_side = self.right_side = False
+            return True
+        return False
+    
+    
+    def move_pf_wheels_back(self):
+        print(self.util.path_plan_counter)
+        path_plan = [
+                    ["rotate", [np.array([0.70711, 0, 0, -0.70711]), 0.0042, True]],
+                    ["wait", []],
+                    ["translate", [17.56147, 1, False]],
+                    ["wait", []],
+                    ["rotate", [np.array([1,0,0,0]), 0.0042, False]],
+                    ["wait", []],
+                    ["translate", [-42.71662, 0, False]],
+                    ["wait", []]]
+        self.util.move_mp(path_plan)
+        if len(path_plan) == self.util.path_plan_counter:
+            self.util.path_plan_counter=0
+            self.util.add_part_custom("pf_wheels/platform","FWheel", f"pf_wheels_1_{self.id+1}", np.array([0.001, 0.001, 0.001]), np.array([0.42089, -0.1821, 0.56097]), np.array([0.5, -0.5, 0.5, 0.5]))
+            self.util.add_part_custom("pf_wheels/platform","FWheel", f"pf_wheels_2_{self.id+1}", np.array([0.001, 0.001, 0.001]), np.array([-0.04856, -0.1821, 0.56097]), np.array([0.5, -0.5, 0.5, 0.5]))
+            self.util.add_part_custom("pf_wheels/platform","FWheel", f"pf_wheels_3_{self.id+1}", np.array([0.001, 0.001, 0.001]), np.array([0.42089, -0.1821, 0.41917]), np.array([0.5, -0.5, 0.5, 0.5]))
+            self.util.add_part_custom("pf_wheels/platform","FWheel", f"pf_wheels_4_{self.id+1}", np.array([0.001, 0.001, 0.001]), np.array([-0.04856, -0.1821, 0.41917]), np.array([0.5, -0.5, 0.5, 0.5]))
+            self.id+=1
+            return True
+        return False
+    
     # -----------------------------cover---------------------------------
 
     def move_pf_main_cover(self):
@@ -531,14 +731,15 @@ class PartFeederFunctions:
     
     def move_pf_handle(self):
         print(self.util.path_plan_counter)
-        path_plan = [["translate", [-32.52, 0, False]],
-                     ["wait",[]],
-                     ["rotate", [np.array([0.70711, 0, 0, 0.70711]), 0.0042, True]],
-                    ["wait", []],
-                     ["translate", [-7.93, 1, False]],
-                    ["wait", []],
-                    ["rotate", [np.array([0, 0, 0, 1]), 0.0042, False]],
-                    ["wait", []],
+        path_plan = [
+                    #  ["translate", [-32.52, 0, False]],
+                    #  ["wait",[]],
+                    #  ["rotate", [np.array([0.70711, 0, 0, 0.70711]), 0.0042, True]],
+                    # ["wait", []],
+                    #  ["translate", [-7.93, 1, False]],
+                    # ["wait", []],
+                    # ["rotate", [np.array([0, 0, 0, 1]), 0.0042, False]],
+                    # ["wait", []],
                     ["translate", [-28.661, 0, False]]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:
@@ -569,7 +770,7 @@ class PartFeederFunctions:
         if self.util.motion_task_counter==6 and not self.bool_done[self.id*10+1]:
             self.bool_done[self.id*10+1] = True
             self.util.remove_part("World/UR10_handle/ee_link", f"pf_qhandle_{self.id}")
-            self.util.add_part_custom(f"World/Environment","handle", f"handle_02_{self.id+1}", np.array([0.001,0.001,0.001]), np.array([-29.70213, -7.25934, 1.08875]), np.array([0, 0.70711, 0.70711, 0]))
+            self.util.add_part_custom(f"World/Environment","handle", f"handle_{self.id+1}", np.array([0.001,0.001,0.001]), np.array([-29.70213, -7.25934, 1.08875]), np.array([0, 0.70711, 0.70711, 0]))
             
         if self.util.motion_task_counter==8:
             self.util.motion_task_counter=0
@@ -579,15 +780,17 @@ class PartFeederFunctions:
     
     def move_pf_handle_back(self):
         print(self.util.path_plan_counter)
-        path_plan = [["translate", [-32.52, 0, False]],
-                     ["wait",[]],
-                     ["rotate", [np.array([0.70711, 0, 0, 0.70711]), 0.0042, True]],
-                    ["wait", []],
-                     ["translate", [-5.63293, 1, False]],
-                    ["wait", []],
-                    ["rotate", [np.array([0, 0, 0, 1]), 0.0042, False]],
-                    ["wait", []],
-                    ["translate", [-42.77298, 0, False]]]
+        path_plan = [
+                    # ["translate", [-32.52, 0, False]],
+                    #  ["wait",[]],
+                    #  ["rotate", [np.array([0.70711, 0, 0, 0.70711]), 0.0042, True]],
+                    # ["wait", []],
+                    #  ["translate", [-5.63293, 1, False]],
+                    # ["wait", []],
+                    # ["rotate", [np.array([0, 0, 0, 1]), 0.0042, False]],
+                    # ["wait", []],
+                    ["translate", [-42.77298, 0, False]],
+                    ["wait", []]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:
             self.util.path_plan_counter=0

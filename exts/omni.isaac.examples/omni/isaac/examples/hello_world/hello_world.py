@@ -93,27 +93,28 @@ class HelloWorld(BaseSample):
         self.num_of_ATVs = 8
         for i in range(self.num_of_ATVs):
             world.add_task(ATVTask(name=f"ATV_{i}",offset=np.array([0, i*2, 0])))
-
+# -7.98255
+# -5.63293
         # part feeder declarations -------------------------------------------------------------------------
         self.num_of_PFs = 5
         self.name_of_PFs = [{"name":"engine","prim_name":"engine_small","position":np.array([0.07038, 0.03535, 0.42908]),"orientation":np.array([0, 0.12268, 0, 0.99245]),"mp_pos":np.array([8.61707, 17.63327, 0.03551]),"mp_ori":np.array([0,0,0,1])},
                             {"name":"trunk","prim_name":"trunk_02","position":np.array([-0.1389, -0.2191, 0.28512]),"orientation":np.array([0.5, 0.5, 0.5, 0.5]),"mp_pos":np.array([-42.76706, 5.21645, 0.03551]),"mp_ori":np.array([1,0,0,0])},
                             {"name":"wheels","prim_name":"wheel_02","position":np.array([0.45216, -0.32084, 0.28512]),"orientation":np.array([0, 0, 0.70711, 0.70711]),"mp_pos":np.array([-42.71662, 17.56147, 0.03551]),"mp_ori":np.array([1,0,0,0])},
                             {"name":"main_cover","prim_name":"main_cover","position":np.array([0.74446, -0.26918, -0.03119]),"orientation":np.array([0, 0, -0.70711, -0.70711]),"mp_pos":np.array([-28.65, -31.19876, 0.03551]),"mp_ori":np.array([0.70711, 0, 0, 0.70711])},
-                            {"name":"handle","prim_name":"handle","position":np.array([-0.4248, 0.46934, 0.94076]),"orientation":np.array([0, 1, 0, 0]),"mp_pos":np.array([-42.77298, -5.63293, 0.03551]),"mp_ori":np.array([0,0,0,1])}]
+                            {"name":"handle","prim_name":"handle","position":np.array([-0.4248, 0.46934, 0.94076]),"orientation":np.array([0, 1, 0, 0]),"mp_pos":np.array([-42.77298, -7.93, 0.03551]),"mp_ori":np.array([0,0,0,1])}]
         for i in range(self.num_of_PFs):
             world.add_task(ATVTask(name=f"PF_{i}", offset=np.array([0, i*2, 0]), mp_name=f"pf_{self.name_of_PFs[i]['name']}_{i}",mp_pos=self.name_of_PFs[i]['mp_pos'],mp_ori=self.name_of_PFs[i]['mp_ori']))
 
         print("inside setup_scene", self.motion_task_counter)
 
-        self.schedules = [deque(["951"]) for _ in range(self.num_of_ATVs)]
+        # self.schedules = [deque([]) for _ in range(self.num_of_ATVs)]
 
+        # "1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402",
 
-
-        # self.schedules = [deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"]) for _ in range(self.num_of_ATVs)]
+        self.schedules = [deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902","1000"]) for _ in range(self.num_of_ATVs)]
         
-        # for i in range(3, len(self.schedules)):
-        #     self.schedules[i]=deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902"])
+        for i in range(3, len(self.schedules)):
+            self.schedules[i]=deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902","1000"])
 
         self.pf_schedules = [deque([]) for _ in range(self.num_of_PFs)]
         self.right_side = self.left_side = False
@@ -157,10 +158,14 @@ class HelloWorld(BaseSample):
                 else:
                     self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform",self.name_of_PFs[i]["name"], "pf_"+self.name_of_PFs[i]["name"]+f"_{0}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
             else:
-                self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform","FWheel", "pf_"+self.name_of_PFs[i]["name"]+f"_1_{0}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
-                self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform","FWheel", "pf_"+self.name_of_PFs[i]["name"]+f"_2_{0}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
-                self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform","FWheel", "pf_"+self.name_of_PFs[i]["name"]+f"_3_{0}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
-                self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform","FWheel", "pf_"+self.name_of_PFs[i]["name"]+f"_4_{0}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
+                # self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform","FWheel", "pf_"+self.name_of_PFs[i]["name"]+f"_1_{0}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
+                # self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform","FWheel", "pf_"+self.name_of_PFs[i]["name"]+f"_2_{0}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
+                # self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform","FWheel", "pf_"+self.name_of_PFs[i]["name"]+f"_3_{0}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
+                # self.add_part_custom("pf_"+self.name_of_PFs[i]["name"]+"/platform","FWheel", "pf_"+self.name_of_PFs[i]["name"]+f"_4_{0}", np.array([0.001, 0.001, 0.001]), self.name_of_PFs[i]["position"], self.name_of_PFs[i]["orientation"])
+                self.add_part_custom("pf_wheels/platform","FWheel", f"pf_wheels_1_{0}", np.array([0.001, 0.001, 0.001]), np.array([0.42089, -0.1821, 0.56097]), np.array([0.5, -0.5, 0.5, 0.5]))
+                self.add_part_custom("pf_wheels/platform","FWheel", f"pf_wheels_2_{0}", np.array([0.001, 0.001, 0.001]), np.array([-0.04856, -0.1821, 0.56097]), np.array([0.5, -0.5, 0.5, 0.5]))
+                self.add_part_custom("pf_wheels/platform","FWheel", f"pf_wheels_3_{0}", np.array([0.001, 0.001, 0.001]), np.array([0.42089, -0.1821, 0.41917]), np.array([0.5, -0.5, 0.5, 0.5]))
+                self.add_part_custom("pf_wheels/platform","FWheel", f"pf_wheels_4_{0}", np.array([0.001, 0.001, 0.001]), np.array([-0.04856, -0.1821, 0.41917]), np.array([0.5, -0.5, 0.5, 0.5]))
             
             pf = PartFeederFunctions()
             self.PF_executions.append(pf)
@@ -960,7 +965,9 @@ class HelloWorld(BaseSample):
             "901":"move_to_light_cell",
             "951":"arm_place_light",
             "971":"screw_light",
-            "902":"wait"
+            "902":"wait",
+
+            "1000":"go_to_end_goal"
         }
 
         # schedule = deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","881","802","901","951","971","902"])
@@ -969,26 +976,28 @@ class HelloWorld(BaseSample):
 
         sc = SimulationContext()
         print("Time:", sc.current_time)
+        time_threshold = 10
 
         for i in range(len(self.schedules)):
             # wait for part feeder check
             if i>0:
+                # print("ATV "+str(i)+":", self.schedules[i][0], self.schedules[i-1][0], self.schedules[i][0] == self.schedules[i-1][0])
                 isWait = self.wait_for_parts(i)
 
-                if self.schedules[i-1] and self.schedules[i] and self.schedules[i]==self.schedules[i-1]:
+                if self.schedules[i-1] and self.schedules[i] and (self.schedules[i][0] == self.schedules[i-1][0] and self.schedules[i-1][0]!="401"):
                     isWait=True
-                    if isWait and sc.current_time>i*60:
+                    if isWait and sc.current_time>i*time_threshold:
                         print("ATV "+str(i)+": ", self.schedules[i])
                         print("Waiting for next mp to move...")
                 else:
-                    if isWait and sc.current_time>i*60:
+                    if isWait and sc.current_time>i*time_threshold:
                         print("ATV "+str(i)+": ", self.schedules[i])
                         print("Waiting for part...")
             else:
                 isWait = False
 
-            # if self.schedules[i] and sc.current_time>i*60 and not isWait:
-            if self.schedules[i] and sc.current_time>i*6:
+            if self.schedules[i] and sc.current_time>i*time_threshold and not isWait:
+            # if self.schedules[i] and sc.current_time>i*50:
                 print("ATV "+str(i)+": ", self.schedules[i])
                 curr_schedule = self.schedules[i][0]
 
@@ -1005,14 +1014,14 @@ class HelloWorld(BaseSample):
                     new_schedule = self.schedules[i][0]
                     if not self.ATV_executions[i].visited["engine"] and any(int(new_schedule) >= x for x in [0,1,2,3,4,6,71,72]):
                         self.ATV_executions[i].visited["engine"]=True
-                    if not self.ATV_executions[i].visited["trunk"] and any(int(new_schedule) >= x for x in [401,451,471,481,402]):
-                        self.ATV_executions[i].visited["trunk"]=True
-                    if not self.ATV_executions[i].visited["wheels"] and any(int(new_schedule) >= x for x in [501,590,591,505,592,593,502]):
-                        self.ATV_executions[i].visited["wheels"]=True
-                    if not self.ATV_executions[i].visited["cover"] and any(int(new_schedule) >= x for x in [701,790,791,702,721,731,703]):
-                        self.ATV_executions[i].visited["cover"]=True
-                    if not self.ATV_executions[i].visited["handle"] and any(int(new_schedule) >= x for x in [801,851,871,802]):
-                        self.ATV_executions[i].visited["handle"]=True
+                    # if not self.ATV_executions[i].visited["trunk"] and any(int(new_schedule) >= x for x in [401,451,471,481,402]):
+                    #     self.ATV_executions[i].visited["trunk"]=True
+                    # if not self.ATV_executions[i].visited["wheels"] and any(int(new_schedule) >= x for x in [501,590,591,505,592,593,502]):
+                    #     self.ATV_executions[i].visited["wheels"]=True
+                    # if not self.ATV_executions[i].visited["cover"] and any(int(new_schedule) >= x for x in [701,790,791,702,721,731,703]):
+                    #     self.ATV_executions[i].visited["cover"]=True
+                    # if not self.ATV_executions[i].visited["handle"] and any(int(new_schedule) >= x for x in [801,851,871,802]):
+                    #     self.ATV_executions[i].visited["handle"]=True
                 
 
 
@@ -1024,6 +1033,10 @@ class HelloWorld(BaseSample):
                         "181":"move_pf_trunk",
                         "182":"place_trunk",
                         "183":"move_pf_trunk_back",
+                        "281":"move_pf_wheels",
+                        "282":"place_wheels",
+                        "283":"place_wheels_01",
+                        "284":"move_pf_wheels_back",
                         "381":"move_pf_main_cover",
                         "382":"place_main_cover",
                         "383":"move_pf_main_cover_back",
@@ -1031,14 +1044,16 @@ class HelloWorld(BaseSample):
                         "482":"place_handle",
                         "483":"move_pf_handle_back"}             
 
-        # for i in range(len(self.pf_schedules)):
-        for i in range(5):
+        for i in range(len(self.pf_schedules)):
+        # for i in range(5):
             
             if not self.check_prim_exists_extra("World/Environment/"+self.name_of_PFs[i]["prim_name"]) and not self.pf_schedules[i]:
                 if self.name_of_PFs[i]["name"]=="engine":
                     self.pf_schedules[i] = deque(["81","82","83"])
                 elif self.name_of_PFs[i]["name"]=="trunk":
                     self.pf_schedules[i] = deque(["181","182","183"])
+                elif self.name_of_PFs[i]["name"]=="wheels":
+                    self.pf_schedules[i] = deque(["281","282","283","284"])
                 elif self.name_of_PFs[i]["name"]=="main_cover":
                     self.pf_schedules[i] = deque(["381","382","383"])
                 elif self.name_of_PFs[i]["name"]=="handle":

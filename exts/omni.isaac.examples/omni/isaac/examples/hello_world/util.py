@@ -462,7 +462,7 @@ class Utils:
 
     def remove_part(self, parent_prim_name, child_prim_name):
 
-        prim_path = f"/{parent_prim_name}/{child_prim_name}"
+        prim_path = f"/{parent_prim_name}/{child_prim_name}" if parent_prim_name else f"/{child_prim_name}"
         # world = self.get_world()
 
         prims.delete_prim(prim_path)
