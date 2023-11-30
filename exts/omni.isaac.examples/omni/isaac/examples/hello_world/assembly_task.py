@@ -64,7 +64,7 @@ class AssemblyTask(BaseTask):
         
         assets_root_path = get_assets_root_path() # http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/2022.2.1
     
-        asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/photos/real_microfactory_show_without_robots.usd"
+        asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/photos/real_microfactory_show_without_robots_l.usd"
 
         robot_arm_path = assets_root_path + "/Isaac/Robots/UR10/ur10.usd"
 

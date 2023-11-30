@@ -560,8 +560,9 @@ class HelloWorld(BaseSample):
                     
                       [{"index":0, "position": np.array([0.71705+0.16+0.26557, 0.06232-self.offset, 0.34496]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.81443-0.26557, -16.22609+self.offset, 0.58618]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])},
                       {"index":1, "position": np.array([0.87135+0.16+0.26557, 0.06232-self.offset, 0.34496]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.96873-0.26557, -16.22609+self.offset, 0.58618]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])},
+                      {"index":2, "position": np.array([0.87135+0.16+0.26557, 0.06232-self.offset, 0.34496]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.96873-0.26557, -16.22609+self.offset, 0.58618]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])}
                     #   {"index":2, "position": np.array([0.87135+0.16+0.26557, 0.06232-self.offset, 0.48867]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.96873-0.26557, -16.22609+self.offset, 0.72989]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])}
-                    ],
+                        ],
 
                       [{"index":0, "position": np.array([0.71705+0.16+0.26557, -0.2367-self.offset, 0.34496]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.81443-0.26557, -15.92707+self.offset, 0.58618]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])},
                       {"index":1, "position": np.array([0.87135+0.16+0.26557, -0.2367-self.offset, 0.34496]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.96873-0.26557, -15.92707+self.offset, 0.58618]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])},
@@ -573,6 +574,7 @@ class HelloWorld(BaseSample):
 
                       [{"index":0, "position": np.array([0.71705+0.16+0.26557, -0.8428-self.offset, 0.34496]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.81443-0.26557, -15.32097+self.offset, 0.58618]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])},
                       {"index":1, "position": np.array([0.87135+0.16+0.26557, -0.8428-self.offset, 0.34496]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.96873-0.26557, -15.32097+self.offset, 0.58618]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])},
+                      {"index":2, "position": np.array([0.87135+0.16+0.26557, -0.8428-self.offset, 0.34496]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.96873-0.26557, -15.32097+self.offset, 0.58618]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])}
                     #   {"index":2, "position": np.array([0.87135+0.16+0.26557, -0.8428-self.offset, 0.48867]), "orientation": np.array([0.70711,0.70711,0,0]), "goal_position":np.array([-6.96873-0.26557, -15.32097+self.offset, 0.72989]), "goal_orientation":np.array([0, 0, 0.70711, 0.70711])}
                       ],
                     ]
@@ -983,7 +985,9 @@ class HelloWorld(BaseSample):
             if i>0:
                 # print("ATV "+str(i)+":", self.schedules[i][0], self.schedules[i-1][0], self.schedules[i][0] == self.schedules[i-1][0])
                 isWait = self.wait_for_parts(i)
-
+                if isWait and self.schedules[i][0]=="401":
+                    self.ATV_executions[i].wait()
+                    
                 if self.schedules[i-1] and self.schedules[i] and (self.schedules[i][0] == self.schedules[i-1][0] and self.schedules[i-1][0]!="401"):
                     isWait=True
                     if isWait and sc.current_time>i*time_threshold:
@@ -1016,8 +1020,8 @@ class HelloWorld(BaseSample):
                         self.ATV_executions[i].visited["engine"]=True
                     # if not self.ATV_executions[i].visited["trunk"] and any(int(new_schedule) >= x for x in [401,451,471,481,402]):
                     #     self.ATV_executions[i].visited["trunk"]=True
-                    # if not self.ATV_executions[i].visited["wheels"] and any(int(new_schedule) >= x for x in [501,590,591,505,592,593,502]):
-                    #     self.ATV_executions[i].visited["wheels"]=True
+                    if not self.ATV_executions[i].visited["wheels"] and any(int(new_schedule) >= x for x in [501,590,591,505,592,593,502]):
+                        self.ATV_executions[i].visited["wheels"]=True
                     # if not self.ATV_executions[i].visited["cover"] and any(int(new_schedule) >= x for x in [701,790,791,702,721,731,703]):
                     #     self.ATV_executions[i].visited["cover"]=True
                     # if not self.ATV_executions[i].visited["handle"] and any(int(new_schedule) >= x for x in [801,851,871,802]):

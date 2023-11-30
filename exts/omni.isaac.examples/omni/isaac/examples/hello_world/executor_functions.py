@@ -1526,6 +1526,13 @@ class ExecutorFunctions:
                      ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
                      ["wait",[]],
                      ["translate", [-17.18, 1, True]]]
+        if self.id == 0:
+            path_plan = [
+                     ["translate", [-28.7, 0, False]],
+                     ["wait",[]],
+                     ["rotate", [np.array([-0.70711, 0, 0, 0.70711]), 0.0042, False]],
+                     ["wait",[]],
+                     ["translate", [-17.18, 1, True]]]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:
             self.util.path_plan_counter=0
@@ -1755,7 +1762,15 @@ class ExecutorFunctions:
 
     def go_to_end_goal(self):
         print(self.util.path_plan_counter)
-        path_plan = [["translate", [10.12, 0, True]]
+        path_plan = [["translate", [-9.95, 0, True]],
+                     ["wait",[]],
+                    ["rotate", [np.array([0.99341, 0, 0, -0.11458]), 0.0042, True]],
+                    ["wait",[]],
+                    ["translate", [-9.16, 0, True]],
+                    ["wait",[]],
+                    ["rotate", [np.array([1,0,0,0]), 0.0042, False]],
+                    ["wait",[]],
+                    ["translate", [9, 0, True]],
                      ]
         self.util.move_mp(path_plan)
         if len(path_plan) == self.util.path_plan_counter:
