@@ -70,7 +70,8 @@ class HelloWorld(BaseSample):
 
     def setup_scene(self):
         world = self.get_world()
-
+        # step_size=1
+        # world.set_physics_step_size(step_size)
         # adding light
         l = UsdLux.SphereLight.Define(world.stage, Sdf.Path("/World/Lights"))
         # l.CreateExposureAttr(...)
@@ -93,8 +94,7 @@ class HelloWorld(BaseSample):
         self.num_of_ATVs = 8
         for i in range(self.num_of_ATVs):
             world.add_task(ATVTask(name=f"ATV_{i}",offset=np.array([0, i*2, 0])))
-# -7.98255
-# -5.63293
+
         # part feeder declarations -------------------------------------------------------------------------
         self.num_of_PFs = 5
         self.name_of_PFs = [{"name":"engine","prim_name":"engine_small","position":np.array([0.07038, 0.03535, 0.42908]),"orientation":np.array([0, 0.12268, 0, 0.99245]),"mp_pos":np.array([8.61707, 17.63327, 0.03551]),"mp_ori":np.array([0,0,0,1])},
@@ -107,14 +107,24 @@ class HelloWorld(BaseSample):
 
         print("inside setup_scene", self.motion_task_counter)
 
-        # self.schedules = [deque([]) for _ in range(self.num_of_ATVs)]
+        # self.schedules = [deque(['790']) for _ in range(self.num_of_ATVs)]
 
         # "1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402",
 
         self.schedules = [deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902","1000"]) for _ in range(self.num_of_ATVs)]
         
         for i in range(3, len(self.schedules)):
-            self.schedules[i]=deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902","1000"])
+            self.schedules[i]=deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902","1000"])
+        
+        # self.schedules = [deque(["701","790","791","702","721","731","703","801","851","871","802","901","951","971","902","1000"]) for _ in range(self.num_of_ATVs)]
+        # # for i in range(len(self.schedules)):
+        # #     self.schedules[i]=deque([])
+        # self.schedules[1]=deque(["71","2","72","4","151","171","181","351","371","381","251","271","281","451","471","481","590","591","592","593","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902","1000"])
+        
+        # self.schedules[0] = deque(["1","6","6","6","6","6","6","6","6","6","6","6","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","802","901","951","971","902","1000"])
+
+
+        self.wait_queue = [deque([0,1,2,3,4]) for _ in range(self.num_of_ATVs)]
 
         self.pf_schedules = [deque([]) for _ in range(self.num_of_PFs)]
         self.right_side = self.left_side = False
@@ -359,14 +369,36 @@ class HelloWorld(BaseSample):
         # bring in moving platforms 
         # self.lower_cover_bringer = self._world.scene.get_object(task_params["eb_name_lower_cover"]["value"])
         
-        self.add_part_custom("World/Environment","lower_cover", "lower_cover_01_0", np.array([0.001,0.001,0.001]), np.array([-26.2541, -15.57458, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
-        self.add_part_custom("World/Environment","lower_cover", "lower_cover_02", np.array([0.001,0.001,0.001]), np.array([-26.2541, -15.30883, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
-        self.add_part_custom("World/Environment","lower_cover", "lower_cover_03", np.array([0.001,0.001,0.001]), np.array([-25.86789, -15.30883, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
+        # self.add_part_custom("World/Environment","lower_cover", "lower_cover_01_0", np.array([0.001,0.001,0.001]), np.array([-26.2541, -15.57458, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
+        # self.add_part_custom("World/Environment","lower_cover", "lower_cover_02", np.array([0.001,0.001,0.001]), np.array([-26.2541, -15.30883, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
+        # self.add_part_custom("World/Environment","lower_cover", "lower_cover_03", np.array([0.001,0.001,0.001]), np.array([-25.86789, -15.30883, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
 
-        self.add_part_custom("World/Environment","lower_cover", "lower_cover_04_0", np.array([0.001,0.001,0.001]), np.array([-26.26153, -19.13631, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
-        self.add_part_custom("World/Environment","lower_cover", "lower_cover_05", np.array([0.001,0.001,0.001]), np.array([-26.26153, -19.3805, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
-        self.add_part_custom("World/Environment","lower_cover", "lower_cover_06", np.array([0.001,0.001,0.001]), np.array([-25.88587, -19.3805, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
+        # self.add_part_custom("World/Environment","lower_cover", "lower_cover_04_0", np.array([0.001,0.001,0.001]), np.array([-26.26153, -19.13631, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
+        # self.add_part_custom("World/Environment","lower_cover", "lower_cover_05", np.array([0.001,0.001,0.001]), np.array([-26.26153, -19.3805, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
+        # self.add_part_custom("World/Environment","lower_cover", "lower_cover_06", np.array([0.001,0.001,0.001]), np.array([-25.88587, -19.3805, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
         
+        # right lower covers
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverr_3", np.array([0.001,0.001,0.001]), np.array([-26.2541, -15.47486, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverr_2", np.array([0.001,0.001,0.001]), np.array([-26.2541, -15.47486, 0.44595]), np.array([0, 0, 0.70711, 0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverr_1", np.array([0.001,0.001,0.001]), np.array([-26.2541, -15.47486, 0.48595]), np.array([0, 0, 0.70711, 0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverr_0", np.array([0.001,0.001,0.001]), np.array([-26.2541, -15.47486, 0.52595]), np.array([0, 0, 0.70711, 0.70711]))
+        
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverr_7", np.array([0.001,0.001,0.001]), np.array([-25.86789, -15.47486, 0.40595]), np.array([0, 0, 0.70711, 0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverr_6", np.array([0.001,0.001,0.001]), np.array([-25.86789, -15.47486, 0.44595]), np.array([0, 0, 0.70711, 0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverr_5", np.array([0.001,0.001,0.001]), np.array([-25.86789, -15.47486, 0.48595]), np.array([0, 0, 0.70711, 0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverr_4", np.array([0.001,0.001,0.001]), np.array([-25.86789, -15.47486, 0.52595]), np.array([0, 0, 0.70711, 0.70711]))
+
+        # left lower covers
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverl_3", np.array([0.001,0.001,0.001]), np.array([-26.26153, -19.25546, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverl_2", np.array([0.001,0.001,0.001]), np.array([-26.26153, -19.25546, 0.44595]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverl_1", np.array([0.001,0.001,0.001]), np.array([-26.26153, -19.25546, 0.48595]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverl_0", np.array([0.001,0.001,0.001]), np.array([-26.26153, -19.25546, 0.52595]), np.array([0, 0, -0.70711, -0.70711]))
+        
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverl_7", np.array([0.001,0.001,0.001]), np.array([-25.92747, -19.25546, 0.40595]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverl_6", np.array([0.001,0.001,0.001]), np.array([-25.92747, -19.25546, 0.44595]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverl_5", np.array([0.001,0.001,0.001]), np.array([-25.92747, -19.25546, 0.48595]), np.array([0, 0, -0.70711, -0.70711]))
+        self.add_part_custom("World/Environment","lower_cover", "lower_coverl_4", np.array([0.001,0.001,0.001]), np.array([-25.92747, -19.25546, 0.52595]), np.array([0, 0, -0.70711, -0.70711]))
+
         self.add_part_custom("World/Environment","main_cover", "main_cover_0", np.array([0.001,0.001,0.001]), np.array([-18.7095-11.83808, -15.70872, 0.28822]), np.array([0.70711, 0.70711,0,0]))
         # Initialize our controller after load and the first reset
 
@@ -579,6 +611,76 @@ class HelloWorld(BaseSample):
                       ],
                     ]
 
+        self.lower_coverr = [
+                            [{"index":0, "position": np.array([-0.49105, 0.8665, -0.16+0.56397+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.54994, -15.3925, 0.80567+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":1, "position": np.array([-0.49105, 0.8665, -0.16+0.56397]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.54994, -15.3925, 0.80567]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":2, "position": np.array([-0.49105, 0.8665, -0.16+0.56397+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.54994, -15.3925, 0.80567+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])}],
+
+                            [{"index":0, "position": np.array([-0.49105, 0.8665, -0.16+0.52368+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.54994, -15.3925, 0.76538+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":1, "position": np.array([-0.49105, 0.8665, -0.16+0.52368]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.54994, -15.3925, 0.76538]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":2, "position": np.array([-0.49105, 0.8665, -0.16+0.52368+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.54994, -15.3925, 0.76538+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])}],
+
+                            [{"index":0, "position": np.array([-0.49105, 0.8665, -0.16+0.48417+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.54994, -15.3925, 0.72587+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":1, "position": np.array([-0.49105, 0.8665, -0.16+0.48417]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.54994, -15.3925, 0.72587]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":2, "position": np.array([-0.49105, 0.8665, -0.16+0.48417+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.54994, -15.3925, 0.72587+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])}],
+
+                            [{"index":0, "position": np.array([-0.49105, 0.8665, -0.16+0.4434+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.54994, -15.3925, 0.6851+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":1, "position": np.array([-0.49105, 0.8665, -0.16+0.4434]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.54994, -15.3925, 0.6851]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":2, "position": np.array([-0.49105, 0.8665, -0.16+0.4434+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.54994, -15.3925, 0.6851+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])}],
+
+                            [{"index":0, "position": np.array([-0.10504, 0.8665, -0.16+0.56397+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.16393, -15.3925, 0.80567+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":1, "position": np.array([-0.10504, 0.8665, -0.16+0.56397]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.16393, -15.3925, 0.80567]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":2, "position": np.array([-0.10504, 0.8665, -0.16+0.56397+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.16393, -15.3925, 0.80567+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])}],
+
+                            [{"index":0, "position": np.array([-0.10504, 0.8665, -0.16+0.52368+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.16393, -15.3925, 0.76538+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":1, "position": np.array([-0.10504, 0.8665, -0.16+0.52368]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.16393, -15.3925, 0.76538]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":2, "position": np.array([-0.10504, 0.8665, -0.16+0.52368+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.16393, -15.3925, 0.76538+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])}],
+
+                            [{"index":0, "position": np.array([-0.10504, 0.8665, -0.16+0.48417+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.16393, -15.3925, 0.72587+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":1, "position": np.array([-0.10504, 0.8665, -0.16+0.48417]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.16393, -15.3925, 0.72587]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":2, "position": np.array([-0.10504, 0.8665, -0.16+0.48417+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.16393, -15.3925, 0.72587+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])}],
+
+                            [{"index":0, "position": np.array([-0.10504, 0.8665, -0.16+0.4434+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.16393, -15.3925, 0.6851+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":1, "position": np.array([-0.10504, 0.8665, -0.16+0.4434]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.16393, -15.3925, 0.6851]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])},
+                            {"index":2, "position": np.array([-0.10504, 0.8665, -0.16+0.4434+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.16393, -15.3925, 0.6851+0.2]), "goal_orientation":np.array([0.70711, 0, 0.70711, 0])}],
+                            ]
+        
+        self.lower_coverl = [
+
+                            [{"index":0, "position": np.array([0.49458, 0.86119, -0.16+0.56518+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.55383, -19.18024, 0.80656+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":1, "position": np.array([0.49458, 0.86119, -0.16+0.56518]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.55383, -19.18024, 0.80656]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":2, "position": np.array([0.49458, 0.86119, -0.16+0.56518+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.55383, -19.18024, 0.80656+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])}],
+                            
+                            [{"index":0, "position": np.array([0.49458, 0.86119, -0.16+0.52494+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.55383, -19.18024, 0.76632+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":1, "position": np.array([0.49458, 0.86119, -0.16+0.52494]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.55383, -19.18024, 0.76632]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":2, "position": np.array([0.49458, 0.86119, -0.16+0.52494+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.55383, -19.18024, 0.76632+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])}],
+                            
+                            [{"index":0, "position": np.array([0.49458, 0.86119, -0.16+0.48451+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.55383, -19.18024, 0.72589+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":1, "position": np.array([0.49458, 0.86119, -0.16+0.48451]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.55383, -19.18024, 0.72589]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":2, "position": np.array([0.49458, 0.86119, -0.16+0.48451+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.55383, -19.18024, 0.72589+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])}],
+                            
+                            [{"index":0, "position": np.array([0.49458, 0.86119, -0.16+0.44428+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.55383, -19.18024, 0.68566+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":1, "position": np.array([0.49458, 0.86119, -0.16+0.44428]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.55383, -19.18024, 0.68566]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":2, "position": np.array([0.49458, 0.86119, -0.16+0.44428+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.55383, -19.18024, 0.68566+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])}],
+                            
+                            [{"index":0, "position": np.array([0.1613, 0.86119, -0.16+0.56518+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.22055, -19.18024, 0.80656+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":1, "position": np.array([0.1613, 0.86119, -0.16+0.56518]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.22055, -19.18024, 0.80656]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":2, "position": np.array([0.1613, 0.86119, -0.16+0.56518+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.22055, -19.18024, 0.80656+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])}],
+                            
+                            [{"index":0, "position": np.array([0.1613, 0.86119, -0.16+0.52494+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.22055, -19.18024, 0.76632+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":1, "position": np.array([0.1613, 0.86119, -0.16+0.52494]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.22055, -19.18024, 0.76632]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":2, "position": np.array([0.1613, 0.86119, -0.16+0.52494+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.22055, -19.18024, 0.76632+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])}],
+                            
+                            [{"index":0, "position": np.array([0.1613, 0.86119, -0.16+0.48451+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.22055, -19.18024, 0.72589+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":1, "position": np.array([0.1613, 0.86119, -0.16+0.48451]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.22055, -19.18024, 0.72589]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":2, "position": np.array([0.1613, 0.86119, -0.16+0.48451+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.22055, -19.18024, 0.72589+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])}],
+                            
+                            [{"index":0, "position": np.array([0.1613, 0.86119, -0.16+0.44428+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.22055, -19.18024, 0.68566+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":1, "position": np.array([0.1613, 0.86119, -0.16+0.44428]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.22055, -19.18024, 0.68566]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])},
+                            {"index":2, "position": np.array([0.1613, 0.86119, -0.16+0.44428+0.2]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-26.22055, -19.18024, 0.68566+0.2]), "goal_orientation":np.array([0, 0.70711, 0, -0.70711])}],
+                            
+                            ]
+
         self.light = [
                     #    [{"index":0, "position": np.array([0.5517, 0.26622-self.light_offset, -0.16+0.34371+0.2]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.38395, -6.81919+self.light_offset, 0.58583+0.2]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
                     #    {"index":1, "position": np.array([0.5517, 0.26622-self.light_offset, -0.16+0.34371]), "orientation": np.array([0.5, 0.5, 0.5, -0.5]), "goal_position":np.array([-18.38395, -6.81919+self.light_offset, 0.58583]), "goal_orientation":np.array([0.5, -0.5, 0.5, 0.5])},
@@ -636,6 +738,7 @@ class HelloWorld(BaseSample):
             ATV.battery = self.battery[i]
             ATV.fuel = self.fuel[i]
             ATV.light = self.light[i]
+            ATV.lower_cover = [self.lower_coverr[i], self.lower_coverl[i]]
 
             # ATV declarations ----------------------------------------------------------
             ATV.moving_platform = self.moving_platforms[i]
@@ -969,7 +1072,11 @@ class HelloWorld(BaseSample):
             "971":"screw_light",
             "902":"wait",
 
-            "1000":"go_to_end_goal"
+            "1000":"go_to_end_goal",
+
+            "1100":"move_to_contingency_cell",
+            "1101":"disassemble",
+            "1102":"carry_on"
         }
 
         # schedule = deque(["1","71","2","72","3","4","6","101","151","171","181","102","301","351","371","381","302","201","251","271","281","202","401","451","471","481","402","501","590","591","505","592","593","502","701","790","791","702","721","731","703","801","851","871","881","802","901","951","971","902"])
@@ -978,29 +1085,32 @@ class HelloWorld(BaseSample):
 
         sc = SimulationContext()
         print("Time:", sc.current_time)
-        time_threshold = 10
+        time_threshold = 180
 
         for i in range(len(self.schedules)):
-            # wait for part feeder check
-            if i>0:
-                # print("ATV "+str(i)+":", self.schedules[i][0], self.schedules[i-1][0], self.schedules[i][0] == self.schedules[i-1][0])
-                isWait = self.wait_for_parts(i)
-                if isWait and self.schedules[i][0]=="401":
-                    self.ATV_executions[i].wait()
+            # # wait for part feeder check
+            # if i>0:
+            #     # print("ATV "+str(i)+":", self.schedules[i][0], self.schedules[i-1][0], self.schedules[i][0] == self.schedules[i-1][0])
+            #     isWait = self.wait_for_parts(i)
+            #     if isWait and self.schedules[i][0]=="401":
+            #         print("ATV "+str(i)+": ", self.schedules[i])
+            #         print("Wait status:",isWait)
+            #         self.ATV_executions[i].wait_infinitely()
+            #         continue
                     
-                if self.schedules[i-1] and self.schedules[i] and (self.schedules[i][0] == self.schedules[i-1][0] and self.schedules[i-1][0]!="401"):
-                    isWait=True
-                    if isWait and sc.current_time>i*time_threshold:
-                        print("ATV "+str(i)+": ", self.schedules[i])
-                        print("Waiting for next mp to move...")
-                else:
-                    if isWait and sc.current_time>i*time_threshold:
-                        print("ATV "+str(i)+": ", self.schedules[i])
-                        print("Waiting for part...")
-            else:
-                isWait = False
+            #     if self.schedules[i-1] and self.schedules[i] and (self.schedules[i][0] == self.schedules[i-1][0] and self.schedules[i-1][0]!="401"):
+            #         isWait=True
+            #         if isWait and sc.current_time>i*time_threshold:
+            #             print("ATV "+str(i)+": ", self.schedules[i])
+            #             print("Waiting for next mp to move...")
+            #     else:
+            #         if isWait and sc.current_time>i*time_threshold:
+            #             print("ATV "+str(i)+": ", self.schedules[i])
+            #             print("Waiting for part...")
+            # else:
+            #     isWait = False
 
-            if self.schedules[i] and sc.current_time>i*time_threshold and not isWait:
+            if self.schedules[i] and sc.current_time>i*time_threshold:
             # if self.schedules[i] and sc.current_time>i*50:
                 print("ATV "+str(i)+": ", self.schedules[i])
                 curr_schedule = self.schedules[i][0]
@@ -1018,8 +1128,9 @@ class HelloWorld(BaseSample):
                     new_schedule = self.schedules[i][0]
                     if not self.ATV_executions[i].visited["engine"] and any(int(new_schedule) >= x for x in [0,1,2,3,4,6,71,72]):
                         self.ATV_executions[i].visited["engine"]=True
-                    # if not self.ATV_executions[i].visited["trunk"] and any(int(new_schedule) >= x for x in [401,451,471,481,402]):
-                    #     self.ATV_executions[i].visited["trunk"]=True
+                    # if i==0:
+                    if not self.ATV_executions[i].visited["trunk"] and any(int(new_schedule) >= x for x in [401,451,471,481,402]):
+                        self.ATV_executions[i].visited["trunk"]=True
                     if not self.ATV_executions[i].visited["wheels"] and any(int(new_schedule) >= x for x in [501,590,591,505,592,593,502]):
                         self.ATV_executions[i].visited["wheels"]=True
                     # if not self.ATV_executions[i].visited["cover"] and any(int(new_schedule) >= x for x in [701,790,791,702,721,731,703]):
@@ -1108,7 +1219,7 @@ class HelloWorld(BaseSample):
         return False
     
     def check_prim_exists_extra(self, prim_path):
-        for i in range(self.num_of_ATVs):
+        for i in range(self.num_of_ATVs+3):
             curr_prim = self._world.stage.GetPrimAtPath("/"+prim_path+f"_{i}")
             if curr_prim.IsValid():
                 return True
@@ -1121,10 +1232,31 @@ class HelloWorld(BaseSample):
         return False
     
     def wait_for_parts(self, id):
+        curr_pf = self.wait_queue[id][0]
+        name = self.name_of_PFs[curr_pf]['name']
+        prim_name = self.name_of_PFs[curr_pf]['prim_name']
+        print(id)
+        print(curr_pf,name,prim_name)
         isWait = False
-        isWait |= not self.check_prim_exists(f"World/Environment/engine_small_{id}") and not self.ATV_executions[id].visited["engine"] and self.ATV_executions[id-1].visited["engine"]
-        isWait |= not self.check_prim_exists(f"World/Environment/trunk_02_{id}") and not self.ATV_executions[id].visited["trunk"] and self.ATV_executions[id-1].visited["trunk"]
-        isWait |= not self.check_prim_exists(f"World/Environment/wheel_02_{id}") and not self.ATV_executions[id].visited["wheels"] and self.ATV_executions[id-1].visited["wheels"]
-        isWait |= not self.check_prim_exists(f"World/Environment/main_cover_{id}") and not self.ATV_executions[id].visited["cover"] and self.ATV_executions[id-1].visited["cover"]
-        isWait |= not self.check_prim_exists(f"World/Environment/handle_{id}") and not self.ATV_executions[id].visited["handle"] and self.ATV_executions[id-1].visited["handle"]
+        
+        if name=='main_cover':
+            isWait |= not self.check_prim_exists(f"World/Environment/{prim_name}_{id}") and not self.ATV_executions[id].visited["cover"] and self.ATV_executions[id-1].visited["cover"]
+        if name!='trunk':
+            isWait |= not self.check_prim_exists(f"World/Environment/{prim_name}_{id}") and not self.ATV_executions[id].visited[f"{name}"] and self.ATV_executions[id-1].visited[f"{name}"]
+        # elif name=='wheels':
+        #     isWait |= not self.check_prim_exists(f"World/Environment/{prim_name}_{id}") and not self.ATV_executions[id].visited[f"{name}"] and self.ATV_executions[id-1].visited[f"{name}"] and self.check_prim_exists(f"World/Environment/{prim_name}_{id-1}")
+        if self.check_prim_exists(f"World/Environment/{prim_name}_{id}"):
+            if name =='trunk' and self.check_prim_exists(f"mock_robot_{id}/platform/xtrunk_{id}"):
+                self.wait_queue[id].popleft()
+            else:
+                self.wait_queue[id].popleft()
+        # isWait |= not self.check_prim_exists(f"World/Environment/trunk_02_{id}") and not self.ATV_executions[id].visited["trunk"] and self.ATV_executions[id-1].visited["trunk"]
+        print(isWait)
+
+        # isWait |= not self.check_prim_exists(f"World/Environment/wheel_02_{id}") and not self.ATV_executions[id].visited["wheels"] and self.ATV_executions[id-1].visited["wheels"]
+
+        # isWait |= not self.check_prim_exists(f"World/Environment/main_cover_{id}") and not self.ATV_executions[id].visited["cover"] and self.ATV_executions[id-1].visited["cover"]
+
+        # isWait |= not self.check_prim_exists(f"World/Environment/handle_{id}") and not self.ATV_executions[id].visited["handle"] and self.ATV_executions[id-1].visited["handle"]
+
         return isWait

@@ -74,7 +74,7 @@ class RobotsPlaying(BaseTask):
         
         assets_root_path = get_assets_root_path() # http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/2022.2.1
     
-        asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/photos/real_microfactory_1_2.usd"
+        asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/real_microfactory/photos/real_microfactory_show_without_robots_l.usd"
 
         
         large_robot_asset_path = "/home/lm-2023/Isaac_Sim/isaac sim samples/Collected_full_warehouse_microfactory/Collected_mobile_platform_improved/Collected_mobile_platform_unfinished/mobile_platform_flattened.usd"
@@ -384,6 +384,11 @@ class Disassembly(BaseSample):
         self.add_part_custom("mobile_platform/platform/unfinished_stuff","lower_cover", "lower_cover_01", np.array([1,1,1]), np.array([36.473, 415.8277, 25.66846]), np.array([0.5,0.5, 0.5, 0.5]))
         # self.add_part_custom("mobile_platform/platform/unfinished_stuff","Seat", "Seat", np.array([1,1,1]), np.array([179.725, 448.55839, 383.33431]), np.array([0.5,0.5, 0.5, 0.5]))
 
+        self.add_part_custom(f"mobile_platform/platform/unfinished_stuff","FWheel", f"wheel_03", np.array([1,1,1]), np.array([0.15255, -0.1948, 0.56377]), np.array([0.5, -0.5, 0.5, -0.5]))
+        self.add_part_custom(f"mobile_platform/platform/unfinished_stuff","FWheel", f"wheel_01", np.array([1,1,1]), np.array([0.1522, 0.33709, 0.56377]), np.array([0.5, -0.5, 0.5, -0.5]))
+        self.add_part_custom(f"mobile_platform/platform/unfinished_stuff","FWheel", f"wheel_04", np.array([1,1,1]), np.array([-0.80845, -0.22143, 0.43737]), np.array([0.5, -0.5, 0.5, -0.5]))
+        self.add_part_custom(f"mobile_platform/platform/unfinished_stuff","FWheel", f"wheel_02", np.array([1,1,1]), np.array([-0.80934, 0.35041, 0.43888]), np.array([0.5, -0.5, 0.5, -0.5]))
+
         # self.moving_platform = self._world.scene.get_object("moving_platform")
         self._world.add_physics_callback("sending_actions", callback_fn=self.send_robot_actions)
         # Initialize our controller after load and the first reset
@@ -568,7 +573,7 @@ class Disassembly(BaseSample):
             print("task 3")
 
         # stop, remove and add part
-        elif current_observations["task_event"] == 9:
+        elif current_observations["task_event"] == 10:
 
             self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0, 0]))
             if not self.isDone[current_observations["task_event"]] and current_observations["delay"]==100:
@@ -578,14 +583,14 @@ class Disassembly(BaseSample):
                 self.isDone[current_observations["task_event"]]=True
         
         # remove and add part
-        elif current_observations["task_event"] == 8:
+        elif current_observations["task_event"] == 9:
             self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0, 0]))
             if not self.isDone[current_observations["task_event"]] and current_observations["delay"]==100:
                 self.remove_part("FSuspensionFront")
                 self.remove_part("FSuspensionFront_01")
                 self.remove_part("FSuspensionBack")
-                self.add_part_custom("World/Environment/disassembled_parts","FSuspensionFront", "suspension_front", np.array([1,1,1]), np.array([-21252.07916, 16123.85255, -95.12237]), np.array([0.68988,-0.15515,0.17299,0.68562]))
-                self.add_part_custom("World/Environment/disassembled_parts","FSuspensionFront", "suspension_front_1", np.array([1,1,1]), np.array([-21253.69102, 15977.78923, -98.17269]), np.array([0.68988,-0.15515,0.17299,0.68562]))
+                # self.add_part_custom("World/Environment/disassembled_parts","FSuspensionFront", "suspension_front", np.array([1,1,1]), np.array([-21252.07916, 16123.85255, -95.12237]), np.array([0.68988,-0.15515,0.17299,0.68562]))
+                # self.add_part_custom("World/Environment/disassembled_parts","FSuspensionFront", "suspension_front_1", np.array([1,1,1]), np.array([-21253.69102, 15977.78923, -98.17269]), np.array([0.68988,-0.15515,0.17299,0.68562]))
                 self.add_part_custom("World/Environment/disassembled_parts","FSuspensionBack", "suspension_back", np.array([1,1,1]), np.array([-21250.02819, 16296.28288, -79.20706]), np.array([0.69191,-0.16341,0.16465,0.6837]))
                 self.isDone[current_observations["task_event"]]=True
         
@@ -598,11 +603,25 @@ class Disassembly(BaseSample):
                 self.isDone[current_observations["task_event"]]=True
 
         # remove and add part
-        elif current_observations["task_event"] == 6:
+        elif current_observations["task_event"] == 8:
             self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0, 0]))
             if not self.isDone[current_observations["task_event"]] and current_observations["delay"]==100:
                 self.remove_part("battery")
                 self.add_part_custom("World/Environment/disassembled_parts","battery", "qbattery", np.array([1,1,1]), np.array([-18656.70206, 19011.82244, 283.39021]), np.array([0.5,0.5,0.5,0.5]))
+                self.isDone[current_observations["task_event"]]=True
+
+        # remove and add part
+        elif current_observations["task_event"] == 6:
+            self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0, 0]))
+            if not self.isDone[current_observations["task_event"]] and current_observations["delay"]==100:
+                self.remove_part("wheel_01")
+                self.remove_part("wheel_02")
+                self.remove_part("wheel_03")
+                self.remove_part("wheel_04")
+                self.add_part_custom("World/Environment/disassembled_parts","FWheel", "qwheel_01", np.array([1,1,1]), np.array([-18656.70206, 19011.82244, 283.39021]), np.array([0.5,0.5,0.5,0.5]))
+                self.add_part_custom("World/Environment/disassembled_parts","FWheel", "qwheel_02", np.array([1,1,1]), np.array([-18656.70206, 19011.82244, 283.39021]), np.array([0.5,0.5,0.5,0.5]))
+                self.add_part_custom("World/Environment/disassembled_parts","FWheel", "qwheel_03", np.array([1,1,1]), np.array([-18656.70206, 19011.82244, 283.39021]), np.array([0.5,0.5,0.5,0.5]))
+                self.add_part_custom("World/Environment/disassembled_parts","FWheel", "qwheel_04", np.array([1,1,1]), np.array([-18656.70206, 19011.82244, 283.39021]), np.array([0.5,0.5,0.5,0.5]))
                 self.isDone[current_observations["task_event"]]=True
         
         # remove and add part
@@ -622,11 +641,13 @@ class Disassembly(BaseSample):
                 self.remove_part("xmain_cover")
                 self.add_part_custom("World/Environment/disassembled_parts","main_cover", "qmain_cover", np.array([1,1,1]), np.array([-23651.85127, 19384.76572, 102.60316]), np.array([0.70428,0.70428,0.06314,-0.06314]))
                 self.isDone[current_observations["task_event"]]=True
+
         
-        elif current_observations["task_event"] == 10:
-            print("delay")
         
         elif current_observations["task_event"] == 11:
+            print("delay")
+        
+        elif current_observations["task_event"] == 12:
             self.moving_platform.apply_action(self._my_custom_controller.forward(command=[0.5, 0]))
         
         return

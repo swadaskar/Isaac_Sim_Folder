@@ -695,7 +695,8 @@ class PartFeederFunctions:
             {'index': 20, 'position': np.array([-0.89016,  0.32513,  0.35038]), 'orientation': np.array([ 0.60698, -0.36274,  0.60698,  0.36274]), 'goal_position': np.array([-29.24913, -16.1764 ,   1.33072]), 'goal_orientation': np.array([ 0.68569,  0.1727 ,  0.68569, -0.1727 ])}, 
             {'index': 21, 'position': np.array([-0.74286,  0.42878,  0.35038]), 'orientation': np.array([ 0.6511, -0.2758,  0.6511,  0.2758]), 'goal_position': np.array([-29.14515, -16.32381,   1.33072]), 'goal_orientation': np.array([ 0.65542,  0.26538,  0.65542, -0.26538])}, 
             {"index": 22, "position": np.array([-0.5015, 0.55795, 0.51038-0.16]), "orientation": np.array([0.6954, -0.12814, 0.6954, 0.12814]), "goal_position":np.array([-17.17748-11.83808, -16.5655, 1.33072]), "goal_orientation":np.array([0.58233, 0.40111, 0.58233, -0.40111])},
-            {'index': 23, 'position': np.array([0.16394, 0.68799,  0.44663]), 'orientation': np.array([ 0.70711, 0, 0.70711, 0]), 'goal_position': np.array([-28.88652, -17.23535,   1.42725]), 'goal_orientation': np.array([0.70711, 0.     , 0.70711, 0.     ])}]
+            {"index": 23, "position": np.array([-0.5015, 0.55795, 0.51038-0.16]), "orientation": np.array([0.70711, 0, 0.70711, 0]), "goal_position":np.array([-17.17748-11.83808, -16.5655, 1.33072]), "goal_orientation":np.array([0.58233, 0.40111, 0.58233, -0.40111])}]
+            # {'index': 23, 'position': np.array([0.16394, 0.68799,  0.44663]), 'orientation': np.array([ 0.70711, 0, 0.70711, 0]), 'goal_position': np.array([-28.88652, -17.23535,   1.42725]), 'goal_orientation': np.array([0.70711, 0.     , 0.70711, 0.     ])}]
        
         self.util.move_ur10(motion_plan, "_main_cover")
 

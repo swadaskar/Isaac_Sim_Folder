@@ -61,7 +61,7 @@ class ATVTask(BaseTask):
                     create_robot=True,
                     usd_path=large_robot_asset_path,
                     # position=np.array([2.5, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
-                    position=np.array([-0.378+int(num)*2, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
+                    position=np.array([1.622+int(num)*2, 5.65, 0.03551]),  orientation=np.array([0,0,0,1]), # start position
                     # position=np.array([-4.78521, -10.1757+int(num)*2,0.03551]), orientation=np.array([0.70711, 0, 0, -0.70711]),# initial before fuel cell
                     # position=np.array([-9.60803, -17.35671+int(num)*2, 0.03551]), orientation=np.array([0, 0, 0, 1]),# initial before battery cell
                     # position=np.array([-32.5-int(num)*2, 3.516, 0.03551]), orientation=np.array([0.70711, 0, 0, 0.70711]),# initial before trunk cell
